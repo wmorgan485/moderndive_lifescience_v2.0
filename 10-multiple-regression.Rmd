@@ -1,0 +1,1369 @@
+# Multiple Regression {#multiple-regression}
+
+```{r, include=FALSE, purl=FALSE}
+# Used to define Learning Check numbers:
+chap <- 9
+lc <- 0
+
+# Set R code chunk defaults:
+opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  warning = FALSE,
+  message = TRUE,
+  tidy = FALSE,
+  purl = TRUE,
+  out.width = "\\textwidth",
+  fig.height = 4,
+  fig.align = "center"
+)
+
+# Set output digit precision
+options(scipen = 99, digits = 3)
+
+# In kable printing replace all NA's with blanks
+options(knitr.kable.NA = "")
+
+# Set random number generator see value for replicable pseudorandomness.
+set.seed(76)
+```
+
+In Chapter \@ref(regression) we introduced ideas related to modeling for explanation, in particular that the goal of modeling is to make explicit the relationship between some outcome variable $y$ and some explanatory variable $x$. While there are many approaches to modeling, we focused on one particular technique: *linear regression*, one of the most commonly used and easy-to-understand approaches to modeling. Furthermore to keep things simple, we only considered models with one explanatory $x$ variable that was either numerical in Section \@ref(model1) or categorical in Section \@ref(model2).
+
+In this chapter on multiple regression, we'll start considering models that include more than one explanatory variable $x$. You can imagine when trying to model a particular outcome variable, like proportion of the lion nose that is black  as in Section \@ref(model1) or life expectancy as in Section \@ref(model2), that it would be useful to include more than just one explanatory variable's worth of information. 
+
+Since our regression models will now consider more than one explanatory variable, the interpretation of the associated effect of any one explanatory variable must be made in conjunction with the other explanatory variables included in your model. Let's begin!
+
+### Needed packages {-#mult-reg-packages}
+
+Let's load all the packages needed for this chapter (this assumes you've already installed them). Recall from our discussion in Section \@ref(tidyverse-package) that loading the `tidyverse` package by running `library(tidyverse)` loads the following commonly used data science packages all at once:
+
+* `ggplot2` for data visualization
+* `dplyr` for data wrangling
+* `tidyr` for converting data to "tidy" format
+* `readr` for importing spreadsheet data into R
+* As well as the more advanced `purrr`, `tibble`, `stringr`, and `forcats` packages
+
+If needed, read Section \@ref(packages) for information on how to install and load R packages. 
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(moderndive)
+library(skimr)
+library(abd)
+```
+```{r, echo=FALSE, message=FALSE, purl=TRUE}
+# The code presented to the reader in the chunk above is different than the code
+# in this chunk that is actually run to build the book. In particular we do not
+# load the skimr package.
+# 
+# This is because skimr v1.0.6 which we used for the book causes all
+# kable() code to break for the remaining chapters in the book. v2 might
+# fix these issues:
+# https://github.com/moderndive/ModernDive_book/issues/271
+
+# As a workaround for v1 of ModernDive, all skimr::skim() output in this chapter
+# has been hard coded.
+library(tidyverse)
+library(moderndive)
+# library(skimr)
+library(gapminder)
+```
+
+```{r, message=FALSE, echo=FALSE, purl=FALSE}
+# Packages needed internally, but not in text:
+library(kableExtra)
+library(patchwork)
+library(gapminder)
+library(abd)
+```
+
+
+
+
+
+## One numerical and one categorical explanatory variable {#model4}
+
+Previously we looked at the relationship between age and nose coloration (proportion black) of male lions in Section \@ref(model1). The variable `proportion.black` was the numerical outcome variable $y$, and the variable `age` was the numerical explanatory $x$ variable. 
+
+In this section, we are going to consider a different model. Rather than a single explanatory variable, we'll now include two different explanatory variables. In this example, we'll look at the relationship between tooth growth and vitamin C intake in guinea pigs. Could it be that increasing levels of vitamin C stimulate tooth growth? Or could it instead be that increasing levels reduce tooth growth? Are there differences in tooth growth depending on the method used to deliver vitamin C? 
+
+We'll answer these questions by modeling the relationship between these variables using *multiple regression*,\index{regression!multiple linear} where we have:
+
+1. A numerical outcome variable $y$, `len`, the length of odontoblasts, the cells responsible for tooth growth, and
+1. Two explanatory variables:
+    1. A numerical explanatory variable $x_1$, `dose`, the dose of vitamin C, in milligrams/day.
+    1. A categorical explanatory variable $x_2$, `supp`, the delivery method, either as orange juice (`OJ`) or ascorbic acid (`VC`).
+
+
+
+### Exploratory data analysis {#model4EDA}
+
+Our dataset is called `ToothGrowth` and included in R's **datasets** package. Recall the three common steps in an exploratory data analysis we saw in Subsection \@ref(model1EDA):
+
+1. Looking at the raw data values.
+1. Computing summary statistics.
+1. Creating data visualizations.
+
+Let's first look at the raw data values by either looking at `ToothGrowth` using RStudio's spreadsheet viewer or by using the `glimpse()` function from the `dplyr` package:
+
+```{r}
+glimpse(ToothGrowth)
+```
+
+```{r echo=FALSE, purl=FALSE}
+# This code is used for dynamic non-static in-line text output purposes
+n_ToothGrowth <- ToothGrowth %>% nrow()
+```
+
+Let's also display a random sample of 5 rows of the `r n_ToothGrowth` rows corresponding to different courses in Table \@ref(tab:model4-data-preview). Remember due to the random nature of the sampling, you will likely end up with a different subset of 5 rows.
+
+```{r, eval=FALSE}
+ToothGrowth %>% sample_n(size = 5)
+```
+```{r model4-data-preview, echo=FALSE, purl=FALSE}
+ToothGrowth %>%
+  sample_n(5) %>%
+  kable(
+    digits = 3,
+    caption = "A random sample of 5 out of the 463 courses at UT Austin",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+Now that we've looked at the raw values in our `ToothGrowth` data frame and got a sense of the data, let's compute summary statistics. As we did in our exploratory data analyses in Sections \@ref(model1EDA) and  \@ref(model2EDA) from the previous chapter, let's use the `skim()` function from the `skimr` package:\index{R packages!skimr!skim()}
+
+```{r, eval =FALSE}
+ToothGrowth %>% skim()
+```
+
+Observe that we have no missing data, that there are `r ToothGrowth %>% filter(supp == "OJ") %>% nrow()` guinea pigs given orange juice and `r ToothGrowth %>% filter(supp == "VC") %>% nrow()` guinea pigs given ascorbic acid, and that the average vitamin C dose is `r ToothGrowth$dose %>% mean() %>% round(digits = 2)`.  
+
+Furthermore, let's compute the correlation coefficient between our two numerical variables: `len` and `dose`. Recall from Subsection \@ref(model1EDA) that correlation coefficients only exist between numerical variables. We observe that they are "clearly positively" correlated.
+
+```{r}
+ToothGrowth %>% 
+  get_correlation(formula = len ~ dose)
+```
+
+Let's now perform the last of the three common steps in an exploratory data analysis: creating data visualizations. Given that the outcome variable `len` and explanatory variable `dose` are both numerical, we'll use a scatterplot to display their relationship. How can we incorporate the categorical variable `supp`, however? By `mapping` the variable `supp` to the `color` aesthetic, thereby creating a *colored* scatterplot. The following code is similar to the code that created the scatterplot of proportion black nose over lion age in Figure \@ref(fig:numxplot1), but with `color = supp` added to the `aes()`thetic mapping.
+
+```{r eval=FALSE}
+ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+  geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement") +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r numxcatxplot1, echo=FALSE, fig.cap="Colored scatterplot of relationship of teaching and beauty scores.", fig.height=3.2, purl=FALSE, message=FALSE}
+if (is_html_output()) {
+  ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+    geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement") +
+    geom_smooth(method = "lm", se = FALSE)
+} else {
+  ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+    geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement") +
+    geom_smooth(method = "lm", se = FALSE) +
+    scale_color_grey()
+}
+```
+
+In the resulting Figure \@ref(fig:numxcatxplot1), observe that `ggplot()` assigns a default `r if_else(is_latex_output(), "", "in red/blue")` color scheme to the points and to the lines associated with the two levels of `supp`: `OJ` and `VC`. Furthermore, the `geom_smooth(method = "lm", se = FALSE)` layer automatically fits a different regression line for each group. 
+
+We notice an interesting trend. While both regression lines are positively sloped with dose levels (i.e., guinea pigs receiving higher doses of vitamin C tend to have longer teeth), the slope for dose for the VC guinea pigs is *more* positive.  
+
+### Interaction model {#model4interactiontable}
+  
+Let's now quantify the relationship of our outcome variable $y$ and the two explanatory variables using one type of multiple regression model known as an *interaction model*. \index{interaction model} We'll explain where the term "interaction" comes from at the end of this section.
+
+In particular, we'll write out the equation of the two regression lines in Figure \@ref(fig:numxcatxplot1) using the values from a regression table. Before we do this, however, let's go over a brief refresher of regression when you have a categorical explanatory variable $x$. 
+
+Recall in Subsection \@ref(model2table) we fit a regression model for countries' life expectancies as a function of which continent the country was in. In other words, we had a numerical outcome variable $y$ = `lifeExp` and a categorical explanatory variable $x$ = `continent` which had 5 levels: `Africa`, `Americas`, `Asia`, `Europe`, and `Oceania`. Let's re-display the regression table you saw in Table \@ref(tab:catxplot4b):
+
+```{r, echo=FALSE, purl=FALSE}
+# Wrangle data
+gapminder2007 <- gapminder %>%
+  filter(year == 2007) %>%
+  select(country, lifeExp, continent, gdpPercap)
+
+# Fit regression model:
+lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
+
+# Get regression table and kable output
+get_regression_table(lifeExp_model) %>%
+  kable(
+    digits = 3,
+    caption = "Regression table for life expectancy as a function of continent",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+```{r echo=FALSE, purl=FALSE}
+# This code is used for dynamic non-static in-line text output purposes
+
+# Coding model earlier to calculate the intercepts etc below
+lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
+
+# Africa / Intercept
+intercept <- get_regression_table(lifeExp_model) %>%
+  filter(term == "intercept") %>%
+  pull(estimate) %>%
+  round(1)
+
+# Americas
+offset_americas <- get_regression_table(lifeExp_model) %>%
+  filter(term == "continentAmericas") %>%
+  pull(estimate) %>%
+  round(1)
+mean_americas <- intercept + offset_americas
+```
+
+Recall our interpretation of the `estimate` column. Since `Africa` was the "baseline for comparison" group, the `intercept` term corresponds to the mean life expectancy for all countries in Africa of `r intercept` years. The other four values of `estimate` correspond to "offsets" relative to the baseline group. So, for example, the "offset" corresponding to the Americas is +`r offset_americas` as compared to the baseline for comparison group Africa. In other words, the average life expectancy for countries in the Americas is `r offset_americas` years *higher*. Thus the mean life expectancy for all countries in the Americas is `r intercept` + `r offset_americas` = `r mean_americas`. The same interpretation holds for Asia, Europe, and Oceania.
+
+Going back to our multiple regression model for tooth `len`gth using `dose` and `supp`lement in Figure \@ref(fig:numxcatxplot1), we generate the regression table using the same two-step approach from Chapter \@ref(regression): we first "fit" the model using the `lm()` "linear model" function and then we apply the `get_regression_table()` function. This time, however, our model formula won't be of the form `y ~ x`, but rather of the form `y ~ x1 * x2`. In other words, our two explanatory variables `x1` and `x2` are separated by a `*` sign:
+
+```{r, eval=FALSE}
+# Fit regression model:
+len_model_interaction <- lm(len ~ dose * supp, data = ToothGrowth)
+
+# Get regression table:
+get_regression_table(len_model_interaction)
+```
+```{r regtable-interaction, echo=FALSE, purl=FALSE}
+len_model_interaction <- lm(len ~ dose * supp, data = ToothGrowth)
+get_regression_table(len_model_interaction) %>%
+  kable(
+    digits = 3,
+    caption = "Regression table for interaction model",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+
+# This code is used for dynamic non-static in-line text output purposes
+intercept_OJ <- get_regression_table(len_model_interaction) %>% 
+  filter(term == "intercept") %>% 
+  pull(estimate)
+slope_OJ <- get_regression_table(len_model_interaction) %>% 
+  filter(term == "dose") %>% 
+  pull(estimate)
+offset_VC <- get_regression_table(len_model_interaction) %>% 
+  filter(term == "suppVC") %>% 
+  pull(estimate)
+offset_slope_interaction <- get_regression_table(len_model_interaction) %>% 
+  filter(term == "dose:suppVC") %>% 
+  pull(estimate)
+slope_VC <- slope_OJ + offset_slope_interaction
+intercept_VC <- intercept_OJ + offset_VC
+```
+
+Looking at the regression table output in Table \@ref(tab:regtable-interaction), there are four rows of values in the `estimate` column. While it is not immediately apparent, using these four values we can write out the equations of both lines in Figure \@ref(fig:numxcatxplot1). First, since the word `OJ` comes alphabetically before `VC`, the orange juice supplement is the "baseline for comparison" group. Thus, `intercept` is the intercept *for only the orange juice recipients*. 
+
+This holds similarly for `dose`. It is the slope for dose *for only the OJ recipients*. Thus, the `r if_else(is_latex_output(), "darker-colored", "red")` regression line in Figure \@ref(fig:numxcatxplot1) has an intercept of `r intercept_OJ` and slope for dose of `r slope_OJ`. 
+
+What about the intercept and slope for dose of the ascorbic acid recipients in the `r if_else(is_latex_output(), "lighter-colored", "blue")` line in Figure \@ref(fig:numxcatxplot1)? This is where our notion of "offsets" comes into play once again. 
+
+The value for `suppVC` of `r offset_VC` is not the intercept for the ascorbic acid recipients, but rather the *offset*\index{offset} in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is `intercept + suppVC` = `r intercept_OJ` + (`r offset_VC`) = `r intercept_OJ` - `r -1*offset_VC` = `r intercept_OJ + offset_VC`. 
+
+Similarly, `dose:suppVC` = `r offset_slope_interaction` is not the slope for dose for the ascorbic acid recipients, but rather the *offset* in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is `dose + dose:suppVC` $=  `r slope_OJ` + `r offset_slope_interaction` = `r slope_VC`$. Thus, the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatxplot1) has intercept `r intercept_OJ + offset_VC` and slope for `dose` of `r slope_VC`. Let's summarize these values in Table \@ref(tab:interaction-summary) and focus on the two slopes for `dose`:
+
+```{r interaction-summary, echo=FALSE, purl=FALSE}
+options(digits = 4)
+tibble(
+  Supplement = c("Orange juice", "Ascorbic acid"),
+  Intercept = c(intercept_OJ, intercept_VC),
+  `Slope for dose` = c(slope_OJ, slope_VC)
+) %>%
+  kable(
+    digits = 4,
+    caption = "Comparison of intercepts and slopes for interaction model",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+options(digits = 3)
+```
+
+Since the slope for dose for the orange recipients was `r slope_OJ`, it means that on average, a guinea pig who receives one unit more would have a tooth length that is `r slope_OJ` units **higher**. For the ascorbic acid recipients, however, the corresponding associated increase was on average `r slope_VC` units. While both slopes for dose were positive, the slope for dose for the `VC` recipients is *more positive*. This is consistent with our observation from Figure \@ref(fig:numxcatxplot1), that this model is suggesting that dose impacts tooth length for ascorbic acid (VC) recipients more than for orange juice recipients.
+
+Let's now write the equation for our regression lines, which we can use to compute our fitted values $\widehat{y} = \widehat{\text{len}}$.
+
+<!--
+Note: Even though markdown preview of the following LaTeX looks garbled, it
+comes out correct in the HTML output.
+-->
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x) + b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)\\
+&= `r intercept_OJ` `r slope_OJ` \cdot \text{dose} - `r -1*offset_VC` \cdot \mathbb{1}_{\text{is VC}}(x) + `r offset_slope_interaction` \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)
+\end{aligned}
+$$
+
+Whoa! That's even more daunting than the equation you saw for the life expectancy as a function of continent in Subsection \@ref(model2table)! However, if you recall what an "indicator function" does, the equation simplifies greatly. In the previous equation, we have one indicator function of interest:
+
+$$
+\mathbb{1}_{\text{is VC}}(x) = \left\{
+\begin{array}{ll}
+1 & \text{if } \text{supp } x \text{ is VC} \\
+0 & \text{otherwise}\end{array}
+\right.
+$$
+
+Second, let's match coefficients in the previous equation with values in the `estimate` column in our regression table in Table \@ref(tab:regtable-interaction):
+
+1. $b_0$ is the `intercept` = `r intercept_OJ` for the orange juice recipients
+1. $b_{\text{dose}}$ is the slope for `dose` = `r slope_OJ` for the orange juice recipients
+1. $b_{\text{VC}}$ is the offset in intercept = `r offset_VC` for the ascorbic acid (VC) recipients
+1. $b_{\text{dose,VC}}$ is the offset in slope for dose = `r offset_slope_interaction` for the ascorbic acid (VC) recipients
+
+Let's put this all together and compute the fitted value $\widehat{y} = \widehat{\text{len}}$ for orange juice recipients. Since for orange juice recipients $\mathbb{1}_{\text{is VC}}(x)$ = 0, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose} - `r -1*offset_VC` \cdot 0 + `r offset_slope_interaction` \cdot \text{dose} \cdot 0\\
+&= `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose} - 0 + 0\\
+&= `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose}\\
+\end{aligned}
+$$
+
+which is the equation of the `r if_else(is_latex_output(), "darker-colored", "red")` regression line in Figure \@ref(fig:numxcatxplot1) corresponding to the orange juice recipients in Table \@ref(tab:interaction-summary). Correspondingly, since for ascorbic acid (VC) recipients $\mathbb{1}_{\text{is VC}}(x)$ = 1, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose} - `r -1*offset_VC` + `r offset_slope_interaction` \cdot \text{dose}\\
+&= (`r intercept_OJ` - `r -1*offset_VC`) + (- `r -1*slope_OJ` + `r offset_slope_interaction`) * \text{dose}\\
+&= `r intercept_VC` - `r -1*slope_VC` \cdot \text{dose}\\
+\end{aligned}
+$$
+
+which is the equation of the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatxplot1) corresponding to the ascorbic acid (VC) recipients in Table \@ref(tab:interaction-summary).
+
+Phew! That was a lot of arithmetic! Don't fret, however, this is as hard as modeling will get in this book. If you're still a little unsure about using indicator functions and using categorical explanatory variables in a regression model, we *highly* suggest you re-read Subsection \@ref(model2table). This involves only a single categorical explanatory variable and thus is much simpler. 
+
+Before we end this section, we explain why we refer to this type of model as an "interaction model." The $b_{\text{dose,VC}}$ term in the equation for the fitted value $\widehat{y}$ = $\widehat{\text{len}}$ is what's known in statistical modeling as an "interaction effect." The interaction term corresponds to the `dose:suppVC` = `r offset_slope_interaction` in the final row of the regression table in Table \@ref(tab:regtable-interaction).  
+
+We say there is an interaction effect if the associated effect of one variable *depends on the value of another variable*. That is to say, the two variables are "interacting" with each other. Here, the associated effect of the variable `dose` *depends* on the value of the other variable `supp`. The difference in slopes for dose of +`r offset_slope_interaction` of ascorbic acid (VC) recipients relative to orange juice recipients shows this. \index{regression!multiple linear!interactions model}
+
+Another way of thinking about interaction effects on tooth length is as follows. For a given pig, there might be an associated effect of their dose *by itself*, there might be an associated effect of their supplement *by itself*, but when dose and supplement are considered *together* there might be an *additional effect* above and beyond the two individual effects.
+
+
+### Parallel slopes model {#model4table}
+
+When creating regression models with one numerical and one categorical explanatory variable, we are not just limited to interaction models as we just saw. Another type of model we can use is known as a *parallel slopes* model.\index{parallel slopes model} Unlike interaction models where the regression lines can have different intercepts and different slopes, parallel slopes models still allow for different intercepts but *force* all lines to have the same slope. The resulting regression lines are thus parallel. Let's visualize the best-fitting parallel slopes model to `ToothGrowth`.
+
+Unfortunately, the `geom_smooth()` function in the `ggplot2` package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called `geom_parallel_slopes()`\index{moderndive!geom\_parallel\_slopes()} that is included in the `moderndive` package. You won't find `geom_parallel_slopes()` in the `ggplot2` package, but rather the `moderndive` package. Thus, if you want to be able to use it, you will need to load both the `ggplot2` and `moderndive` packages. Using this function, let's now plot the parallel slopes model for teaching score. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure \@ref(fig:numxcatxplot1), but now the `geom_smooth(method = "lm", se = FALSE)` layer is replaced with `geom_parallel_slopes(se = FALSE)`. 
+
+```{r eval=FALSE}
+ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+  geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement type") +
+  geom_parallel_slopes(se = FALSE)
+```
+
+```{r numxcatx-parallel, echo=FALSE, fig.cap="Parallel slopes model of len with dose and supp.", fig.height=3.5, purl=FALSE}
+par_slopes <- ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+  geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement type") +
+  geom_parallel_slopes(se = FALSE)
+if (is_html_output()) {
+  par_slopes
+} else {
+  par_slopes +
+    scale_color_grey()
+}
+```
+
+Observe in Figure \@ref(fig:numxcatx-parallel) that we now have parallel lines corresponding to the orange juice and ascorbic acid (VC) recipients, respectively: here they have the same positive slope.  This is telling us that guinea pigs who receive higher doses of vitamin C will tend to have longer teeth than guinea pigs who receive less. Furthermore, since the lines are parallel, the associated gain for higher dose is assumed to be the same for both orange juice and ascorbic acid (VC) recipients. 
+
+However, observe also in Figure \@ref(fig:numxcatx-parallel) that these two lines have different intercepts as evidenced by the fact that the `r if_else(is_latex_output(), "lighter-colored", "blue")` line corresponding to the ascorbic acid (VC) recipients is higher than the `r if_else(is_latex_output(), "darker-colored", "red")` line corresponding to the orange juice recipients. This is telling us that irrespective of dose, orange juice recipients tended to receive lower teaching scores than ascorbic acid (VC) recipients. 
+
+In order to obtain the precise numerical values of the two intercepts and the single common slope, we once again "fit" the model using the `lm()` "linear model" function and then apply the `get_regression_table()` function. However, unlike the interaction model which had a model formula of the form `y ~ x1 * x2`, our model formula is now of the form `y ~ x1 + x2`. In other words, our two explanatory variables `x1` and `x2` are separated by a `+` sign:
+
+```{r, eval=FALSE}
+# Fit regression model:
+len_model_parallel_slopes <- lm(len ~ dose + supp, data = ToothGrowth)
+# Get regression table:
+get_regression_table(len_model_parallel_slopes)
+```
+```{r regtable-parallel-slopes, echo=FALSE, purl=FALSE}
+len_model_parallel_slopes <- lm(len ~ dose + supp, data = ToothGrowth)
+get_regression_table(len_model_parallel_slopes) %>%
+  kable(
+    digits = 3,
+    caption = "Regression table for parallel slopes model",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+
+# This code is used for dynamic non-static in-line text output purposes
+intercept_OJ_parallel <- get_regression_table(len_model_parallel_slopes) %>%
+  filter(term == "intercept") %>% 
+  pull(estimate)
+offset_VC_parallel <- get_regression_table(len_model_parallel_slopes) %>% 
+  filter(term == "suppVC") %>% 
+  pull(estimate)
+intercept_VC_parallel <- intercept_OJ_parallel + offset_VC_parallel
+```
+
+Similarly to the regression table for the interaction model from Table \@ref(tab:regtable-interaction), we have an `intercept` term corresponding to the intercept for the "baseline for comparison" orange juice instructor group and a `suppVC` term corresponding to the *offset* in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure \@ref(fig:numxcatx-parallel) the `r if_else(is_latex_output(), "darker-colored", "red")` regression line corresponding to the orange juice recipients has an intercept of `r intercept_OJ_parallel` while the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line corresponding to the ascorbic acid (VC) recipients has an intercept of `r intercept_OJ_parallel` + `r offset_VC_parallel` = `r intercept_OJ_parallel + offset_VC_parallel`.  
+
+```{r echo=FALSE}
+dose_coef <- get_regression_table(len_model_parallel_slopes) %>%
+  filter(term == "dose") %>%
+  pull(estimate)
+```
+
+Unlike in Table \@ref(tab:regtable-interaction), however, we now only have a single slope for dose of `r dose_coef`. This is because the model dictates that both the orange juice and ascorbic acid (VC) recipients have a common slope for dose. \index{regression!multiple linear!parallel slopes model} This is telling us that a guinea pig who received a vitamin C dose one unit higher has tooth length that is on average `r abs(dose_coef)` units longer. This benefit for receiving a higher vitamin C dose applies equally to both orange juice and ascorbic acid (VC) recipients. 
+
+Let's summarize these values in Table \@ref(tab:parallel-slopes-summary), noting the different intercepts but common slopes:
+
+```{r parallel-slopes-summary, echo=FALSE, purl=FALSE}
+options(digits = 4)
+tibble(
+  Supplement = c("Orange juice (OJ)", "Ascorbic acid (VC)"),
+  Intercept = c(intercept_OJ_parallel, intercept_VC_parallel),
+  `Slope for dose` = c(dose_coef, dose_coef)
+) %>%
+  kable(
+    digits = 4,
+    caption = "Comparison of intercepts and slope for parallel slopes model",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+options(digits = 3)
+```
+
+Let's now write the equation for our regression lines, which we can use to compute our fitted values $\widehat{y} = \widehat{\text{len}}$.
+
+<!--
+Note: Even though markdown preview of the following LaTeX looks garbled, it
+comes out correct in the HTML output.
+-->
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)\\
+&= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot \mathbb{1}_{\text{is VC}}(x) 
+\end{aligned}
+$$
+
+Let's put this all together and compute the fitted value $\widehat{y} = \widehat{\text{len}}$ for orange juice recipients. Since for orange juice recipients the indicator function $\mathbb{1}_{\text{is VC}}(x)$ = 0, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 0\\
+&= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose}
+\end{aligned}
+$$
+
+which is the equation of the `r if_else(is_latex_output(), "darker-colored", "red")` regression line in Figure \@ref(fig:numxcatx-parallel) corresponding to the orange juice recipients. Correspondingly, since for ascorbic acid (VC) recipients the indicator function $\mathbb{1}_{\text{is VC}}(x)$ = 1, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 1\\
+&= (`r intercept_OJ_parallel` + `r offset_VC_parallel`) - `r -1*dose_coef` \cdot \text{dose}\\
+&= `r intercept_VC_parallel` `r dose_coef` \cdot \text{dose}
+\end{aligned}
+$$
+
+which is the equation of the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatx-parallel) corresponding to the ascorbic acid (VC) recipients. 
+
+Great! We've considered both an interaction model and a parallel slopes model for our data. Let's compare the visualizations for both models side-by-side in Figure \@ref(fig:numxcatx-comparison).
+
+```{r numxcatx-comparison, fig.width=8, echo=FALSE, fig.cap="Comparison of interaction and parallel slopes models.", purl=FALSE, message=FALSE}
+interaction_plot <- ggplot(ToothGrowth, aes(x = dose, y = len, color = supp), show.legend = FALSE) +
+  geom_point() +
+  labs(x = "dose", y = "Tooth length", color = "Supplement type", title = "Interaction model") +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme(legend.position = "none")
+parallel_slopes_plot <- ggplot(ToothGrowth, aes(x = dose, y = len, color = supp), show.legend = FALSE) +
+  geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement type", title = "Interaction model") +
+  geom_parallel_slopes(se = FALSE) +
+  labs(x = "Dose", y = "Tooth length", title = "Parallel slopes model") +
+  theme(axis.title.y = element_blank())
+
+if (is_html_output()) {
+  interaction_plot + parallel_slopes_plot
+} else {
+  grey_interaction_plot <- interaction_plot +
+    scale_color_grey()
+  grey_parallel_slopes_plot <- parallel_slopes_plot +
+    scale_color_grey()
+  grey_interaction_plot + grey_parallel_slopes_plot
+}
+```
+
+At this point, you might be asking yourself: "Why would we ever use a parallel slopes model?". Looking at the left-hand plot in Figure \@ref(fig:numxcatx-comparison), the two lines definitely do not appear to be parallel, so why would we *force* them to be parallel? For this data, we agree! It can easily be argued that the interaction model on the left is more appropriate. However, in the upcoming Subsection \@ref(model-selection) on model selection, we'll present an example where it can be argued that the case for a parallel slopes model might be stronger. 
+
+
+### Observed/fitted values and residuals {#model4points}
+
+For brevity's sake, in this section we'll only compute the observed values, fitted values, and residuals for the interaction model which we saved in `len_model_interaction`. You'll have an opportunity to study the corresponding values for the parallel slopes model in the upcoming *Learning check*.
+
+```{r echo=FALSE, purl=FALSE}
+# This code is used for dynamic non-static in-line text output purposes
+ex_OJ_dose <- 2
+ex_VC_dose <- 1
+```
+
+Say, you have a guinea pig who receives orange juice of `r ex_OJ_dose` mg/day. What fitted value $\widehat{y}$ = $\widehat{\text{len}}$ would our model yield? Say, you have another guinea pig who receives ascorbic acid of `r ex_VC_dose` mg/day. What would their fitted value $\widehat{y}$ be? 
+
+We answer this question visually first for the orange juice recipient by finding the intersection of the `r if_else(is_latex_output(), "darker-colored", "red")` regression line and the vertical line at $x$ = dose = `r ex_OJ_dose`. We mark this value with a large `r if_else(is_latex_output(), "darker-colored", "red")` dot in Figure \@ref(fig:fitted-values). Similarly, we can identify the fitted value $\widehat{y}$ = $\widehat{\text{len}}$ for the male instructor by finding the intersection of the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line and the vertical line at $x$ = dose = `r ex_VC_dose`. We mark this value with a large `r if_else(is_latex_output(), "lighter-colored", "blue")` dot in Figure \@ref(fig:fitted-values).
+
+```{r fitted-values, echo=FALSE, fig.cap="Fitted values for two new professors.", fig.height=4.7, purl=FALSE, message=FALSE}
+newpoints <- ToothGrowth %>%
+  slice(c(1, 5)) %>%
+  get_regression_points(len_model_interaction, newdata = .)
+
+fitted_plot <- ggplot(ToothGrowth, aes(x = dose, y = len, color = supp), show.legend = FALSE) +
+  geom_point() +
+  labs(x = "Dose", y = "Tooth length", color = "Supplement type", title = "Interaction model") +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_vline(data = newpoints, aes(xintercept = dose, col = supp), linetype = "dashed", size = 1, show.legend = FALSE) +
+  geom_point(data = newpoints, aes(x = dose, y = len_hat), size = 4, show.legend = FALSE)
+
+if (is_html_output()) {
+  fitted_plot
+} else {
+  fitted_plot + scale_color_grey()
+}
+```
+
+What are these two values of $\widehat{y}$ = $\widehat{\text{len}}$ precisely? We can use the equations of the two regression lines we computed in Subsection \@ref(model4interactiontable), which in turn were based on values from the regression table in Table \@ref(tab:regtable-interaction):
+
+* For all orange juice recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose}$
+* For all ascorbic acid (VC) recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_VC` - `r -1*slope_VC` \cdot \text{dose}$
+
+So our fitted values would be: $`r intercept_OJ` - `r -1 * slope_OJ` \cdot `r ex_OJ_dose` = `r (intercept_OJ + (slope_OJ*ex_OJ_dose)) %>% round(2)`$ and $`r intercept_VC` - `r -1*slope_VC` \cdot `r ex_VC_dose` = `r (intercept_VC + (slope_VC*ex_VC_dose)) %>% format(round(2), nsmall = 2)`$, respectively. 
+
+Now what if we want the fitted values not just for these two guinea pigs, but for all `r n_ToothGrowth` guinea pigs included in the `ToothGrowth` data frame? Doing this by hand would be long and tedious! This is where the `get_regression_points()` function from the `moderndive` package can help: it will quickly automate the above calculations for all `r n_ToothGrowth` guinea pigs We present a preview of the first 5 rows for each supplement type out of `r n_ToothGrowth` in Table \@ref(tab:model4-points-table).
+
+```{r, eval=FALSE}
+regression_points <- get_regression_points(len_model_interaction)
+regression_points %>% group_by(supp) %>% slice_head(n=5)
+```
+```{r model4-points-table, echo=FALSE, purl=FALSE}
+regression_points <- get_regression_points(len_model_interaction)
+regression_points %>%
+   group_by(supp) %>% slice_head(n=5) %>%
+  kable(
+    digits = 3,
+    caption = "Regression points (First 10 out of 463 courses)" # ,
+    #    booktabs = TRUE
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+It turns out that the first five orange juice recipients received 0.5 mg/day of vitamin C. The resulting $\widehat{y}$ = $\widehat{\text{len}}$ fitted values are in the `len_hat` column. Furthermore, the `get_regression_points()` function also returns the residuals $y-\widehat{y}$.  Notice, for example, the second and third guinea pigs receiving orange juice had positive residuals, indicating that the actual tooth growth values were greater than their fitted length of 15.46. On the other hand, the first and fourth guinea pigs had negative residuals, indicating that the actual tooth growth values were less than 15.46. 
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Compute the observed values, fitted values, and residuals not for the interaction model as we just did, but rather for the parallel slopes model we saved in `len_model_parallel_slopes`.
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
+
+
+
+
+## Two categorical explanatory variables {#model3}
+
+Let's now switch gears and consider multiple regression models where instead of one numerical and one categorical explanatory variable, we now have two categorical explanatory variables. The dataset we'll use is from [*Analysis of Biological Data*] by Whitlock and Schluter. Its accompanying `abd` R package contains the `IntertidalAlgae` dataset that we'll use next.
+
+<!--Open with the research question-->This dataset is from a study looking at the effect of herbivores and height above low tide, and the interaction between these factors, on abundance of a red intertidal alga. 
+
+In this section, we'll fit a regression model where we have 
+
+1. A numerical outcome variable $y$, sqrt.area, the square root of the area (in cm^2^) covered by red algae at the experiment's end, and
+1. Two explanatory variables:
+    1. One categorical explanatory variable $x_1$, herbivores, absence or presence of herbivores
+    1. Another categorical explanatory variable $x_2$, height, the height of the experimental plot relative to the tide levels.
+
+
+### Exploratory data analysis {#model3EDA}
+
+Let's examine the `Intertidal` dataset\index{R packages!abd!Intertidal data frame} using RStudio's spreadsheet viewer or `glimpse()`.
+
+```{r, message=FALSE}
+library(abd)
+glimpse(IntertidalAlgae)
+```
+
+```{r echo=FALSE, purl=FALSE}
+n_IntertidalAlgae <- IntertidalAlgae %>% nrow()
+```
+
+Furthermore, let's look at a random sample of five out of the `r n_IntertidalAlgae` plots in Table \@ref(tab:model3-data-preview). Once again, note that due to the random nature of the sampling, you will likely end up with a different subset of five rows.
+
+```{r, eval=FALSE}
+IntertidalAlgae %>% sample_n(size = 5)
+```
+```{r model3-data-preview, echo=FALSE, purl=FALSE}
+IntertidalAlgae %>%
+  sample_n(5) %>%
+  kable(
+    digits = 3,
+    caption = "Random sample of 5 experimental plots",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+Now that we've looked at the raw values in our `IntertidalAlgae` data frame and got a sense of the data, let's move on to the next common step in an exploratory data analysis: computing summary statistics. Let's use the `skim()` function from the `skimr` package:
+
+```{r, eval=FALSE}
+IntertidalAlgae %>% skim()
+```
+
+Observe the summary statistics for the outcome variable `sqrt.area`: the mean and median sqrt.area are 22.84 and 22.25, respectively, and that 25% of plots had values of 5.92 or less. 
+
+<!--Discuss balanced FACTORIAL design here-->
+Now let's look at the explanatory variables `herbivores` and `height`. First, let's visualize the relationship of the outcome variable with each of the two explanatory variables in separate box plots with an overlaid scatterplot to see the individual data points in Figure \@ref(fig:2numxplot1). 
+
+
+```{r, eval=FALSE}
+ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered", 
+       title = "Area coverage and herbivore treatment") 
+
+ggplot(IntertidalAlgae, aes(x = height, y = sqrt.area)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1) +
+  labs(x = "Height relative to low tide", 
+       y = "Square root of area covered", 
+       title = "Area coverage and tidal location") 
+```
+
+```{r 2numxplot1b, echo=FALSE, fig.cap="Relationship between red algae coverage and herbivores/height.", fig.height=3.2, purl=FALSE, message=FALSE}
+model3_herbivores_area_plot <- ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered", 
+       title = "Area coverage and herbivore treatment") +
+  scale_y_continuous(limits = c(0, 70))
+
+model3_height_area_plot <- ggplot(IntertidalAlgae, aes(x = height, y = sqrt.area)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1) +
+  labs(x = "Height relative to low tide", 
+       y = "Square root of area covered", 
+       title = "Area coverage and tidal location") +
+  scale_y_continuous(limits = c(0, 70)) +
+  theme(axis.title.y = element_blank())
+
+model3_herbivores_area_plot + model3_height_area_plot
+```
+
+It seems that the herbivore treatment, but not tidal location, has some effect on its own on red algae coverage. With respect to herbivore treatment, the median of $y$ is almost double in the presence of herbivores (`plus`) as compared to the absence (`minus`). With respect to height above low tide, the median of $y$ is nearly the same in the low tide group as in the mid tide group. 
+
+However, the two plots in Figure \@ref(fig:2numxplot1) only focus on the relationship of the outcome variable with each of the two explanatory variables *separately*. To visualize the *joint* relationship of all three variables simultaneously, let's make just a scatterplot and indicate the other explanatory variable by color. Each of the `r n_IntertidalAlgae` observations in the `IntertidalAlgae` data frame are marked with a point where
+
+1. The numerical outcome variable $y$ `sqrt.area` is on the vertical axis.
+1. The first categorical explanatory variable $x_1$ `herbivores` is on the horizontal axis.
+1. The second categorical explanatory variable $x_2$ `height` is indicated by color. 
+
+```{r, eval=FALSE}
+ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area, 
+                            color = height, group = height)) +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered", 
+       title = "Area coverage and herbivore treatment") +
+  geom_smooth(method = "lm", se = FALSE)
+  # geom_parallel_slopes(se = FALSE)
+```
+
+```{r 2numxplot1c, echo=FALSE, fig.cap="Relationship between red algae coverage and herbivores plus height.", fig.height=3.2, purl=FALSE, message=FALSE}
+ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area, 
+                            color = height, group = height)) +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered", 
+       title = "Area coverage and herbivore treatment") +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Furthermore, we also include the *regression lines*\index{regression!regression line} for each `height` level (`low` or `mid`). Recall from Subsection \@ref(leastsquares) that regression lines are "best-fitting" in that of all possible lines we can draw through a cloud of points, the regression line minimizes the *sum of squared residuals*\index{sum of squared residuals}. This concept also extends to models with two categorical explanatory variables. 
+
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Prepare a new plot with the same outcome variable $y$ `sqrt.area` but with the second explanatory variable $x_2$ `height` on the horizontal axis and the first explanatory variable $x_1$ on the color layers. How does this plot compare with the previous one?
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
+
+### Regression lines {#model3table}
+
+Let's now fit a regression model and get the regression table corresponding to the regression line in Figure \@ref(fig:2numxplot1c). As we have done throughout Chapter \@ref(regression) and this chapter, we use our two-step process to obtain the regression table for this model in Table \@ref(tab:model3-table-output).
+
+```{r, eval=FALSE}
+# Fit regression model:
+area_model1 <- lm(sqrt.area ~ herbivores * height, data = IntertidalAlgae)
+# Get regression table:
+get_regression_table(area_model1)
+```
+```{r model3-table-output, echo=FALSE, purl=FALSE}
+area_model1 <- lm(sqrt.area ~ herbivores * height, data = IntertidalAlgae)
+area_coverage <- get_regression_table(area_model1) %>%
+  pull(estimate)
+get_regression_table(area_model1) %>%
+  kable(
+    digits = 3,
+    caption = "Multiple regression table",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+1. We first "fit" the linear regression model using the `lm(y ~ x1 * x2, data)` function and save it in `area_model1`.
+1. We get the regression table by applying the `get_regression_table()` function from the `moderndive` package to `area_model1`.
+
+Let's interpret the three values in the `estimate` column. First, the `intercept` value is 32.9, and this will be our base value in comparison to other groups. This `intercept` represents the mean `sqrt.area` for a plot who has `herbivores` absent and `height` of low tide, and this corresponds to where the red line (`low`) intersects $x$ = `minus`.
+
+Second, the `herbivoresplus` value is -22.5. Taking into account all the other explanatory variables in our model, the addition of `herbivores`has an associated decrease on average of 22.5 in sqrt.area. <!--Just as we did in Subsection \@ref(model1table), we are cautious *not* to imply causality as we saw in Subsection \@ref(correlation-is-not-causation) that "correlation is not necessarily causation." We do this merely stating there was an *associated* increase. --> We preface our interpretation with the statement, "taking into account all the other explanatory variables in our model."  Here, by all other explanatory variables we mean `height` and the interaction between `height` and `herbivores`. We do this to emphasize that we are now jointly interpreting the associated effect of multiple explanatory variables in the same model at the same time. 
+
+Third, `heightmid` is -10.4 Taking into account all other explanatory variables in our model, plots with a `height`  of `mid` tide, have an associated sqrt.area decrease of, on average, 10.4 cm. And finally, `herbivoresplus:heightmid` is 25.6. Taking into account all other explanatory variables in our model, the addition of `herbivores` *and* a `height`  of `mid` tide, have an associated sqrt.area increase of, on average, 25.6 cm. 
+
+Putting these results together, the equation of the regression lines for the interaction model to give us fitted values $\widehat{y}$ = $\widehat{\text{sqrt.area}}$ is:
+
+$$
+\begin{aligned}
+\widehat{y} &= b_0 + b_1 \cdot x_1 +  b_2 \cdot x_2\\
+\widehat{\text{sqrt.area}} &= b_0 + b_{\text{herbivores}} \cdot \mathbb{1}_{\text{is plus}}(x) + b_{\text{height}} \cdot \mathbb{1}_{\text{is mid}}(x) \\
+&\text{ } + b_{\text{herbivores,height}} \cdot \mathbb{1}_{\text{is plus}}(x) \cdot \mathbb{1}_{\text{is mid}}(x)\\
+&= 32.9 - 22.5 \cdot\mathbb{1}_{\text{is plus}}(x) - 10.4 \cdot\mathbb{1}_{\text{is mid}}(x) \\
+&\text{ } + 25.6 \cdot \mathbb{1}_{\text{is plus}}(x) \cdot \mathbb{1}_{\text{is mid}}(x)
+\end{aligned}
+$$
+
+Yes, the equation is again quite daunting, but as we saw above, once you recall what an "indicator function" does, the equation simplifies greatly. In this equation, we now have two indicator functions of interest:
+
+$$
+\mathbb{1}_{\text{is plus}}(x) = \left\{
+\begin{array}{ll}
+1 & \text{if } \text{herbivores } x \text{ is plus} \\
+0 & \text{otherwise}\end{array}
+\right.
+\mathbb{1}_{\text{is mid}}(x) = \left\{
+\begin{array}{ll}
+1 & \text{if } \text{height } x \text{ is mid} \\
+0 & \text{otherwise}\end{array}
+\right.
+$$
+
+Okay, let's put this all together again and compute the fitted value $\widehat{y} = \widehat{\text{sqrt.area}}$ for red algae minus herbivores and at low level. In this case $\mathbb{1}_{\text{is plus}}(x)$ = 0 and $\mathbb{1}_{\text{is mid}}(x)$ = 0, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{\text{sqrt.area}} &= 32.9 - 22.5 \cdot 0 - 10.4 \cdot0  + 25.6 \cdot 0 \cdot 0 \\
+&= 32.9 + 0 + 0 + 0\\
+&= 32.9
+\end{aligned}
+$$
+which is the left end of the `r if_else(is_latex_output(), "darker-colored", "red")` regression line in Figure \@ref(fig:numxcatxplot1) corresponding to the `intercept` in Table \@ref(tab:interaction-summary). 
+
+Correspondingly, for red algae plus herbivores and at low level, since $\mathbb{1}_{\text{is plus}}(x)$ = 1 and $\mathbb{1}_{\text{is mid}}(x)$ = 0, the previous equation becomes
+
+$$
+\begin{aligned}
+\widehat{\text{sqrt.area}} &= 32.9 - 22.5 \cdot 1 - 10.4 \cdot0  + 25.6 \cdot 1 \cdot 0 \\
+&= 32.9 - 22.5 + 0 +0 \\
+&= 10.4
+\end{aligned}
+$$
+
+which is the right end of the `r if_else(is_latex_output(), "darker-colored", "red")` regression line in Figure \@ref(fig:numxcatxplot1). 
+
+Moving on, for red algae minus herbivores and at mid level, since $\mathbb{1}_{\text{is plus}}(x)$ = 0 and $\mathbb{1}_{\text{is mid}}(x)$ = 1, the equation becomes
+
+$$
+\begin{aligned}
+\widehat{\text{sqrt.area}} &= 32.9 - 22.5 \cdot 0 - 10.4 \cdot 1  + 25.6 \cdot 0 \cdot 1 \\
+&= 32.9 + 0 - 10.4 + 0\\
+&= 22.5
+\end{aligned}
+$$
+
+which is the left end of the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatxplot1). 
+
+And finally, for red algae plus herbivores and at mid level, since $\mathbb{1}_{\text{is plus}}(x)$ = 1 and $\mathbb{1}_{\text{is mid}}(x)$ = 1, the equation becomes
+
+$$
+\begin{aligned}
+\widehat{\text{sqrt.area}} &= 32.9 - 22.5 \cdot 1 - 10.4 \cdot 1  + 25.6 \cdot 1 \cdot 1 \\
+&= 32.9 - 22.5 - 10.4 + 25.6\\
+&= 25.6
+\end{aligned}
+$$
+
+which is the right end of the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatxplot1). 
+
+That was a lot of arithmetic, but you made it! If you're still a little unsure about using indicator functions and categorical explanatory variables in a regression model, you should re-read Subsection \@ref(model2table). 
+
+Recall however in the right-hand plot of Figure \@ref(fig:2numxplot1b) that when plotting the relationship between `sqrt.area` and `height` in isolation, there appeared to be a *positive* relationship. In the last discussed multiple regression, however, when *jointly* modeling the relationship between `sqrt.area`, `herbivores`, and `height`, there appears to be a *negative* relationship of `sqrt.area` and `height` as evidenced by the negative offset for `height` of -10.4.  What explains these contradictory results? A phenomenon known as *Simpson's Paradox*\index{Simpson's Paradox}, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. In Subsection \@ref(simpsonsparadox) we elaborate on this idea by looking at another example.
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Fit a new simple linear regression for a *non-interaction* model using `lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)`. Get information about the "best-fitting" regression lines from the regression table by applying the `get_regression_table()` function. How do the regression results compare to those for the interaction model above? 
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
+### Observed/fitted values and residuals {#model3points}
+
+Let's compute all fitted values and residuals for our interaction model using the `get_regression_points()` function and present only the first two rows of output for each combination of explanatory variables in Table \@ref(tab:model3-points-table). Remember that the coordinates of each of the `r if_else(is_latex_output(), "", "blue")` points <!--in our 3D scatterplot--> in Figure \@ref(fig:2numxplot1c) can be found in the `height`, `herbivores`, and `sqrt.area` columns. The fitted values on the regression lines are found in the `sqrt.area_hat` column and are computed using our equation <!--for the regression plane--> in the previous section:
+
+$$
+\begin{aligned}
+\widehat{y} = \widehat{\text{sqrt.area}} &= 32.9 - 22.5 \cdot\mathbb{1}_{\text{is plus}}(x) - 10.4 \cdot\mathbb{1}_{\text{is mid}}(x) \\
+&\text{ } + 25.6 \cdot \mathbb{1}_{\text{is plus}}(x) \cdot \mathbb{1}_{\text{is mid}}(x)
+\end{aligned}
+$$
+
+```{r, eval=FALSE}
+get_regression_points(area_model1) %>% 
+  group_by(herbivores, height) %>% slice_head(n=2) 
+```
+```{r model3-points-table, echo=FALSE, purl=FALSE}
+set.seed(76)
+regression_points <- get_regression_points(area_model1)
+regression_points %>% 
+    group_by(herbivores, height) %>% slice_head(n=2) %>%
+  kable(
+    digits = 3,
+    caption = "Regression points (First 10 credit card holders out of 400)",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+###Which model, without or with interaction, fits the data better?
+
+Here we compare the mean of the observed $y$ values (Obs) of each of the four groups with their mean fitted $\widehat{y}$ values for the interaction (Int)  and non-interaction (Non) models:
+
+```{r, eval=FALSE}
+area_model2 <- lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)
+means_Obs <- IntertidalAlgae %>% group_by(herbivores, height) %>% summarise(mean_Obs=mean(sqrt.area))
+means_Int <- get_regression_points(area_model1) %>% 
+  group_by(herbivores, height) %>% 
+  summarise(mean_hat_Int = mean(sqrt.area_hat)) 
+means_Non <- get_regression_points(area_model2) %>% 
+  group_by(herbivores, height) %>% 
+  summarise(mean_hat_Non = mean(sqrt.area_hat)) 
+means_table <- means_Obs %>% inner_join(means_Int) %>% inner_join(means_Non)
+means_table
+```
+```{r model3-means-table, echo=FALSE, purl=FALSE}
+area_model2 <- lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)
+means_Obs <- IntertidalAlgae %>% group_by(herbivores, height) %>% summarise(mean_Obs=mean(sqrt.area))
+means_Int <- get_regression_points(area_model1) %>% 
+  group_by(herbivores, height) %>% summarise(mean_hat_Int = mean(sqrt.area_hat)) 
+means_Non <- get_regression_points(area_model2) %>% 
+  group_by(herbivores, height) %>% summarise(mean_hat_Non = mean(sqrt.area_hat)) 
+means_table <- means_Obs %>% inner_join(means_Int) %>% inner_join(means_Non)
+means_table  %>%
+  kable(
+    digits = 3,
+    caption = "Regression points (First 10 credit card holders out of 400)",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+It's clear from this table that the predicted (fitted) means for the interaction model (mean_hat_Int) are much closer to the observed mean (mean_Obs) than for the non-interaction model (mean_hat_Non). This is even more apparent when we overlay our scatterplot with the observed and predicted (fitted) means for each model, along with colored crossbars to mark the observed mean values (mean_Obs) for each of the four groups:
+
+```{r 2numxplot1d, echo=FALSE, fig.cap="Comparison of interaction and parallel slopes model for red algae coverage.", fig.height=3.2, purl=FALSE, message=FALSE}
+IntPlot <- IntertidalAlgae %>% 
+  ggplot(aes(x = herbivores, y = sqrt.area, 
+             color = height, group = height)) +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered (cm)", 
+       title = "Interaction model") +
+  geom_crossbar(data = means_table,
+              aes(x = herbivores, y = mean_Obs, 
+                  ymin = mean_Obs, ymax = mean_Obs, color=height),
+              show.legend = FALSE, width = 0.5) + 
+  geom_line(data = means_table, aes(x = herbivores, y = mean_hat_Int))
+NonPlot <- IntertidalAlgae %>% 
+  ggplot(aes(x = herbivores, y = sqrt.area, 
+             color = height, group = height)) +
+  geom_jitter(width = 0.1) +
+  labs(x = "Herbivore treatment", y = "Square root of area covered (cm)", 
+       title = "Non-interaction model") +
+  geom_crossbar(data = means_table,
+              aes(x = herbivores, y = mean_Obs, 
+                  ymin = mean_Obs, ymax = mean_Obs, color=height),
+              show.legend = FALSE, width = 0.5) + 
+  geom_line(data = means_table, aes(x = herbivores, y = mean_hat_Non))
+IntPlot + NonPlot
+```
+
+
+
+
+## Related topics {#mult-reg-related-topics}
+
+### Model selection using visualizations {#model-selection}
+
+When should we use an interaction model versus a parallel slopes (non-interaction) model? Recall in Sections \@ref(model4interactiontable) and \@ref(model4table) we fit both interaction and parallel slopes models for the outcome variable $y$ (tooth length) using a numerical explanatory variable $x_1$ (dose) and a categorical explanatory variable $x_2$ (supplement type). We compared these models in Figure \@ref(fig:numxcatx-comparison), which we display again now. 
+
+```{r recall-parallel-vs-interaction, fig.height=3.5, echo=FALSE, fig.cap="Previously seen comparison of interaction and parallel slopes models.", purl=FALSE, message=FALSE}
+if (is_html_output()) {
+  interaction_plot + (parallel_slopes_plot + labs(color = "Supplement"))
+} else {
+  grey_interaction_plot <- interaction_plot +
+    scale_color_grey()
+  grey_parallel_slopes_plot <- parallel_slopes_plot +
+    scale_color_grey()
+  grey_interaction_plot + grey_parallel_slopes_plot
+}
+```
+
+A lot of you might have asked yourselves: "Why would I force the lines to have parallel slopes (as seen in the right-hand plot) when they clearly have different slopes (as seen in the left-hand plot)?".
+
+The answer lies in a philosophical principle known as "Occam's Razor." It states that, "all other things being equal, simpler solutions are more likely to be correct than complex ones." When viewed in a modeling framework, Occam's Razor \index{Occam's Razor} can be restated as, "all other things being equal, simpler models are to be preferred over complex ones." In other words, we should only favor the more complex model if the additional complexity is *warranted*. 
+
+Let's revisit the equations for the regression line for both the interaction and parallel slopes model:
+
+$$
+\begin{aligned}
+\text{Interaction} &: \widehat{y} = \widehat{\text{len}} = b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x) + \\
+& \qquad b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}\\
+\text{Parallel slopes} &: \widehat{y} = \widehat{\text{len}} = b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)
+\end{aligned}
+$$
+
+The interaction model is "more complex" in that there is an additional $b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}$ interaction term in the equation not present for the parallel slopes model. Or viewed alternatively, the regression table for the interaction model in Table \@ref(tab:regtable-interaction) has *four* rows, whereas the regression table for the parallel slopes model in Table \@ref(tab:regtable-parallel-slopes) has *three* rows. The question becomes: "Is this additional complexity warranted?". In this case, it can be argued that this additional complexity is warranted, as evidenced by the two converging regression lines in the left-hand plot of Figure \@ref(fig:recall-parallel-vs-interaction).
+
+
+However, let's consider an example where the additional complexity might *not* be warranted. Let's consider the `MoleRats` data included in the `moderndive` package which contains data on energy expenditure in two castes of  mole rats. For more details, read the help file for this data by running `?MoleRats` in the console.
+
+Let's model the numerical outcome variable $y$, `ln.energy`, log-transformed energy expenditure for a given mole rat, as a function of two explanatory variables:
+
+1. A numerical explanatory variable $x_1$, `ln.mass`, the log-transformed mass of the mole rat and
+1. A categorical explanatory variable $x_2$, the `caste` of the rat, either `lazy` or `worker`.
+
+Let's create visualizations of both the interaction and parallel slopes model once again and display the output in Figure \@ref(fig:numxcatx-comparison-2). Recall from Subsection \@ref(model4table) that the `geom_parallel_slopes()` function is a special purpose function included in the `moderndive` package, since the `geom_smooth()` method in the `ggplot2` package does not have a convenient way to plot parallel slopes models.
+
+```{r, eval=FALSE}
+# Interaction model
+ggplot(MoleRats, 
+       aes(x = ln.mass, y = ln.energy, color = caste)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Log body mass", y = "Log energy expenditure", 
+       color = "Caste", 
+       title = "Interaction model")
+```
+
+```{r, eval=FALSE}
+# Parallel slopes model
+ggplot(MoleRats, 
+       aes(x = ln.mass, y = ln.energy, color = caste)) +
+  geom_point(alpha = 0.5) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(x = "Log body mass", y = "Log energy expenditure", 
+       color = "Caste", 
+       title = "Parallel slopes model")
+```
+```{r numxcatx-comparison-2, fig.height=3.4, echo=FALSE, fig.cap="Comparison of interaction and parallel slopes models for mole rats datasets.", purl=FALSE, message=FALSE}
+p1 <- ggplot(MoleRats, 
+       aes(x = ln.mass, y = ln.energy, color = caste)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Log body mass", y = "Log energy expenditure", 
+       color = "Caste", 
+       title = "Interaction model") +
+  theme(legend.position = "none")
+p2 <- ggplot(MoleRats, 
+       aes(x = ln.mass, y = ln.energy, color = caste)) +
+  geom_point(alpha = 0.5) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(x = "Log body mass", y = "Log energy expenditure", 
+       color = "Caste", 
+       title = "Parallel slopes model") +
+  theme(axis.title.y = element_blank())
+
+if (is_html_output()) {
+  p1 + p2
+} else {
+  (p1 + scale_color_grey()) + (p2 + scale_color_grey())
+}
+```
+
+Look closely at the left-hand plot of Figure \@ref(fig:numxcatx-comparison-2) corresponding to an interaction model. While the slopes are indeed different, they do not differ *by much* and are nearly identical. Now compare the left-hand plot with the right-hand plot corresponding to a parallel slopes model. The two models don't appear all that different. So in this case, it can be argued that the additional complexity of the interaction model is *not warranted*. Thus following Occam's Razor, we should prefer the "simpler" parallel slopes model. Let's explicitly define what "simpler" means in this case. Let's compare the regression tables for the interaction and parallel slopes models in Tables \@ref(tab:model2-interaction) and \@ref(tab:model2-parallel-slopes). 
+
+```{r, eval=FALSE}
+model_2_interaction <- lm(ln.energy ~ ln.mass * caste, 
+                          data = MoleRats)
+get_regression_table(model_2_interaction)
+```
+```{r model2-interaction, echo=FALSE, purl=FALSE}
+model_2_interaction <- lm(ln.energy ~ ln.mass * caste,
+  data = MoleRats
+)
+get_regression_table(model_2_interaction) %>%
+  kable(
+    digits = 3,
+    caption = "Interaction model regression table",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+```{r, eval=FALSE}
+model_2_parallel_slopes <- lm(ln.energy ~ ln.mass + caste, 
+                              data = MoleRats)
+get_regression_table(model_2_parallel_slopes)
+```
+```{r model2-parallel-slopes, echo=FALSE, purl=FALSE}
+model_2_parallel_slopes <- lm(ln.energy ~ ln.mass + caste,
+  data = MoleRats
+)
+get_regression_table(model_2_parallel_slopes) %>%
+  kable(
+    digits = 3,
+    caption = "Parallel slopes regression table",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+Observe how the regression table for the interaction model has 1 more rows (4 versus 3). This reflects the additional "complexity" of the interaction model over the parallel slopes model. 
+
+Furthermore, note in Table \@ref(tab:model2-interaction) how the *offsets for the slope* `ln.mass::casteworker` being 0.419 is small relative to the *slope for the baseline group* of lazy caste of $1.294$. In other words, both slopes are similarly positive: $1.294$ for the lazy caste and $1.713$ $(=1.294 + 0.419)$ for the worker caste. These results are suggesting that irrespective of caste, the relationship between mass and energy expenditure is similar and, alas, quite positive.
+
+What you have just performed is a rudimentary *model selection*\index{model selection}: choosing which model fits data best among a set of candidate models. The model selection we performed used the "eyeball test": qualitatively looking at visualizations to choose a model. In the next subsection, you'll once again perform the same model selection, but this time using a numerical approach via the $R^2$ (pronounced "R-squared") value. 
+
+
+### Model selection using R-squared {#rsquared}
+
+At the end of the previous section in Figure \@ref(fig:numxcatx-comparison-2) you compared an interaction model with a parallel slopes model, where both models attempted to explain $y$ = the average energy expenditure of mole rats. In Tables \@ref(tab:model2-interaction) and \@ref(tab:model2-parallel-slopes), we observed that the interaction model was "more complex" in that the regression table had 4 rows versus the 3 rows of the parallel slopes model. 
+
+Most importantly however, when comparing the left and right-hand plots of Figure \@ref(fig:numxcatx-comparison-2), we observed that the two lines corresponding to lazy and worker mole rats were not that different. Given this similarity, we stated it could be argued that the "simpler" parallel slopes model should be favored. 
+
+In this section, we'll mimic the model selection we just performed using the qualitative "eyeball test", but this time using a numerical and quantitative approach. Specifically, we'll use the $R^2$ summary statistic (pronounced "R-squared"), also called the "coefficient of determination". But first, we must introduce one new concept: the *variance* of a numerical variable. 
+
+We've previously studied two summary statistics of the *spread* (or *variation*) of a numerical variable: the standard deviation when studying the normal distribution in \@ref(appendix-normal-curve) and the interquartile range (IQR) when studying boxplots in Section \@ref(geomboxplot). We now introduce a third summary statistic of spread: the *variance*. The variance is merely the standard deviation squared and it can be computed in R using the `var()` summary function within `summarize()`. If you would like to see the formula, see \@ref(appendix-sd-variance). 
+
+Recall that to get: 1) the observed values $y$, 2) the fitted values $\widehat{y}$ from a regression model, and 3) the resulting residuals $y - \widehat{y}$, we can apply the `get_regression_points()` function our saved model, in this case `model_2_interaction`:
+
+```{r}
+get_regression_points(model_2_interaction) 
+```
+
+Let's now use the `var()` summary function within a `summarize()` to compute the variance of these three terms:
+
+```{r}
+get_regression_points(model_2_interaction) %>% 
+  summarize(var_y = var(ln.energy), 
+                      var_y_hat = var(ln.energy_hat), 
+                      var_residual = var(residual))
+```
+
+Observe that the variance of $y$ is equal to the variance of $\widehat{y}$ plus the variance of the residuals. But what do these three terms tell us individually?
+
+First, the variance of $y$ (denoted as $var(y)$) tells us how much do mole rats differ in energy expenditure. The goal of regression modeling is to fit a model that hopefully *explains* this variation. In other words, we want to understand what factors explain why certain mole rats have high energy expenditures, while others have low expenditures. The variance of $y$ is independent of the model; this is just data. In other words, whether we fit an interaction or parallel slopes model, $var(y)$ remains the same. 
+
+Second, the variance of $\widehat{y}$ (denoted as $var(\widehat{y})$) tells us how much the fitted values from our interaction model vary. That is to say, after accounting for (1) the log mass and (2) caste of a mole rat in an interaction model, how much do our model's explanations of log energy expenditure vary?
+
+Third, the variance of the residuals tells us how much do "the left-overs" from the model vary. Observe how the points in the left-hand plot of Figure \@ref(fig:numxcatx-comparison-2) scatter around the two lines. Say instead all the points fell *exactly* on their corresponding line. Then all residuals would be zero and hence the variance of the residuals would be zero. 
+
+We're now ready to introduce $R^2$:
+
+$$
+R^2 = \frac{var(\widehat{y})}{var(y)}
+$$
+
+It is *the proportion of the spread/variation of the outcome variable $y$ that is explained by our model*, where our model's explanatory power is embedded in the fitted values $\widehat{y}$. Furthermore, since it can be mathematically proven that $0 \leq var(\widehat{y}) \leq var(y)$ (a fact we leave for an advanced class on regression), we are guaranteed that:
+
+$$
+0 \leq R^2 \leq 1
+$$
+
+$R^2$ can be interpreted as follows:
+
+1. $R^2$ values of 0 tell us that our model explains 0% of the variation in $y$. Say we fit a model to the mole rats data and obtained $R^2 = 0$. This would be telling us that the combination of explanatory variables $x$ we used and model form we chose (interaction or parallel slopes) tell us *nothing* about energy expenditure of a mole rat. The model is a poor fit.
+1. $R^2$ values of 1 tell us that our model explains 100% of the variation in $y$. Say we fit a model to the mole rats data and obtained $R^2 = 1$. This would be telling us that the combination of explanatory variables $x$ we used and model form we chose (interaction or parallel slopes) tell us *everything we need to know* about energy expenditure of a mole rat. 
+
+In practice however, $R^2$ values of 1 almost never occur. Think about it in the context of mole rats. There are an infinite number of factors that influence why certain mole rats expend much energy while others don't. The idea that a human-designed statistical model can capture all the heterogeneity of all mole rats is bordering on hubris. However, even if such models are not perfect, they may still prove useful in predicting energy expenditure. A general principle of modeling we should keep in mind is a famous quote by eminent statistician George Box: ["All models are wrong, but some are useful."](https://jamesclear.com/all-models-are-wrong)
+
+Let's repeat the above calculations for the parallel slopes model and compare them in Table \@ref(tab:model2-r-squared).
+
+```{r model2-r-squared, echo=FALSE}
+variances_interaction <- get_regression_points(model_2_interaction) %>% 
+  summarize(var_y = var(ln.energy), 
+                      var_y_hat = var(ln.energy_hat), 
+                      var_residual = var(residual)) %>% 
+  mutate(model = "Interaction", r_squared = var_y_hat/var_y)
+variances_parallel_slopes <- get_regression_points(model_2_parallel_slopes) %>% 
+  summarize(var_y = var(ln.energy), 
+                      var_y_hat = var(ln.energy_hat), 
+                      var_residual = var(residual)) %>% 
+  mutate(model = "Parallel slopes", r_squared = var_y_hat/var_y)
+
+bind_rows(
+  variances_interaction,
+  variances_parallel_slopes
+) %>% 
+  select(model, var_y, var_y_hat, var_residual, r_squared) %>% 
+  knitr::kable(
+    digits = 3,
+    caption = "Comparing variances from interaction and parallel slopes models for mole rats data", 
+    booktabs = TRUE,
+    linesep = ""
+  ) %>% 
+  kable_styling(font_size = ifelse(knitr:::is_latex_output(), 10, 16),
+                latex_options = c("hold_position"))
+```
+
+Observe how the $R^2$ values are near identical at around `r variances_parallel_slopes %>% pull(r_squared)` = `r variances_parallel_slopes %>% pull(r_squared) %>% "*"(100) %>% round(1)`%. In other words, the *additional complexity* of the interaction model only improves our $R^2$ value by a near zero amount. Thus, we are inclined to favor the "simpler" parallel slopes model.
+
+Now let's repeat this $R^2$ comparison between interaction and parallel slopes model for our models of $y$ = coverage area of red algae which you visually compared in Figure \@ref(fig:2numxplot1d). We compare these values in Table \@ref(tab:model1-r-squared)
+
+```{r model1-r-squared, echo=FALSE}
+variances_interaction <- get_regression_points(area_model1) %>% 
+  summarize(var_y = var(sqrt.area), var_y_hat = var(sqrt.area_hat), var_residual = var(residual)) %>% 
+  mutate(model = "Interaction", r_squared = var_y_hat/var_y)
+variances_parallel_slopes <- get_regression_points(area_model2) %>% 
+  summarize(var_y = var(sqrt.area), var_y_hat = var(sqrt.area_hat), var_residual = var(residual)) %>% 
+  mutate(model = "Parallel slopes", r_squared = var_y_hat/var_y)
+
+bind_rows(
+  variances_interaction,
+  variances_parallel_slopes
+) %>% 
+  select(model, var_y, var_y_hat, var_residual, r_squared) %>% 
+  knitr::kable(
+    digits = 3,
+    caption = "Comparing variances from interaction and parallel slopes models for tooth growth data", 
+    booktabs = TRUE,
+    linesep = ""
+  ) %>% 
+  kable_styling(font_size = ifelse(knitr:::is_latex_output(), 10, 16),
+                latex_options = c("hold_position"))
+```
+
+Observe how the $R^2$ values are now very different! In other words, since the *additional complexity* of the interaction model over the parallel slopes model improves our $R^2$ value by a relatively large amount (`r variances_interaction$r_squared` versus `r variances_parallel_slopes$r_squared`, which is an increase of about `r round(100*((variances_interaction$r_squared)/(variances_parallel_slopes$r_squared)-1), 1)`%), it could be argued that the additional complexity is warranted. 
+
+As a final note, we can also use the third of our `get_regression()` wrapper functions, `get_regression_summaries()`, to quickly automate calculating $R^2$ for both the interaction and parallels slopes models, first for the `MoleRats` data.
+
+```{r}
+# R-squared for interaction model:
+get_regression_summaries(model_2_interaction)
+# R-squared for parallel slopes model:
+get_regression_summaries(model_2_parallel_slopes)
+```
+
+In addition to the $R^2$ value for a model, this wrapper function also returns an adjusted-$R^2$ value, which accounts for the additional feature contained in the interaction model. While $R^2$ will always increase as we add additional variables to our model, the adjusted-$R^2$ will only increase if the more complex model is better. You'll notice that the adjusted-$R^2$ of the interaction and the parallel slopes models for the `MoleRats` data is identical at 0.372. This indicates that the additional complexity of the model that accounts for an interaction between the two explanatory variables is not any better than the simpler parallel-slopes model.
+
+In contrast when we compare the interaction and parallel slopes models for the `IntertidalAlgae` data, we see marked increase in the adjusted-$R^2$ values with the interaction model:
+
+```{r echo=FALSE, purl=FALSE}
+# R-squared for interaction model:
+get_regression_summaries(area_model1)
+# R-squared for parallel slopes model:
+get_regression_summaries(area_model2)
+```
+
+
+
+<!--Remove this section
+### Simpson's Paradox {#simpsonsparadox}
+
+Recall in Section \@ref(model3), we saw the two seemingly contradictory results when studying the relationship between `sqrt.area` and `height`. On the one hand, the right hand plot of Figure \@ref(fig:2numxplot1) suggested that the relationship between `sqrt.area` and `height` was *positive*. We re-display this in Figure \@ref(fig:2numxplot1-repeat).
+
+```{r 2numxplot1-repeat, echo=FALSE, fig.cap="Relationship between credit card sqrt.area and height.", fig.height=1.8, message=FALSE, purl=FALSE}
+model3_height_area_plot
+```
+
+On the other hand, the multiple regression results in Table \@ref(tab:model3-table-output) suggested that the relationship between `sqrt.area` and `height` was *negative*. We re-display this information in Table \@ref(tab:model3-table-output-repeat).
+
+```{r model3-table-output-repeat, echo=FALSE, purl=FALSE}
+area_model1 <- lm(sqrt.area ~ herbivores * height, data = IntertidalAlgae)
+area_coverage <- get_regression_table(area_model1) %>%
+  pull(estimate)
+get_regression_table(area_model1) %>%
+  kable(
+    digits = 3,
+    caption = "Multiple regression table",
+    booktabs = TRUE,
+    linesep = ""
+  ) %>%
+  kable_styling(
+    font_size = ifelse(is_latex_output(), 10, 16),
+    latex_options = c("hold_position")
+  )
+```
+
+Observe how the offset for `heightmid` is $-10.431$ and, most importantly for now, it is negative. This contradicts our observation in Figure \@ref(fig:2numxplot1-repeat) that the relationship is positive. How can this be? Recall the interpretation of the offset for `heightmid` in the context of a multiple regression model: *taking into account all the other explanatory variables in our model*, for every increase of one unit in `height`, there is an associated decrease of on average \$10.431 in `sqrt.area`.
+
+In other words, while in *isolation*, the relationship between `sqrt.area` and `height` may be positive, when taking into account `area_coverage` as well, this relationship becomes negative. These seemingly paradoxical results are due to a phenomenon aptly named [*Simpson's Paradox*](https://en.wikipedia.org/wiki/Simpson%27s_paradox)\index{Simpson's Paradox}. Simpson's Paradox occurs when trends that exist for the data in aggregate either disappear or reverse when the data are broken down into groups. 
+
+Let's show how Simpson's Paradox manifests itself in the `IntertidalAlgae` data. Let's first visualize the distribution of the numerical explanatory variable `area_coverage` with a histogram in Figure \@ref(fig:credit-limit-quartiles).
+
+```{r credit-limit-quartiles, fig.height=2.5, fig.cap="Histogram of credit limits and brackets.", eval=FALSE, message=FALSE, echo=FALSE, purl=FALSE}
+ggplot(IntertidalAlgae, aes(x = height)) +
+  geom_histogram(color = "white") +
+  geom_vline(xintercept = quantile(IntertidalAlgae$area_coverage, probs = c(0.25, 0.5, 0.75)), linetype = "dashed", size = 1) +
+  labs(x = "Intertidal limit", title = "Intertidal limit and 4 credit limit brackets.")
+```
+
+The vertical dashed lines are the *quartiles* that cut up the variable `area_coverage` into four equally sized groups. Let's think of these quartiles as converting our numerical variable `area_coverage` into a categorical variable "`area_coverage` bracket" with four levels. This means that
+
+1. 25% of credit limits were between \$0 and \$3088. Let's assign these 100 people to the "low" `area_coverage` bracket.
+1. 25% of credit limits were between \$3088 and \$4622. Let's assign these 100 people to the "medium-low" `area_coverage` bracket.
+1. 25% of credit limits were between \$4622 and \$5873. Let's assign these 100 people to the "medium-high" `area_coverage` bracket.
+1. 25% of credit limits were over \$5873. Let's assign these 100 people to the "high" `area_coverage` bracket.
+
+Now in Figure \@ref(fig:2numxplot4) let's re-display two versions of the scatterplot of `sqrt.area` and `height` from Figure \@ref(fig:2numxplot1-repeat), but with a slight twist:
+
+1. The left-hand plot shows the regular scatterplot and the single regression line, just as you saw in Figure \@ref(fig:2numxplot1-repeat).
+1. The right-hand plot shows the *colored scatterplot*, where the color aesthetic is mapped to "`area_coverage` bracket." Furthermore, there are now four separate regression lines.
+
+In other words, the location of the `r n_IntertidalAlgae` points are the same in both scatterplots, but the right-hand plot shows an additional variable of information: `area_coverage` bracket. 
+
+```{r 2numxplot4, echo=FALSE, fig.cap="Relationship between credit card sqrt.area and height by credit limit bracket.", fig.height=3, eval=FALSE, purl=FALSE, message=FALSE}
+IntertidalAlgae <- IntertidalAlgae %>%
+  mutate(limit_bracket = cut_number(area_coverage, 4)) %>%
+  mutate(limit_bracket = fct_recode(limit_bracket,
+    "low" =  "[855,3.09e+03]",
+    "med-low" = "(3.09e+03,4.62e+03]",
+    "med-high" = "(4.62e+03,5.87e+03]",
+    "high" = "(5.87e+03,1.39e+04]"
+  ))
+
+model3_height_area_plot <- ggplot(IntertidalAlgae, aes(x = height, y = sqrt.area)) +
+  geom_point() +
+  labs(
+    x = "Income (in $1000)", y = "Intertidal card sqrt.area (in $)",
+    title = "Two scatterplots of credit card sqrt.area vs height"
+  ) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(0, NA))
+
+model3_balance_vs_income_plot_colored <- ggplot(
+  IntertidalAlgae,
+  aes(
+    x = height, y = sqrt.area,
+    col = limit_bracket
+  )
+) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Income (in $1000)", y = "Intertidal card sqrt.area (in $)",
+    color = "Intertidal limit\nbracket"
+  ) +
+  scale_y_continuous(limits = c(0, NA)) +
+  theme(axis.title.y = element_blank())
+
+if (is_html_output()) {
+  model3_height_area_plot + model3_balance_vs_income_plot_colored
+} else {
+  (model3_height_area_plot + scale_color_grey()) +
+    (model3_balance_vs_income_plot_colored + scale_color_grey())
+}
+```
+
+The left-hand plot of Figure \@ref(fig:2numxplot4) focuses on the relationship between `sqrt.area` and `height` in *aggregate*. It is suggesting that overall there exists a positive relationship between `sqrt.area` and `height`. However, the right-hand plot of Figure \@ref(fig:2numxplot4) focuses on the relationship between `sqrt.area` and `height` *broken down by `area_coverage` bracket*. In other words, we focus on four *separate* relationships between `sqrt.area` and `height`: one for the "low" `area_coverage` bracket, one for the "medium-low" `area_coverage` bracket, and so on. 
+
+Observe in the right-hand plot that the relationship between `sqrt.area` and `height` is clearly negative for the "medium-low" and "medium-high" `area_coverage` brackets, while the relationship is somewhat flat for the "low" `area_coverage` bracket. The only `area_coverage` bracket where the relationship remains positive is for the "high" `area_coverage` bracket. However, this relationship is less positive than in the relationship in aggregate, since the slope is shallower than the slope of the regression line in the left-hand plot. 
+
+In this example of Simpson's Paradox, the `area_coverage` is a *confounding variable* of the relationship between credit card `sqrt.area` and `height`\index{confounding variable} as we defined in Subsection \@ref(correlation-is-not-causation). Thus, `area_coverage` needs to be accounted for in any appropriate model for the relationship between `sqrt.area` and `height`.
+
+-->
+
+
+
+## Conclusion {#mult-reg-conclusion}
+<!--
+### Additional resources
+
+```{r echo=FALSE, results="asis", purl=FALSE}
+if (is_latex_output()) {
+  cat("Solutions to all *Learning checks* can be found online in [Appendix D](https://moderndive.com/D-appendixD.html).")
+}
+```
+
+```{r echo=FALSE, purl=FALSE, results="asis"}
+generate_r_file_link("06-multiple-regression.R")
+```
+-->
+
+### What's to come?
+
+You've now concluded the last major part of the book on "Data Modeling with `moderndive`." The closing Chapter \@ref(thinking-with-data) concludes this book with a review and short case studies involving real data. You'll see how the principles in this book can help you become a great storyteller with data!

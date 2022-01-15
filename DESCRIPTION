@@ -1,0 +1,23 @@
+Package: placeholder
+Title: This file exists merely to get travis-ci to work for R-based repos
+Version: 0.0.1
+Imports: 
+  bookdown,
+  nycflights13, 
+  ggplot2movies, 
+  fivethirtyeight, 
+  gapminder,
+  ggplot2, 
+  tibble, 
+  tidyr (>= 1.0.0),
+  dplyr, 
+  readr, 
+  dygraphs, 
+  rmarkdown, 
+  knitr, 
+  devtools, 
+  webshot, 
+  mvtnorm,
+  stringr,
+  broom
+Remotes: rstudio/bookdown

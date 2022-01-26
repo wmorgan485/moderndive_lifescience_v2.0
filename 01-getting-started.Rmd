@@ -306,12 +306,12 @@ As you will see, there are many ways to access datasets in R. We'll start with `
 We'll begin by previewing the `fishbase` data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the `fishbase` data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary. 
 
 ```{r eval=FALSE}
-fishbase
+fishbase <- load_taxa()
 ```
 
 ```{r echo=FALSE, purl=FALSE}
 # This redundant code is used for dynamic non-static in-line text output purposes
-fishbase %>% as_tibble()
+fishbase <- load_taxa()
 library(scales)
 fishbase_rows <- fishbase %>%
   nrow() %>%

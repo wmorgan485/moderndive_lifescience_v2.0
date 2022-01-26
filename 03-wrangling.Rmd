@@ -38,7 +38,7 @@ So far in our journey, we've seen how to look at data saved in data frames using
 
 We created these visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of one of the 5 `geom`etric objects. We can also control other aesthetic attributes of the geometric objects such as the size and color as seen in the Gapminder data example in Figure \@ref(fig:gapminder). 
 
-Recall however that for two of our visualizations, we first needed to transform/modify existing data frames a little. For example, recall the scatterplot in Figure \@ref(fig:noalpha) of length and weight measurements *only* for brackish fish species. In order to create this visualization, we first needed to pare down the `all_fishdata` data frame to a `brackish_fish` data frame consisting of only `Brack == "1"` fish species Thus, `brackish_fish` will have fewer rows than `all_fishdata`. We did this using the `filter()` function:
+Recall however that for two of our visualizations, we first needed to transform/modify existing data frames a little. For example, recall the scatterplot in Figure \@ref(fig:noalpha) of length and weight measurements *only* for brackish fish species. In order to create this visualization, we first needed to pare down the `all_fishdata` data frame to a `brackish_fish` data frame consisting of only `Brack == "1"` fish species. Thus, `brackish_fish` will have fewer rows than `all_fishdata`. We did this using the `filter()` function:
 
 ```{r, eval=FALSE}
 brackish_fish <- all_fishdata %>% 
@@ -121,6 +121,7 @@ So while both approaches achieve the same goal, the latter is much more human-re
 1. The result will be the transformed/modified data frame that you want. In our example, we'll save the result in a new data frame by using the `<-` assignment operator with the name `brackish_fish` via `brackish_fish <-`.
 
 ```{r, eval=FALSE}
+all_fishdata <- species()
 brackish_fish <- all_fishdata %>% 
   filter(Brack == "1")
 ```

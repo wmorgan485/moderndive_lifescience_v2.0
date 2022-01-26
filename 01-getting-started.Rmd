@@ -299,8 +299,8 @@ Daniel Pauly hypothesized that the growth rate of fish was affected by the gill 
 
 Fishbase contains dozens of data tables, with information about individual fish species, including morphological characteristics, food items consumed, population size and age structure, swimming speed, and much, much more. Information about a single species can be readily accessed from the FishBase web site at <https://fishbase.org>, but this interface becomes limiting for large scale data analysis. The `rfishbase` \index{R packages!rfishbase} R package that we will be using contains many functions for accessing the online data tables available at [fishbase.org](https://fishbase.org).
 
-### `fishbase` data frame {#fishbasedataframe}
-
+### `fishbase` data frames {#fishbasedataframe}
+<!--
 As you will see, there are many ways to access datasets in R. We'll start with `fishbase`, a dataset built into the `rfishbase` \index{R packages!rfishbase} R package that contains species information about all of the fish data available online at <https://fishbase.org>.
 
 We'll begin by previewing the `fishbase` data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the `fishbase` data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary. 
@@ -327,17 +327,41 @@ Let's unpack this output:
 * `SpecCode`, `Genus`, `Species`, `SpeciesRefNo`, etc. are the different columns, in other words, the different variables of this dataset.
 * We then have a preview of the first 10 rows of observations corresponding to the first 10 species. R is only showing the first 10 rows, because if it showed all `` `r fishbase_rows` `` rows, it would overwhelm your screen.
 * ``... with `r (fishbase %>% nrow() - 10) %>% comma()` more rows, and `r fishbase_cols - 11` more variables:`` indicating to us that `r (fishbase %>% nrow() - 10) %>% comma()` more rows of data and `r fishbase_cols - 11` more variables could not fit in this screen.
+-->
 
-In addition to datasets built into packages, we can also import data from external sources using functions. For example, the `species()` function of the `rfishbase` \index{R packages!rfishbase} package is used to access an online data table at FishBase.org. Run the following two lines of code by typing or copying-and-pasting in your console.
+As you will see, there are many ways to access datasets in R. As we'll see some datasets are built into packages, but more typically we will import data from external sources using functions. For example, the `species()` function of the `rfishbase` \index{R packages!rfishbase} package is used to access an online data table at FishBase.org. Run the following two lines of code by typing or copying-and-pasting in your console.
 
-```{r}
+```{r eval=FALSE}
 all_fishdata <- species()
 all_fishdata
 ```
 
+```{r echo=FALSE, purl=FALSE}
+# This redundant code is used for dynamic non-static in-line text output purposes
+all_fishdata <- species()
+all_fishdata
+library(scales)
+allfish_rows <- all_fishdata %>%
+  nrow() %>%
+  comma()
+allfish_cols <- all_fishdata %>% ncol()
+```
+
 The first line of code `all_fishdata <- species()` runs the `species()` function to retrieve data from the FishBase Species table. The left arrow `<-` tells R to save the data by *assigning* (or putting) it into a data frame named `all_fishdata`. 
 
-Typing the name of the data frame `all_fishdata` in the second line of code, then displays the data. Unfortunately, this output does not allow us to explore the data very well, but it does give a nice preview. Let's look at some different ways to explore data frames more closely.
+Typing the name of the data frame `all_fishdata` in the second line of code, then displays the data.
+
+Let's unpack this output:
+
+* ``A tibble: `r allfish_rows` x `r allfish_cols` ``: A `tibble` is a specific kind of data frame in R.\index{tibble}  This particular data frame has
+    + `` `r allfish_rows` `` rows corresponding to different *observations*. Here, each observation is a fish species
+    + `` `r allfish_cols` `` columns corresponding to `r allfish_cols` *variables* describing each observation.
+* `SpecCode`, `Genus`, `Species`, `SpeciesRefNo`, etc. are the different columns, in other words, the different variables of this dataset.
+* We then have a preview of the first 10 rows of observations corresponding to the first 10 species. R is only showing the first 10 rows, because if it showed all `` `r allfish_rows` `` rows, it would overwhelm your screen.
+* ``... with `r (all_fishdata %>% nrow() - 10) %>% comma()` more rows, and `r allfish_cols - 11` more variables:`` indicating to us that `r (all_fishdata %>% nrow() - 10) %>% comma()` more rows of data and `r allfish_cols - 11` more variables could not fit in this screen.
+
+
+Unfortunately, this output does not allow us to explore the data very well, but it does give a nice preview. Let's look at some different ways to explore data frames more closely.
 
 
 ### Exploring data frames {#exploredataframes}
@@ -444,10 +468,9 @@ Furthermore, sometimes a single variable might not be enough to uniquely identif
 
 ### Help files
 
-Another nice feature of R are help files, which provide documentation for various functions and datasets. You can bring up help files by adding a `?` \index{operators!?} before the name of a function or data frame and then run this in the console. You will then be presented with a page showing the corresponding documentation if it exists.  For example, let's look at the help file for the `fishbase` data frame and the `species` function.
+Another nice feature of R are help files, which provide documentation for various functions and datasets. You can bring up help files by adding a `?` \index{operators!?} before the name of a function or data frame and then run this in the console. You will then be presented with a page showing the corresponding documentation if it exists.  For example, let's look at the help file for the `species` function.
 
 ```{r eval=FALSE}
-?fishbase
 ?species
 ```
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Tell Your Story with Data | Modern Biological Data Analysis</title>
   <meta name="description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Tell Your Story with Data | Modern Biological Data Analysis" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-01-15" />
+<meta name="date" content="2022-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="10-multiple-regression.html"/>
 <link rel="next" href="A-appendixA.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,12 +51,11 @@
 
 
 
-
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
 <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
 <script src="libs/dygraphs-1.1.1/shapes.js"></script>
@@ -1288,7 +1288,7 @@ Furthermore, example "vignettes" of fully reproducible start-to-finish analyses 
 <h3><span class="header-section-number">11.2.1</span> US Births in 1999</h3>
 <p>The <code>US_births_1994_2003</code> data frame included in the <code>fivethirtyeight</code> package provides information about the number of daily births in the United States between 1994 and 2003. For more information on this data frame including a link to the original article on FiveThirtyEight.com, check out the help file by running <code>?US_births_1994_2003</code> in the console.</p>
 <p>It’s always a good idea to preview your data, either by using RStudio’s spreadsheet <code>View()</code> function or using <code>glimpse()</code> from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="11-thinking-with-data.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(US_births_1994_2003)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="11-thinking-with-data.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(US_births_1994_2003)</span></code></pre></div>
 <pre><code>Rows: 3,652
 Columns: 6
 $ year          &lt;int&gt; 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 19…
@@ -1298,14 +1298,14 @@ $ date          &lt;date&gt; 1994-01-01, 1994-01-02, 1994-01-03, 1994-01-04, 199
 $ day_of_week   &lt;ord&gt; Sat, Sun, Mon, Tues, Wed, Thurs, Fri, Sat, Sun, Mon, Tue…
 $ births        &lt;int&gt; 8096, 7772, 10142, 11248, 11053, 11406, 11251, 8653, 791…</code></pre>
 <p>We’ll focus on the number of <code>births</code> for each <code>date</code>, but only for births that occurred in 1999. Recall from Section <a href="3-wrangling.html#filter">3.2</a> we can do this using the <code>filter()</code> function from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="11-thinking-with-data.html#cb445-1" aria-hidden="true" tabindex="-1"></a>US_births_1999 <span class="ot">&lt;-</span> US_births_1994_2003 <span class="sc">%&gt;%</span></span>
-<span id="cb445-2"><a href="11-thinking-with-data.html#cb445-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="11-thinking-with-data.html#cb452-1" aria-hidden="true" tabindex="-1"></a>US_births_1999 <span class="ot">&lt;-</span> US_births_1994_2003 <span class="sc">%&gt;%</span></span>
+<span id="cb452-2"><a href="11-thinking-with-data.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1999</span>)</span></code></pre></div>
 <p>As discussed in Section <a href="2-viz.html#linegraphs">2.4</a>, since <code>date</code> is a notion of time and thus has sequential ordering to it, a linegraph would be a more appropriate visualization to use than a scatterplot. In other words, we should use a <code>geom_line()</code> instead of <code>geom_point()</code>. Recall that such plots are called  <em>time series</em> plots.</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="11-thinking-with-data.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_1999, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
-<span id="cb446-2"><a href="11-thinking-with-data.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb446-3"><a href="11-thinking-with-data.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Date&quot;</span>, </span>
-<span id="cb446-4"><a href="11-thinking-with-data.html#cb446-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of births&quot;</span>, </span>
-<span id="cb446-5"><a href="11-thinking-with-data.html#cb446-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;US Births in 1999&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="11-thinking-with-data.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_1999, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
+<span id="cb453-2"><a href="11-thinking-with-data.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb453-3"><a href="11-thinking-with-data.html#cb453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Date&quot;</span>, </span>
+<span id="cb453-4"><a href="11-thinking-with-data.html#cb453-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of births&quot;</span>, </span>
+<span id="cb453-5"><a href="11-thinking-with-data.html#cb453-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;US Births in 1999&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:us-births"></span>
 <img src="ModernDive_files/figure-html/us-births-1.png" alt="Number of births in the US in 1999." width="\textwidth" />
 <p class="caption">
@@ -1314,8 +1314,8 @@ FIGURE 11.3: Number of births in the US in 1999.
 </div>
 <p>We see a big dip occurring just before January 1st, 2000, most likely due to the holiday season. However, what about the large spike of over 14,000 births occurring just before October 1st, 1999? What could be the reason for this anomalously high spike?</p>
 <p>Let’s sort the rows of <code>US_births_1999</code> in descending order of the number of births. Recall from Section <a href="3-wrangling.html#arrange">3.8</a> that we can use the <code>arrange()</code> function from the <code>dplyr</code> function to do this, making sure to sort <code>births</code> in <code>desc</code>ending order:</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="11-thinking-with-data.html#cb447-1" aria-hidden="true" tabindex="-1"></a>US_births_1999 <span class="sc">%&gt;%</span> </span>
-<span id="cb447-2"><a href="11-thinking-with-data.html#cb447-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(births))</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="11-thinking-with-data.html#cb454-1" aria-hidden="true" tabindex="-1"></a>US_births_1999 <span class="sc">%&gt;%</span> </span>
+<span id="cb454-2"><a href="11-thinking-with-data.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(births))</span></code></pre></div>
 <pre><code># A tibble: 365 × 6
     year month date_of_month date       day_of_week births
    &lt;int&gt; &lt;int&gt;         &lt;int&gt; &lt;date&gt;     &lt;ord&gt;        &lt;int&gt;
@@ -1430,7 +1430,6 @@ R code files saved as *.R files for all relevant chapters throughout the entire 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1471,7 +1470,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

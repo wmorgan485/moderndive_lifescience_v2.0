@@ -34,7 +34,6 @@ fig:DemersPelagpie
 fig:all-fishdata-stacked-bar
 fig:all-fishdata-stacked-bar-color
 fig:all-fishdata-dodged-bar-color
-fig:all-fishdata-dodged-bar-color-tweak
 fig:facet-bar-vert
 tab:viz-summary-table
 fig:ggplot-cheatsheet

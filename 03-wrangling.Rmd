@@ -617,6 +617,7 @@ all_fishdata <- all_fishdata %>%
   mutate(depth_range = DepthRangeDeep - DepthRangeShallow)
 ```
 
+<!---
 Wait! Did you get an Error message that there is a problem with column `depth_range`? That it is a 'non-numeric argument'? Let's look closer at this and the other depth-related columns using the `select()` and `glimpse()` functions:
 
 ```{r}
@@ -642,20 +643,37 @@ Now let's try to calculate the `depth_range` variable again:
 all_fishdata <- all_fishdata %>% 
   mutate(depth_range = DepthRangeDeep - DepthRangeShallow)
 ```
+--->
 
-Let's take a look at only the `DepthRangeShallow`, `DepthRangeDeep`, and the resulting `depth_range` variables for the first 5 rows in our updated `all_fishdata` data frame in Table \@ref(tab:first-five-all-fishdata).
+Let's take a look at only the `DepthRangeShallow`, `DepthRangeDeep`, and the resulting `depth_range` variables of our updated `all_fishdata` data frame, after removing rows with missing data (indicated by "NA"). The first 5 rows are shown in Table \@ref(tab:first-five-all-fishdata).
+
+
+```{r eval=FALSE}
+all_fishdata %>% 
+  select(DepthRangeShallow, DepthRangeDeep, depth_range) %>% 
+    drop_na() %>% 
+  slice(1:5)
+```
 
 ```{r first-five-all-fishdata, echo=FALSE, purl=FALSE}
 all_fishdata %>% 
   select(DepthRangeShallow, DepthRangeDeep, depth_range) %>% 
+    drop_na() %>% 
   slice(1:5) %>% 
   kable(
     caption = "First five rows of DepthRangeShallow/Deep and depth_range variables"
   ) %>%
   kable_styling(position = "center", latex_options = "hold_position")
+# values for the text
+first_shallow = all_fishdata %>% 
+  select(DepthRangeShallow, DepthRangeDeep, depth_range) %>% 
+    drop_na() %>% slice(1) %>% pull(DepthRangeShallow)
+first_deep = all_fishdata %>% 
+  select(DepthRangeShallow, DepthRangeDeep, depth_range) %>% 
+    drop_na() %>% slice(1) %>% pull(DepthRangeDeep)
 ```
 
-The deepest depth of the fish species in the fifth row is 100 m and its shallowest is 40, so the difference between the two depths, its `depth_range` is 100 - 40 = 60. 
+The deepest depth of the fish species in the first row is `r first_deep` meters and its shallowest is `r first_shallow`, so the difference between the two depths, its `depth_range` is `r first_deep` - `r first_shallow` = `r first_deep - first_shallow` meters. 
 
 Let's look at some summary statistics of the `depth_range` variable by considering multiple summary functions at once in the same `summarize()` code:
 

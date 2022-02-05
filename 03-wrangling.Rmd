@@ -167,7 +167,7 @@ Furthermore, you can combine multiple criteria using operators that make compari
 
 To see many of these in action, let's filter `all_fishdata` for aquarium fish species that are `"commercial"` or `"highly commercial"` *and* may be dangerous (not `"harmless"` and not`"Harmless"`).  Note that this example uses the \index{operators!not} `!` "not" operator to pick rows that *don't* match a criteria. As mentioned earlier, the `!` can be read as "not." Run the following:
 
-```{r}
+```{r echo=FALSE, purl=FALSE}
 danger_comm_fish <- all_fishdata %>% 
   filter((Aquarium == "commercial" | Aquarium == "highly commercial") & Dangerous != "harmless" & Dangerous != "Harmless")
 View(danger_comm_fish)

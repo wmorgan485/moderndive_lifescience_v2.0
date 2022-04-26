@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-04-20" />
+<meta name="date" content="2022-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -954,7 +954,7 @@ continent: Oceania
 </tr>
 </tbody>
 </table>
-<p>Recall our interpretation of the <code>estimate</code> column. Since <code>Africa</code> was the “baseline for comparison” group, the <code>intercept</code> term corresponds to the mean life expectancy for all countries in Africa of 54.8 years. The other four values of <code>estimate</code> correspond to “offsets” relative to the baseline group. So, for example, the “offset” corresponding to the Americas is + as compared to the baseline for comparison group Africa. In other words, the average life expectancy for countries in the Americas is years <em>higher</em>. Thus the mean life expectancy for all countries in the Americas is 54.8 + = . The same interpretation holds for Asia, Europe, and Oceania.</p>
+<p>Recall our interpretation of the <code>estimate</code> column. Since <code>Africa</code> was the “baseline for comparison” group, the <code>intercept</code> term corresponds to the mean life expectancy for all countries in Africa of 54.8 years. The other four values of <code>estimate</code> correspond to “offsets” relative to the baseline group. So, for example, the “offset” corresponding to the Americas is +18.8 as compared to the baseline for comparison group Africa. In other words, the average life expectancy for countries in the Americas is 18.8 years <em>higher</em>. Thus the mean life expectancy for all countries in the Americas is 54.8 + 18.8 = 73.6. The same interpretation holds for Asia, Europe, and Oceania.</p>
 <p>Going back to our multiple regression model for tooth <code>len</code>gth using <code>dose</code> and <code>supp</code>lement in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, we generate the regression table using the same two-step approach from Chapter <a href="8-regression.html#regression">8</a>: we first “fit” the model using the <code>lm()</code> “linear model” function and then we apply the <code>get_regression_table()</code> function. This time, however, our model formula won’t be of the form <code>y ~ x</code>, but rather of the form <code>y ~ x1 * x2</code>. In other words, our two explanatory variables <code>x1</code> and <code>x2</code> are separated by a <code>*</code> sign:</p>
 <div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="10-multiple-regression.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
 <span id="cb409-2"><a href="10-multiple-regression.html#cb409-2" aria-hidden="true" tabindex="-1"></a>len_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(len <span class="sc">~</span> dose <span class="sc">*</span> supp, <span class="at">data =</span> ToothGrowth)</span>
@@ -1088,8 +1088,8 @@ dose:suppVC
 <p>Looking at the regression table output in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, there are four rows of values in the <code>estimate</code> column. While it is not immediately apparent, using these four values we can write out the equations of both lines in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>. First, since the word <code>OJ</code> comes alphabetically before <code>VC</code>, the orange juice supplement is the “baseline for comparison” group. Thus, <code>intercept</code> is the intercept <em>for only the orange juice recipients</em>.</p>
 <p>This holds similarly for <code>dose</code>. It is the slope for dose <em>for only the OJ recipients</em>. Thus, the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has an intercept of 11.55 and slope for dose of 7.811.</p>
 <p>What about the intercept and slope for dose of the ascorbic acid recipients in the blue line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>? This is where our notion of “offsets” comes into play once again.</p>
-<p>The value for <code>suppVC</code> of is not the intercept for the ascorbic acid recipients, but rather the <em>offset</em> in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is <code>intercept + suppVC</code> = 11.55 + () = 11.55 - = .</p>
-<p>Similarly, <code>dose:suppVC</code> = 3.904 is not the slope for dose for the ascorbic acid recipients, but rather the <em>offset</em> in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is <code>dose + dose:suppVC</code> <span class="math inline">\(= 7.811 + 3.904 = 11.715\)</span>. Thus, the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has intercept and slope for <code>dose</code> of 11.715. Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a> and focus on the two slopes for <code>dose</code>:</p>
+<p>The value for <code>suppVC</code> of -8.255 is not the intercept for the ascorbic acid recipients, but rather the <em>offset</em> in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is <code>intercept + suppVC</code> = 11.55 + (-8.255) = 11.55 - 8.255 = 3.295.</p>
+<p>Similarly, <code>dose:suppVC</code> = 3.904 is not the slope for dose for the ascorbic acid recipients, but rather the <em>offset</em> in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is <code>dose + dose:suppVC</code> <span class="math inline">\(= 7.811 + 3.904 = 11.715\)</span>. Thus, the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has intercept 3.295 and slope for <code>dose</code> of 11.715. Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a> and focus on the two slopes for <code>dose</code>:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:interaction-summary">TABLE 10.4: </span>Comparison of intercepts and slopes for interaction model
@@ -1113,7 +1113,7 @@ Slope for dose
 Orange juice
 </td>
 <td style="text-align:right;">
-11.55
+11.550
 </td>
 <td style="text-align:right;">
 7.811
@@ -1124,7 +1124,7 @@ Orange juice
 Ascorbic acid
 </td>
 <td style="text-align:right;">
-11.55
+3.295
 </td>
 <td style="text-align:right;">
 11.715
@@ -1141,7 +1141,7 @@ comes out correct in the HTML output.
 <p><span class="math display">\[
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &amp;= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x) + b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)\\
-&amp;= 11.55 7.811 \cdot \text{dose} -  \cdot \mathbb{1}_{\text{is VC}}(x) + 3.904 \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)
+&amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 \cdot \mathbb{1}_{\text{is VC}}(x) + 3.904 \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)
 \end{aligned}
 \]</span></p>
 <p>Whoa! That’s even more daunting than the equation you saw for the life expectancy as a function of continent in Subsection <a href="8-regression.html#model2table">8.2.2</a>! However, if you recall what an “indicator function” does, the equation simplifies greatly. In the previous equation, we have one indicator function of interest:</p>
@@ -1156,23 +1156,23 @@ comes out correct in the HTML output.
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(b_0\)</span> is the <code>intercept</code> = 11.55 for the orange juice recipients</li>
 <li><span class="math inline">\(b_{\text{dose}}\)</span> is the slope for <code>dose</code> = 7.811 for the orange juice recipients</li>
-<li><span class="math inline">\(b_{\text{VC}}\)</span> is the offset in intercept = for the ascorbic acid (VC) recipients</li>
+<li><span class="math inline">\(b_{\text{VC}}\)</span> is the offset in intercept = -8.255 for the ascorbic acid (VC) recipients</li>
 <li><span class="math inline">\(b_{\text{dose,VC}}\)</span> is the offset in slope for dose = 3.904 for the ascorbic acid (VC) recipients</li>
 </ol>
 <p>Let’s put this all together and compute the fitted value <span class="math inline">\(\widehat{y} = \widehat{\text{len}}\)</span> for orange juice recipients. Since for orange juice recipients <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 0, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 11.55 - -7.811 \cdot \text{dose} -  \cdot 0 + 3.904 \cdot \text{dose} \cdot 0\\
-&amp;= 11.55 - -7.811 \cdot \text{dose} - 0 + 0\\
+\widehat{y} = \widehat{\text{len}} &amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 \cdot 0 + 3.904 \cdot \text{dose} \cdot 0\\
+&amp;= 11.55 + 7.811 \cdot \text{dose} - 0 + 0\\
 &amp;= 11.55 - -7.811 \cdot \text{dose}\\
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> corresponding to the orange juice recipients in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a>. Correspondingly, since for ascorbic acid (VC) recipients <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 1, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 11.55 - -7.811 \cdot \text{dose} -  + 3.904 \cdot \text{dose}\\
-&amp;= (11.55 - ) + (- -7.811 + 3.904) * \text{dose}\\
-&amp;=  - -11.715 \cdot \text{dose}\\
+\widehat{y} = \widehat{\text{len}} &amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 + 3.904 \cdot \text{dose}\\
+&amp;= (11.55 - 8.255) + (`slope_OJ` + 3.904) * \text{dose}\\
+&amp;= 3.295 + 11.715 \cdot \text{dose}\\
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> corresponding to the ascorbic acid (VC) recipients in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a>.</p>
@@ -1303,7 +1303,7 @@ supp: VC
 </tr>
 </tbody>
 </table>
-<p>Similarly to the regression table for the interaction model from Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, we have an <code>intercept</code> term corresponding to the intercept for the “baseline for comparison” orange juice instructor group and a <code>suppVC</code> term corresponding to the <em>offset</em> in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> the red regression line corresponding to the orange juice recipients has an intercept of 9.273 while the blue regression line corresponding to the ascorbic acid (VC) recipients has an intercept of 9.273 + = .</p>
+<p>Similarly to the regression table for the interaction model from Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, we have an <code>intercept</code> term corresponding to the intercept for the “baseline for comparison” orange juice instructor group and a <code>suppVC</code> term corresponding to the <em>offset</em> in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> the red regression line corresponding to the orange juice recipients has an intercept of 9.273 while the blue regression line corresponding to the ascorbic acid (VC) recipients has an intercept of 9.273 + 9.764 = 19.037.</p>
 <p>Unlike in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, however, we now only have a single slope for dose of 9.764. This is because the model dictates that both the orange juice and ascorbic acid (VC) recipients have a common slope for dose.  This is telling us that a guinea pig who received a vitamin C dose one unit higher has tooth length that is on average 9.764 units longer. This benefit for receiving a higher vitamin C dose applies equally to both orange juice and ascorbic acid (VC) recipients.</p>
 <p>Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:parallel-slopes-summary">10.6</a>, noting the different intercepts but common slopes:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
@@ -1340,7 +1340,7 @@ Orange juice (OJ)
 Ascorbic acid (VC)
 </td>
 <td style="text-align:right;">
-9.273
+19.037
 </td>
 <td style="text-align:right;">
 9.764
@@ -1356,22 +1356,22 @@ comes out correct in the HTML output.
 <p><span class="math display">\[
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &amp;= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)\\
-&amp;= 9.273 9.764 \cdot \text{dose} +  \cdot \mathbb{1}_{\text{is VC}}(x) 
+&amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot \mathbb{1}_{\text{is VC}}(x) 
 \end{aligned}
 \]</span></p>
 <p>Let’s put this all together and compute the fitted value <span class="math inline">\(\widehat{y} = \widehat{\text{len}}\)</span> for orange juice recipients. Since for orange juice recipients the indicator function <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 0, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} +  \cdot 0\\
+\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot 0\\
 &amp;= 9.273 9.764 \cdot \text{dose}
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> corresponding to the orange juice recipients. Correspondingly, since for ascorbic acid (VC) recipients the indicator function <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 1, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} +  \cdot 1\\
-&amp;= (9.273 + ) - -9.764 \cdot \text{dose}\\
-&amp;=  9.764 \cdot \text{dose}
+\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot 1\\
+&amp;= (9.273 + 9.764) - -9.764 \cdot \text{dose}\\
+&amp;= 19.037 9.764 \cdot \text{dose}
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> corresponding to the ascorbic acid (VC) recipients.</p>
@@ -1398,9 +1398,9 @@ FIGURE 10.4: Fitted values for two new professors.
 <p>What are these two values of <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{len}}\)</span> precisely? We can use the equations of the two regression lines we computed in Subsection <a href="10-multiple-regression.html#model4interactiontable">10.1.2</a>, which in turn were based on values from the regression table in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>:</p>
 <ul>
 <li>For all orange juice recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = 11.55 - -7.811 \cdot \text{dose}\)</span></li>
-<li>For all ascorbic acid (VC) recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = - -11.715 \cdot \text{dose}\)</span></li>
+<li>For all ascorbic acid (VC) recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = 3.295 - -11.715 \cdot \text{dose}\)</span></li>
 </ul>
-<p>So our fitted values would be: <span class="math inline">\(11.55 - -7.811 \cdot 2 = 27.17\)</span> and $ - -11.715  = $, respectively.</p>
+<p>So our fitted values would be: <span class="math inline">\(11.55 - -7.811 \cdot 2 = 27.17\)</span> and <span class="math inline">\(3.295 - -11.715 \cdot 1 = 15.01\)</span>, respectively.</p>
 <p>Now what if we want the fitted values not just for these two guinea pigs, but for all 60 guinea pigs included in the <code>ToothGrowth</code> data frame? Doing this by hand would be long and tedious! This is where the <code>get_regression_points()</code> function from the <code>moderndive</code> package can help: it will quickly automate the above calculations for all 60 guinea pigs We present a preview of the first 5 rows for each supplement type out of 60 in Table <a href="10-multiple-regression.html#tab:model4-points-table">10.7</a>.</p>
 <div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="10-multiple-regression.html#cb412-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(len_model_interaction)</span>
 <span id="cb412-2"><a href="10-multiple-regression.html#cb412-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(supp) <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div>

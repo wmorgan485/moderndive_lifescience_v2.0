@@ -237,7 +237,7 @@ ggplot(data = HornedLizards, aes(x = group, y = horn.length)) +
 
 
 ## -----------------------------------------------------------------------------
-HornedLizards <- HornedLizards %>% drop_na()
+HornedLizards <- HornedLizards %>% tidyr::drop_na()
 
 
 ## -----------------------------------------------------------------------------

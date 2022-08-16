@@ -2,7 +2,7 @@
 
 ```{r setup_inference_regression, include=FALSE, purl=FALSE}
 # Used to define Learning Check numbers:
-chap <- 10
+chap <- 9
 lc <- 0
 
 # Set R code chunk defaults:
@@ -26,6 +26,18 @@ set.seed(76)
 ```
 
 In this chapter, we'll further explore the regression models we first studied in Chapter \@ref(regression). Armed with our knowledge of confidence intervals and hypothesis tests from Chapters \@ref(confidence-intervals) and \@ref(hypothesis-testing), we'll be able to apply statistical inference to further our understanding of relationships between outcome and explanatory variables.
+
+
+```{block loa9, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*   
+• Fully interpret a regression table to determine the p-value and 95% confidence interval of the point estimates for the intercept and slope of the regression line.  
+• Check if data meets the necessary conditions to apply linear regression.  
+\vspace{-0.1in}
+```
 
 
 ### Needed packages {-#inf-packages}
@@ -760,25 +772,7 @@ When the conditions for inference for regression are met and the null distributi
 
 
 
-
-## Conclusion {#inference-conclusion}
-
-<!--
-v2 TODO: Consider adding
-
-### Relating regression to other methods
-
-To conclude this chapter, we'll be investigating how regression relates to two different statistical techniques. One of them was covered already in this book, the difference in sample means, and the other is new to the text but is related, ANOVA. We'll see how both can be represented in the regression framework. The hope is that this closing section helps you to tie together many of the concepts you've seen in the Data Modeling and Statistical Inference parts of this book.
-
-#### Two sample difference in means
-
-#### ANOVA
-
-
--->
-
-
-### Theory-based inference for regression {#theory-regression}
+## Theory-based inference for regression {#theory-regression}
 
 Recall in Subsection \@ref(regression-table-computation) when we interpreted the regression table in Table \@ref(tab:regtable-11), we mentioned that R does not compute its values using simulation-based methods for constructing confidence intervals and conducting hypothesis tests as we did in Chapters \@ref(confidence-intervals) and \@ref(hypothesis-testing) using the `infer` package. Rather, R uses a theory-based approach using mathematical formulas, much like the theory-based confidence intervals you saw in Subsection \@ref(theory-ci) and the theory-based hypothesis tests you saw in Subsection \@ref(theory-hypo). These formulas were derived in a time when computers didn't exist, so it would've been incredibly labor intensive to run extensive simulations.
 
@@ -812,6 +806,39 @@ Lastly, to compute the $p$-value, we need to compare the observed test statistic
 
 Don't worry if you're feeling a little overwhelmed at this point. There is a lot of background theory to understand before you can fully make sense of the equations for theory-based methods. That being said, theory-based methods and simulation-based methods for constructing confidence intervals and conducting hypothesis tests often yield consistent results. As mentioned before, in our opinion, two large benefits of simulation-based methods over theory-based are that (1) they are easier for people new to statistical inference to understand, and (2) they also work in situations where theory-based methods and mathematical formulas don't exist. 
 
+
+<!--
+v2 TODO: Consider adding
+
+### Relating regression to other methods
+
+To conclude this chapter, we'll be investigating how regression relates to two different statistical techniques. One of them was covered already in this book, the difference in sample means, and the other is new to the text but is related, ANOVA. We'll see how both can be represented in the regression framework. The hope is that this closing section helps you to tie together many of the concepts you've seen in the Data Modeling and Statistical Inference parts of this book.
+
+#### Two sample difference in means
+
+#### ANOVA
+
+
+-->
+
+
+
+## Conclusion {#inference-conclusion}
+
+```{block cls09, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Summary_**
+
+* The fitted intercept and slope for a regression line based on a sample are point estimates of these values for the regression line of the population.  
+* The standard errors of the fitted intercept $b_0$ and slope $b_1$ quantify the sampling variability.  
+* The null hypothesis for linear regression is that the population slope $B_1$ equals 0, indicating no relationship between the response and explanatory variables.  
+* Linear regression compares the observed standardized *t*-test statistic to its null distribution to determine the *p*-value.  
+* Linear regression uses the standard errors of $b_0$ and $b_1$ to calculate the confidence intervals of each coefficient.  
+* For linear regression results to be valid, the residuals must have a linear relationship, be independent, and have a normal distribution and equal variance across all $x$ values (LINE).  
+* In addition to the theory-based method, computer-based methods can also be used to compute the *p*-value and 95% confidence interval for $B_0$ and $B_1$.  
+\vspace{-0.1in}
+```
 
 ### Summary of statistical inference
 

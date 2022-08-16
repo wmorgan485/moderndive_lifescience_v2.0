@@ -1,2 +1,2 @@
-# moderndive_lifescience2
- ModernDive for Life Science 2nd ed.
+# moderndive_lifescience2.1
+ ModernDive for Life Science v.2.1

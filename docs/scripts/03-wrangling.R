@@ -1,12 +1,13 @@
 ## ---- eval=FALSE--------------------------------------------------------------
-## brackish_fish <- all_fishdata %>%
-##   filter(Brack == 1)
+## chick1_weight <- filter(Chickbody_wt, Chick == 1)
+
+
 
 
 ## ---- message=FALSE-----------------------------------------------------------
 library(dplyr)
 library(ggplot2)
-library(rfishbase)
+library(openintro)
 
 
 
@@ -16,57 +17,41 @@ library(rfishbase)
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## brackish_fish <- all_fishdata %>%
-##   filter(Brack == "1")
+## chick1_weight <- Chickbody_wt %>%
+##   filter(Chick == 1)
 
 
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## paquarium_fish <- all_fishdata %>%
-##   filter(Aquarium == "public aquariums")
-## View(paquarium_fish)
-
-
-## -----------------------------------------------------------------------------
-danger_comm_fish <- all_fishdata %>% 
-  filter((Aquarium == "commercial" | Aquarium == "highly commercial") & Dangerous != "harmless" & Dangerous != "Harmless")
-View(danger_comm_fish)
+## predation1 <- mammals %>%
+##   filter(predation == 1)
+## View(predation1)
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## danger_comm_fish <- all_fishdata %>%
-##   filter((Aquarium == "commercial" | Aquarium == "highly commercial") & !(Dangerous == "harmless" | Dangerous == "Harmless"))
-## View(danger_comm_fish)
-
-
-## ---- eval=FALSE--------------------------------------------------------------
-## danger_comm_fish <- all_fishdata %>%
-##   filter((Aquarium == "commercial" | Aquarium == "highly commercial"), !(Dangerous == "harmless" | Dangerous == "Harmless"))
-## View(danger_comm_fish)
-
-
-## ---- eval=FALSE--------------------------------------------------------------
-## many_aquarium_fish <- all_fishdata %>%
-##   filter(Aquarium == "commercial" | Aquarium == "highly commercial" | Aquarium == "show aquarium" | Aquarium == "public aquariums")
-
-
-## ---- eval=FALSE--------------------------------------------------------------
-## many_aquarium_fish <- all_fishdata %>%
-##   filter(Aquarium %in% c("commercial", "highly commercial", "show aquarium", "public aquariums"))
-## View(many_aquarium_fish)
-
-
+## predation_notexp1 <- mammals %>%
+##   filter((predation == 1 | predation == 2) & exposure != 1)
+## predation_notexp1
 
 
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## all_fishdata %>% slice(1:100)
+## predation_notexp1 <- mammals %>%
+##   filter((predation == 1 | predation == 2) & !exposure == 1)
+## predation_notexp1
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## all_fishdata %>% slice_max(n = 10, order_by = DepthRangeDeep)
+## predation_notexp1 <- mammals %>%
+##   filter((predation == 1 | predation == 2), !exposure == 1)
+## predation_notexp1
+
+
+## ---- eval=FALSE--------------------------------------------------------------
+## many_species <- mammals %>%
+##   filter(species == "Africanelephant" | species == "Asianelephant" | species == "Deserthedgehog" | species == "Europeanhedgehog")
 
 
 
@@ -76,37 +61,51 @@ View(danger_comm_fish)
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## glimpse(all_fishdata)
+## mammals %>% slice(1:5)
+
+
+## ---- eval=FALSE--------------------------------------------------------------
+## mammals %>% slice_max(n = 5, order_by = life_span)
+
+
+
+
+
+
+
+
+## ---- eval=FALSE--------------------------------------------------------------
+## glimpse(mammals)
 
 
 
 
 ## -----------------------------------------------------------------------------
-View(danger_comm_fish)
+many_species
 
 
 ## -----------------------------------------------------------------------------
-slim_danger_comm_fish <- danger_comm_fish %>% 
-  select(Species, Genus, Aquarium, Dangerous)
+slim_many_species <- many_species %>% 
+  select(species, body_wt, danger)
 
 
 ## -----------------------------------------------------------------------------
-slim_danger_comm_fish
+slim_many_species
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## slim_danger_comm_fish <- slim_danger_comm_fish %>% select(-Genus)
+## mammals_10cols <- mammals %>% select(-gestation)
 
 
 ## -----------------------------------------------------------------------------
-slim2_danger_comm_fish <- danger_comm_fish %>% select(SpecCode:Species, Fresh:Saltwater)
-slim2_danger_comm_fish
+mammals_sleep <- mammals %>% select(species, non_dreaming:total_sleep)
+mammals_sleep
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## fishdata_reorder <- all_fishdata %>%
-##   select(Species, BodyShapeI, DepthRangeShallow, DepthRangeDeep, everything())
-## glimpse(fishdata_reorder)
+## mammals_reorder <- mammals %>%
+##   mammals_sleep <- mammals %>% select(species, non_dreaming:total_sleep, everything())
+## glimpse(mammals_reorder)
 
 
 
@@ -114,13 +113,13 @@ slim2_danger_comm_fish
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## all_fishdata %>%
-##   rename(Preferred_Habitat = DemersPelag)
+## mammals %>%
+##   rename(danger_faced = danger)
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata %>% 
-  select(Species, Preferred_Habitat = DemersPelag)
+mammals %>% 
+  select(species, danger_faced = danger)
 
 
 
@@ -128,24 +127,24 @@ all_fishdata %>%
 
 
 ## -----------------------------------------------------------------------------
-summary_brackish <- brackish_fish %>% 
-  summarize(mean = mean(Length), std_dev = sd(Length))
-summary_brackish
+summary_mammals <- mammals %>% 
+  summarize(mean = mean(life_span), std_dev = sd(life_span))
+summary_mammals
 
 
 ## -----------------------------------------------------------------------------
-summary_brackish <- brackish_fish %>% 
-  summarize(mean = mean(Length, na.rm = TRUE), 
-            std_dev = sd(Length, na.rm = TRUE))
-summary_brackish
+summary_mammals <- mammals %>% 
+  summarize(mean = mean(life_span, na.rm = TRUE), 
+            std_dev = sd(life_span, na.rm = TRUE))
+summary_mammals
 
 
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## summary_wt_d21 <- brackish_fish %>%
-##   summarize(mean = mean(Length, na.rm = TRUE)) %>%
-##   summarize(std_dev = sd(Length, na.rm = TRUE))
+## summary2_mammals <- mammals %>%
+##   summarize(mean = mean(life_span, na.rm = TRUE)) %>%
+##   summarize(std_dev = sd(life_span, na.rm = TRUE))
 
 
 
@@ -153,56 +152,56 @@ summary_brackish
 
 
 ## -----------------------------------------------------------------------------
-summary_DP_length <- all_fishdata %>% 
-  group_by(DemersPelag) %>% 
-  summarize(mean = mean(Length, na.rm = TRUE), 
-            std_dev = sd(Length, na.rm = TRUE))
-summary_DP_length
+summary_pred_life <- mammals %>% 
+  group_by(predation) %>% 
+  summarize(mean = mean(life_span, na.rm = TRUE), 
+            std_dev = sd(life_span, na.rm = TRUE))
+summary_pred_life
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata
+mammals
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata %>% 
-  group_by(DemersPelag)
+mammals %>% 
+  group_by(predation)
 
 
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata %>% 
-  group_by(DemersPelag) %>% 
-  summarize(avg_depth = mean(DepthRangeDeep, na.rm = TRUE))
+mammals %>% 
+  group_by(predation) %>% 
+  summarize(avg_life = mean(life_span, na.rm = TRUE))
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata %>% 
-  group_by(DemersPelag) %>% 
+mammals %>% 
+  group_by(predation) %>% 
   ungroup()
 
 
 ## -----------------------------------------------------------------------------
-by_DP <- all_fishdata %>% 
-  group_by(DemersPelag) %>% 
+by_pred <- mammals %>% 
+  group_by(predation) %>% 
   summarize(count = n())
-by_DP
+by_pred
 
 
-## -----------------------------------------------------------------------------
-by_Dp_Shape <- all_fishdata %>% 
-  group_by(DemersPelag, BodyShapeI) %>% 
+## ----message=FALSE, warning=FALSE---------------------------------------------
+by_pred_exp <- mammals %>% 
+  group_by(predation, exposure) %>% 
   summarize(count = n())
-by_Dp_Shape
+by_pred_exp
 
 
-## -----------------------------------------------------------------------------
-by_Dp_Shape_incorrect <- all_fishdata %>% 
-  group_by(DemersPelag) %>% 
-  group_by(BodyShapeI) %>% 
+## ----message=FALSE, warning=FALSE---------------------------------------------
+by_pred_exp_incorrect <- mammals %>% 
+  group_by(predation) %>% 
+  group_by(exposure) %>% 
   summarize(count = n())
-by_Dp_Shape_incorrect
+by_pred_exp_incorrect
 
 
 
@@ -212,67 +211,48 @@ by_Dp_Shape_incorrect
 
 
 ## ---- eval=TRUE---------------------------------------------------------------
-all_fishdata <- all_fishdata %>% 
-  mutate(wt_in_oz = Weight / 28.35)
+mammals <- mammals %>% 
+  mutate(wt_in_lb = body_wt * 2.205)
+mammals
 
 
 ## -----------------------------------------------------------------------------
-summary_DP_wt <- all_fishdata %>% 
-  group_by(DemersPelag) %>% 
-  summarize(mean_wt_in_g = mean(Weight, na.rm = TRUE), 
-            mean_wt_in_oz = mean(wt_in_oz, na.rm = TRUE))
-summary_DP_wt
-
-
-## ---- eval=FALSE--------------------------------------------------------------
-## all_fishdata <- all_fishdata %>%
-##   mutate(depth_range = DepthRangeDeep - DepthRangeShallow)
+summary_pred_wt <- mammals %>% 
+  group_by(predation) %>% 
+  summarize(mean_wt_in_kg = mean(body_wt, na.rm = TRUE), 
+            mean_wt_in_lb = mean(wt_in_lb, na.rm = TRUE))
+summary_pred_wt
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata %>% select(starts_with("Depth")) %>% glimpse()
-
-
-## -----------------------------------------------------------------------------
-all_fishdata <- all_fishdata %>% mutate(DepthRangeShallow = as.numeric(DepthRangeShallow))
-
-
-## -----------------------------------------------------------------------------
-all_fishdata <- all_fishdata %>% 
-  mutate(depth_range = DepthRangeDeep - DepthRangeShallow)
-
-
-
-
-## -----------------------------------------------------------------------------
-depth_summary <- all_fishdata %>% 
+lb_summary <- mammals %>% 
   summarize(
-    min = min(depth_range, na.rm = TRUE),
-    q1 = quantile(depth_range, 0.25, na.rm = TRUE),
-    median = quantile(depth_range, 0.5, na.rm = TRUE),
-    q3 = quantile(depth_range, 0.75, na.rm = TRUE),
-    max = max(depth_range, na.rm = TRUE),
-    mean = mean(depth_range, na.rm = TRUE),
-    sd = sd(depth_range, na.rm = TRUE),
-    missing = sum(is.na(depth_range))
+    min = min(wt_in_lb, na.rm = TRUE),
+    q1 = quantile(wt_in_lb, 0.25, na.rm = TRUE),
+    median = quantile(wt_in_lb, 0.5, na.rm = TRUE),
+    q3 = quantile(wt_in_lb, 0.75, na.rm = TRUE),
+    max = max(wt_in_lb, na.rm = TRUE),
+    mean = mean(wt_in_lb, na.rm = TRUE),
+    sd = sd(wt_in_lb, na.rm = TRUE),
+    missing = sum(is.na(wt_in_lb))
   )
-depth_summary
+lb_summary
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## all_fishdata %>% select(depth_range) %>% skim()
+## mammals %>% select(wt_in_lb) %>% skim()
 
 
-## ----depth-range-hist, fig.cap="Histogram of depth_range variable.", message=FALSE, fig.height=3----
-ggplot(data = all_fishdata, mapping = aes(x = depth_range)) +
+## ----depth-range-hist, fig.cap="Histogram of wt_in_lb variable.", message=FALSE, fig.height=3----
+ggplot(data = mammals, mapping = aes(x = wt_in_lb)) +
   geom_histogram(color = "white", boundary = 0, binwidth = 200)
 
 
 ## -----------------------------------------------------------------------------
-all_fishdata <- all_fishdata %>% 
+mammals <- mammals %>% 
   mutate(
-    depth_range = DepthRangeShallow - DepthRangeDeep,
-    range_per_depth = depth_range / DepthRangeDeep
+    wt_in_oz = wt_in_lb * 16,
+    oz_per_year = wt_in_oz / life_span
   )
 
 
@@ -281,18 +261,18 @@ all_fishdata <- all_fishdata %>%
 
 
 ## -----------------------------------------------------------------------------
-freq_DP <- all_fishdata %>% 
-  group_by(DemersPelag) %>% 
+freq_pred <- mammals %>% 
+  group_by(predation) %>% 
   summarize(num_species = n())
-freq_DP
+freq_pred
 
 
 ## -----------------------------------------------------------------------------
-freq_DP %>% 
+freq_pred %>% 
   arrange(num_species)
 
 
 ## -----------------------------------------------------------------------------
-freq_DP %>% 
+freq_pred %>% 
   arrange(desc(num_species))
 

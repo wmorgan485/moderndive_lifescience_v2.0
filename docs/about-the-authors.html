@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>About the authors | Modern Biological Data Analysis</title>
   <meta name="description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="About the authors | Modern Biological Data Analysis" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://moderndive.com/" />
   <meta property="og:image" content="https://moderndive.com//images/logos/book_cover.png" />
   <meta property="og:description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
   <meta name="github-repo" content="moderndive/ModernDive_book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-01-15" />
+<meta name="date" content="2022-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="preface.html"/>
 <link rel="next" href="about-the-adapting-author.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,12 +49,12 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
 <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
 <script src="libs/dygraphs-1.1.1/shapes.js"></script>
@@ -218,18 +217,23 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.2" data-path="1-getting-started.html"><a href="1-getting-started.html#package-loading"><i class="fa fa-check"></i><b>1.3.2</b> Package loading</a></li>
 <li class="chapter" data-level="1.3.3" data-path="1-getting-started.html"><a href="1-getting-started.html#package-use"><i class="fa fa-check"></i><b>1.3.3</b> Package use</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishbase"><i class="fa fa-check"></i><b>1.4</b> Explore your first datasets</a>
+<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdb"><i class="fa fa-check"></i><b>1.4</b> Explore your first data sets</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishpackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>rfishbase</code> package</a></li>
-<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#fishbasedataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>fishbase</code> data frame</a></li>
+<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#openintropackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>openintro</code> package</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>mammals</code> data frame</a></li>
 <li class="chapter" data-level="1.4.3" data-path="1-getting-started.html"><a href="1-getting-started.html#exploredataframes"><i class="fa fa-check"></i><b>1.4.3</b> Exploring data frames</a></li>
 <li class="chapter" data-level="1.4.4" data-path="1-getting-started.html"><a href="1-getting-started.html#identification-vs-measurement-variables"><i class="fa fa-check"></i><b>1.4.4</b> Identification and measurement variables</a></li>
 <li class="chapter" data-level="1.4.5" data-path="1-getting-started.html"><a href="1-getting-started.html#help-files"><i class="fa fa-check"></i><b>1.4.5</b> Help files</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.5</b> Conclusion</a>
+<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#csv"><i class="fa fa-check"></i><b>1.5</b> Importing data</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#using-the-console"><i class="fa fa-check"></i><b>1.5.1</b> Using the console</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#using-rstudios-interface"><i class="fa fa-check"></i><b>1.5.2</b> Using RStudio’s interface</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.6.1</b> Additional resources</a></li>
+<li class="chapter" data-level="1.6.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.6.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Science with tidyverse</b></span></li>
@@ -270,16 +274,20 @@ div.csl-indent {
 <li class="chapter" data-level="2.8" data-path="2-viz.html"><a href="2-viz.html#geombar"><i class="fa fa-check"></i><b>2.8</b> 5NG#5: Barplots</a>
 <ul>
 <li class="chapter" data-level="2.8.1" data-path="2-viz.html"><a href="2-viz.html#barplots-via-geom_bar-or-geom_col"><i class="fa fa-check"></i><b>2.8.1</b> Barplots via <code>geom_bar</code> or <code>geom_col</code></a></li>
-<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#must-avoid-pie-charts"><i class="fa fa-check"></i><b>2.8.2</b> Must avoid pie charts!</a></li>
-<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.3</b> Two categorical variables</a></li>
-<li class="chapter" data-level="2.8.4" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.4</b> Summary</a></li>
+<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.2</b> Two categorical variables</a></li>
+<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.9</b> Conclusion</a>
+<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#plots-to-avoid"><i class="fa fa-check"></i><b>2.9</b> Plots to avoid!</a>
 <ul>
-<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.9.1</b> Summary table</a></li>
-<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.9.2</b> Function argument specification</a></li>
-<li class="chapter" data-level="2.9.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.9.3</b> Additional resources</a></li>
-<li class="chapter" data-level="2.9.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.9.4</b> What’s to come</a></li>
+<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#barplots-with-a-continuous-variable"><i class="fa fa-check"></i><b>2.9.1</b> Barplots with a continuous variable</a></li>
+<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#pie-charts"><i class="fa fa-check"></i><b>2.9.2</b> Pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.10</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.10.1</b> Summary table</a></li>
+<li class="chapter" data-level="2.10.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.10.2</b> Function argument specification</a></li>
+<li class="chapter" data-level="2.10.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.10.3</b> Additional resources</a></li>
+<li class="chapter" data-level="2.10.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.10.4</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-wrangling.html"><a href="3-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a>
@@ -306,25 +314,20 @@ div.csl-indent {
 <li class="chapter" data-level="3.9.3" data-path="3-wrangling.html"><a href="3-wrangling.html#whats-to-come-1"><i class="fa fa-check"></i><b>3.9.3</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> Data Importing and “Tidy” Data</a>
+<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> “Tidy” Data</a>
 <ul>
 <li class="chapter" data-level="" data-path="4-tidy.html"><a href="4-tidy.html#tidy-packages"><i class="fa fa-check"></i>Needed packages</a></li>
-<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#csv"><i class="fa fa-check"></i><b>4.1</b> Importing data</a>
+<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.1</b> “Tidy” data</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#using-the-console"><i class="fa fa-check"></i><b>4.1.1</b> Using the console</a></li>
-<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#using-rstudios-interface"><i class="fa fa-check"></i><b>4.1.2</b> Using RStudio’s interface</a></li>
+<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.1.1</b> Definition of “tidy” data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.1.2</b> Converting to “tidy” data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.2</b> “Tidy” data</a>
+<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.2</b> Case study: Weight loss data</a></li>
+<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.3</b> <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.4</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.2.1</b> Definition of “tidy” data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.2.2</b> Converting to “tidy” data</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.3</b> Case study: Weight loss data</a></li>
-<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.4</b> <code>tidyverse</code> package</a></li>
-<li class="chapter" data-level="4.5" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.5</b> Conclusion</a>
-<ul>
-<li class="chapter" data-level="4.5.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="4.5.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="4.4.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.4.1</b> Additional resources</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.4.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Inference with infer</b></span></li>
@@ -354,10 +357,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-sampling.html"><a href="5-sampling.html#sampling-case-study"><i class="fa fa-check"></i><b>5.4</b> Case study: Genetic crosses</a></li>
 <li class="chapter" data-level="5.5" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-central-limit-theorem"><i class="fa fa-check"></i><b>5.5</b> Central Limit Theorem</a></li>
-<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.6</b> Conclusion</a>
+<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6</b> Sampling scenarios</a></li>
+<li class="chapter" data-level="5.7" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.7</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6.1</b> Sampling scenarios</a></li>
-<li class="chapter" data-level="5.6.2" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.6.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="5.7.1" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.7.1</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html"><i class="fa fa-check"></i><b>6</b> Bootstrapping and Confidence Intervals</a>
@@ -401,12 +404,22 @@ div.csl-indent {
 <li class="chapter" data-level="6.6.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-build"><i class="fa fa-check"></i><b>6.6.3</b> Constructing the confidence interval</a></li>
 <li class="chapter" data-level="6.6.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#interpreting-the-confidence-interval"><i class="fa fa-check"></i><b>6.6.4</b> Interpreting the confidence interval</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.7</b> Conclusion</a>
+<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7</b> Comparing bootstrap and sampling distributions</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7.1</b> Comparing bootstrap and sampling distributions</a></li>
-<li class="chapter" data-level="6.7.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.7.2</b> Theory-based confidence intervals</a></li>
-<li class="chapter" data-level="6.7.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.7.3</b> Additional resources</a></li>
-<li class="chapter" data-level="6.7.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.7.4</b> What’s to come?</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#sampling-distribution"><i class="fa fa-check"></i>Sampling distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-distribution"><i class="fa fa-check"></i>Bootstrap distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#comparison"><i class="fa fa-check"></i>Comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.8</b> Theory-based confidence intervals</a>
+<ul>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-computing-standard-errors"><i class="fa fa-check"></i>Theory-based method for computing standard errors</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-constructing-confidence-intervals"><i class="fa fa-check"></i>Theory-based method for constructing confidence intervals</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#confidence-intervals-based-on-33-tactile-samples"><i class="fa fa-check"></i>Confidence intervals based on 33 tactile samples</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.9</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.9.1</b> Additional resources</a></li>
+<li class="chapter" data-level="6.9.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.9.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Hypothesis Testing</a>
@@ -438,17 +451,22 @@ div.csl-indent {
 <li class="chapter" data-level="7.5.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#sampling-scenario-1"><i class="fa fa-check"></i><b>7.5.2</b> Sampling scenario</a></li>
 <li class="chapter" data-level="7.5.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#conducting-the-hypothesis-test"><i class="fa fa-check"></i><b>7.5.3</b> Conducting the hypothesis test</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.6</b> Conclusion</a>
+<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6</b> Theory-based hypothesis tests</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6.1</b> Theory-based hypothesis tests</a></li>
-<li class="chapter" data-level="7.6.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.6.2</b> Problems with p-values</a></li>
-<li class="chapter" data-level="7.6.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6.3</b> Additional resources</a></li>
-<li class="chapter" data-level="7.6.4" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.6.4</b> What’s to come</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#two-sample-t-statistic"><i class="fa fa-check"></i>Two-sample t-statistic</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#null-distribution"><i class="fa fa-check"></i>Null distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.7</b> Problems with p-values</a></li>
+<li class="chapter" data-level="7.8" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.8</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.8.1</b> Additional resources</a></li>
+<li class="chapter" data-level="7.8.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.8.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III Data Modeling with moderndive</b></span></li>
 <li class="chapter" data-level="8" data-path="8-regression.html"><a href="8-regression.html"><i class="fa fa-check"></i><b>8</b> Basic Regression</a>
 <ul>
+<li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-modeling"><i class="fa fa-check"></i>Modeling for explanation or prediction</a></li>
 <li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-packages"><i class="fa fa-check"></i>Needed packages</a></li>
 <li class="chapter" data-level="8.1" data-path="8-regression.html"><a href="8-regression.html#model1"><i class="fa fa-check"></i><b>8.1</b> One numerical explanatory variable</a>
 <ul>
@@ -503,11 +521,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.4.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#confidence-interval-for-slope"><i class="fa fa-check"></i><b>9.4.1</b> Confidence interval for slope</a></li>
 <li class="chapter" data-level="9.4.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#hypothesis-test-for-slope"><i class="fa fa-check"></i><b>9.4.2</b> Hypothesis test for slope</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.5</b> Conclusion</a>
+<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5</b> Theory-based inference for regression</a></li>
+<li class="chapter" data-level="9.6" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="9.5.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5.1</b> Theory-based inference for regression</a></li>
-<li class="chapter" data-level="9.5.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.5.2</b> Summary of statistical inference</a></li>
-<li class="chapter" data-level="9.5.3" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.5.3</b> What’s to come</a></li>
+<li class="chapter" data-level="9.6.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.6.1</b> Summary of statistical inference</a></li>
+<li class="chapter" data-level="9.6.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.6.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-multiple-regression.html"><a href="10-multiple-regression.html"><i class="fa fa-check"></i><b>10</b> Multiple Regression</a>
@@ -655,9 +673,13 @@ div.csl-indent {
 <html>
 <img src='https://moderndive.com/wide_format.png' alt="ModernDive">
 </html>
-<div id="about-the-authors" class="section level1 unnumbered">
-<h1>About the authors</h1>
+<div id="about-the-authors" class="section level1 unnumbered hasAnchor">
+<h1>About the authors<a href="about-the-authors.html#about-the-authors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="center">Chester Ismay</th>
@@ -697,7 +719,6 @@ div.csl-indent {
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -738,7 +759,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

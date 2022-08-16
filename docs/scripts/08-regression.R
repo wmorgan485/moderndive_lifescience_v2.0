@@ -68,6 +68,8 @@ LionNoses %>%
 
 
 
+
+
 ## ----numxplot3, fig.cap="Regression line.", message=FALSE---------------------
 ggplot(LionNoses, aes(x = age, y = proportion.black)) +
   geom_point() +

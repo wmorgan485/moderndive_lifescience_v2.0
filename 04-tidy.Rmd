@@ -1,4 +1,4 @@
-# Data Importing and "Tidy" Data {#tidy}
+# "Tidy" Data {#tidy}
 
 ```{r setup_tidy, include=FALSE, purl=FALSE}
 # Used to define Learning Check numbers:
@@ -27,12 +27,25 @@ options(knitr.kable.NA = "")
 # Set random number generator see value for replicable pseudorandomness.
 set.seed(76)
 ```
-<!-- Correct text and @ref in this paragraph
-In Subsection \@ref(programming-concepts), we introduced the concept of a \index{data frame} data frame in R: a rectangular spreadsheet-like representation of data where the rows correspond to observations and the columns correspond to variables describing each observation.  In Section \@ref(WeightLoss), we started exploring our first data frame: the `WeightLoss` data frame included in the `WeightLoss` package. In Chapter \@ref(viz), we created visualizations based on the data included in `WeightLoss` and other data frames such as `weather`. In Chapter \@ref(wrangling), we learned how to take existing data frames and transform/modify them to suit our ends. 
--->
+
+In Subsection \@ref(programming-concepts), we introduced the concept of a \index{data frame} data frame in R: a rectangular spreadsheet-like representation of data where the rows correspond to observations and the columns correspond to variables describing each observation. In Chapter \@ref(viz), we created visualizations using data stored in a data frame, and in Chapter \@ref(wrangling), we learned how to take existing data frames and transform/modify them to suit our ends. 
+
 In this final chapter of the "Data Science with `tidyverse`" portion of the book, we extend some of these ideas by discussing a type of data formatting called "tidy" data. You will see that having data stored in "tidy" format is about more than just what the everyday definition of the term "tidy" might suggest: having your data "neatly organized." Instead, we define the term "tidy" as it's used by data scientists who use R, outlining a set of rules by which data is saved.
 
-Knowledge of this type of data formatting was not necessary for our treatment of data visualization in Chapter \@ref(viz) and data wrangling in Chapter \@ref(wrangling). This is because all the data used were already in "tidy" format. In this chapter, we'll now see that this format is essential to using the tools we covered up until now. Furthermore, it will also be useful for all subsequent chapters in this book when we cover regression and statistical inference. First, however, we'll show you how to import spreadsheet data in R.
+Knowledge of this type of data formatting was not necessary for our treatment of data visualization in Chapter \@ref(viz) and data wrangling in Chapter \@ref(wrangling). This is because all the data used were already in "tidy" format. In this chapter, we'll now see that this format is essential to using the tools we covered up until now. Furthermore, it will also be useful for all subsequent chapters in this book when we cover statistical inference and regression. 
+
+
+```{block loa4, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*  
+• Determine if a dataset is in the “tidy” format necessary for using tidyverse functions.  
+• Convert a data frame from a “wide” format to a “tidy” format.  
+\vspace{-0.1in}
+```
+
 
 ### Needed packages {-#tidy-packages}
 
@@ -57,65 +70,8 @@ library(scales)
 
 
 
-
-## Importing data {#csv}
-
-Up to this point, we've almost entirely used data stored inside of an R package. Say instead you have your own data saved on your computer or somewhere online. How can you analyze this data in R? Spreadsheet data is often saved in one of the following three formats:
-
-First, a *Comma Separated Values* `.csv` \index{CSV file} file.  You can think of a `.csv` file as a bare-bones spreadsheet where:
-
-* Each line in the file corresponds to one row of data/one observation.
-* Values for each line are separated with commas. In other words, the values of different variables are separated by commas in each row.
-* The first line is often, but not always, a *header* row indicating the names of the columns/variables.
-
-Second, an Excel `.xlsx` spreadsheet file. This format is based on Microsoft's proprietary Excel software. As opposed to bare-bones `.csv` files, `.xlsx` Excel files contain a lot of meta-data\index{meta-data} (data about data). Recall we saw a previous example of meta-data in Section \@ref(groupby) when adding "group structure" meta-data to a data frame by using the `group_by()` verb. Some examples of Excel spreadsheet meta-data include the use of bold and italic fonts, colored cells, different column widths, and formula macros.
-
-Third, a [Google Sheets](https://www.google.com/sheets/about/) file, which is a "cloud" or online-based way to work with a spreadsheet. Google Sheets allows you to download your data in both comma separated values `.csv` and Excel `.xlsx` formats. One way to import Google Sheets data in R is to go to the Google Sheets menu bar -> File -> Download as -> Select "Microsoft Excel" or "Comma-separated values" and then load that data into R. A more advanced way to import Google Sheets data in R is by using the [`googlesheets`](https://cran.r-project.org/web/packages/googlesheets/vignettes/basic-usage.html) package, a method we leave to a more advanced data science book.
-
-We'll cover two methods for importing `.csv` and `.xlsx` spreadsheet data in R: one using the console and the other using RStudio's graphical user interface, abbreviated as "GUI."
-
-### Using the console
-
-First, let's import a Comma Separated Values `.csv` file that exists on the internet. The `.csv` file `chap12e2BlackbirdTestosterone.csv` compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in  Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175.	Let's use the `read_csv()` function from the `readr` \index{R packages!readr!read\_csv()} [@R-readr] package to read the dataset from the *Analysis of Biological Data* textbook website, import it into R, and save it in a data frame called `blackbird`.
-
-```{r message=FALSE, eval=FALSE}
-library(readr)
-blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
-```
-
-```{r message=FALSE, echo=FALSE, purl=FALSE}
-blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
-# blackbird
-```
-<!-- UPDATE this paragraph
-In this `blackbird` data frame, the minimum value of `-10` corresponds to a highly autocratic nation, whereas a value of `10` corresponds to a highly democratic nation. Note also that backticks surround the different variable names.  Variable names in R by default are not allowed to start with a number nor include spaces, but we can get around this fact by surrounding the column name with backticks. We'll revisit the `blackbird` data frame in a case study in the upcoming Section \@ref(case-study-tidy).
--->
-Note that the `read_csv()` function included in the `readr` package is different than the `read.csv()` function that comes installed with R. While the difference in the names might seem trivial (an `_` instead of a `.`), the `read_csv()` function is, in our opinion, easier to use since it can more easily read data off the web and generally imports data at a much faster speed. Furthermore, the `read_csv()` function included in the `readr` saves data frames as `tibbles` by default. 
-
-
-### Using RStudio's interface
-
-Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by going to <a href="http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv" download>http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv</a>, then
-
-1. Go to the Files pane of RStudio.
-2. Navigate to the directory (i.e., folder on your computer) where the downloaded `chap12e2BlackbirdTestosterone.csv` file is saved. For example, this might be in your Downloads folder.
-3. Click on `chap12e2BlackbirdTestosterone.csv`.
-4. Click "Import Dataset..." 
-
-At this point, you should see a screen pop-up like in Figure \@ref(fig:read-excel). After clicking on the "Import" \index{RStudio!import data} button on the bottom right of Figure \@ref(fig:read-excel), RStudio will save this spreadsheet's data in a data frame called `chap12e2BlackbirdTestosterone` and display its contents in the spreadsheet viewer. 
-
-```{r read-excel, echo=FALSE, fig.cap="Importing an Excel file to R.", purl=FALSE}
-include_graphics("images/rstudio_screenshots/read_excel.png")
-```
-
-Furthermore, note the "Code Preview" block in the bottom right of Figure \@ref(fig:read-excel). You can copy and paste this code to reload your data again later programmatically, instead of repeating this manual point-and-click process.
-
-
-
-
-
 ## "Tidy" data {#tidy-data-ex}
-Let's now switch gears and learn about the concept of "tidy" data format with a motivating example from the `fivethirtyeight` package. The `fivethirtyeight` package [@R-fivethirtyeight] provides access to the datasets used in many articles published by the data journalism website, [FiveThirtyEight.com](https://fivethirtyeight.com/). For a complete list of all `r nrow(data(package = "fivethirtyeight")[[3]])` datasets included in the `fivethirtyeight` package, check out the package webpage by going to: <https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html>.\index{R packages!fivethirtyeight}
+We will learn about the concept of "tidy" data with a motivating example from the `fivethirtyeight` package. The `fivethirtyeight` package [@R-fivethirtyeight] provides access to the datasets used in many articles published by the data journalism website, [FiveThirtyEight.com](https://fivethirtyeight.com/). For a complete list of all `r nrow(data(package = "fivethirtyeight")[[3]])` datasets included in the `fivethirtyeight` package, check out the package webpage by going to: <https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html>.\index{R packages!fivethirtyeight}
 
 Let's focus our attention on the `drinks` data frame and look at its first 5 rows:
 
@@ -404,57 +360,67 @@ This data frame is not in "tidy" format. How would you convert this data frame t
 
 In this section, we'll show you another example of how to convert a data frame that isn't in "tidy" format ("wide" format) to a data frame that is in "tidy" format ("long/narrow" format). We'll do this using the `pivot_longer()` function from the `tidyr` package again. 
 
-Furthermore, we'll make use of functions from the `ggplot2` and `dplyr` packages to produce a *time-series plot* showing weight loss data for three groups of individuals: control, diet, and diet plus exercise. Recall that we saw time-series plots in Section \@ref(linegraphs) on creating linegraphs using `geom_line()`. 
+Then, we'll make use of functions from the `ggplot2` and `dplyr` packages to produce a *time-series plot* showing weight loss data for three groups of individuals: control, diet, and diet plus exercise. Recall that we saw time-series plots in Section \@ref(linegraphs) on creating linegraphs using `geom_line()`. 
 
-We'll summarize the `WeightLoss` data frame available in the `carData` package and focus on average weight loss data for the `Control` group. 
+We'll summarize the `WeightLoss` data frame available in the `carData` package and focus on average weight loss data for the Diet + Exercise group. 
 
 ```{r}
-ControlGroup <- WeightLoss %>% 
+WeeklyAverage <- WeightLoss %>% 
   group_by(group) %>% 
   summarise(mean_wl1 = mean(wl1), 
             mean_wl2 = mean(wl2), 
-            mean_wl3 = mean(wl3)) %>% 
-  filter(group == "Control") 
-ControlGroup
+            mean_wl3 = mean(wl3))
+WeeklyAverage
 ```
 
 Now, let's lay out the grammar of graphics we saw in Section \@ref(grammarofgraphics). 
 
-First we know we need to set `data = ControlGroup` and use a `geom_line()` layer, but what is the aesthetic mapping of variables? We'd like to see how the weight loss has changed over the months, so we need to map:
+First we know we need to set `data = WeeklyAverage` and use a `geom_line()` layer, but what is the aesthetic mapping of variables? We'd like to see how the weight loss has changed over the months for each group, so we need to map:
 
-* `month` to the x-position aesthetic and
-* `weightloss` to the y-position aesthetic
+* `month` to the x-position aesthetic,
+* `weightloss` to the y-position aesthetic, and
+* `group` to the color aesthetic.
 
-Now we are stuck in a predicament, much like with our `drinks_smaller` example in Section \@ref(tidy-data-ex). <!--We see that we have a variable named `group`, but its only value is `"Control"`.  We have other variables for monthly weight loss denoted by different `wl` values.-->  Unfortunately, the `ControlGroup` data frame is not "tidy" and hence is not in the appropriate format to apply the grammar of graphics, and thus we cannot use the `ggplot2` package just yet.  
+Now we are stuck in a predicament, much like with our `drinks_smaller` example in Section \@ref(tidy-data-ex). We have a variable/column named `group`, but the other variables/columns have combined information about *both* the month and the average weight loss. Because the `WeeklyAverage` data frame is not "tidy", we cannot use the `ggplot2` package until the data is in the appropriate format to apply the grammar of graphics.  
 
-We need to take the values of the columns corresponding to average monthly weight loss (`mean_wl`) in `ControlGroup` and convert them into a new "names" variable called `month`. Because we want these values to count time (in months) for the line graph, below we first rename the variables as integers. Note that backticks (just above the 'tab' key on most keyboards) surround these variable names.  By default, variable names in R are not allowed to start with a number nor include spaces, but we can get around this by surrounding the column name with backticks.
-
-Then, we need to take the average weight loss values in the inside of the data frame and turn them into a new "values" variable called `weightloss`. Our resulting data frame will have three columns:  `group`, `month`, and `weightloss`. Recall that the `pivot_longer()` function in the `tidyr` package does this for us:
+So how do we convert this data frame into a tidy format. First, we need to take the numeric values from the `mean_wl` column names in `WeeklyAverage` and place them into a new "names" variable called `month`. Then, we need to take the average weight loss values inside  the data frame and turn them into a new "values" variable called `weightloss`. Our resulting data frame will have three columns:  `group`, `month`, and `weightloss`. Recall that the `pivot_longer()` function in the `tidyr` package does this for us:
 
 ```{r}
-ControlGroup_tidy <- ControlGroup %>% 
-  rename(`1` = mean_wl1, `2` = mean_wl2, `3` = mean_wl3) %>% 
-  pivot_longer(names_to = "month", 
-               values_to = "weightloss", 
-               cols = -group,
-               names_transform = list(month = as.integer)) 
-ControlGroup_tidy
+WeeklyAverage_tidy <- WeeklyAverage %>% 
+  pivot_longer(cols = -group,
+               names_to = "month", 
+               values_to = "weightloss") 
+WeeklyAverage_tidy
 ```
 
-1. `names_to` is the name of the variable in the new "tidy" data frame that will contain the *column names* of the original data. Observe how we set `names_to = "month"`.  In the resulting `ControlGroup_tidy`, the column `month` indicates the month that the weight loss was measured.
-1. `values_to` is the name of the variable in the new "tidy" data frame that will contain the *values* of the original data. Observe how we set `values_to = "weightloss"`. In the resulting `ControlGroup_tidy` the column `weightloss` contains the 1 $\times$ 3 = 3 weight loss scores as numeric values.
-1. The third argument is the columns you either want to or don't want to "tidy." Observe how we set this to `cols = -group` indicating that we don't want to "tidy" the `group` variable in `ControlGroup` and rather only variables `1` through `3`. 
+1. The first argument specifies the columns you either want to or don't want to "tidy." We set this to `cols = -group` indicating that we don't want to "tidy" the `group` variable but do want to "tidy" the other variables in `WeeklyAverage`. 
+1. `names_to` is the name of the variable in the new "tidy" data frame that will contain the *column names* of the original data. Observe how we set `names_to = "month"`.  In the resulting `WeeklyAverage_tidy`, the column `month` indicates the month that the weight loss was measured.
+1. `values_to` is the name of the variable in the new "tidy" data frame that will contain the *values* of the original data. Observe how we set `values_to = "weightloss"`. In the resulting `WeeklyAverage_tidy` the column `weightloss` contains the 3 $\times$ 3 = 3 weight loss scores as numeric values.
 1. The last argument of `names_transform` tells R what type of variable `year` should be set to. Without specifying that it is an `integer` as we've done here, `pivot_longer()` will set it to be a character value by default.
 
-We can now create the time-series plot in Figure \@ref(fig:guat-dem-tidy) to visualize how weight loss scores in the Control group have changed during the study using a \index{ggplot2!geom\_line()} `geom_line()`. Furthermore, we'll use the `labs()` function in the `ggplot2` package to add informative labels to all the `aes()`thetic attributes of our plot, in this case the `x` and `y` positions.
+This is a good start, but to create the time-series plot, the month variable needs to be numeric, not a character string. We can fix this by converting the `month` variable to an integer using two additional arguments in the `pivot_longer` command. We'll use `names_prefix` to strip off the `mean_wl` prefix from each column name, and `names_transform` to convert `month` into an integer variable. 
 
-```{r guat-dem-tidy, fig.cap="Weight loss scores of control group.", fig.height=3}
-ggplot(ControlGroup_tidy, aes(x = month, y = weightloss)) +
-  geom_line() +
-  labs(x = "Month", y = "Weight Loss Score")
+```{r}
+WeeklyAverage_tidy <- WeeklyAverage %>% 
+  pivot_longer(cols = -group,
+               names_to = "month",
+               names_prefix = "mean_wl",
+               names_transform = list(month = as.integer),
+               values_to = "weightloss") 
+WeeklyAverage_tidy
 ```
 
-Note that if we forgot to include the `names_transform` argument specifying that `year` was not of character format, we would have gotten an error here since `geom_line()` wouldn't have known how to sort the character values in `month` in the right order. 
+We can now create the time-series plot in Figure \@ref(fig:guat-dem-tidy) using \index{ggplot2!geom\_line()} `geom_line()` to visualize how weight loss scores in each group changed during the study. Furthermore, we'll use the `labs()` function in the `ggplot2` package to add informative labels to the `aes()`thetic attributes of our plot.
+
+```{r guat-dem-tidy, fig.cap="Weight loss scores of control group.", fig.height=3}
+ggplot(WeeklyAverage_tidy, aes(x = month, y = weightloss, color = group)) +
+  geom_line() +
+  labs(x = "Month", y = "Weight Loss Score", color = "Study group")
+```
+
+We see that the Diet + Exercise group had a higher average weight loss score in the first month than the other groups, but eventually the average weight loss scores converged in the third month.
+
+Note that if we forgot to include the `names_transform` argument specifying that `month` should be in the integer format, we would have gotten an error here since `geom_line()` wouldn't have known how to sort the character values in `month` in the right order. 
 
 ```{block lc-tidying, type="learncheck", purl=FALSE}
 \vspace{-0.15in}
@@ -464,7 +430,9 @@ Note that if we forgot to include the `names_transform` argument specifying that
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Read in the life expectancy data stored at <https://moderndive.com/data/le_mess.csv> and convert it to a "tidy" data frame. 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Prepare line graphs displaying the average weight loss scores with time for all three groups using facets or different colored lines for each group.  
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Prepare line graphs displaying the average weight loss scores with time for each group using facets instead. Is the faceted plot more helpful for comparing the groups than the original plot?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Revise the code for the original plot to better visualize the sampling variation for each group and month. 
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -530,7 +498,7 @@ generate_r_file_link("04-tidy.R")
 ```
 -->
 
-If you want to learn more about using the `readr` and `tidyr` package, we suggest that you check out RStudio's "Data Import Cheat Sheet." In the current version of RStudio in late 2019, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheatsheets -> "Browse Cheatsheets" -> Scroll down the page to the "Data Import Cheat Sheet." The first page of this cheatsheet has information on using the `readr` package to import data, while the second page has information on using the `tidyr` package to "tidy" data. `r if(is_html_output()) "You can see a preview of both cheatsheets in the figures below."`
+If you want to learn more about using the `readr` and `tidyr` package, we suggest that you check out RStudio's "Data Import Cheat Sheet." In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Browse Cheatsheets" -> Scroll down the page to the "Data Import Cheat Sheet." The first page of this cheatsheet has information on using the `readr` package to import data, while the second page has information on using the `tidyr` package to "tidy" data. `r if(is_html_output()) "You can see a preview of both cheatsheets in the figures below."`
 
 ```{r import-cheatsheet, echo=FALSE, fig.cap="Data Import cheatsheet (first page): readr package.", out.width="66%", purl=FALSE}
 if (is_html_output()) {

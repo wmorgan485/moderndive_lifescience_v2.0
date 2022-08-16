@@ -37,6 +37,22 @@ set.seed(76)
 
 In this chapter, we kick off the second portion of this book on statistical inference by learning about *sampling*. The concepts behind sampling form the basis of confidence intervals and hypothesis testing, which we'll cover in Chapters \@ref(confidence-intervals) and \@ref(hypothesis-testing). We will see that the tools that you learned in the data science portion of this book, in particular data visualization and data wrangling, will also play an important role in the development of your understanding.  As mentioned before, the concepts throughout this text all build into a culmination allowing you to "tell your story with data." 
 
+```{block loa5, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*  
+• Define and explain the basis of sampling error.  
+• Describe how to produce a sampling distribution and explain why it approximates a normal distribution.  
+• Explain how sample size affects the spread (standard deviation) of the sampling distribution.  
+• Recognize when a sampling methodology is not representative, generalizable, or unbiased and explain why.  
+• Describe how to conduct random sampling.  
+• List sampling steps that can be used to improve the accuracy and precision of a point estimate.  
+\vspace{-0.1in}
+```
+
+
 
 ### Needed packages {-#sampling-packages}
 
@@ -825,7 +841,7 @@ Let's now put all four sets of terms and notation together, keeping our sampling
 * the sample proportion $\widehat{p}$ of the $n$ = 50 balls in the shovel that are red is a "good guess" of the population proportion $p$ of the bowl's $N$ = `r num_balls` balls that are red, thus
 * instead of conducting a *census* of the `r num_balls` balls in the bowl, we can **infer** about the bowl using the sample from the shovel.
 
-What you have been performing is **statistical inference**. This is one of the most important concepts in all of statistics. So much so, we included this term in the title of our book: "Statistial Inference via Data Science". More generally speaking, 
+What you have been performing is **statistical inference**. This is one of the most important concepts in all of statistics; so much so, this term is in the title of the original book: "Statistical Inference via Data Science". More generally speaking, 
 
 * If the sampling of a sample of size $n$ is done at *random*, then
 * the sample is *unbiased* and *representative* of the population of size $N$, thus
@@ -1210,13 +1226,7 @@ can replicate what was done in the video?
 
 
 
-
-
-
-
-## Conclusion {#sampling-conclusion}
-
-### Sampling scenarios {#sampling-conclusion-table}
+## Sampling scenarios {#sampling-conclusion-table}
 
 In this chapter, we performed both tactile and virtual sampling exercises to infer about an unknown proportion. We also presented a case study of sampling in real life with genetic crosses. In each case, we used the sample proportion $\widehat{p}$ to estimate the population proportion $p$. However, we are not just limited to scenarios related to proportions. In other words, we can use sampling to estimate other population parameters using other point estimates as well. We present four more such scenarios in Table \@ref(tab:table-ch8). 
 
@@ -1261,6 +1271,32 @@ In the rest of this book, we'll cover all the remaining scenarios as follows:
 * In Chapter \@ref(inference-for-regression), we'll cover an example of statistical inference for regression by revisiting the regression models for tooth growth as a function of various explanatory variables you'll see in Chapter \@ref(regression).
     + Scenario 5: The slope $\beta_1$ of the population regression line.
 
+
+
+
+
+
+## Conclusion {#sampling-conclusion}
+
+
+```{block cls5, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Summary_**
+
+* When a complete census of a population is impractical, a subset of individuals, or sample, can be used to estimate an unknown parameter, such as mean weight, of a population.  
+* Sampling can be performed tactically with random draws or virtually (and more quickly) with computer simulations.  
+* The subset of individuals chosen will vary between samples; consequently, the estimate will almost always differ between samples (sampling variation) and from the true population parameter (sampling error).  
+* Repeated sampling of a population produces a sampling distribution, where most sample estimates differ somewhat from the true population parameter, but some differ greatly.  
+* As the number of samples increases, the distribution of sample estimates more closely resembles a bell-shaped, or normal, distribution.  
+* The mean of the sampling distribution approximates the population parameter, and 95% of the sample estimates lie within ~2 standard deviations of this mean.  
+* As the size of each sample increases, the standard deviation of the sampling distribution (called the standard error) narrows; therefore, sample estimates very close to the population parameter become more likely.  
+* Random sampling, where each individual is equally likely to be chosen, ensures that a sample is unbiased and representative of the population.  
+* Accurate estimates are on target, while precise estimates are consistent. Random sampling and large sample sizes yield accurate and precise estimates.  
+* According to the Central Limit Theorem, the sampling distribution will become normal with increasing sample sizes; this property allows us a sample estimate to be used to infer a population parameter.  
+\vspace{-0.1in}
+```
+
 <!--
 ### Additional resources
 
@@ -1277,4 +1313,4 @@ generate_r_file_link("07-sampling.R")
 
 ### What's to come?
 
-Recall in our Genetic cross case study in Section \@ref(sampling-case-study) that based on this particular sample, the best guess of the proportion of offspring of *all* curly-winged parents was 68%. However, this isn't the end of the story. Most samples won't produce an estimate that's perfectly right; there will always be a certain amount of error caused by *sampling variation*. In the next chapter, we will look at *confidence intervals*, the interval that is likely to contain our true *population* proportion.
+Recall in our Genetic cross case study in Section \@ref(sampling-case-study) that based on this particular sample, the best guess of the proportion of offspring of *all* curly-winged parents was 68%. However, this isn't the end of the story. Most samples won't produce an estimate that's perfectly right; there will always be a certain amount of error caused by *sampling variation*. Public opinion pollsters refer to this uncertainty as the “margin of error.” As we’ll see in the next chapter, data scientists use a related term called the  *confidence interval*, the interval that is likely to contain our true *population* proportion.

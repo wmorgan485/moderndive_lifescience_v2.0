@@ -40,6 +40,18 @@ if (!is_latex_output()) {
 }
 ```
 
+```{block loa7, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*   
+• State useful null and alternative statistical hypotheses.  
+• Perform hypothesis testing in R using computer-based and theory-based methods.  
+• Properly interpret p-values to reach statistical conclusions.  
+\vspace{-0.1in}
+```
+
 
 ### Needed packages {-#nhst-packages}
 
@@ -164,7 +176,7 @@ The question is, however, does this provide *conclusive* evidence that there is 
 
 To run the simulations, we will work with the original `BirdMalaria` dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn't affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our `BirdMalaria` data frame, the `treatment` variable would thus be an irrelevant label for predicting malaria infection. If these `treatment` labels were irrelevant, then we could randomly reassign them by "shuffling" them to no consequence!
 
-To illustrate this idea, let's narrow our focus to 6 arbitrarily chosen females of the `r total_birds` in Table \@ref(tab:compare-six). The malaria column shows that 3 females were infected while 3 weren't. The `treatment` column shows the nest treatment, control or egg removal. 
+To illustrate this idea, in Table \@ref(tab:compare-six) we narrow our focus to 6 arbitrarily chosen females of the `r total_birds` . The malaria column shows that 3 females were infected while 3 weren't. The `treatment` column shows the nest treatment, control or egg removal. 
 
 However, in our hypothesized universe of no effect of egg removal, treatment is irrelevant and thus it is of no consequence to randomly "shuffle" the values of `treatment`. The `shuffled_treatment` column shows one such possible random shuffling. Observe in the last column how the number of females in the `Egg removal` group and the `Control` group  remains the same at 3 each, but they are now listed in a different order. 
 
@@ -288,7 +300,7 @@ n_shuffle <- 99L
 
 Imagine that we repeated the shuffling process above `r n_shuffle` more times and recorded the values in `r n_shuffle` more `shuffled__treatment` columns. The `shuffled_results` dataset includes the results of one such scenario
 
-```{r, echo=FALSE, message=FALSE, purl=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
 shuffled_results <- BirdMalaria_shuffled
 for (j in 1:n_shuffle) {
   shuffled_results <- BirdMalaria %>%  
@@ -1033,7 +1045,7 @@ HornedLizards %>% tibble()
 
 ```{r echo=FALSE, purl=FALSE}
 # This code is used for dynamic non-static in-line text output purposes
-n_HornedLizards <- HornedLizards %>% drop_na() %>% nrow()
+n_HornedLizards <- HornedLizards %>% tidyr::drop_na() %>% nrow()
 ```
 
 Let's perform an exploratory data analysis of this data. Recall from Subsection \@ref(geomboxplot) that a boxplot is a visualization we can use to show the relationship between a numerical and a categorical variable. Another option you saw in Section \@ref(facets) would be to use a faceted histogram. However, in the interest of brevity, let's only present the boxplot in Figure \@ref(fig:killed-living-boxplot).
@@ -1046,10 +1058,10 @@ ggplot(data = HornedLizards, aes(x = group, y = horn.length)) +
 
 Eyeballing Figure \@ref(fig:killed-living-boxplot), living horned lizards have a greater median horn length than killed. Do we have reason to believe, however, that there is a *significant* difference between the mean `horn.length` for killed horned lizards compared to living horned lizards?  Although the boxplot does show that the median sample horn length is higher for living horned lizards, it's hard to conclude if this difference is statistically significant or due to random chance in the sample of horned lizards studied. After all, there is a fair amount of overlap between the boxes. Recall that the median isn't necessarily the same as the mean either, depending on whether the distribution is skewed.  
 
-Did you notice the warning above that one row contains "non-finite" values? Apparently one row has missing values -- which explains why the dataset has 185 rows instead of the expected 184 observations. Before we proceed further, let's use `drop_na` to drop the row with missing data to potentially avoid trouble later on.
+Did you notice the warning above that one row contains "non-finite" values? Apparently one row has missing values -- which explains why the dataset has 185 rows instead of the expected 184 observations. Before we proceed further, let's use `tidyr::drop_na` to drop the row with missing data to potentially avoid trouble later on.
 
 ```{r}
-HornedLizards <- HornedLizards %>% drop_na()
+HornedLizards <- HornedLizards %>% tidyr::drop_na()
 ```
 
 Let's calculate some summary statistics -- the number of horned lizards, the mean horn length, and the standard deviation -- split by the binary categorical variable `group`. We'll do this using `dplyr` data wrangling verbs. Notice in particular how we count the number of each type of lizard using the `n()` summary function. 
@@ -1290,12 +1302,7 @@ In particular, this $p$-value is less than our pre-specified $\alpha$ significan
 
 
 
-
-
-## Conclusion {#nhst-conclusion}
-
-
-### Theory-based hypothesis tests {#theory-hypo}
+## Theory-based hypothesis tests {#theory-hypo}
 
 Much as we did in Subsection \@ref(theory-ci) when we showed you a theory-based method for constructing confidence intervals that involved mathematical formulas, we now present an example of a traditional theory-based method to conduct hypothesis tests. This method relies on probability models, probability distributions, and a few assumptions to construct the null distribution. This is in contrast to the approach we've been using throughout this book where we relied on computer simulations to construct the null distribution.
 
@@ -1303,7 +1310,7 @@ These traditional theory-based methods have been used for decades mostly because
 
 As we'll show in this section, any theory-based method is ultimately an approximation to the simulation-based method. The theory-based method we'll focus on is known as the *two-sample $t$-test* for testing differences in sample means. However, the test statistic we'll use won't be the difference in sample means $\overline{x}_1 - \overline{x}_2$, but rather the related  *two-sample $t$-statistic*. The data we'll use will once again be the `HornedLizards` data of killed and living horned lizards from Section \@ref(ht-case-study).
 
-#### Two-sample t-statistic {-}
+### Two-sample t-statistic {-}
 
 A common task in statistics is the process of "standardizing a variable." By standardizing different variables, we make them more comparable. For example, say you are interested in studying the distribution of temperature recordings from Portland, Oregon, USA and comparing it to that of the temperature recordings in Montreal, Quebec, Canada. Given that US temperatures are generally recorded in degrees Fahrenheit and Canadian temperatures are generally recorded in degrees Celsius, how can we make them comparable? One approach would be to convert degrees Fahrenheit into Celsius, or vice versa. Another approach would be to convert them both to a common "standardized" scale, like Kelvin units of temperature. 
 
@@ -1421,7 +1428,7 @@ $$
 
 Great! How can we compute the $p$-value using this theory-based test statistic? We need to compare it to a null distribution, which we construct next.
 
-#### Null distribution {-}
+### Null distribution {-}
   
 Let's revisit the null distribution for the test statistic $\bar{x}_k - \bar{x}_l$ we constructed in Section \@ref(ht-case-study). Let's visualize this in the left-hand plot of Figure \@ref(fig:comparing-diff-means-t-stat).
 
@@ -1527,7 +1534,7 @@ You may be wondering why we chose ``reps = `r n_reps` `` for these simulation-ba
 
 
 
-### Problems with p-values
+## Problems with p-values
 
 On top of the many common misunderstandings about hypothesis testing and $p$-values we listed in Section \@ref(ht-interpretation), another unfortunate consequence of the expanded use of $p$-values and hypothesis testing is a phenomenon known as "p-hacking." \index{p-hacking} p-hacking is the act of "cherry-picking" only results that are "statistically significant" while dismissing those that aren't, even if at the expense of the scientific ideas. There are lots of articles written recently about misunderstandings and the problems with $p$-values. We encourage you to check some of them out:
 
@@ -1540,6 +1547,36 @@ On top of the many common misunderstandings about hypothesis testing and $p$-val
 Such issues were getting so problematic that the American Statistical Association (ASA) put out a statement in 2016 titled, ["The ASA Statement on Statistical Significance and $P$-Values,"](https://www.amstat.org/asa/files/pdfs/P-ValueStatement.pdf) with six principles underlying the proper use and interpretation of $p$-values. The ASA released this guidance on $p$-values to improve the conduct and interpretation of quantitative science and to inform the growing emphasis on reproducibility of science research. 
 
 We as authors much prefer the use of confidence intervals for statistical inference, since in our opinion they are much less prone to large misinterpretation. However, many fields still exclusively use $p$-values for statistical inference and this is one reason for including them in this text. We encourage you to learn more about "p-hacking" as well and its implication for science.
+
+
+
+
+
+## Conclusion {#nhst-conclusion}
+
+```{block cls7, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Summary_**
+
+* Hypothesis testing is used to determine how likely an observed difference of a test statistic between two groups is due to chance.  
+* A statistical hypothesis states the expected values of an unknown population parameter.  
+* The null hypothesis supposes that there is no difference of interest; the alternative hypothesis supposes that there is a difference of interest.  
+* The null distribution is the sampling distribution of a test statistic in a hypothesized universe where there is no difference between the two groups.  
+* The null distribution of a test statistic can be calculated using computer simulations or  theories based on mathematical formulas.  
+* Permutations (shuffling) are a form of resampling without replacement.  
+* Hypothesis testing compares the observed test statistic to its null distribution to determine the likelihood of the observed value (or more extreme values) assuming the null hypothesis is true.  
+* If the p-value is below a pre-selected threshold, called the significance level or alpha, then the null hypothesis is rejected; otherwise, it cannot be rejected (which doesn’t mean that it’s accepted).  
+* Computer-based methods of hypothesis testing with different test statistics use one consistent framework and require fewer specific conditions compared to theory-based methods.  
+* A Type I error (false positive) occurs when the null hypothesis is rejected although it is actually true; the probability of a type I error is denoted by alpha.  
+* A type II error (false negative) occurs when the null hypothesis is not rejected although it is not true; the probability of a type II error is denoted by beta.  
+* Power, 1 - beta, is the probability of rejecting the null hypothesis when it is not true (true positive).  
+* The theory-based method of hypothesis testing uses probability models, probability distributions and some assumptions to construct the null distribution.  
+* Compared to computer based methods, theory-based methods require that additional conditions be met to trust the conclusions.  
+* While p-values are commonly used as evidence for scientific conclusions, they can be easily misunderstood or even misused; in contrast, confidence intervals better indicate the uncertainty associated with a sample statistic.  
+\vspace{-0.1in}
+```
+
 
 
 ### Additional resources

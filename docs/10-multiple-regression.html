@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Multiple Regression | Modern Biological Data Analysis</title>
   <meta name="description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Multiple Regression | Modern Biological Data Analysis" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://moderndive.com/" />
   <meta property="og:image" content="https://moderndive.com//images/logos/book_cover.png" />
   <meta property="og:description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
   <meta name="github-repo" content="moderndive/ModernDive_book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-01-15" />
+<meta name="date" content="2022-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="9-inference-for-regression.html"/>
 <link rel="next" href="11-thinking-with-data.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,12 +49,12 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
 <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
 <script src="libs/dygraphs-1.1.1/shapes.js"></script>
@@ -218,18 +217,23 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.2" data-path="1-getting-started.html"><a href="1-getting-started.html#package-loading"><i class="fa fa-check"></i><b>1.3.2</b> Package loading</a></li>
 <li class="chapter" data-level="1.3.3" data-path="1-getting-started.html"><a href="1-getting-started.html#package-use"><i class="fa fa-check"></i><b>1.3.3</b> Package use</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishbase"><i class="fa fa-check"></i><b>1.4</b> Explore your first datasets</a>
+<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdb"><i class="fa fa-check"></i><b>1.4</b> Explore your first data sets</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishpackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>rfishbase</code> package</a></li>
-<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#fishbasedataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>fishbase</code> data frame</a></li>
+<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#openintropackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>openintro</code> package</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>mammals</code> data frame</a></li>
 <li class="chapter" data-level="1.4.3" data-path="1-getting-started.html"><a href="1-getting-started.html#exploredataframes"><i class="fa fa-check"></i><b>1.4.3</b> Exploring data frames</a></li>
 <li class="chapter" data-level="1.4.4" data-path="1-getting-started.html"><a href="1-getting-started.html#identification-vs-measurement-variables"><i class="fa fa-check"></i><b>1.4.4</b> Identification and measurement variables</a></li>
 <li class="chapter" data-level="1.4.5" data-path="1-getting-started.html"><a href="1-getting-started.html#help-files"><i class="fa fa-check"></i><b>1.4.5</b> Help files</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.5</b> Conclusion</a>
+<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#csv"><i class="fa fa-check"></i><b>1.5</b> Importing data</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#using-the-console"><i class="fa fa-check"></i><b>1.5.1</b> Using the console</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#using-rstudios-interface"><i class="fa fa-check"></i><b>1.5.2</b> Using RStudio’s interface</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.6.1</b> Additional resources</a></li>
+<li class="chapter" data-level="1.6.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.6.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Science with tidyverse</b></span></li>
@@ -270,16 +274,20 @@ div.csl-indent {
 <li class="chapter" data-level="2.8" data-path="2-viz.html"><a href="2-viz.html#geombar"><i class="fa fa-check"></i><b>2.8</b> 5NG#5: Barplots</a>
 <ul>
 <li class="chapter" data-level="2.8.1" data-path="2-viz.html"><a href="2-viz.html#barplots-via-geom_bar-or-geom_col"><i class="fa fa-check"></i><b>2.8.1</b> Barplots via <code>geom_bar</code> or <code>geom_col</code></a></li>
-<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#must-avoid-pie-charts"><i class="fa fa-check"></i><b>2.8.2</b> Must avoid pie charts!</a></li>
-<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.3</b> Two categorical variables</a></li>
-<li class="chapter" data-level="2.8.4" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.4</b> Summary</a></li>
+<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.2</b> Two categorical variables</a></li>
+<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.9</b> Conclusion</a>
+<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#plots-to-avoid"><i class="fa fa-check"></i><b>2.9</b> Plots to avoid!</a>
 <ul>
-<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.9.1</b> Summary table</a></li>
-<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.9.2</b> Function argument specification</a></li>
-<li class="chapter" data-level="2.9.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.9.3</b> Additional resources</a></li>
-<li class="chapter" data-level="2.9.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.9.4</b> What’s to come</a></li>
+<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#barplots-with-a-continuous-variable"><i class="fa fa-check"></i><b>2.9.1</b> Barplots with a continuous variable</a></li>
+<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#pie-charts"><i class="fa fa-check"></i><b>2.9.2</b> Pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.10</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.10.1</b> Summary table</a></li>
+<li class="chapter" data-level="2.10.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.10.2</b> Function argument specification</a></li>
+<li class="chapter" data-level="2.10.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.10.3</b> Additional resources</a></li>
+<li class="chapter" data-level="2.10.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.10.4</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-wrangling.html"><a href="3-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a>
@@ -306,25 +314,20 @@ div.csl-indent {
 <li class="chapter" data-level="3.9.3" data-path="3-wrangling.html"><a href="3-wrangling.html#whats-to-come-1"><i class="fa fa-check"></i><b>3.9.3</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> Data Importing and “Tidy” Data</a>
+<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> “Tidy” Data</a>
 <ul>
 <li class="chapter" data-level="" data-path="4-tidy.html"><a href="4-tidy.html#tidy-packages"><i class="fa fa-check"></i>Needed packages</a></li>
-<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#csv"><i class="fa fa-check"></i><b>4.1</b> Importing data</a>
+<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.1</b> “Tidy” data</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#using-the-console"><i class="fa fa-check"></i><b>4.1.1</b> Using the console</a></li>
-<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#using-rstudios-interface"><i class="fa fa-check"></i><b>4.1.2</b> Using RStudio’s interface</a></li>
+<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.1.1</b> Definition of “tidy” data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.1.2</b> Converting to “tidy” data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.2</b> “Tidy” data</a>
+<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.2</b> Case study: Weight loss data</a></li>
+<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.3</b> <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.4</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.2.1</b> Definition of “tidy” data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.2.2</b> Converting to “tidy” data</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.3</b> Case study: Weight loss data</a></li>
-<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.4</b> <code>tidyverse</code> package</a></li>
-<li class="chapter" data-level="4.5" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.5</b> Conclusion</a>
-<ul>
-<li class="chapter" data-level="4.5.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="4.5.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="4.4.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.4.1</b> Additional resources</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.4.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Inference with infer</b></span></li>
@@ -354,10 +357,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-sampling.html"><a href="5-sampling.html#sampling-case-study"><i class="fa fa-check"></i><b>5.4</b> Case study: Genetic crosses</a></li>
 <li class="chapter" data-level="5.5" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-central-limit-theorem"><i class="fa fa-check"></i><b>5.5</b> Central Limit Theorem</a></li>
-<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.6</b> Conclusion</a>
+<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6</b> Sampling scenarios</a></li>
+<li class="chapter" data-level="5.7" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.7</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6.1</b> Sampling scenarios</a></li>
-<li class="chapter" data-level="5.6.2" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.6.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="5.7.1" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.7.1</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html"><i class="fa fa-check"></i><b>6</b> Bootstrapping and Confidence Intervals</a>
@@ -401,12 +404,22 @@ div.csl-indent {
 <li class="chapter" data-level="6.6.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-build"><i class="fa fa-check"></i><b>6.6.3</b> Constructing the confidence interval</a></li>
 <li class="chapter" data-level="6.6.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#interpreting-the-confidence-interval"><i class="fa fa-check"></i><b>6.6.4</b> Interpreting the confidence interval</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.7</b> Conclusion</a>
+<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7</b> Comparing bootstrap and sampling distributions</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7.1</b> Comparing bootstrap and sampling distributions</a></li>
-<li class="chapter" data-level="6.7.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.7.2</b> Theory-based confidence intervals</a></li>
-<li class="chapter" data-level="6.7.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.7.3</b> Additional resources</a></li>
-<li class="chapter" data-level="6.7.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.7.4</b> What’s to come?</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#sampling-distribution"><i class="fa fa-check"></i>Sampling distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-distribution"><i class="fa fa-check"></i>Bootstrap distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#comparison"><i class="fa fa-check"></i>Comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.8</b> Theory-based confidence intervals</a>
+<ul>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-computing-standard-errors"><i class="fa fa-check"></i>Theory-based method for computing standard errors</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-constructing-confidence-intervals"><i class="fa fa-check"></i>Theory-based method for constructing confidence intervals</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#confidence-intervals-based-on-33-tactile-samples"><i class="fa fa-check"></i>Confidence intervals based on 33 tactile samples</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.9</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.9.1</b> Additional resources</a></li>
+<li class="chapter" data-level="6.9.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.9.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Hypothesis Testing</a>
@@ -438,17 +451,22 @@ div.csl-indent {
 <li class="chapter" data-level="7.5.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#sampling-scenario-1"><i class="fa fa-check"></i><b>7.5.2</b> Sampling scenario</a></li>
 <li class="chapter" data-level="7.5.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#conducting-the-hypothesis-test"><i class="fa fa-check"></i><b>7.5.3</b> Conducting the hypothesis test</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.6</b> Conclusion</a>
+<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6</b> Theory-based hypothesis tests</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6.1</b> Theory-based hypothesis tests</a></li>
-<li class="chapter" data-level="7.6.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.6.2</b> Problems with p-values</a></li>
-<li class="chapter" data-level="7.6.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6.3</b> Additional resources</a></li>
-<li class="chapter" data-level="7.6.4" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.6.4</b> What’s to come</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#two-sample-t-statistic"><i class="fa fa-check"></i>Two-sample t-statistic</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#null-distribution"><i class="fa fa-check"></i>Null distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.7</b> Problems with p-values</a></li>
+<li class="chapter" data-level="7.8" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.8</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.8.1</b> Additional resources</a></li>
+<li class="chapter" data-level="7.8.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.8.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III Data Modeling with moderndive</b></span></li>
 <li class="chapter" data-level="8" data-path="8-regression.html"><a href="8-regression.html"><i class="fa fa-check"></i><b>8</b> Basic Regression</a>
 <ul>
+<li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-modeling"><i class="fa fa-check"></i>Modeling for explanation or prediction</a></li>
 <li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-packages"><i class="fa fa-check"></i>Needed packages</a></li>
 <li class="chapter" data-level="8.1" data-path="8-regression.html"><a href="8-regression.html#model1"><i class="fa fa-check"></i><b>8.1</b> One numerical explanatory variable</a>
 <ul>
@@ -503,11 +521,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.4.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#confidence-interval-for-slope"><i class="fa fa-check"></i><b>9.4.1</b> Confidence interval for slope</a></li>
 <li class="chapter" data-level="9.4.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#hypothesis-test-for-slope"><i class="fa fa-check"></i><b>9.4.2</b> Hypothesis test for slope</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.5</b> Conclusion</a>
+<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5</b> Theory-based inference for regression</a></li>
+<li class="chapter" data-level="9.6" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="9.5.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5.1</b> Theory-based inference for regression</a></li>
-<li class="chapter" data-level="9.5.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.5.2</b> Summary of statistical inference</a></li>
-<li class="chapter" data-level="9.5.3" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.5.3</b> What’s to come</a></li>
+<li class="chapter" data-level="9.6.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.6.1</b> Summary of statistical inference</a></li>
+<li class="chapter" data-level="9.6.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.6.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-multiple-regression.html"><a href="10-multiple-regression.html"><i class="fa fa-check"></i><b>10</b> Multiple Regression</a>
@@ -655,14 +673,28 @@ div.csl-indent {
 <html>
 <img src='https://moderndive.com/wide_format.png' alt="ModernDive">
 </html>
-<div id="multiple-regression" class="section level1" number="10">
-<h1><span class="header-section-number">Chapter 10</span> Multiple Regression</h1>
+<div id="multiple-regression" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Multiple Regression<a href="10-multiple-regression.html#multiple-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In Chapter <a href="8-regression.html#regression">8</a> we introduced ideas related to modeling for explanation, in particular that the goal of modeling is to make explicit the relationship between some outcome variable <span class="math inline">\(y\)</span> and some explanatory variable <span class="math inline">\(x\)</span>. While there are many approaches to modeling, we focused on one particular technique: <em>linear regression</em>, one of the most commonly used and easy-to-understand approaches to modeling. Furthermore to keep things simple, we only considered models with one explanatory <span class="math inline">\(x\)</span> variable that was either numerical in Section <a href="8-regression.html#model1">8.1</a> or categorical in Section <a href="8-regression.html#model2">8.2</a>.</p>
 <p>In this chapter on multiple regression, we’ll start considering models that include more than one explanatory variable <span class="math inline">\(x\)</span>. You can imagine when trying to model a particular outcome variable, like proportion of the lion nose that is black as in Section <a href="8-regression.html#model1">8.1</a> or life expectancy as in Section <a href="8-regression.html#model2">8.2</a>, that it would be useful to include more than just one explanatory variable’s worth of information.</p>
 <p>Since our regression models will now consider more than one explanatory variable, the interpretation of the associated effect of any one explanatory variable must be made in conjunction with the other explanatory variables included in your model. Let’s begin!</p>
-<div id="mult-reg-packages" class="section level3 unnumbered">
-<h3>Needed packages</h3>
-<p>Let’s load all the packages needed for this chapter (this assumes you’ve already installed them). Recall from our discussion in Section <a href="4-tidy.html#tidyverse-package">4.4</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:</p>
+<div class="review">
+<p>
+<strong><em>Chapter Learning Objectives</em></strong>
+</p>
+<p>
+<em>At the end of this chapter, you should be able to…</em><br />
+* Fully interpret a multiple linear regression table for multiple
+regression.<br />
+* Use available evidence to determine if an interaction or parallel
+slopes model is more appropriate.<br />
+* Use a mathematical formula for multiple linear regression to compute
+the fitted value for given explanatory values.<br />
+</p>
+</div>
+<div id="mult-reg-packages" class="section level3 unnumbered hasAnchor">
+<h3>Needed packages<a href="10-multiple-regression.html#mult-reg-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s load all the packages needed for this chapter (this assumes you’ve already installed them). Recall from our discussion in Section <a href="4-tidy.html#tidyverse-package">4.3</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:</p>
 <ul>
 <li><code>ggplot2</code> for data visualization</li>
 <li><code>dplyr</code> for data wrangling</li>
@@ -671,13 +703,13 @@ div.csl-indent {
 <li>As well as the more advanced <code>purrr</code>, <code>tibble</code>, <code>stringr</code>, and <code>forcats</code> packages</li>
 </ul>
 <p>If needed, read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install and load R packages.</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="10-multiple-regression.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb407-2"><a href="10-multiple-regression.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
-<span id="cb407-3"><a href="10-multiple-regression.html#cb407-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb407-4"><a href="10-multiple-regression.html#cb407-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="10-multiple-regression.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb402-2"><a href="10-multiple-regression.html#cb402-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb402-3"><a href="10-multiple-regression.html#cb402-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb402-4"><a href="10-multiple-regression.html#cb402-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span></code></pre></div>
 </div>
-<div id="model4" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> One numerical and one categorical explanatory variable</h2>
+<div id="model4" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> One numerical and one categorical explanatory variable<a href="10-multiple-regression.html#model4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Previously we looked at the relationship between age and nose coloration (proportion black) of male lions in Section <a href="8-regression.html#model1">8.1</a>. The variable <code>proportion.black</code> was the numerical outcome variable <span class="math inline">\(y\)</span>, and the variable <code>age</code> was the numerical explanatory <span class="math inline">\(x\)</span> variable.</p>
 <p>In this section, we are going to consider a different model. Rather than a single explanatory variable, we’ll now include two different explanatory variables. In this example, we’ll look at the relationship between tooth growth and vitamin C intake in guinea pigs. Could it be that increasing levels of vitamin C stimulate tooth growth? Or could it instead be that increasing levels reduce tooth growth? Are there differences in tooth growth depending on the method used to deliver vitamin C?</p>
 <p>We’ll answer these questions by modeling the relationship between these variables using <em>multiple regression</em>, where we have:</p>
@@ -689,8 +721,8 @@ div.csl-indent {
 <li>A categorical explanatory variable <span class="math inline">\(x_2\)</span>, <code>supp</code>, the delivery method, either as orange juice (<code>OJ</code>) or ascorbic acid (<code>VC</code>).</li>
 </ol></li>
 </ol>
-<div id="model4EDA" class="section level3" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> Exploratory data analysis</h3>
+<div id="model4EDA" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> Exploratory data analysis<a href="10-multiple-regression.html#model4EDA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Our dataset is called <code>ToothGrowth</code> and included in R’s <strong>datasets</strong> package. Recall the three common steps in an exploratory data analysis we saw in Subsection <a href="8-regression.html#model1EDA">8.1.1</a>:</p>
 <ol style="list-style-type: decimal">
 <li>Looking at the raw data values.</li>
@@ -698,17 +730,17 @@ div.csl-indent {
 <li>Creating data visualizations.</li>
 </ol>
 <p>Let’s first look at the raw data values by either looking at <code>ToothGrowth</code> using RStudio’s spreadsheet viewer or by using the <code>glimpse()</code> function from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="10-multiple-regression.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ToothGrowth)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="10-multiple-regression.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ToothGrowth)</span></code></pre></div>
 <pre><code>Rows: 60
 Columns: 3
-$ len  &lt;dbl&gt; 4.2, 11.5, 7.3, 5.8, 6.4, 10.0, 11.2, 11.2, 5.2, 7.0, 16.5, 16.5,…
-$ supp &lt;fct&gt; VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, V…
-$ dose &lt;dbl&gt; 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, …</code></pre>
+$ len  &lt;dbl&gt; 4.2, 11.5, 7.3, 5.8, 6.4, 10.0, 11.2, 11.2, 5.2, 7.0, 16.5, 16.5, 15.2, 17.3, 22.5, 1…
+$ supp &lt;fct&gt; VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, VC, V…
+$ dose &lt;dbl&gt; 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, …</code></pre>
 <p>Let’s also display a random sample of 5 rows of the 60 rows corresponding to different courses in Table <a href="10-multiple-regression.html#tab:model4-data-preview">10.1</a>. Remember due to the random nature of the sampling, you will likely end up with a different subset of 5 rows.</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="10-multiple-regression.html#cb410-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="10-multiple-regression.html#cb405-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:model4-data-preview">TABLE 10.1: </span>A random sample of 5 out of the 463 courses at UT Austin
+<span id="tab:model4-data-preview">TABLE 10.1: </span>A random sample of 5 of the 60 data rows
 </caption>
 <thead>
 <tr>
@@ -782,18 +814,18 @@ OJ
 </tbody>
 </table>
 <p>Now that we’ve looked at the raw values in our <code>ToothGrowth</code> data frame and got a sense of the data, let’s compute summary statistics. As we did in our exploratory data analyses in Sections <a href="8-regression.html#model1EDA">8.1.1</a> and <a href="8-regression.html#model2EDA">8.2.1</a> from the previous chapter, let’s use the <code>skim()</code> function from the <code>skimr</code> package:</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="10-multiple-regression.html#cb411-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="10-multiple-regression.html#cb406-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
 <p>Observe that we have no missing data, that there are 30 guinea pigs given orange juice and 30 guinea pigs given ascorbic acid, and that the average vitamin C dose is 1.17.</p>
 <p>Furthermore, let’s compute the correlation coefficient between our two numerical variables: <code>len</code> and <code>dose</code>. Recall from Subsection <a href="8-regression.html#model1EDA">8.1.1</a> that correlation coefficients only exist between numerical variables. We observe that they are “clearly positively” correlated.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="10-multiple-regression.html#cb412-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> </span>
-<span id="cb412-2"><a href="10-multiple-regression.html#cb412-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> len <span class="sc">~</span> dose)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="10-multiple-regression.html#cb407-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> </span>
+<span id="cb407-2"><a href="10-multiple-regression.html#cb407-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> len <span class="sc">~</span> dose)</span></code></pre></div>
 <pre><code>    cor
 1 0.803</code></pre>
-<p>Let’s now perform the last of the three common steps in an exploratory data analysis: creating data visualizations. Given that the outcome variable <code>len</code> and explanatory variable <code>dose</code> are both numerical, we’ll use a scatterplot to display their relationship. How can we incorporate the categorical variable <code>supp</code>, however? By <code>mapping</code> the variable <code>supp</code> to the <code>color</code> aesthetic, thereby creating a <em>colored</em> scatterplot. The following code is similar to the code that created the scatterplot of proportion black nose over lion age in Figure <a href="8-regression.html#fig:numxplot1">8.2</a>, but with <code>color = supp</code> added to the <code>aes()</code>thetic mapping.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="10-multiple-regression.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb414-2"><a href="10-multiple-regression.html#cb414-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb414-3"><a href="10-multiple-regression.html#cb414-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Dose&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tooth length&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Supplement&quot;</span>) <span class="sc">+</span></span>
-<span id="cb414-4"><a href="10-multiple-regression.html#cb414-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Let’s now perform the last of the three common steps in an exploratory data analysis: creating data visualizations. Given that the outcome variable <code>len</code> and explanatory variable <code>dose</code> are both numerical, we’ll use a scatterplot to display their relationship. How can we incorporate the categorical variable <code>supp</code>, however? By <code>mapping</code> the variable <code>supp</code> to the <code>color</code> aesthetic, thereby creating a <em>colored</em> scatterplot. The following code is similar to the code that created the scatterplot of proportion black nose over lion age in Figure <a href="8-regression.html#fig:numxplot1">8.3</a>, but with <code>color = supp</code> added to the <code>aes()</code>thetic mapping.</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="10-multiple-regression.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb409-2"><a href="10-multiple-regression.html#cb409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb409-3"><a href="10-multiple-regression.html#cb409-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Dose&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tooth length&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Supplement&quot;</span>) <span class="sc">+</span></span>
+<span id="cb409-4"><a href="10-multiple-regression.html#cb409-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:numxcatxplot1"></span>
 <img src="ModernDive_files/figure-html/numxcatxplot1-1.png" alt="Colored scatterplot of relationship of teaching and beauty scores." width="\textwidth" />
 <p class="caption">
@@ -803,14 +835,14 @@ FIGURE 10.1: Colored scatterplot of relationship of teaching and beauty scores.
 <p>In the resulting Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, observe that <code>ggplot()</code> assigns a default in red/blue color scheme to the points and to the lines associated with the two levels of <code>supp</code>: <code>OJ</code> and <code>VC</code>. Furthermore, the <code>geom_smooth(method = "lm", se = FALSE)</code> layer automatically fits a different regression line for each group.</p>
 <p>We notice an interesting trend. While both regression lines are positively sloped with dose levels (i.e., guinea pigs receiving higher doses of vitamin C tend to have longer teeth), the slope for dose for the VC guinea pigs is <em>more</em> positive.</p>
 </div>
-<div id="model4interactiontable" class="section level3" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span> Interaction model</h3>
-<p>Let’s now quantify the relationship of our outcome variable <span class="math inline">\(y\)</span> and the two explanatory variables using one type of multiple regression model known as an <em>interaction model</em>.  We’ll explain where the term “interaction” comes from at the end of this section.</p>
+<div id="model4interactiontable" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> Interaction model<a href="10-multiple-regression.html#model4interactiontable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s now quantify the relationship of our outcome variable <span class="math inline">\(y\)</span> and the two explanatory variables using one type of multiple regression model known as an <em>interaction model</em>. We’ll explain where the term “interaction” comes from at the end of this section.</p>
 <p>In particular, we’ll write out the equation of the two regression lines in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> using the values from a regression table. Before we do this, however, let’s go over a brief refresher of regression when you have a categorical explanatory variable <span class="math inline">\(x\)</span>.</p>
 <p>Recall in Subsection <a href="8-regression.html#model2table">8.2.2</a> we fit a regression model for countries’ life expectancies as a function of which continent the country was in. In other words, we had a numerical outcome variable <span class="math inline">\(y\)</span> = <code>lifeExp</code> and a categorical explanatory variable <span class="math inline">\(x\)</span> = <code>continent</code> which had 5 levels: <code>Africa</code>, <code>Americas</code>, <code>Asia</code>, <code>Europe</code>, and <code>Oceania</code>. Let’s re-display the regression table you saw in Table <a href="8-regression.html#tab:catxplot4b">8.8</a>:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-448">TABLE 10.2: </span>Regression table for life expectancy as a function of continent
+<span id="tab:unnamed-chunk-441">TABLE 10.2: </span>Regression table for life expectancy as a function of continent
 </caption>
 <thead>
 <tr>
@@ -955,13 +987,13 @@ continent: Oceania
 </tr>
 </tbody>
 </table>
-<p>Recall our interpretation of the <code>estimate</code> column. Since <code>Africa</code> was the “baseline for comparison” group, the <code>intercept</code> term corresponds to the mean life expectancy for all countries in Africa of 54.8 years. The other four values of <code>estimate</code> correspond to “offsets” relative to the baseline group. So, for example, the “offset” corresponding to the Americas is + as compared to the baseline for comparison group Africa. In other words, the average life expectancy for countries in the Americas is years <em>higher</em>. Thus the mean life expectancy for all countries in the Americas is 54.8 + = . The same interpretation holds for Asia, Europe, and Oceania.</p>
+<p>Recall our interpretation of the <code>estimate</code> column. Since <code>Africa</code> was the “baseline for comparison” group, the <code>intercept</code> term corresponds to the mean life expectancy for all countries in Africa of 54.8 years. The other four values of <code>estimate</code> correspond to “offsets” relative to the baseline group. So, for example, the “offset” corresponding to the Americas is +18.8 as compared to the baseline for comparison group Africa. In other words, the average life expectancy for countries in the Americas is 18.8 years <em>higher</em>. Thus the mean life expectancy for all countries in the Americas is 54.8 + 18.8 = 73.6. The same interpretation holds for Asia, Europe, and Oceania.</p>
 <p>Going back to our multiple regression model for tooth <code>len</code>gth using <code>dose</code> and <code>supp</code>lement in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, we generate the regression table using the same two-step approach from Chapter <a href="8-regression.html#regression">8</a>: we first “fit” the model using the <code>lm()</code> “linear model” function and then we apply the <code>get_regression_table()</code> function. This time, however, our model formula won’t be of the form <code>y ~ x</code>, but rather of the form <code>y ~ x1 * x2</code>. In other words, our two explanatory variables <code>x1</code> and <code>x2</code> are separated by a <code>*</code> sign:</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="10-multiple-regression.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb415-2"><a href="10-multiple-regression.html#cb415-2" aria-hidden="true" tabindex="-1"></a>len_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(len <span class="sc">~</span> dose <span class="sc">*</span> supp, <span class="at">data =</span> ToothGrowth)</span>
-<span id="cb415-3"><a href="10-multiple-regression.html#cb415-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb415-4"><a href="10-multiple-regression.html#cb415-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb415-5"><a href="10-multiple-regression.html#cb415-5" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(len_model_interaction)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="10-multiple-regression.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb410-2"><a href="10-multiple-regression.html#cb410-2" aria-hidden="true" tabindex="-1"></a>len_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(len <span class="sc">~</span> dose <span class="sc">*</span> supp, <span class="at">data =</span> ToothGrowth)</span>
+<span id="cb410-3"><a href="10-multiple-regression.html#cb410-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb410-4"><a href="10-multiple-regression.html#cb410-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb410-5"><a href="10-multiple-regression.html#cb410-5" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(len_model_interaction)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:regtable-interaction">TABLE 10.3: </span>Regression table for interaction model
@@ -1089,8 +1121,8 @@ dose:suppVC
 <p>Looking at the regression table output in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, there are four rows of values in the <code>estimate</code> column. While it is not immediately apparent, using these four values we can write out the equations of both lines in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>. First, since the word <code>OJ</code> comes alphabetically before <code>VC</code>, the orange juice supplement is the “baseline for comparison” group. Thus, <code>intercept</code> is the intercept <em>for only the orange juice recipients</em>.</p>
 <p>This holds similarly for <code>dose</code>. It is the slope for dose <em>for only the OJ recipients</em>. Thus, the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has an intercept of 11.55 and slope for dose of 7.811.</p>
 <p>What about the intercept and slope for dose of the ascorbic acid recipients in the blue line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>? This is where our notion of “offsets” comes into play once again.</p>
-<p>The value for <code>suppVC</code> of is not the intercept for the ascorbic acid recipients, but rather the <em>offset</em> in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is <code>intercept + suppVC</code> = 11.55 + () = 11.55 - = .</p>
-<p>Similarly, <code>dose:suppVC</code> = 3.904 is not the slope for dose for the ascorbic acid recipients, but rather the <em>offset</em> in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is <code>dose + dose:suppVC</code> <span class="math inline">\(= 7.811 + 3.904 = 11.715\)</span>. Thus, the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has intercept and slope for <code>dose</code> of 11.715. Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a> and focus on the two slopes for <code>dose</code>:</p>
+<p>The value for <code>suppVC</code> of -8.255 is not the intercept for the ascorbic acid recipients, but rather the <em>offset</em> in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is <code>intercept + suppVC</code> = 11.55 + (-8.255) = 11.55 - 8.255 = 3.295.</p>
+<p>Similarly, <code>dose:suppVC</code> = 3.904 is not the slope for dose for the ascorbic acid recipients, but rather the <em>offset</em> in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is <code>dose + dose:suppVC</code> <span class="math inline">\(= 7.811 + 3.904 = 11.715\)</span>. Thus, the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> has intercept 3.295 and slope for <code>dose</code> of 11.715. Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a> and focus on the two slopes for <code>dose</code>:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:interaction-summary">TABLE 10.4: </span>Comparison of intercepts and slopes for interaction model
@@ -1114,7 +1146,7 @@ Slope for dose
 Orange juice
 </td>
 <td style="text-align:right;">
-11.55
+11.550
 </td>
 <td style="text-align:right;">
 7.811
@@ -1125,7 +1157,7 @@ Orange juice
 Ascorbic acid
 </td>
 <td style="text-align:right;">
-11.55
+3.295
 </td>
 <td style="text-align:right;">
 11.715
@@ -1142,7 +1174,7 @@ comes out correct in the HTML output.
 <p><span class="math display">\[
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &amp;= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x) + b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)\\
-&amp;= 11.55 7.811 \cdot \text{dose} -  \cdot \mathbb{1}_{\text{is VC}}(x) + 3.904 \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)
+&amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 \cdot \mathbb{1}_{\text{is VC}}(x) + 3.904 \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}(x)
 \end{aligned}
 \]</span></p>
 <p>Whoa! That’s even more daunting than the equation you saw for the life expectancy as a function of continent in Subsection <a href="8-regression.html#model2table">8.2.2</a>! However, if you recall what an “indicator function” does, the equation simplifies greatly. In the previous equation, we have one indicator function of interest:</p>
@@ -1157,23 +1189,23 @@ comes out correct in the HTML output.
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(b_0\)</span> is the <code>intercept</code> = 11.55 for the orange juice recipients</li>
 <li><span class="math inline">\(b_{\text{dose}}\)</span> is the slope for <code>dose</code> = 7.811 for the orange juice recipients</li>
-<li><span class="math inline">\(b_{\text{VC}}\)</span> is the offset in intercept = for the ascorbic acid (VC) recipients</li>
+<li><span class="math inline">\(b_{\text{VC}}\)</span> is the offset in intercept = -8.255 for the ascorbic acid (VC) recipients</li>
 <li><span class="math inline">\(b_{\text{dose,VC}}\)</span> is the offset in slope for dose = 3.904 for the ascorbic acid (VC) recipients</li>
 </ol>
 <p>Let’s put this all together and compute the fitted value <span class="math inline">\(\widehat{y} = \widehat{\text{len}}\)</span> for orange juice recipients. Since for orange juice recipients <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 0, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 11.55 - -7.811 \cdot \text{dose} -  \cdot 0 + 3.904 \cdot \text{dose} \cdot 0\\
-&amp;= 11.55 - -7.811 \cdot \text{dose} - 0 + 0\\
+\widehat{y} = \widehat{\text{len}} &amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 \cdot 0 + 3.904 \cdot \text{dose} \cdot 0\\
+&amp;= 11.55 + 7.811 \cdot \text{dose} - 0 + 0\\
 &amp;= 11.55 - -7.811 \cdot \text{dose}\\
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> corresponding to the orange juice recipients in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a>. Correspondingly, since for ascorbic acid (VC) recipients <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 1, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 11.55 - -7.811 \cdot \text{dose} -  + 3.904 \cdot \text{dose}\\
-&amp;= (11.55 - ) + (- -7.811 + 3.904) * \text{dose}\\
-&amp;=  - -11.715 \cdot \text{dose}\\
+\widehat{y} = \widehat{\text{len}} &amp;= 11.55 + 7.811 \cdot \text{dose} - 8.255 + 3.904 \cdot \text{dose}\\
+&amp;= (11.55 - 8.255) + (`slope_OJ` + 3.904) * \text{dose}\\
+&amp;= 3.295 + 11.715 \cdot \text{dose}\\
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a> corresponding to the ascorbic acid (VC) recipients in Table <a href="10-multiple-regression.html#tab:interaction-summary">10.4</a>.</p>
@@ -1182,14 +1214,14 @@ comes out correct in the HTML output.
 <p>We say there is an interaction effect if the associated effect of one variable <em>depends on the value of another variable</em>. That is to say, the two variables are “interacting” with each other. Here, the associated effect of the variable <code>dose</code> <em>depends</em> on the value of the other variable <code>supp</code>. The difference in slopes for dose of +3.904 of ascorbic acid (VC) recipients relative to orange juice recipients shows this. </p>
 <p>Another way of thinking about interaction effects on tooth length is as follows. For a given pig, there might be an associated effect of their dose <em>by itself</em>, there might be an associated effect of their supplement <em>by itself</em>, but when dose and supplement are considered <em>together</em> there might be an <em>additional effect</em> above and beyond the two individual effects.</p>
 </div>
-<div id="model4table" class="section level3" number="10.1.3">
-<h3><span class="header-section-number">10.1.3</span> Parallel slopes model</h3>
+<div id="model4table" class="section level3 hasAnchor" number="10.1.3">
+<h3><span class="header-section-number">10.1.3</span> Parallel slopes model<a href="10-multiple-regression.html#model4table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When creating regression models with one numerical and one categorical explanatory variable, we are not just limited to interaction models as we just saw. Another type of model we can use is known as a <em>parallel slopes</em> model. Unlike interaction models where the regression lines can have different intercepts and different slopes, parallel slopes models still allow for different intercepts but <em>force</em> all lines to have the same slope. The resulting regression lines are thus parallel. Let’s visualize the best-fitting parallel slopes model to <code>ToothGrowth</code>.</p>
 <p>Unfortunately, the <code>geom_smooth()</code> function in the <code>ggplot2</code> package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called <code>geom_parallel_slopes()</code> that is included in the <code>moderndive</code> package. You won’t find <code>geom_parallel_slopes()</code> in the <code>ggplot2</code> package, but rather the <code>moderndive</code> package. Thus, if you want to be able to use it, you will need to load both the <code>ggplot2</code> and <code>moderndive</code> packages. Using this function, let’s now plot the parallel slopes model for teaching score. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, but now the <code>geom_smooth(method = "lm", se = FALSE)</code> layer is replaced with <code>geom_parallel_slopes(se = FALSE)</code>.</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="10-multiple-regression.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb416-2"><a href="10-multiple-regression.html#cb416-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb416-3"><a href="10-multiple-regression.html#cb416-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Dose&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tooth length&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Supplement type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb416-4"><a href="10-multiple-regression.html#cb416-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="10-multiple-regression.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb411-2"><a href="10-multiple-regression.html#cb411-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb411-3"><a href="10-multiple-regression.html#cb411-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Dose&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tooth length&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Supplement type&quot;</span>) <span class="sc">+</span></span>
+<span id="cb411-4"><a href="10-multiple-regression.html#cb411-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:numxcatx-parallel"></span>
 <img src="ModernDive_files/figure-html/numxcatx-parallel-1.png" alt="Parallel slopes model of len with dose and supp." width="\textwidth" />
 <p class="caption">
@@ -1199,10 +1231,10 @@ FIGURE 10.2: Parallel slopes model of len with dose and supp.
 <p>Observe in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> that we now have parallel lines corresponding to the orange juice and ascorbic acid (VC) recipients, respectively: here they have the same positive slope. This is telling us that guinea pigs who receive higher doses of vitamin C will tend to have longer teeth than guinea pigs who receive less. Furthermore, since the lines are parallel, the associated gain for higher dose is assumed to be the same for both orange juice and ascorbic acid (VC) recipients.</p>
 <p>However, observe also in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> that these two lines have different intercepts as evidenced by the fact that the blue line corresponding to the ascorbic acid (VC) recipients is higher than the red line corresponding to the orange juice recipients. This is telling us that irrespective of dose, orange juice recipients tended to receive lower teaching scores than ascorbic acid (VC) recipients.</p>
 <p>In order to obtain the precise numerical values of the two intercepts and the single common slope, we once again “fit” the model using the <code>lm()</code> “linear model” function and then apply the <code>get_regression_table()</code> function. However, unlike the interaction model which had a model formula of the form <code>y ~ x1 * x2</code>, our model formula is now of the form <code>y ~ x1 + x2</code>. In other words, our two explanatory variables <code>x1</code> and <code>x2</code> are separated by a <code>+</code> sign:</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="10-multiple-regression.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb417-2"><a href="10-multiple-regression.html#cb417-2" aria-hidden="true" tabindex="-1"></a>len_model_parallel_slopes <span class="ot">&lt;-</span> <span class="fu">lm</span>(len <span class="sc">~</span> dose <span class="sc">+</span> supp, <span class="at">data =</span> ToothGrowth)</span>
-<span id="cb417-3"><a href="10-multiple-regression.html#cb417-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb417-4"><a href="10-multiple-regression.html#cb417-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(len_model_parallel_slopes)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="10-multiple-regression.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb412-2"><a href="10-multiple-regression.html#cb412-2" aria-hidden="true" tabindex="-1"></a>len_model_parallel_slopes <span class="ot">&lt;-</span> <span class="fu">lm</span>(len <span class="sc">~</span> dose <span class="sc">+</span> supp, <span class="at">data =</span> ToothGrowth)</span>
+<span id="cb412-3"><a href="10-multiple-regression.html#cb412-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb412-4"><a href="10-multiple-regression.html#cb412-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(len_model_parallel_slopes)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:regtable-parallel-slopes">TABLE 10.5: </span>Regression table for parallel slopes model
@@ -1304,8 +1336,8 @@ supp: VC
 </tr>
 </tbody>
 </table>
-<p>Similarly to the regression table for the interaction model from Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, we have an <code>intercept</code> term corresponding to the intercept for the “baseline for comparison” orange juice instructor group and a <code>suppVC</code> term corresponding to the <em>offset</em> in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> the red regression line corresponding to the orange juice recipients has an intercept of 9.273 while the blue regression line corresponding to the ascorbic acid (VC) recipients has an intercept of 9.273 + = .</p>
-<p>Unlike in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, however, we now only have a single slope for dose of 9.764. This is because the model dictates that both the orange juice and ascorbic acid (VC) recipients have a common slope for dose.  This is telling us that a guinea pig who received a vitamin C dose one unit higher has tooth length that is on average 9.764 units longer. This benefit for receiving a higher vitamin C dose applies equally to both orange juice and ascorbic acid (VC) recipients.</p>
+<p>Similarly to the regression table for the interaction model from Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, we have an <code>intercept</code> term corresponding to the intercept for the “baseline for comparison” orange juice (OJ) group and a <code>suppVC</code> term corresponding to the <em>offset</em> in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> the red regression line corresponding to the orange juice recipients has an intercept of 9.273 while the blue regression line corresponding to the ascorbic acid (VC) recipients has an intercept of 9.273 + 9.764 = 19.037.</p>
+<p>Unlike in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>, however, we now only have a single slope for dose of 9.764. This is because the model dictates that both the orange juice and ascorbic acid (VC) recipients have a common slope for dose. This is telling us that a guinea pig who received a vitamin C dose one unit higher has tooth length that is on average 9.764 units longer. This benefit for receiving a higher vitamin C dose applies equally to both orange juice and ascorbic acid (VC) recipients.</p>
 <p>Let’s summarize these values in Table <a href="10-multiple-regression.html#tab:parallel-slopes-summary">10.6</a>, noting the different intercepts but common slopes:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -1341,7 +1373,7 @@ Orange juice (OJ)
 Ascorbic acid (VC)
 </td>
 <td style="text-align:right;">
-9.273
+19.037
 </td>
 <td style="text-align:right;">
 9.764
@@ -1357,22 +1389,22 @@ comes out correct in the HTML output.
 <p><span class="math display">\[
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &amp;= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)\\
-&amp;= 9.273 9.764 \cdot \text{dose} +  \cdot \mathbb{1}_{\text{is VC}}(x) 
+&amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot \mathbb{1}_{\text{is VC}}(x)
 \end{aligned}
 \]</span></p>
 <p>Let’s put this all together and compute the fitted value <span class="math inline">\(\widehat{y} = \widehat{\text{len}}\)</span> for orange juice recipients. Since for orange juice recipients the indicator function <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 0, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} +  \cdot 0\\
+\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot 0\\
 &amp;= 9.273 9.764 \cdot \text{dose}
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> corresponding to the orange juice recipients. Correspondingly, since for ascorbic acid (VC) recipients the indicator function <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 1, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} +  \cdot 1\\
-&amp;= (9.273 + ) - -9.764 \cdot \text{dose}\\
-&amp;=  9.764 \cdot \text{dose}
+\widehat{y} = \widehat{\text{len}} &amp;= 9.273 9.764 \cdot \text{dose} + 9.764 \cdot 1\\
+&amp;= (9.273 + 9.764) - -9.764 \cdot \text{dose}\\
+&amp;= 19.037 9.764 \cdot \text{dose}
 \end{aligned}
 \]</span></p>
 <p>which is the equation of the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> corresponding to the ascorbic acid (VC) recipients.</p>
@@ -1383,28 +1415,28 @@ comes out correct in the HTML output.
 FIGURE 10.3: Comparison of interaction and parallel slopes models.
 </p>
 </div>
-<p>At this point, you might be asking yourself: “Why would we ever use a parallel slopes model?” Looking at the left-hand plot in Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison">10.3</a>, the two lines definitely do not appear to be parallel, so why would we <em>force</em> them to be parallel? For this data, we agree! It can easily be argued that the interaction model on the left is more appropriate. However, in the upcoming Subsection <a href="10-multiple-regression.html#model-selection">10.3.1</a> on model selection, we’ll present an example where it can be argued that the case for a parallel slopes model might be stronger.</p>
+<p>At this point, you might be asking yourself: “Why would we ever use a parallel slopes model?”. Looking at the left-hand plot in Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison">10.3</a>, the two lines definitely do not appear to be parallel, so why would we <em>force</em> them to be parallel? For this data, we agree! It can easily be argued that the interaction model on the left is more appropriate. However, in the upcoming Subsection <a href="10-multiple-regression.html#model-selection">10.3.1</a> on model selection, we’ll present an example where it can be argued that the case for a parallel slopes model might be stronger.</p>
 </div>
-<div id="model4points" class="section level3" number="10.1.4">
-<h3><span class="header-section-number">10.1.4</span> Observed/fitted values and residuals</h3>
+<div id="model4points" class="section level3 hasAnchor" number="10.1.4">
+<h3><span class="header-section-number">10.1.4</span> Observed/fitted values and residuals<a href="10-multiple-regression.html#model4points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For brevity’s sake, in this section we’ll only compute the observed values, fitted values, and residuals for the interaction model which we saved in <code>len_model_interaction</code>. You’ll have an opportunity to study the corresponding values for the parallel slopes model in the upcoming <em>Learning check</em>.</p>
 <p>Say, you have a guinea pig who receives orange juice of 2 mg/day. What fitted value <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{len}}\)</span> would our model yield? Say, you have another guinea pig who receives ascorbic acid of 1 mg/day. What would their fitted value <span class="math inline">\(\widehat{y}\)</span> be?</p>
-<p>We answer this question visually first for the orange juice recipient by finding the intersection of the red regression line and the vertical line at <span class="math inline">\(x\)</span> = dose = 2. We mark this value with a large red dot in Figure <a href="10-multiple-regression.html#fig:fitted-values">10.4</a>. Similarly, we can identify the fitted value <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{len}}\)</span> for the male instructor by finding the intersection of the blue regression line and the vertical line at <span class="math inline">\(x\)</span> = dose = 1. We mark this value with a large blue dot in Figure <a href="10-multiple-regression.html#fig:fitted-values">10.4</a>.</p>
+<p>We answer this question visually first for the orange juice recipient by finding the intersection of the red regression line and the vertical line at <span class="math inline">\(x\)</span> = dose = 2. We mark this value with a large red dot in Figure <a href="10-multiple-regression.html#fig:fitted-values">10.4</a>. Similarly, we can identify the fitted value <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{len}}\)</span> for the ascorbic acid recipient by finding the intersection of the blue regression line and the vertical line at <span class="math inline">\(x\)</span> = dose = 1. We mark this value with a large blue dot in Figure <a href="10-multiple-regression.html#fig:fitted-values">10.4</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:fitted-values"></span>
-<img src="ModernDive_files/figure-html/fitted-values-1.png" alt="Fitted values for two new professors." width="\textwidth" />
+<img src="ModernDive_files/figure-html/fitted-values-1.png" alt="Fitted values for two supplement doses." width="\textwidth" />
 <p class="caption">
-FIGURE 10.4: Fitted values for two new professors.
+FIGURE 10.4: Fitted values for two supplement doses.
 </p>
 </div>
 <p>What are these two values of <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{len}}\)</span> precisely? We can use the equations of the two regression lines we computed in Subsection <a href="10-multiple-regression.html#model4interactiontable">10.1.2</a>, which in turn were based on values from the regression table in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a>:</p>
 <ul>
 <li>For all orange juice recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = 11.55 - -7.811 \cdot \text{dose}\)</span></li>
-<li>For all ascorbic acid (VC) recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = - -11.715 \cdot \text{dose}\)</span></li>
+<li>For all ascorbic acid (VC) recipients: <span class="math inline">\(\widehat{y} = \widehat{\text{len}} = 3.295 - -11.715 \cdot \text{dose}\)</span></li>
 </ul>
-<p>So our fitted values would be: <span class="math inline">\(11.55 - -7.811 \cdot 2 = 27.17\)</span> and $ - -11.715  = $, respectively.</p>
-<p>Now what if we want the fitted values not just for these two guinea pigs, but for all 60 guinea pigs included in the <code>ToothGrowth</code> data frame? Doing this by hand would be long and tedious! This is where the <code>get_regression_points()</code> function from the <code>moderndive</code> package can help: it will quickly automate the above calculations for all 60 guinea pigs We present a preview of the first 5 rows for each supplement type out of 60 in Table <a href="10-multiple-regression.html#tab:model4-points-table">10.7</a>.</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="10-multiple-regression.html#cb418-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(len_model_interaction)</span>
-<span id="cb418-2"><a href="10-multiple-regression.html#cb418-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(supp) <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div>
+<p>So our fitted values would be: <span class="math inline">\(11.55 - -7.811 \cdot 2 = 27.17\)</span> and <span class="math inline">\(3.295 - -11.715 \cdot 1 = 15.01\)</span>, respectively.</p>
+<p>Now what if we want the fitted values not just for these two guinea pigs, but for all 60 guinea pigs included in the <code>ToothGrowth</code> data frame? Doing this by hand would be long and tedious! This is where the <code>get_regression_points()</code> function from the <code>moderndive</code> package can help: it will quickly automate the above calculations for all 60 guinea pigs. We present a preview of the first 5 rows for each supplement type out of 60 in Table <a href="10-multiple-regression.html#tab:model4-points-table">10.7</a>.</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="10-multiple-regression.html#cb413-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(len_model_interaction)</span>
+<span id="cb413-2"><a href="10-multiple-regression.html#cb413-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(supp) <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model4-points-table">TABLE 10.7: </span>Regression points (First 10 out of 463 courses)
@@ -1646,10 +1678,9 @@ VC
 </div>
 </div>
 </div>
-<div id="model3" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Two categorical explanatory variables</h2>
+<div id="model3" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Two categorical explanatory variables<a href="10-multiple-regression.html#model3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s now switch gears and consider multiple regression models where instead of one numerical and one categorical explanatory variable, we now have two categorical explanatory variables. The dataset we’ll use is from [<em>Analysis of Biological Data</em>] by Whitlock and Schluter. Its accompanying <code>abd</code> R package contains the <code>IntertidalAlgae</code> dataset that we’ll use next.</p>
-<!--Open with the research question-->
 <p>This dataset is from a study looking at the effect of herbivores and height above low tide, and the interaction between these factors, on abundance of a red intertidal alga.</p>
 <p>In this section, we’ll fit a regression model where we have</p>
 <ol style="list-style-type: decimal">
@@ -1660,18 +1691,18 @@ VC
 <li>Another categorical explanatory variable <span class="math inline">\(x_2\)</span>, height, the height of the experimental plot relative to the tide levels.</li>
 </ol></li>
 </ol>
-<div id="model3EDA" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Exploratory data analysis</h3>
+<div id="model3EDA" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Exploratory data analysis<a href="10-multiple-regression.html#model3EDA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s examine the <code>Intertidal</code> dataset using RStudio’s spreadsheet viewer or <code>glimpse()</code>.</p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="10-multiple-regression.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
-<span id="cb419-2"><a href="10-multiple-regression.html#cb419-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(IntertidalAlgae)</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="10-multiple-regression.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
+<span id="cb414-2"><a href="10-multiple-regression.html#cb414-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(IntertidalAlgae)</span></code></pre></div>
 <pre><code>Rows: 64
 Columns: 3
-$ height     &lt;fct&gt; low, low, low, low, low, low, low, low, low, low, low, low,…
-$ herbivores &lt;fct&gt; minus, minus, minus, minus, minus, minus, minus, minus, min…
-$ sqrt.area  &lt;dbl&gt; 9.406, 34.468, 46.673, 16.642, 24.377, 38.351, 33.777, 61.0…</code></pre>
+$ height     &lt;fct&gt; low, low, low, low, low, low, low, low, low, low, low, low, low, low, low, low,…
+$ herbivores &lt;fct&gt; minus, minus, minus, minus, minus, minus, minus, minus, minus, minus, minus, mi…
+$ sqrt.area  &lt;dbl&gt; 9.406, 34.468, 46.673, 16.642, 24.377, 38.351, 33.777, 61.096, 35.456, 46.174, …</code></pre>
 <p>Furthermore, let’s look at a random sample of five out of the 64 plots in Table <a href="10-multiple-regression.html#tab:model3-data-preview">10.8</a>. Once again, note that due to the random nature of the sampling, you will likely end up with a different subset of five rows.</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="10-multiple-regression.html#cb421-1" aria-hidden="true" tabindex="-1"></a>IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="10-multiple-regression.html#cb416-1" aria-hidden="true" tabindex="-1"></a>IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model3-data-preview">TABLE 10.8: </span>Random sample of 5 experimental plots
@@ -1748,22 +1779,22 @@ minus
 </tbody>
 </table>
 <p>Now that we’ve looked at the raw values in our <code>IntertidalAlgae</code> data frame and got a sense of the data, let’s move on to the next common step in an exploratory data analysis: computing summary statistics. Let’s use the <code>skim()</code> function from the <code>skimr</code> package:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="10-multiple-regression.html#cb422-1" aria-hidden="true" tabindex="-1"></a>IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="10-multiple-regression.html#cb417-1" aria-hidden="true" tabindex="-1"></a>IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
 <p>Observe the summary statistics for the outcome variable <code>sqrt.area</code>: the mean and median sqrt.area are 22.84 and 22.25, respectively, and that 25% of plots had values of 5.92 or less.</p>
 <!--Discuss balanced FACTORIAL design here-->
-<p>Now let’s look at the explanatory variables <code>herbivores</code> and <code>height</code>. First, let’s visualize the relationship of the outcome variable with each of the two explanatory variables in separate box plots with an overlaid scatterplot to see the individual data points in Figure <a href="#fig:2numxplot1"><strong>??</strong></a>.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="10-multiple-regression.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> herbivores, <span class="at">y =</span> sqrt.area)) <span class="sc">+</span></span>
-<span id="cb423-2"><a href="10-multiple-regression.html#cb423-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb423-3"><a href="10-multiple-regression.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb423-4"><a href="10-multiple-regression.html#cb423-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Herbivore treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
-<span id="cb423-5"><a href="10-multiple-regression.html#cb423-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and herbivore treatment&quot;</span>) </span>
-<span id="cb423-6"><a href="10-multiple-regression.html#cb423-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb423-7"><a href="10-multiple-regression.html#cb423-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> sqrt.area)) <span class="sc">+</span></span>
-<span id="cb423-8"><a href="10-multiple-regression.html#cb423-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb423-9"><a href="10-multiple-regression.html#cb423-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb423-10"><a href="10-multiple-regression.html#cb423-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Height relative to low tide&quot;</span>, </span>
-<span id="cb423-11"><a href="10-multiple-regression.html#cb423-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
-<span id="cb423-12"><a href="10-multiple-regression.html#cb423-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and tidal location&quot;</span>) </span></code></pre></div>
+<p>Now let’s look at the explanatory variables <code>herbivores</code> and <code>height</code>. First, let’s visualize the relationship of the outcome variable with each of the two explanatory variables in separate box plots with an overlaid scatterplot to see the individual data points in Figure <a href="10-multiple-regression.html#fig:2numxplot1b">10.5</a>.</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="10-multiple-regression.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> herbivores, <span class="at">y =</span> sqrt.area)) <span class="sc">+</span></span>
+<span id="cb418-2"><a href="10-multiple-regression.html#cb418-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb418-3"><a href="10-multiple-regression.html#cb418-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb418-4"><a href="10-multiple-regression.html#cb418-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Herbivore treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
+<span id="cb418-5"><a href="10-multiple-regression.html#cb418-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and herbivore treatment&quot;</span>) </span>
+<span id="cb418-6"><a href="10-multiple-regression.html#cb418-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb418-7"><a href="10-multiple-regression.html#cb418-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> sqrt.area)) <span class="sc">+</span></span>
+<span id="cb418-8"><a href="10-multiple-regression.html#cb418-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb418-9"><a href="10-multiple-regression.html#cb418-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb418-10"><a href="10-multiple-regression.html#cb418-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Height relative to low tide&quot;</span>, </span>
+<span id="cb418-11"><a href="10-multiple-regression.html#cb418-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
+<span id="cb418-12"><a href="10-multiple-regression.html#cb418-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and tidal location&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:2numxplot1b"></span>
 <img src="ModernDive_files/figure-html/2numxplot1b-1.png" alt="Relationship between red algae coverage and herbivores/height." width="\textwidth" />
 <p class="caption">
@@ -1777,13 +1808,12 @@ FIGURE 10.5: Relationship between red algae coverage and herbivores/height.
 <li>The first categorical explanatory variable <span class="math inline">\(x_1\)</span> <code>herbivores</code> is on the horizontal axis.</li>
 <li>The second categorical explanatory variable <span class="math inline">\(x_2\)</span> <code>height</code> is indicated by color.</li>
 </ol>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="10-multiple-regression.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> herbivores, <span class="at">y =</span> sqrt.area, </span>
-<span id="cb424-2"><a href="10-multiple-regression.html#cb424-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> height, <span class="at">group =</span> height)) <span class="sc">+</span></span>
-<span id="cb424-3"><a href="10-multiple-regression.html#cb424-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb424-4"><a href="10-multiple-regression.html#cb424-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Herbivore treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
-<span id="cb424-5"><a href="10-multiple-regression.html#cb424-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and herbivore treatment&quot;</span>) <span class="sc">+</span></span>
-<span id="cb424-6"><a href="10-multiple-regression.html#cb424-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb424-7"><a href="10-multiple-regression.html#cb424-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_parallel_slopes(se = FALSE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="10-multiple-regression.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IntertidalAlgae, <span class="fu">aes</span>(<span class="at">x =</span> herbivores, <span class="at">y =</span> sqrt.area, </span>
+<span id="cb419-2"><a href="10-multiple-regression.html#cb419-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> height, <span class="at">group =</span> height)) <span class="sc">+</span></span>
+<span id="cb419-3"><a href="10-multiple-regression.html#cb419-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb419-4"><a href="10-multiple-regression.html#cb419-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Herbivore treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Square root of area covered&quot;</span>, </span>
+<span id="cb419-5"><a href="10-multiple-regression.html#cb419-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Area coverage and herbivore treatment&quot;</span>) <span class="sc">+</span></span>
+<span id="cb419-6"><a href="10-multiple-regression.html#cb419-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:2numxplot1c"></span>
 <img src="ModernDive_files/figure-html/2numxplot1c-1.png" alt="Relationship between red algae coverage and herbivores plus height." width="\textwidth" />
 <p class="caption">
@@ -1801,13 +1831,13 @@ FIGURE 10.6: Relationship between red algae coverage and herbivores plus height.
 
 </div>
 </div>
-<div id="model3table" class="section level3" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> Regression lines</h3>
+<div id="model3table" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Regression lines<a href="10-multiple-regression.html#model3table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s now fit a regression model and get the regression table corresponding to the regression line in Figure <a href="10-multiple-regression.html#fig:2numxplot1c">10.6</a>. As we have done throughout Chapter <a href="8-regression.html#regression">8</a> and this chapter, we use our two-step process to obtain the regression table for this model in Table <a href="10-multiple-regression.html#tab:model3-table-output">10.9</a>.</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="10-multiple-regression.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb425-2"><a href="10-multiple-regression.html#cb425-2" aria-hidden="true" tabindex="-1"></a>area_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sqrt.area <span class="sc">~</span> herbivores <span class="sc">*</span> height, <span class="at">data =</span> IntertidalAlgae)</span>
-<span id="cb425-3"><a href="10-multiple-regression.html#cb425-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb425-4"><a href="10-multiple-regression.html#cb425-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(area_model1)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="10-multiple-regression.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb420-2"><a href="10-multiple-regression.html#cb420-2" aria-hidden="true" tabindex="-1"></a>area_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sqrt.area <span class="sc">~</span> herbivores <span class="sc">*</span> height, <span class="at">data =</span> IntertidalAlgae)</span>
+<span id="cb420-3"><a href="10-multiple-regression.html#cb420-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb420-4"><a href="10-multiple-regression.html#cb420-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(area_model1)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model3-table-output">TABLE 10.9: </span>Multiple regression table
@@ -1942,7 +1972,7 @@ herbivores: plus:heightmid
 <p>Putting these results together, the equation of the regression lines for the interaction model to give us fitted values <span class="math inline">\(\widehat{y}\)</span> = <span class="math inline">\(\widehat{\text{sqrt.area}}\)</span> is:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\widehat{y} &amp;= b_0 + b_1 \cdot x_1 +  b_2 \cdot x_2\\
+\widehat{y} &amp;= b_0 + b_1 \cdot x_1 +  b_2 \cdot x_2 + b_{\text{1,2}} \cdot x_1 \cdot x_2\\
 \widehat{\text{sqrt.area}} &amp;= b_0 + b_{\text{herbivores}} \cdot \mathbb{1}_{\text{is plus}}(x) + b_{\text{height}} \cdot \mathbb{1}_{\text{is mid}}(x) \\
 &amp;\text{ } + b_{\text{herbivores,height}} \cdot \mathbb{1}_{\text{is plus}}(x) \cdot \mathbb{1}_{\text{is mid}}(x)\\
 &amp;= 32.9 - 22.5 \cdot\mathbb{1}_{\text{is plus}}(x) - 10.4 \cdot\mathbb{1}_{\text{is mid}}(x) \\
@@ -1999,7 +2029,7 @@ which is the left end of the red regression line in Figure <a href="10-multiple-
 \]</span></p>
 <p>which is the right end of the blue regression line in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>.</p>
 <p>That was a lot of arithmetic, but you made it! If you’re still a little unsure about using indicator functions and categorical explanatory variables in a regression model, you should re-read Subsection <a href="8-regression.html#model2table">8.2.2</a>.</p>
-<p>Recall however in the right-hand plot of Figure <a href="10-multiple-regression.html#fig:2numxplot1b">10.5</a> that when plotting the relationship between <code>sqrt.area</code> and <code>height</code> in isolation, there appeared to be a <em>positive</em> relationship. In the last discussed multiple regression, however, when <em>jointly</em> modeling the relationship between <code>sqrt.area</code>, <code>herbivores</code>, and <code>height</code>, there appears to be a <em>negative</em> relationship of <code>sqrt.area</code> and <code>height</code> as evidenced by the negative offset for <code>height</code> of -10.4. What explains these contradictory results? A phenomenon known as <em>Simpson’s Paradox</em>, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups. In Subsection <a href="#simpsonsparadox"><strong>??</strong></a> we elaborate on this idea by looking at another example.</p>
+<p>Recall however in the right-hand plot of Figure <a href="10-multiple-regression.html#fig:2numxplot1b">10.5</a> that when plotting the relationship between <code>sqrt.area</code> and <code>height</code> in isolation, there appeared to be a <em>positive</em> relationship. In the last discussed multiple regression, however, when <em>jointly</em> modeling the relationship between <code>sqrt.area</code>, <code>herbivores</code>, and <code>height</code>, there appears to be a <em>negative</em> relationship of <code>sqrt.area</code> and <code>height</code> as evidenced by the negative offset for <code>height</code> of -10.4. What explains these contradictory results? A phenomenon known as <em>Simpson’s Paradox</em>, whereby overall trends that exist in aggregate either disappear or reverse when the data are broken down into groups.</p>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
@@ -2010,8 +2040,8 @@ which is the left end of the red regression line in Figure <a href="10-multiple-
 
 </div>
 </div>
-<div id="model3points" class="section level3" number="10.2.3">
-<h3><span class="header-section-number">10.2.3</span> Observed/fitted values and residuals</h3>
+<div id="model3points" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Observed/fitted values and residuals<a href="10-multiple-regression.html#model3points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s compute all fitted values and residuals for our interaction model using the <code>get_regression_points()</code> function and present only the first two rows of output for each combination of explanatory variables in Table <a href="10-multiple-regression.html#tab:model3-points-table">10.10</a>. Remember that the coordinates of each of the blue points <!--in our 3D scatterplot--> in Figure <a href="10-multiple-regression.html#fig:2numxplot1c">10.6</a> can be found in the <code>height</code>, <code>herbivores</code>, and <code>sqrt.area</code> columns. The fitted values on the regression lines are found in the <code>sqrt.area_hat</code> column and are computed using our equation <!--for the regression plane--> in the previous section:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2019,11 +2049,11 @@ which is the left end of the red regression line in Figure <a href="10-multiple-
 &amp;\text{ } + 25.6 \cdot \mathbb{1}_{\text{is plus}}(x) \cdot \mathbb{1}_{\text{is mid}}(x)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="10-multiple-regression.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(area_model1) <span class="sc">%&gt;%</span> </span>
-<span id="cb426-2"><a href="10-multiple-regression.html#cb426-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="10-multiple-regression.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(area_model1) <span class="sc">%&gt;%</span> </span>
+<span id="cb421-2"><a href="10-multiple-regression.html#cb421-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">2</span>) </span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:model3-points-table">TABLE 10.10: </span>Regression points (First 10 credit card holders out of 400)
+<span id="tab:model3-points-table">TABLE 10.10: </span>Regression points (First 2 samples of each treatment combination)
 </caption>
 <thead>
 <tr>
@@ -2212,21 +2242,21 @@ mid
 </table>
 <p>###Which model, without or with interaction, fits the data better?</p>
 <p>Here we compare the mean of the observed <span class="math inline">\(y\)</span> values (Obs) of each of the four groups with their mean fitted <span class="math inline">\(\widehat{y}\)</span> values for the interaction (Int) and non-interaction (Non) models:</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="10-multiple-regression.html#cb427-1" aria-hidden="true" tabindex="-1"></a>area_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sqrt.area <span class="sc">~</span> herbivores <span class="sc">+</span> height, <span class="at">data =</span> IntertidalAlgae)</span>
-<span id="cb427-2"><a href="10-multiple-regression.html#cb427-2" aria-hidden="true" tabindex="-1"></a>means_Obs <span class="ot">&lt;-</span> IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean_Obs=</span><span class="fu">mean</span>(sqrt.area))</span>
-<span id="cb427-3"><a href="10-multiple-regression.html#cb427-3" aria-hidden="true" tabindex="-1"></a>means_Int <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(area_model1) <span class="sc">%&gt;%</span> </span>
-<span id="cb427-4"><a href="10-multiple-regression.html#cb427-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> </span>
-<span id="cb427-5"><a href="10-multiple-regression.html#cb427-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_hat_Int =</span> <span class="fu">mean</span>(sqrt.area_hat)) </span>
-<span id="cb427-6"><a href="10-multiple-regression.html#cb427-6" aria-hidden="true" tabindex="-1"></a>means_Non <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(area_model2) <span class="sc">%&gt;%</span> </span>
-<span id="cb427-7"><a href="10-multiple-regression.html#cb427-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> </span>
-<span id="cb427-8"><a href="10-multiple-regression.html#cb427-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_hat_Non =</span> <span class="fu">mean</span>(sqrt.area_hat)) </span>
-<span id="cb427-9"><a href="10-multiple-regression.html#cb427-9" aria-hidden="true" tabindex="-1"></a>means_table <span class="ot">&lt;-</span> means_Obs <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(means_Int) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(means_Non)</span>
-<span id="cb427-10"><a href="10-multiple-regression.html#cb427-10" aria-hidden="true" tabindex="-1"></a>means_table</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="10-multiple-regression.html#cb422-1" aria-hidden="true" tabindex="-1"></a>area_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sqrt.area <span class="sc">~</span> herbivores <span class="sc">+</span> height, <span class="at">data =</span> IntertidalAlgae)</span>
+<span id="cb422-2"><a href="10-multiple-regression.html#cb422-2" aria-hidden="true" tabindex="-1"></a>means_Obs <span class="ot">&lt;-</span> IntertidalAlgae <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean_Obs=</span><span class="fu">mean</span>(sqrt.area))</span>
+<span id="cb422-3"><a href="10-multiple-regression.html#cb422-3" aria-hidden="true" tabindex="-1"></a>means_Int <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(area_model1) <span class="sc">%&gt;%</span> </span>
+<span id="cb422-4"><a href="10-multiple-regression.html#cb422-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> </span>
+<span id="cb422-5"><a href="10-multiple-regression.html#cb422-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_hat_Int =</span> <span class="fu">mean</span>(sqrt.area_hat)) </span>
+<span id="cb422-6"><a href="10-multiple-regression.html#cb422-6" aria-hidden="true" tabindex="-1"></a>means_Non <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(area_model2) <span class="sc">%&gt;%</span> </span>
+<span id="cb422-7"><a href="10-multiple-regression.html#cb422-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(herbivores, height) <span class="sc">%&gt;%</span> </span>
+<span id="cb422-8"><a href="10-multiple-regression.html#cb422-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_hat_Non =</span> <span class="fu">mean</span>(sqrt.area_hat)) </span>
+<span id="cb422-9"><a href="10-multiple-regression.html#cb422-9" aria-hidden="true" tabindex="-1"></a>means_table <span class="ot">&lt;-</span> means_Obs <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(means_Int) <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(means_Non)</span>
+<span id="cb422-10"><a href="10-multiple-regression.html#cb422-10" aria-hidden="true" tabindex="-1"></a>means_table</span></code></pre></div>
 <pre><code>Joining, by = c(&quot;herbivores&quot;, &quot;height&quot;)
 Joining, by = c(&quot;herbivores&quot;, &quot;height&quot;)</code></pre>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:model3-means-table">TABLE 10.11: </span>Regression points (First 10 credit card holders out of 400)
+<span id="tab:model3-means-table">TABLE 10.11: </span>Observed means compared to fitted means for both models
 </caption>
 <thead>
 <tr>
@@ -2327,10 +2357,10 @@ FIGURE 10.7: Comparison of interaction and parallel slopes model for red algae c
 </div>
 </div>
 </div>
-<div id="mult-reg-related-topics" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Related topics</h2>
-<div id="model-selection" class="section level3" number="10.3.1">
-<h3><span class="header-section-number">10.3.1</span> Model selection using visualizations</h3>
+<div id="mult-reg-related-topics" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Related topics<a href="10-multiple-regression.html#mult-reg-related-topics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="model-selection" class="section level3 hasAnchor" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> Model selection using visualizations<a href="10-multiple-regression.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When should we use an interaction model versus a parallel slopes (non-interaction) model? Recall in Sections <a href="10-multiple-regression.html#model4interactiontable">10.1.2</a> and <a href="10-multiple-regression.html#model4table">10.1.3</a> we fit both interaction and parallel slopes models for the outcome variable <span class="math inline">\(y\)</span> (tooth length) using a numerical explanatory variable <span class="math inline">\(x_1\)</span> (dose) and a categorical explanatory variable <span class="math inline">\(x_2\)</span> (supplement type). We compared these models in Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison">10.3</a>, which we display again now.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:recall-parallel-vs-interaction"></span>
 <img src="ModernDive_files/figure-html/recall-parallel-vs-interaction-1.png" alt="Previously seen comparison of interaction and parallel slopes models." width="\textwidth" />
@@ -2338,8 +2368,8 @@ FIGURE 10.7: Comparison of interaction and parallel slopes model for red algae c
 FIGURE 10.8: Previously seen comparison of interaction and parallel slopes models.
 </p>
 </div>
-<p>A lot of you might have asked yourselves: “Why would I force the lines to have parallel slopes (as seen in the right-hand plot) when they clearly have different slopes (as seen in the left-hand plot)?”</p>
-<p>The answer lies in a philosophical principle known as “Occam’s Razor.” It states that, “all other things being equal, simpler solutions are more likely to be correct than complex ones.” When viewed in a modeling framework, Occam’s Razor  can be restated as, “all other things being equal, simpler models are to be preferred over complex ones.” In other words, we should only favor the more complex model if the additional complexity is <em>warranted</em>.</p>
+<p>A lot of you might have asked yourselves: “Why would I force the lines to have parallel slopes (as seen in the right-hand plot) when they clearly have different slopes (as seen in the left-hand plot)?”.</p>
+<p>The answer lies in a philosophical principle known as “Occam’s Razor.” It states that, “all other things being equal, simpler solutions are more likely to be correct than complex ones.” When viewed in a modeling framework, Occam’s Razor can be restated as, “all other things being equal, simpler models are to be preferred over complex ones.” In other words, we should only favor the more complex model if the additional complexity is <em>warranted</em>.</p>
 <p>Let’s revisit the equations for the regression line for both the interaction and parallel slopes model:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2348,7 +2378,7 @@ FIGURE 10.8: Previously seen comparison of interaction and parallel slopes model
 \text{Parallel slopes} &amp;: \widehat{y} = \widehat{\text{len}} = b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)
 \end{aligned}
 \]</span></p>
-<p>The interaction model is “more complex” in that there is an additional <span class="math inline">\(b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}\)</span> interaction term in the equation not present for the parallel slopes model. Or viewed alternatively, the regression table for the interaction model in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a> has <em>four</em> rows, whereas the regression table for the parallel slopes model in Table <a href="10-multiple-regression.html#tab:regtable-parallel-slopes">10.5</a> has <em>three</em> rows. The question becomes: “Is this additional complexity warranted?” In this case, it can be argued that this additional complexity is warranted, as evidenced by the two converging regression lines in the left-hand plot of Figure <a href="10-multiple-regression.html#fig:recall-parallel-vs-interaction">10.8</a>.</p>
+<p>The interaction model is “more complex” in that there is an additional <span class="math inline">\(b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}\)</span> interaction term in the equation not present for the parallel slopes model. Or viewed alternatively, the regression table for the interaction model in Table <a href="10-multiple-regression.html#tab:regtable-interaction">10.3</a> has <em>four</em> rows, whereas the regression table for the parallel slopes model in Table <a href="10-multiple-regression.html#tab:regtable-parallel-slopes">10.5</a> has <em>three</em> rows. The question becomes: “Is this additional complexity warranted?”. In this case, it can be argued that this additional complexity is warranted, as evidenced by the two converging regression lines in the left-hand plot of Figure <a href="10-multiple-regression.html#fig:recall-parallel-vs-interaction">10.8</a>.</p>
 <p>However, let’s consider an example where the additional complexity might <em>not</em> be warranted. Let’s consider the <code>MoleRats</code> data included in the <code>moderndive</code> package which contains data on energy expenditure in two castes of mole rats. For more details, read the help file for this data by running <code>?MoleRats</code> in the console.</p>
 <p>Let’s model the numerical outcome variable <span class="math inline">\(y\)</span>, <code>ln.energy</code>, log-transformed energy expenditure for a given mole rat, as a function of two explanatory variables:</p>
 <ol style="list-style-type: decimal">
@@ -2356,22 +2386,22 @@ FIGURE 10.8: Previously seen comparison of interaction and parallel slopes model
 <li>A categorical explanatory variable <span class="math inline">\(x_2\)</span>, the <code>caste</code> of the rat, either <code>lazy</code> or <code>worker</code>.</li>
 </ol>
 <p>Let’s create visualizations of both the interaction and parallel slopes model once again and display the output in Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison-2">10.9</a>. Recall from Subsection <a href="10-multiple-regression.html#model4table">10.1.3</a> that the <code>geom_parallel_slopes()</code> function is a special purpose function included in the <code>moderndive</code> package, since the <code>geom_smooth()</code> method in the <code>ggplot2</code> package does not have a convenient way to plot parallel slopes models.</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="10-multiple-regression.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction model</span></span>
-<span id="cb429-2"><a href="10-multiple-regression.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(MoleRats, </span>
-<span id="cb429-3"><a href="10-multiple-regression.html#cb429-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> ln.mass, <span class="at">y =</span> ln.energy, <span class="at">color =</span> caste)) <span class="sc">+</span></span>
-<span id="cb429-4"><a href="10-multiple-regression.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb429-5"><a href="10-multiple-regression.html#cb429-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb429-6"><a href="10-multiple-regression.html#cb429-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Log body mass&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Log energy expenditure&quot;</span>, </span>
-<span id="cb429-7"><a href="10-multiple-regression.html#cb429-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Caste&quot;</span>, </span>
-<span id="cb429-8"><a href="10-multiple-regression.html#cb429-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Interaction model&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="10-multiple-regression.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parallel slopes model</span></span>
-<span id="cb430-2"><a href="10-multiple-regression.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(MoleRats, </span>
-<span id="cb430-3"><a href="10-multiple-regression.html#cb430-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> ln.mass, <span class="at">y =</span> ln.energy, <span class="at">color =</span> caste)) <span class="sc">+</span></span>
-<span id="cb430-4"><a href="10-multiple-regression.html#cb430-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb430-5"><a href="10-multiple-regression.html#cb430-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb430-6"><a href="10-multiple-regression.html#cb430-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Log body mass&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Log energy expenditure&quot;</span>, </span>
-<span id="cb430-7"><a href="10-multiple-regression.html#cb430-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Caste&quot;</span>, </span>
-<span id="cb430-8"><a href="10-multiple-regression.html#cb430-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Parallel slopes model&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="10-multiple-regression.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction model</span></span>
+<span id="cb424-2"><a href="10-multiple-regression.html#cb424-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(MoleRats, </span>
+<span id="cb424-3"><a href="10-multiple-regression.html#cb424-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> ln.mass, <span class="at">y =</span> ln.energy, <span class="at">color =</span> caste)) <span class="sc">+</span></span>
+<span id="cb424-4"><a href="10-multiple-regression.html#cb424-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb424-5"><a href="10-multiple-regression.html#cb424-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb424-6"><a href="10-multiple-regression.html#cb424-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Log body mass&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Log energy expenditure&quot;</span>, </span>
+<span id="cb424-7"><a href="10-multiple-regression.html#cb424-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Caste&quot;</span>, </span>
+<span id="cb424-8"><a href="10-multiple-regression.html#cb424-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Interaction model&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="10-multiple-regression.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parallel slopes model</span></span>
+<span id="cb425-2"><a href="10-multiple-regression.html#cb425-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(MoleRats, </span>
+<span id="cb425-3"><a href="10-multiple-regression.html#cb425-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> ln.mass, <span class="at">y =</span> ln.energy, <span class="at">color =</span> caste)) <span class="sc">+</span></span>
+<span id="cb425-4"><a href="10-multiple-regression.html#cb425-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb425-5"><a href="10-multiple-regression.html#cb425-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb425-6"><a href="10-multiple-regression.html#cb425-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Log body mass&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Log energy expenditure&quot;</span>, </span>
+<span id="cb425-7"><a href="10-multiple-regression.html#cb425-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Caste&quot;</span>, </span>
+<span id="cb425-8"><a href="10-multiple-regression.html#cb425-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Parallel slopes model&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:numxcatx-comparison-2"></span>
 <img src="ModernDive_files/figure-html/numxcatx-comparison-2-1.png" alt="Comparison of interaction and parallel slopes models for mole rats datasets." width="\textwidth" />
 <p class="caption">
@@ -2379,9 +2409,9 @@ FIGURE 10.9: Comparison of interaction and parallel slopes models for mole rats 
 </p>
 </div>
 <p>Look closely at the left-hand plot of Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison-2">10.9</a> corresponding to an interaction model. While the slopes are indeed different, they do not differ <em>by much</em> and are nearly identical. Now compare the left-hand plot with the right-hand plot corresponding to a parallel slopes model. The two models don’t appear all that different. So in this case, it can be argued that the additional complexity of the interaction model is <em>not warranted</em>. Thus following Occam’s Razor, we should prefer the “simpler” parallel slopes model. Let’s explicitly define what “simpler” means in this case. Let’s compare the regression tables for the interaction and parallel slopes models in Tables <a href="10-multiple-regression.html#tab:model2-interaction">10.12</a> and <a href="10-multiple-regression.html#tab:model2-parallel-slopes">10.13</a>.</p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="10-multiple-regression.html#cb431-1" aria-hidden="true" tabindex="-1"></a>model_2_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(ln.energy <span class="sc">~</span> ln.mass <span class="sc">*</span> caste, </span>
-<span id="cb431-2"><a href="10-multiple-regression.html#cb431-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> MoleRats)</span>
-<span id="cb431-3"><a href="10-multiple-regression.html#cb431-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(model_2_interaction)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="10-multiple-regression.html#cb426-1" aria-hidden="true" tabindex="-1"></a>model_2_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(ln.energy <span class="sc">~</span> ln.mass <span class="sc">*</span> caste, </span>
+<span id="cb426-2"><a href="10-multiple-regression.html#cb426-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> MoleRats)</span>
+<span id="cb426-3"><a href="10-multiple-regression.html#cb426-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(model_2_interaction)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model2-interaction">TABLE 10.12: </span>Interaction model regression table
@@ -2506,9 +2536,9 @@ ln.mass:casteworker
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="10-multiple-regression.html#cb432-1" aria-hidden="true" tabindex="-1"></a>model_2_parallel_slopes <span class="ot">&lt;-</span> <span class="fu">lm</span>(ln.energy <span class="sc">~</span> ln.mass <span class="sc">+</span> caste, </span>
-<span id="cb432-2"><a href="10-multiple-regression.html#cb432-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> MoleRats)</span>
-<span id="cb432-3"><a href="10-multiple-regression.html#cb432-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(model_2_parallel_slopes)</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="10-multiple-regression.html#cb427-1" aria-hidden="true" tabindex="-1"></a>model_2_parallel_slopes <span class="ot">&lt;-</span> <span class="fu">lm</span>(ln.energy <span class="sc">~</span> ln.mass <span class="sc">+</span> caste, </span>
+<span id="cb427-2"><a href="10-multiple-regression.html#cb427-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> MoleRats)</span>
+<span id="cb427-3"><a href="10-multiple-regression.html#cb427-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(model_2_parallel_slopes)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model2-parallel-slopes">TABLE 10.13: </span>Parallel slopes regression table
@@ -2614,14 +2644,14 @@ caste: worker
 <p>Furthermore, note in Table <a href="10-multiple-regression.html#tab:model2-interaction">10.12</a> how the <em>offsets for the slope</em> <code>ln.mass::casteworker</code> being 0.419 is small relative to the <em>slope for the baseline group</em> of lazy caste of <span class="math inline">\(1.294\)</span>. In other words, both slopes are similarly positive: <span class="math inline">\(1.294\)</span> for the lazy caste and <span class="math inline">\(1.713\)</span> <span class="math inline">\((=1.294 + 0.419)\)</span> for the worker caste. These results are suggesting that irrespective of caste, the relationship between mass and energy expenditure is similar and, alas, quite positive.</p>
 <p>What you have just performed is a rudimentary <em>model selection</em>: choosing which model fits data best among a set of candidate models. The model selection we performed used the “eyeball test”: qualitatively looking at visualizations to choose a model. In the next subsection, you’ll once again perform the same model selection, but this time using a numerical approach via the <span class="math inline">\(R^2\)</span> (pronounced “R-squared”) value.</p>
 </div>
-<div id="rsquared" class="section level3" number="10.3.2">
-<h3><span class="header-section-number">10.3.2</span> Model selection using R-squared</h3>
+<div id="rsquared" class="section level3 hasAnchor" number="10.3.2">
+<h3><span class="header-section-number">10.3.2</span> Model selection using R-squared<a href="10-multiple-regression.html#rsquared" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>At the end of the previous section in Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison-2">10.9</a> you compared an interaction model with a parallel slopes model, where both models attempted to explain <span class="math inline">\(y\)</span> = the average energy expenditure of mole rats. In Tables <a href="10-multiple-regression.html#tab:model2-interaction">10.12</a> and <a href="10-multiple-regression.html#tab:model2-parallel-slopes">10.13</a>, we observed that the interaction model was “more complex” in that the regression table had 4 rows versus the 3 rows of the parallel slopes model.</p>
 <p>Most importantly however, when comparing the left and right-hand plots of Figure <a href="10-multiple-regression.html#fig:numxcatx-comparison-2">10.9</a>, we observed that the two lines corresponding to lazy and worker mole rats were not that different. Given this similarity, we stated it could be argued that the “simpler” parallel slopes model should be favored.</p>
-<p>In this section, we’ll mimic the model selection we just performed using the qualitative “eyeball test,” but this time using a numerical and quantitative approach. Specifically, we’ll use the <span class="math inline">\(R^2\)</span> summary statistic (pronounced “R-squared”), also called the “coefficient of determination.” But first, we must introduce one new concept: the <em>variance</em> of a numerical variable.</p>
+<p>In this section, we’ll mimic the model selection we just performed using the qualitative “eyeball test”, but this time using a numerical and quantitative approach. Specifically, we’ll use the <span class="math inline">\(R^2\)</span> summary statistic (pronounced “R-squared”), also called the “coefficient of determination”. But first, we must introduce one new concept: the <em>variance</em> of a numerical variable.</p>
 <p>We’ve previously studied two summary statistics of the <em>spread</em> (or <em>variation</em>) of a numerical variable: the standard deviation when studying the normal distribution in <a href="A-appendixA.html#appendix-normal-curve">A.2</a> and the interquartile range (IQR) when studying boxplots in Section <a href="2-viz.html#geomboxplot">2.7.1</a>. We now introduce a third summary statistic of spread: the <em>variance</em>. The variance is merely the standard deviation squared and it can be computed in R using the <code>var()</code> summary function within <code>summarize()</code>. If you would like to see the formula, see <a href="A-appendixA.html#appendix-sd-variance">A.1.3</a>.</p>
 <p>Recall that to get: 1) the observed values <span class="math inline">\(y\)</span>, 2) the fitted values <span class="math inline">\(\widehat{y}\)</span> from a regression model, and 3) the resulting residuals <span class="math inline">\(y - \widehat{y}\)</span>, we can apply the <code>get_regression_points()</code> function our saved model, in this case <code>model_2_interaction</code>:</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="10-multiple-regression.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(model_2_interaction) </span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="10-multiple-regression.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(model_2_interaction) </span></code></pre></div>
 <pre><code># A tibble: 35 × 6
       ID ln.energy ln.mass caste  ln.energy_hat residual
    &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -2637,10 +2667,10 @@ caste: worker
 10    10     4.111   3.951 worker         3.775    0.336
 # … with 25 more rows</code></pre>
 <p>Let’s now use the <code>var()</code> summary function within a <code>summarize()</code> to compute the variance of these three terms:</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="10-multiple-regression.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(model_2_interaction) <span class="sc">%&gt;%</span> </span>
-<span id="cb435-2"><a href="10-multiple-regression.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">var_y =</span> <span class="fu">var</span>(ln.energy), </span>
-<span id="cb435-3"><a href="10-multiple-regression.html#cb435-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var_y_hat =</span> <span class="fu">var</span>(ln.energy_hat), </span>
-<span id="cb435-4"><a href="10-multiple-regression.html#cb435-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var_residual =</span> <span class="fu">var</span>(residual))</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="10-multiple-regression.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_points</span>(model_2_interaction) <span class="sc">%&gt;%</span> </span>
+<span id="cb430-2"><a href="10-multiple-regression.html#cb430-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">var_y =</span> <span class="fu">var</span>(ln.energy), </span>
+<span id="cb430-3"><a href="10-multiple-regression.html#cb430-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var_y_hat =</span> <span class="fu">var</span>(ln.energy_hat), </span>
+<span id="cb430-4"><a href="10-multiple-regression.html#cb430-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">var_residual =</span> <span class="fu">var</span>(residual))</span></code></pre></div>
 <pre><code># A tibble: 1 × 3
      var_y var_y_hat var_residual
      &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -2788,14 +2818,14 @@ Parallel slopes
 </table>
 <p>Observe how the <span class="math inline">\(R^2\)</span> values are now very different! In other words, since the <em>additional complexity</em> of the interaction model over the parallel slopes model improves our <span class="math inline">\(R^2\)</span> value by a relatively large amount (0.228 versus 0.087, which is an increase of about 163.4%), it could be argued that the additional complexity is warranted.</p>
 <p>As a final note, we can also use the third of our <code>get_regression()</code> wrapper functions, <code>get_regression_summaries()</code>, to quickly automate calculating <span class="math inline">\(R^2\)</span> for both the interaction and parallels slopes models, first for the <code>MoleRats</code> data.</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="10-multiple-regression.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared for interaction model:</span></span>
-<span id="cb437-2"><a href="10-multiple-regression.html#cb437-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_summaries</span>(model_2_interaction)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="10-multiple-regression.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared for interaction model:</span></span>
+<span id="cb432-2"><a href="10-multiple-regression.html#cb432-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_summaries</span>(model_2_interaction)</span></code></pre></div>
 <pre><code># A tibble: 1 × 9
   r_squared adj_r_squared       mse     rmse sigma statistic p_value    df  nobs
       &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1     0.428         0.372 0.0778555 0.279026 0.296     7.727   0.001     3    35</code></pre>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="10-multiple-regression.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared for parallel slopes model:</span></span>
-<span id="cb439-2"><a href="10-multiple-regression.html#cb439-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_summaries</span>(model_2_parallel_slopes)</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="10-multiple-regression.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared for parallel slopes model:</span></span>
+<span id="cb434-2"><a href="10-multiple-regression.html#cb434-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_summaries</span>(model_2_parallel_slopes)</span></code></pre></div>
 <pre><code># A tibble: 1 × 9
   r_squared adj_r_squared       mse     rmse sigma statistic p_value    df  nobs
       &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -2908,8 +2938,34 @@ In this example of Simpson's Paradox, the `area_coverage` is a *confounding vari
 -->
 </div>
 </div>
-<div id="mult-reg-conclusion" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Conclusion</h2>
+<div id="mult-reg-conclusion" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Conclusion<a href="10-multiple-regression.html#mult-reg-conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="review">
+<p>
+<strong><em>Chapter Learning Summary</em></strong>
+</p>
+<ul>
+<li>
+Multiple linear regression examines the relationship between a
+numerical response variable and multiple explanatory variables, which
+may be numerical and/or categorical.<br />
+</li>
+<li>
+There is an interaction effect when the effect of an explanatory
+variable on the response variable depends on a second explanatory
+variable.<br />
+</li>
+<li>
+Because simpler models are to be preferred (Occam’s razor), a
+parallel slopes (or non-#interaction) model is more appropriate if there
+is no evidence for an interaction effect.<br />
+</li>
+<li>
+Data visualization, R-squared values and p-values can provide
+evidence for an interaction effect.<br />
+</li>
+</ul>
+</div>
 <!--
 ### Additional resources
 
@@ -2917,8 +2973,8 @@ In this example of Simpson's Paradox, the `area_coverage` is a *confounding vari
 
 An R script file of all R code used in this chapter is available [here](scripts/06-multiple-regression.R).
 -->
-<div id="whats-to-come-9" class="section level3" number="10.4.1">
-<h3><span class="header-section-number">10.4.1</span> What’s to come?</h3>
+<div id="whats-to-come-9" class="section level3 hasAnchor" number="10.4.1">
+<h3><span class="header-section-number">10.4.1</span> What’s to come?<a href="10-multiple-regression.html#whats-to-come-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You’ve now concluded the last major part of the book on “Data Modeling with <code>moderndive</code>.” The closing Chapter <a href="11-thinking-with-data.html#thinking-with-data">11</a> concludes this book with a review and short case studies involving real data. You’ll see how the principles in this book can help you become a great storyteller with data!</p>
 
 </div>
@@ -2937,7 +2993,6 @@ An R script file of all R code used in this chapter is available [here](scripts/
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -2978,7 +3033,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

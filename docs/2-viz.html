@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Data Visualization | Modern Biological Data Analysis</title>
   <meta name="description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Data Visualization | Modern Biological Data Analysis" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://moderndive.com/" />
   <meta property="og:image" content="https://moderndive.com//images/logos/book_cover.png" />
   <meta property="og:description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
   <meta name="github-repo" content="moderndive/ModernDive_book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-01-15" />
+<meta name="date" content="2022-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
 <link rel="prev" href="1-getting-started.html"/>
 <link rel="next" href="3-wrangling.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,12 +49,12 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
 <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
 <script src="libs/dygraphs-1.1.1/shapes.js"></script>
@@ -218,18 +217,23 @@ div.csl-indent {
 <li class="chapter" data-level="1.3.2" data-path="1-getting-started.html"><a href="1-getting-started.html#package-loading"><i class="fa fa-check"></i><b>1.3.2</b> Package loading</a></li>
 <li class="chapter" data-level="1.3.3" data-path="1-getting-started.html"><a href="1-getting-started.html#package-use"><i class="fa fa-check"></i><b>1.3.3</b> Package use</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishbase"><i class="fa fa-check"></i><b>1.4</b> Explore your first datasets</a>
+<li class="chapter" data-level="1.4" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdb"><i class="fa fa-check"></i><b>1.4</b> Explore your first data sets</a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#rfishpackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>rfishbase</code> package</a></li>
-<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#fishbasedataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>fishbase</code> data frame</a></li>
+<li class="chapter" data-level="1.4.1" data-path="1-getting-started.html"><a href="1-getting-started.html#openintropackage"><i class="fa fa-check"></i><b>1.4.1</b> <code>openintro</code> package</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-getting-started.html"><a href="1-getting-started.html#mammalsdataframe"><i class="fa fa-check"></i><b>1.4.2</b> <code>mammals</code> data frame</a></li>
 <li class="chapter" data-level="1.4.3" data-path="1-getting-started.html"><a href="1-getting-started.html#exploredataframes"><i class="fa fa-check"></i><b>1.4.3</b> Exploring data frames</a></li>
 <li class="chapter" data-level="1.4.4" data-path="1-getting-started.html"><a href="1-getting-started.html#identification-vs-measurement-variables"><i class="fa fa-check"></i><b>1.4.4</b> Identification and measurement variables</a></li>
 <li class="chapter" data-level="1.4.5" data-path="1-getting-started.html"><a href="1-getting-started.html#help-files"><i class="fa fa-check"></i><b>1.4.5</b> Help files</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.5</b> Conclusion</a>
+<li class="chapter" data-level="1.5" data-path="1-getting-started.html"><a href="1-getting-started.html#csv"><i class="fa fa-check"></i><b>1.5</b> Importing data</a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-getting-started.html"><a href="1-getting-started.html#using-the-console"><i class="fa fa-check"></i><b>1.5.1</b> Using the console</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-getting-started.html"><a href="1-getting-started.html#using-rstudios-interface"><i class="fa fa-check"></i><b>1.5.2</b> Using RStudio’s interface</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="1-getting-started.html"><a href="1-getting-started.html#conclusion"><i class="fa fa-check"></i><b>1.6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="1-getting-started.html"><a href="1-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>1.6.1</b> Additional resources</a></li>
+<li class="chapter" data-level="1.6.2" data-path="1-getting-started.html"><a href="1-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>1.6.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Science with tidyverse</b></span></li>
@@ -270,16 +274,20 @@ div.csl-indent {
 <li class="chapter" data-level="2.8" data-path="2-viz.html"><a href="2-viz.html#geombar"><i class="fa fa-check"></i><b>2.8</b> 5NG#5: Barplots</a>
 <ul>
 <li class="chapter" data-level="2.8.1" data-path="2-viz.html"><a href="2-viz.html#barplots-via-geom_bar-or-geom_col"><i class="fa fa-check"></i><b>2.8.1</b> Barplots via <code>geom_bar</code> or <code>geom_col</code></a></li>
-<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#must-avoid-pie-charts"><i class="fa fa-check"></i><b>2.8.2</b> Must avoid pie charts!</a></li>
-<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.3</b> Two categorical variables</a></li>
-<li class="chapter" data-level="2.8.4" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.4</b> Summary</a></li>
+<li class="chapter" data-level="2.8.2" data-path="2-viz.html"><a href="2-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>2.8.2</b> Two categorical variables</a></li>
+<li class="chapter" data-level="2.8.3" data-path="2-viz.html"><a href="2-viz.html#summary-4"><i class="fa fa-check"></i><b>2.8.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.9</b> Conclusion</a>
+<li class="chapter" data-level="2.9" data-path="2-viz.html"><a href="2-viz.html#plots-to-avoid"><i class="fa fa-check"></i><b>2.9</b> Plots to avoid!</a>
 <ul>
-<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.9.1</b> Summary table</a></li>
-<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.9.2</b> Function argument specification</a></li>
-<li class="chapter" data-level="2.9.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.9.3</b> Additional resources</a></li>
-<li class="chapter" data-level="2.9.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.9.4</b> What’s to come</a></li>
+<li class="chapter" data-level="2.9.1" data-path="2-viz.html"><a href="2-viz.html#barplots-with-a-continuous-variable"><i class="fa fa-check"></i><b>2.9.1</b> Barplots with a continuous variable</a></li>
+<li class="chapter" data-level="2.9.2" data-path="2-viz.html"><a href="2-viz.html#pie-charts"><i class="fa fa-check"></i><b>2.9.2</b> Pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="2-viz.html"><a href="2-viz.html#data-vis-conclusion"><i class="fa fa-check"></i><b>2.10</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="2-viz.html"><a href="2-viz.html#summary-table"><i class="fa fa-check"></i><b>2.10.1</b> Summary table</a></li>
+<li class="chapter" data-level="2.10.2" data-path="2-viz.html"><a href="2-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>2.10.2</b> Function argument specification</a></li>
+<li class="chapter" data-level="2.10.3" data-path="2-viz.html"><a href="2-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>2.10.3</b> Additional resources</a></li>
+<li class="chapter" data-level="2.10.4" data-path="2-viz.html"><a href="2-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>2.10.4</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-wrangling.html"><a href="3-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a>
@@ -306,25 +314,20 @@ div.csl-indent {
 <li class="chapter" data-level="3.9.3" data-path="3-wrangling.html"><a href="3-wrangling.html#whats-to-come-1"><i class="fa fa-check"></i><b>3.9.3</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> Data Importing and “Tidy” Data</a>
+<li class="chapter" data-level="4" data-path="4-tidy.html"><a href="4-tidy.html"><i class="fa fa-check"></i><b>4</b> “Tidy” Data</a>
 <ul>
 <li class="chapter" data-level="" data-path="4-tidy.html"><a href="4-tidy.html#tidy-packages"><i class="fa fa-check"></i>Needed packages</a></li>
-<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#csv"><i class="fa fa-check"></i><b>4.1</b> Importing data</a>
+<li class="chapter" data-level="4.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.1</b> “Tidy” data</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#using-the-console"><i class="fa fa-check"></i><b>4.1.1</b> Using the console</a></li>
-<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#using-rstudios-interface"><i class="fa fa-check"></i><b>4.1.2</b> Using RStudio’s interface</a></li>
+<li class="chapter" data-level="4.1.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.1.1</b> Definition of “tidy” data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.1.2</b> Converting to “tidy” data</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>4.2</b> “Tidy” data</a>
+<li class="chapter" data-level="4.2" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.2</b> Case study: Weight loss data</a></li>
+<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.3</b> <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.4</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="4-tidy.html"><a href="4-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>4.2.1</b> Definition of “tidy” data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="4-tidy.html"><a href="4-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>4.2.2</b> Converting to “tidy” data</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="4-tidy.html"><a href="4-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>4.3</b> Case study: Weight loss data</a></li>
-<li class="chapter" data-level="4.4" data-path="4-tidy.html"><a href="4-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>4.4</b> <code>tidyverse</code> package</a></li>
-<li class="chapter" data-level="4.5" data-path="4-tidy.html"><a href="4-tidy.html#tidy-data-conclusion"><i class="fa fa-check"></i><b>4.5</b> Conclusion</a>
-<ul>
-<li class="chapter" data-level="4.5.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.5.1</b> Additional resources</a></li>
-<li class="chapter" data-level="4.5.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.5.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="4.4.1" data-path="4-tidy.html"><a href="4-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>4.4.1</b> Additional resources</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-tidy.html"><a href="4-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>4.4.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>II Statistical Inference with infer</b></span></li>
@@ -354,10 +357,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-sampling.html"><a href="5-sampling.html#sampling-case-study"><i class="fa fa-check"></i><b>5.4</b> Case study: Genetic crosses</a></li>
 <li class="chapter" data-level="5.5" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-central-limit-theorem"><i class="fa fa-check"></i><b>5.5</b> Central Limit Theorem</a></li>
-<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.6</b> Conclusion</a>
+<li class="chapter" data-level="5.6" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6</b> Sampling scenarios</a></li>
+<li class="chapter" data-level="5.7" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>5.7</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="5-sampling.html"><a href="5-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>5.6.1</b> Sampling scenarios</a></li>
-<li class="chapter" data-level="5.6.2" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.6.2</b> What’s to come?</a></li>
+<li class="chapter" data-level="5.7.1" data-path="5-sampling.html"><a href="5-sampling.html#whats-to-come-4"><i class="fa fa-check"></i><b>5.7.1</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html"><i class="fa fa-check"></i><b>6</b> Bootstrapping and Confidence Intervals</a>
@@ -401,12 +404,22 @@ div.csl-indent {
 <li class="chapter" data-level="6.6.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-build"><i class="fa fa-check"></i><b>6.6.3</b> Constructing the confidence interval</a></li>
 <li class="chapter" data-level="6.6.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#interpreting-the-confidence-interval"><i class="fa fa-check"></i><b>6.6.4</b> Interpreting the confidence interval</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.7</b> Conclusion</a>
+<li class="chapter" data-level="6.7" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7</b> Comparing bootstrap and sampling distributions</a>
 <ul>
-<li class="chapter" data-level="6.7.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>6.7.1</b> Comparing bootstrap and sampling distributions</a></li>
-<li class="chapter" data-level="6.7.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.7.2</b> Theory-based confidence intervals</a></li>
-<li class="chapter" data-level="6.7.3" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.7.3</b> Additional resources</a></li>
-<li class="chapter" data-level="6.7.4" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.7.4</b> What’s to come?</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#sampling-distribution"><i class="fa fa-check"></i>Sampling distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#bootstrap-distribution"><i class="fa fa-check"></i>Bootstrap distribution</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#comparison"><i class="fa fa-check"></i>Comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>6.8</b> Theory-based confidence intervals</a>
+<ul>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-computing-standard-errors"><i class="fa fa-check"></i>Theory-based method for computing standard errors</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#theory-based-method-for-constructing-confidence-intervals"><i class="fa fa-check"></i>Theory-based method for constructing confidence intervals</a></li>
+<li class="chapter" data-level="" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#confidence-intervals-based-on-33-tactile-samples"><i class="fa fa-check"></i>Confidence intervals based on 33 tactile samples</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>6.9</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#additional-resources-4"><i class="fa fa-check"></i><b>6.9.1</b> Additional resources</a></li>
+<li class="chapter" data-level="6.9.2" data-path="6-confidence-intervals.html"><a href="6-confidence-intervals.html#whats-to-come-5"><i class="fa fa-check"></i><b>6.9.2</b> What’s to come?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Hypothesis Testing</a>
@@ -438,17 +451,22 @@ div.csl-indent {
 <li class="chapter" data-level="7.5.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#sampling-scenario-1"><i class="fa fa-check"></i><b>7.5.2</b> Sampling scenario</a></li>
 <li class="chapter" data-level="7.5.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#conducting-the-hypothesis-test"><i class="fa fa-check"></i><b>7.5.3</b> Conducting the hypothesis test</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.6</b> Conclusion</a>
+<li class="chapter" data-level="7.6" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6</b> Theory-based hypothesis tests</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>7.6.1</b> Theory-based hypothesis tests</a></li>
-<li class="chapter" data-level="7.6.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.6.2</b> Problems with p-values</a></li>
-<li class="chapter" data-level="7.6.3" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6.3</b> Additional resources</a></li>
-<li class="chapter" data-level="7.6.4" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.6.4</b> What’s to come</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#two-sample-t-statistic"><i class="fa fa-check"></i>Two-sample t-statistic</a></li>
+<li class="chapter" data-level="" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#null-distribution"><i class="fa fa-check"></i>Null distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>7.7</b> Problems with p-values</a></li>
+<li class="chapter" data-level="7.8" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#nhst-conclusion"><i class="fa fa-check"></i><b>7.8</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#additional-resources-5"><i class="fa fa-check"></i><b>7.8.1</b> Additional resources</a></li>
+<li class="chapter" data-level="7.8.2" data-path="7-hypothesis-testing.html"><a href="7-hypothesis-testing.html#whats-to-come-6"><i class="fa fa-check"></i><b>7.8.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>III Data Modeling with moderndive</b></span></li>
 <li class="chapter" data-level="8" data-path="8-regression.html"><a href="8-regression.html"><i class="fa fa-check"></i><b>8</b> Basic Regression</a>
 <ul>
+<li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-modeling"><i class="fa fa-check"></i>Modeling for explanation or prediction</a></li>
 <li class="chapter" data-level="" data-path="8-regression.html"><a href="8-regression.html#reg-packages"><i class="fa fa-check"></i>Needed packages</a></li>
 <li class="chapter" data-level="8.1" data-path="8-regression.html"><a href="8-regression.html#model1"><i class="fa fa-check"></i><b>8.1</b> One numerical explanatory variable</a>
 <ul>
@@ -503,11 +521,11 @@ div.csl-indent {
 <li class="chapter" data-level="9.4.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#confidence-interval-for-slope"><i class="fa fa-check"></i><b>9.4.1</b> Confidence interval for slope</a></li>
 <li class="chapter" data-level="9.4.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#hypothesis-test-for-slope"><i class="fa fa-check"></i><b>9.4.2</b> Hypothesis test for slope</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.5</b> Conclusion</a>
+<li class="chapter" data-level="9.5" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5</b> Theory-based inference for regression</a></li>
+<li class="chapter" data-level="9.6" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#inference-conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="9.5.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>9.5.1</b> Theory-based inference for regression</a></li>
-<li class="chapter" data-level="9.5.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.5.2</b> Summary of statistical inference</a></li>
-<li class="chapter" data-level="9.5.3" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.5.3</b> What’s to come</a></li>
+<li class="chapter" data-level="9.6.1" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>9.6.1</b> Summary of statistical inference</a></li>
+<li class="chapter" data-level="9.6.2" data-path="9-inference-for-regression.html"><a href="9-inference-for-regression.html#whats-to-come-8"><i class="fa fa-check"></i><b>9.6.2</b> What’s to come</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-multiple-regression.html"><a href="10-multiple-regression.html"><i class="fa fa-check"></i><b>10</b> Multiple Regression</a>
@@ -655,23 +673,46 @@ div.csl-indent {
 <html>
 <img src='https://moderndive.com/wide_format.png' alt="ModernDive">
 </html>
-<div id="viz" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Data Visualization</h1>
+<div id="viz" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data Visualization<a href="2-viz.html#viz" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We begin the development of your data science toolbox with data visualization. By visualizing data, we gain valuable insights we couldn’t initially obtain from just looking at the raw data values. We’ll use the <code>ggplot2</code> package, as it provides an easy way to customize your plots. <code>ggplot2</code> is rooted in the data visualization theory known as <em>the grammar of graphics</em> <span class="citation">(<a href="#ref-wilkinson2005" role="doc-biblioref">Wilkinson 2005</a>)</span>, developed by Leland Wilkinson. </p>
 <p>At their most basic, graphics/plots/charts (we use these terms interchangeably in this book) provide a nice way to explore the patterns in data, such as the presence of <em>outliers</em>, <em>distributions</em> of individual variables, and <em>relationships</em> between groups of variables. Graphics are designed to emphasize the findings and insights you want your audience to understand. This does, however, require a balancing act. On the one hand, you want to highlight as many interesting findings as possible. On the other hand, you don’t want to include so much information that it overwhelms your audience.</p>
-<p>As we will see, plots  also help us to identify patterns and outliers in our data. We’ll see that a common extension of these ideas is to compare the <em>distribution</em>  of one numerical variable, such as what are the center and spread of the values, as we go across the levels of a different categorical variable.</p>
-<div id="needed-packages" class="section level3 unnumbered">
-<h3>Needed packages</h3>
-<p>Let’s load all the packages needed for this chapter (this assumes you’ve already installed them). Read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install and load R packages.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="2-viz.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rfishbase)</span>
-<span id="cb13-2"><a href="2-viz.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb13-3"><a href="2-viz.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>As we will see, plots also help us to identify patterns and outliers in our data. We’ll see that a common extension of these ideas is to compare the <em>distribution</em> of one numerical variable, such as what are the center and spread of the values, as we go across the levels of a different categorical variable.</p>
+<div class="review">
+<p>
+<strong><em>Chapter Learning Objectives</em></strong>
+</p>
+<p>
+<em>At the end of this chapter, you should be able to…</em><br />
+• Explore and present data using plots (a.k.a., charts and graphics) in
+R.<br />
+• Use the grammar of graphics to create basic plots by specifying the
+data, its mapping and the geometric object(s).<br />
+• Produce more complex plots by adding layers to modify labels, add
+facets, etc.<br />
+• Adjust plot features such as colors and bin number by modifying
+function arguments (inputs).<br />
+• Select and create the most appropriate graph to visualize your
+data.<br />
+• Recognize and correct difficulties in visualizing data due to
+overplotting.<br />
+• Interpret data presented in histograms and boxplots.<br />
+• Explain the problems with using bar charts to present quantitative
+data and pie charts to present categorical data.<br />
+</p>
 </div>
-<div id="grammarofgraphics" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> The grammar of graphics</h2>
-<p>We start with a discussion of a theoretical framework for data visualization known as “the grammar of graphics.” This framework serves as the foundation for the  <code>ggplot2</code> package which we’ll use extensively in this chapter.  Think of how we construct and form sentences in English by combining different elements, like nouns, verbs, articles, subjects, objects, etc. We can’t just combine these elements in any arbitrary order; we must do so following a set of rules known as a linguistic grammar. Similarly to a linguistic grammar, “the grammar of graphics” defines a set of rules for constructing <em>statistical graphics</em> by combining different types of <em>layers</em>. This grammar was created by Leland Wilkinson <span class="citation">(<a href="#ref-wilkinson2005" role="doc-biblioref">Wilkinson 2005</a>)</span> and has been implemented in a variety of data visualization software platforms like R, but also <a href="https://plot.ly/">Plotly</a> and <a href="https://www.tableau.com/">Tableau</a>.</p>
-<div id="components-of-the-grammar" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Components of the grammar</h3>
+<div id="needed-packages" class="section level3 unnumbered hasAnchor">
+<h3>Needed packages<a href="2-viz.html#needed-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s load all the packages needed for this chapter (this assumes you’ve already installed them). Read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install and load R packages.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="2-viz.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openintro)</span>
+<span id="cb12-2"><a href="2-viz.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-3"><a href="2-viz.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+</div>
+<div id="grammarofgraphics" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> The grammar of graphics<a href="2-viz.html#grammarofgraphics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We start with a discussion of a theoretical framework for data visualization known as “the grammar of graphics.” This framework serves as the foundation for the <code>ggplot2</code> package which we’ll use extensively in this chapter. Think of how we construct and form sentences in English by combining different elements, like nouns, verbs, articles, subjects, objects, etc. We can’t just combine these elements in any arbitrary order; we must do so following a set of rules known as a linguistic grammar. Similarly to a linguistic grammar, “the grammar of graphics” defines a set of rules for constructing <em>statistical graphics</em> by combining different types of <em>layers</em>. This grammar was created by Leland Wilkinson <span class="citation">(<a href="#ref-wilkinson2005" role="doc-biblioref">Wilkinson 2005</a>)</span> and has been implemented in a variety of data visualization software platforms like R, but also <a href="https://plot.ly/">Plotly</a> and <a href="https://www.tableau.com/">Tableau</a>.</p>
+<div id="components-of-the-grammar" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Components of the grammar<a href="2-viz.html#components-of-the-grammar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In short, the grammar tells us that:</p>
 <blockquote>
 <p><strong>A statistical graphic is a <code>mapping</code> of <code>data</code> variables to <code>aes</code>thetic attributes of <code>geom</code>etric objects.</strong></p>
@@ -684,8 +725,8 @@ div.csl-indent {
 </ol>
 <p>You might be wondering why we wrote the terms <code>data</code>, <code>geom</code>, and <code>aes</code> in a computer code type font. We’ll see very shortly that we’ll specify the elements of the grammar in R using these terms. However, let’s first break down the grammar with an example.</p>
 </div>
-<div id="gapminder" class="section level3" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Gapminder data</h3>
+<div id="gapminder" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Gapminder data<a href="2-viz.html#gapminder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In February 2006, a Swedish physician and data advocate named Hans Rosling gave a TED talk titled <a href="https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen">“The best stats you’ve ever seen”</a> where he presented global economic, health, and development data from the website <a href="http://www.gapminder.org/tools/#_locale_id=en;&amp;chart-type=bubbles">gapminder.org</a>. For example, for data on 142 countries in 2007, let’s consider only a few countries in Table <a href="2-viz.html#tab:gapminder-2007">2.1</a> as a peek into the data.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -781,12 +822,12 @@ FIGURE 2.1: Life expectancy over GDP per capita in 2007.
 </div>
 <p>Let’s view this plot through the grammar of graphics:</p>
 <ol style="list-style-type: decimal">
-<li>The <code>data</code> variable <strong>GDP per Capita</strong> gets mapped to the <code>x</code>-position <code>aes</code>thetic  of the points.</li>
-<li>The <code>data</code>  variable <strong>Life Expectancy</strong> gets mapped to the <code>y</code>-position <code>aes</code>thetic of the points.</li>
+<li>The <code>data</code> variable <strong>GDP per Capita</strong> gets mapped to the <code>x</code>-position <code>aes</code>thetic of the points.</li>
+<li>The <code>data</code> variable <strong>Life Expectancy</strong> gets mapped to the <code>y</code>-position <code>aes</code>thetic of the points.</li>
 <li>The <code>data</code> variable <strong>Population</strong> gets mapped to the <code>size</code> <code>aes</code>thetic of the points.</li>
 <li>The <code>data</code> variable <strong>Continent</strong> gets mapped to the <code>color</code> <code>aes</code>thetic of the points.</li>
 </ol>
-<p>We’ll see shortly that <code>data</code> corresponds to the particular data frame where our data is saved and that “data variables” correspond to particular columns in the data frame. Furthermore, the type of <code>geom</code>etric object  considered in this plot are points. That being said, while in this example we are considering points, graphics are not limited to just points. We can also use lines, bars, and other geometric objects.</p>
+<p>We’ll see shortly that <code>data</code> corresponds to the particular data frame where our data is saved and that “data variables” correspond to particular columns in the data frame. Furthermore, the type of <code>geom</code>etric object considered in this plot are points. That being said, while in this example we are considering points, graphics are not limited to just points. We can also use lines, bars, and other geometric objects.</p>
 <p>Let’s summarize the three essential components of the grammar in Table <a href="2-viz.html#tab:summary-table-gapminder">2.2</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -853,8 +894,8 @@ point
 </tbody>
 </table>
 </div>
-<div id="other-components" class="section level3" number="2.1.3">
-<h3><span class="header-section-number">2.1.3</span> Other components</h3>
+<div id="other-components" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Other components<a href="2-viz.html#other-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are other components of the grammar of graphics we can control as well. As you start to delve deeper into the grammar of graphics, you’ll start to encounter these topics more frequently. In this book, we’ll keep things simple and only work with these two additional components:</p>
 <ul>
 <li><code>facet</code>ing breaks up a plot into several plots split by the values of another variable (Section <a href="2-viz.html#facets">2.5</a>) </li>
@@ -862,9 +903,9 @@ point
 </ul>
 <p>Other more complex components like <code>scales</code> and <code>coord</code>inate systems are left for a more advanced text such as <a href="http://r4ds.had.co.nz/data-visualisation.html#aesthetic-mappings"><em>R for Data Science</em></a> <span class="citation">(<a href="#ref-rds2016" role="doc-biblioref">Grolemund and Wickham 2017</a>)</span>. Generally speaking, the grammar of graphics allows for a high degree of customization of plots and also a consistent framework for easily updating and modifying them.</p>
 </div>
-<div id="ggplot2-package" class="section level3" number="2.1.4">
-<h3><span class="header-section-number">2.1.4</span> ggplot2 package</h3>
-<p>In this book, we will use the <code>ggplot2</code> package for data visualization, which is an implementation of the <code>g</code>rammar of <code>g</code>raphics for R <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2021</a>)</span>. As we noted earlier, a lot of the previous section was written in a computer code type font. This is because the various components of the grammar of graphics are specified in the <code>ggplot()</code>  function included in the <code>ggplot2</code> package. For the purposes of this book, we’ll always provide the <code>ggplot()</code> function with the following arguments (i.e., inputs) at a minimum:</p>
+<div id="ggplot2-package" class="section level3 hasAnchor" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> ggplot2 package<a href="2-viz.html#ggplot2-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this book, we will use the <code>ggplot2</code> package for data visualization, which is an implementation of the <code>g</code>rammar of <code>g</code>raphics for R <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al. 2022</a>)</span>. As we noted earlier, a lot of the previous section was written in a computer code type font. This is because the various components of the grammar of graphics are specified in the <code>ggplot()</code> function included in the <code>ggplot2</code> package. For the purposes of this book, we’ll always provide the <code>ggplot()</code> function with the following arguments (i.e., inputs) at a minimum:</p>
 <ul>
 <li>The data frame where the variables exist: the <code>data</code> argument.</li>
 <li>The mapping of the variables to aesthetic attributes: the <code>mapping</code> argument which specifies the <code>aes</code>thetic attributes involved.</li>
@@ -873,8 +914,8 @@ point
 <p>Let’s now put the theory of the grammar of graphics into practice.</p>
 </div>
 </div>
-<div id="FiveNG" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Five named graphs - the 5NG</h2>
+<div id="FiveNG" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Five named graphs - the 5NG<a href="2-viz.html#FiveNG" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In order to keep things simple in this book, we will only focus on five different types of graphics, each with a commonly given name. We term these “five named graphs” or in abbreviated form, the <strong>5NG</strong>: </p>
 <ol style="list-style-type: decimal">
 <li>scatterplots</li>
@@ -885,50 +926,37 @@ point
 </ol>
 <p>We’ll also present some variations of these plots, but with this basic repertoire of five graphics in your toolbox, you can visualize a wide array of different variable types. As we’ll see, certain plots are only appropriate for categorical variables, while others are only appropriate for numerical variables.</p>
 </div>
-<div id="scatterplots" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> 5NG#1: Scatterplots</h2>
-<p>The simplest of the 5NG are <em>scatterplots</em>,  also called <em>bivariate plots</em>. They allow you to visualize the <em>relationship</em> between two numerical variables. While you may already be familiar with scatterplots, let’s view them through the lens of the grammar of graphics we presented in Section <a href="2-viz.html#grammarofgraphics">2.1</a>. Specifically, we will visualize the relationship between the following two numerical variables in the <code>all_fishdata</code> data frame we created in Chapter <a href="1-getting-started.html#fishbasedataframe">1.4.2</a>:</p>
+<div id="scatterplots" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> 5NG#1: Scatterplots<a href="2-viz.html#scatterplots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The simplest of the 5NG are <em>scatterplots</em>, also called <em>bivariate plots</em>. They allow you to visualize the <em>relationship</em> between two numerical variables. While you may already be familiar with scatterplots, let’s view them through the lens of the grammar of graphics we presented in Section <a href="2-viz.html#grammarofgraphics">2.1</a>. Specifically, we will visualize the relationship between the following two numerical variables in the <code>mammals</code> data frame we created in Chapter <a href="1-getting-started.html#mammalsdb">1.4</a>:</p>
 <ol style="list-style-type: decimal">
-<li><code>Length</code>: typical length (in cm) of a fish species on the horizontal “x” axis and</li>
-<li><code>Weight</code>: typical weight (in g) on the vertical “y” axis</li>
+<li><code>brain_wt</code>: brain weight (in kg) on the horizontal “x” axis and</li>
+<li><code>life_span</code>: total number of hours of sleep on the vertical “y” axis<br />
+for each mammalian species.</li>
 </ol>
-<p>for brackish fish species. (If the <code>all_fishdata</code> set is not in your Environment, rerun the <code>all_fishdata &lt;- species()</code> command to reproduce it.)</p>
-<p>This requires paring down the data from all 61,603 fish species to only the 3,125 <em>brackish</em> species that live in brackish (slightly salty) environments at any stage of development. We do this so our scatterplot will involve a manageable 3,125 points, and not an overwhelmingly large number. To achieve this, we’ll take the <code>all_fishdata</code> data frame, filter the rows so that only the 3,125 rows corresponding to brackish fish species are kept, and save this in a new data frame called <code>brackish_fish</code> using the <code>&lt;-</code> <em>assignment</em> operator: </p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="2-viz.html#cb14-1" aria-hidden="true" tabindex="-1"></a>brackish_fish <span class="ot">&lt;-</span> all_fishdata <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="2-viz.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Brack <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
-<p>For now, we suggest you don’t worry if you don’t fully understand this code. We’ll see later in Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling that this code uses the <code>dplyr</code> package for data wrangling to achieve our goal: it takes the <code>all_fishdata</code> data frame and <code>filter</code>s it to only return the rows where <code>Brack</code> is equal to <code>-1</code> (paradoxically indicating that this is true, as opposed to 0/false). Recall from Section <a href="1-getting-started.html#code">1.2</a> that testing for equality is specified with  <code>==</code> and not <code>=</code>. Convince yourself that this code achieves what it is supposed to by exploring the resulting data frame by running <code>View(brackish_fish)</code>. You’ll see that it has 3,125 rows, consisting of only 3,125 brackish fish species.</p>
-<div class="learncheck">
-<p>
-<strong><em>Learning check</em></strong>
-</p>
-</div>
-<p><strong>(LC2.1)</strong> Take a look at both the <code>all_fishdata</code> and <code>brackish_fish</code> data frames by running <code>View(all_fishdata)</code> and <code>View(brackish_fish)</code>. Does the <code>brackish_fish</code> data frame seem to contain the expected rows?</p>
-<div class="learncheck">
-
-</div>
-<div id="geompoint" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Scatterplots via <code>geom_point</code></h3>
+<div id="geompoint" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Scatterplots via <code>geom_point</code><a href="2-viz.html#geompoint" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s now go over the code that will create the desired scatterplot, while keeping in mind the grammar of graphics framework we introduced in Section <a href="2-viz.html#grammarofgraphics">2.1</a>. Let’s take a look at the code and break it down piece-by-piece.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="2-viz.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> brackish_fish, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> Weight)) <span class="sc">+</span> </span>
-<span id="cb15-2"><a href="2-viz.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p>Within the <code>ggplot()</code>  function, we specify two of the components of the grammar of graphics as arguments (i.e., inputs):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="2-viz.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> brain_wt, <span class="at">y =</span> life_span)) <span class="sc">+</span> </span>
+<span id="cb13-2"><a href="2-viz.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>Within the <code>ggplot()</code> function, we specify two of the components of the grammar of graphics as arguments (i.e., inputs):</p>
 <ol style="list-style-type: decimal">
-<li>The <code>data</code> as the <code>brackish_fish</code> data frame via <code>data = brackish_fish</code>.</li>
-<li>The <code>aes</code>thetic  <code>mapping</code> by setting <code>mapping = aes(x = Length, y = Weight)</code>. Specifically, the variable <code>Length</code> maps to the <code>x</code> position aesthetic, while the variable <code>Weight</code> maps to the <code>y</code> position.</li>
+<li>The <code>data</code> as the <code>mammals</code> data frame via <code>data = mammals</code>.</li>
+<li>The <code>aes</code>thetic <code>mapping</code> by setting <code>mapping = aes(x = brain_wt, y = life_span)</code>. Specifically, the variable <code>brain_wt</code> maps to the <code>x</code> position aesthetic, while the variable <code>life_span</code> maps to the <code>y</code> position.</li>
 </ol>
 <p>We then add a layer to the <code>ggplot()</code> function call using the <code>+</code> sign. The added layer in question specifies the third component of the grammar: the <code>geom</code>etric object. In this case, the geometric object is set to be points by specifying <code>geom_point()</code>. After running these two lines of code in your console, you’ll notice two outputs: a warning message and the graphic shown in Figure <a href="2-viz.html#fig:noalpha">2.2</a>.</p>
-<pre><code>Warning: Removed 2514 rows containing missing values (geom_point).</code></pre>
+<pre><code>Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:noalpha"></span>
-<img src="ModernDive_files/figure-html/noalpha-1.png" alt="Length versus weight for brackish species in all_fishdata." width="\textwidth" />
+<img src="ModernDive_files/figure-html/noalpha-1.png" alt="Brain weight vs. life span in mammals data frame." width="\textwidth" />
 <p class="caption">
-FIGURE 2.2: Length versus weight for brackish species in all_fishdata.
+FIGURE 2.2: Brain weight vs. life span in mammals data frame.
 </p>
 </div>
-<p>Let’s first unpack the graphic in Figure <a href="2-viz.html#fig:noalpha">2.2</a>. Observe that a <em>positive relationship</em> exists overall between <code>Length</code> and <code>Weight</code>: as fish lengths increase, fish weights tend to also increase. Observe also the large number of points clustered near (0, 0).</p>
-<p>Let’s turn our attention to the warning message. R is alerting us to the fact that many rows were ignored due to missing information. For these rows, either the value for <code>Length</code> or <code>Weight</code> or both were missing (recorded in R as <code>NA</code>), and thus these rows were ignored in our plot.</p>
-<p>Before we continue, let’s make a few more observations about this code that created the scatterplot. Note that the <code>+</code> sign comes at the end of lines, and not at the beginning. You’ll get an error in R if you put it at the beginning of a line.  When adding layers to a plot, you are encouraged to start a new line after the <code>+</code> (by pressing the Return/Enter button on your keyboard) so that the code for each layer is on a new line. As we add more and more layers to plots, you’ll see this will greatly improve the legibility of your code.</p>
+<p>Let’s first unpack the graphic in Figure <a href="2-viz.html#fig:noalpha">2.2</a>. Observe that a <em>positive relationship</em> exists overall between <code>brain_wt</code> and <code>life_span</code>: as <code>brain_wt</code> increases, the <code>life_span</code> tends to also increase. Observe also the large number of points clustered near (0, 0), which we’ll discuss further in Subsection <a href="2-viz.html#overplotting">2.3.2</a>.</p>
+<p>Now, let’s turn our attention to the warning message. R is alerting us to the fact that some rows were ignored due to missing information. For these rows, either the value for <code>brain_wt</code> or <code>life_span</code> or both were missing, and thus these rows were ignored in our plot.</p>
+<p>Before we continue, let’s make a few more observations about this code that created the scatterplot. Note that the <code>+</code> sign comes at the end of lines, and not at the beginning. You’ll get an error in R if you put it at the beginning of a line. When adding layers to a plot, you are encouraged to start a new line after the <code>+</code> (by pressing the Return/Enter button on your keyboard) so that the code for each layer is on a new line. As we add more and more layers to plots, you’ll see this will greatly improve the legibility of your code.</p>
 <p>To stress the importance of adding the layer specifying the <code>geom</code>etric object, consider Figure <a href="2-viz.html#fig:nolayers">2.3</a> where no layers are added. Because the <code>geom</code>etric object was not specified, we have a blank plot which is not very useful!</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="2-viz.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> brackish_fish, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> Weight))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="2-viz.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> brain_wt, <span class="at">y =</span> life_span)) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:nolayers"></span>
 <img src="ModernDive_files/figure-html/nolayers-1.png" alt="A plot with no layers." width="\textwidth" />
 <p class="caption">
@@ -940,33 +968,33 @@ FIGURE 2.3: A plot with no layers.
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.2)</strong> What are some practical reasons why <code>Length</code> and <code>Weight</code> have a positive relationship?</p>
-<p><strong>(LC2.3)</strong> For which of these two variables, <code>Length</code> and <code>Weight</code>, is the data more frequently missing? How did you determine this?</p>
-<p><strong>(LC2.4)</strong> What are some other features of the plot that stand out to you?</p>
-<p><strong>(LC2.5)</strong> Create a new scatterplot using different quantitative variables in the <code>brackish_fish</code> data frame by modifying the example given.</p>
+<p><strong>(LC2.1)</strong> What are some practical reasons why <code>brain_wt</code> and <code>life_span</code> have a positive relationship?</p>
+<p><strong>(LC2.2)</strong> For which of these two variables, <code>brain_wt</code> and <code>life_span</code>, is the data more frequently missing? How did you determine this?</p>
+<p><strong>(LC2.3)</strong> What are some other features of the plot that stand out to you?</p>
+<p><strong>(LC2.4)</strong> Create a new scatterplot using different quantitative variables in the <code>mammals</code> data frame by modifying the example given.</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="overplotting" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Overplotting</h3>
-<p>The large mass of points near (0, 0) in Figure <a href="2-viz.html#fig:noalpha">2.2</a> can cause some confusion since it is hard to tell the true number of points that are plotted. This is the result of a phenomenon called  <em>overplotting</em>. As one may guess, this corresponds to points being plotted on top of each other over and over again. When overplotting occurs, it is difficult to know the number of points being plotted. There are two methods to address the issue of overplotting. Either by</p>
+<div id="overplotting" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Overplotting<a href="2-viz.html#overplotting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The large mass of points near (0, 0) in Figure <a href="2-viz.html#fig:noalpha">2.2</a> can cause some confusion since it is hard to tell the true number of points that are plotted. This is the result of a phenomenon called <em>overplotting</em>. As one may guess, this corresponds to points being plotted on top of each other over and over again. When overplotting occurs, it is difficult to know the number of points being plotted. There are two methods to address the issue of overplotting. Either by</p>
 <ol style="list-style-type: decimal">
 <li>Adjusting the transparency of the points or</li>
-<li>Adding a little random “jitter,” or random “nudges,” to each of the points.</li>
+<li>Adding a little random “jitter”, or random “nudges”, to each of the points.</li>
 </ol>
 <p><strong>Method 1: Changing the transparency</strong></p>
 <p>The first way of addressing overplotting is to change the transparency/opacity of the points by setting the <code>alpha</code> argument in <code>geom_point()</code>. We can change the <code>alpha</code> argument to be any value between <code>0</code> and <code>1</code>, where <code>0</code> sets the points to be 100% transparent and <code>1</code> sets the points to be 100% opaque. By default, <code>alpha</code> is set to <code>1</code>. In other words, if we don’t explicitly set an <code>alpha</code> value, R will use <code>alpha = 1</code>.</p>
 <p>Note how the following code is identical to the code in Section <a href="2-viz.html#scatterplots">2.3</a> that created the scatterplot with overplotting, but with <code>alpha = 0.2</code> added to the <code>geom_point()</code> function:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="2-viz.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> brackish_fish, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> Weight)) <span class="sc">+</span> </span>
-<span id="cb18-2"><a href="2-viz.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="2-viz.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> brain_wt, <span class="at">y =</span> life_span)) <span class="sc">+</span> </span>
+<span id="cb16-2"><a href="2-viz.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:alpha"></span>
-<img src="ModernDive_files/figure-html/alpha-1.png" alt="Arrival vs. departure delays scatterplot with alpha = 0.2." width="\textwidth" />
+<img src="ModernDive_files/figure-html/alpha-1.png" alt="Brain weight vs. life span scatterplot with alpha = 0.2." width="\textwidth" />
 <p class="caption">
-FIGURE 2.4: Arrival vs. departure delays scatterplot with alpha = 0.2.
+FIGURE 2.4: Brain weight vs. life span scatterplot with alpha = 0.2.
 </p>
 </div>
-<p>The key feature to note in Figure <a href="2-viz.html#fig:alpha">2.4</a> is that the transparency   of the points is cumulative: areas with a high-degree of overplotting are darker, whereas areas with a lower degree are less dark. Note furthermore that there is no <code>aes()</code> surrounding <code>alpha = 0.2</code>. This is because we are not mapping a variable to an aesthetic attribute, but rather merely changing the default setting of <code>alpha</code>. In fact, you’ll receive an error if you try to change the second line to read <code>geom_point(aes(alpha = 0.2))</code>.</p>
+<p>The key feature to note in Figure <a href="2-viz.html#fig:alpha">2.4</a> is that the transparency of the points is cumulative: areas with a high-degree of overplotting are darker, whereas areas with a lower degree are less dark. Note furthermore that there is no <code>aes()</code> surrounding <code>alpha = 0.2</code>. This is because we are not mapping a variable to an aesthetic attribute, but rather merely changing the default setting of <code>alpha</code>. In fact, you’ll receive an error if you try to change the second line to read <code>geom_point(aes(alpha = 0.2))</code>.</p>
 <p><strong>Method 2: Jittering the points</strong></p>
 <p>The second way of addressing overplotting is by <em>jittering</em> all the points. This means giving each point a small “nudge” in a random direction. You can think of “jittering” as shaking the points around a bit on the plot. Let’s illustrate using a simple example first. Say we have a data frame with 4 identical rows of x and y values: (0,0), (0,0), (0,0), and (0,0). In Figure <a href="2-viz.html#fig:jitter-example-plot-1">2.5</a>, we present both the regular scatterplot of these 4 points (on the left) and its jittered counterpart (on the right).</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:jitter-example-plot-1"></span>
@@ -977,68 +1005,67 @@ FIGURE 2.5: Regular and jittered scatterplot.
 </div>
 <p>In the left-hand regular scatterplot, observe that the 4 points are superimposed on top of each other. While we know there are 4 values being plotted, this fact might not be apparent to others. In the right-hand jittered scatterplot, it is now plainly evident that this plot involves four points since each point is given a random “nudge.”</p>
 <p>Keep in mind, however, that jittering is strictly a visualization tool; even after creating a jittered scatterplot, the original values saved in the data frame remain unchanged. </p>
-<p>To create a jittered scatterplot, instead of using <code>geom_point()</code>, we use <code>geom_jitter()</code>. Observe how the following code is very similar to the code that created the scatterplot with overplotting in Subsection <a href="2-viz.html#geompoint">2.3.1</a>, but with <code>geom_point()</code>  replaced with <code>geom_jitter()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="2-viz.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> brackish_fish, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> Weight)) <span class="sc">+</span> </span>
-<span id="cb19-2"><a href="2-viz.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="dv">30</span>, <span class="at">height =</span> <span class="dv">30</span>)</span></code></pre></div>
+<p>To create a jittered scatterplot, instead of using <code>geom_point()</code>, we use <code>geom_jitter()</code>. Observe how the following code is very similar to the code that created the scatterplot with overplotting in Subsection <a href="2-viz.html#geompoint">2.3.1</a>, but with <code>geom_point()</code> replaced with <code>geom_jitter()</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="2-viz.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> brain_wt, <span class="at">y =</span> life_span)) <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="2-viz.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="dv">30</span>, <span class="at">height =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:jitter"></span>
-<img src="ModernDive_files/figure-html/jitter-1.png" alt="Arrival versus departure delays jittered scatterplot." width="\textwidth" />
+<img src="ModernDive_files/figure-html/jitter-1.png" alt="Brain weight vs. life span jittered scatterplot." width="\textwidth" />
 <p class="caption">
-FIGURE 2.6: Arrival versus departure delays jittered scatterplot.
+FIGURE 2.6: Brain weight vs. life span jittered scatterplot.
 </p>
 </div>
-<p>In order to specify how much jitter to add, we adjusted the <code>width</code> and <code>height</code> arguments to <code>geom_jitter()</code>. This corresponds to how hard you’d like to shake the plot in horizontal x-axis units and vertical y-axis units, respectively. In this case, both axes are in minutes. How much jitter should we add using the <code>width</code> and <code>height</code> arguments? On the one hand, it is important to add just enough jitter to break any overlap in points, but on the other hand, not so much that we completely alter the original pattern in points.</p>
+<p>In order to specify how much jitter to add, we adjusted the <code>width</code> and <code>height</code> arguments to <code>geom_jitter()</code>. This corresponds to how hard you’d like to shake the plot in horizontal x-axis units and vertical y-axis units, respectively. How much jitter should we add using the <code>width</code> and <code>height</code> arguments? On the one hand, it is important to add just enough jitter to break any overlap in points, but on the other hand, not so much that we completely alter the original pattern in points.</p>
 <p>As can be seen in the resulting Figure <a href="2-viz.html#fig:jitter">2.6</a>, in this case jittering doesn’t really provide much new insight. In this particular case, it can be argued that changing the transparency of the points by setting <code>alpha</code> proved more effective. When would it be better to use a jittered scatterplot? When would it be better to alter the points’ transparency? There is no single right answer that applies to all situations. You need to make a subjective choice and own that choice. At the very least when confronted with overplotting, however, we suggest you make both types of plots and see which one better emphasizes the point you are trying to make.</p>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.6)</strong> Why is setting the <code>alpha</code> argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?</p>
-<p><strong>(LC2.7)</strong> After viewing Figure <a href="2-viz.html#fig:alpha">2.4</a>, give an approximate range of lengths and weights of fish species that occur most frequently. How has that region changed compared to when you observed the same plot without <code>alpha = 0.2</code> set in Figure <a href="2-viz.html#fig:noalpha">2.2</a>?</p>
+<p><strong>(LC2.5)</strong> Why is setting the <code>alpha</code> argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?</p>
+<p><strong>(LC2.6)</strong> After viewing Figure <a href="2-viz.html#fig:alpha">2.4</a>, give an approximate range of brain weights and life spans that occur most frequently in mammalian species. How has that region changed compared to when you observed the same plot without <code>alpha = 0.2</code> set in Figure <a href="2-viz.html#fig:noalpha">2.2</a>?</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="summary" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Summary</h3>
+<div id="summary" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Summary<a href="2-viz.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Scatterplots display the relationship between two numerical variables. They are among the most commonly used plots because they can provide an immediate way to see the trend in one numerical variable versus another. However, if you try to create a scatterplot where either one of the two variables is not numerical, you might get strange results. Be careful!</p>
 <p>With medium to large datasets, you may need to play around with the different modifications to scatterplots, such as changing the transparency/opacity of the points or by jittering the points. This tweaking is often a fun part of data visualization, since you’ll have the chance to see different relationships emerge as you tinker with your plots.</p>
 </div>
 </div>
-<div id="linegraphs" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> 5NG#2: Linegraphs</h2>
-<p>The next of the five named graphs are linegraphs. Linegraphs  show the relationship between two numerical variables when the variable on the x-axis, also called the <em>explanatory</em> variable, is of a sequential nature. In other words, there is an inherent ordering to the variable.</p>
-<p>The most common examples of linegraphs have some notion of time on the x-axis: hours, days, weeks, years, etc. Since time is sequential, we connect consecutive observations of the variable on the y-axis with a line. Linegraphs that have some notion of time on the x-axis are also called <em>time series</em> plots. Let’s illustrate linegraphs using a dataset in the <code>datasets</code>  package included in base R: the <code>ChickWeight</code> data frame.</p>
+<div id="linegraphs" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> 5NG#2: Linegraphs<a href="2-viz.html#linegraphs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The next of the five named graphs are linegraphs. Linegraphs show the relationship between two numerical variables when the variable on the x-axis, also called the <em>explanatory</em> variable, is of a sequential nature. In other words, there is an inherent ordering to the variable.</p>
+<p>The most common examples of linegraphs have some notion of time on the x-axis: hours, days, weeks, years, etc. Since time is sequential, we connect consecutive observations of the variable on the y-axis with a line. Linegraphs that have some notion of time on the x-axis are also called <em>time series</em> plots. Let’s illustrate linegraphs using a dataset in the <code>datasets</code> package included in base R: the <code>ChickWeight</code> data frame.</p>
 <p>Let’s explore the <code>ChickWeight</code> data frame by running <code>View(ChickWeight)</code> and <code>glimpse(ChickWeight)</code>. Furthermore let’s read the associated help file by running <code>?ChickWeight</code> to bring up the help file.</p>
-<p>Observe that there is a variable called <code>weight</code> which records the weight (in grams) for the first 21 days of 50 new born chicks fed one of four different diets (1-4). However, for simplicity let’s focus on weights of Chick 1 on Diet 1.</p>
-<p>Recall in Section <a href="2-viz.html#scatterplots">2.3</a>, we used the <code>filter()</code> function to only choose the subset of rows of <code>all_fishdata</code> corresponding to brackish fish. We similarly use <code>filter()</code>  here, but by using the <code>&amp;</code> operator we will choose the subset of rows of <code>ChickWeight</code> using two criteria: where the <code>Chick</code> is <code>1</code> and the <code>Diet</code> is <code>1</code>. (Since Chick 1 was only fed Diet 1, this is redundant, but it illustrates how to filter on multiple criteria.)</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="2-viz.html#cb20-1" aria-hidden="true" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="2-viz.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Chick <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> Diet <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>Observe that there is a variable called <code>weight</code> which records the weight (in grams) for the first 21 days of 50 new born chicks fed one of four different diets (1-4). However, for simplicity let’s focus on weights of Chick 1.</p>
+<p>To focus on Chick 1, we will use <code>dplyr's</code> <code>filter()</code> function to choose the subset of rows in <code>ChickWeight</code> corresponding to Chick 1. Recall from Section <a href="1-getting-started.html#code">1.2</a> that testing for equality is specified with <code>==</code> and not <code>=</code>. If you don’t fully understand the code, don’t worry for now; we’ll cover the <code>filter</code> function in more depth in Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="2-viz.html#cb18-1" aria-hidden="true" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> <span class="fu">filter</span>(ChickWeight, Chick <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.8)</strong> Take a look at both the <code>ChickWeight</code> and <code>chick1_weight</code> data frames by running <code>View(ChickWeight)</code> and <code>View(chick1_weight)</code>. In what respect do these data frames differ?</p>
-<p><strong>(LC2.9)</strong> <code>Glimpse()</code> the <code>ChickWeight</code> data frame again. Notice that two of the variables use a data type that you have seen previously. What is the data type? What abbreviations are used for the new data types?</p>
-<p><strong>(LC2.10)</strong> Two of the <code>ChickWeight</code> variables use data types that you have not seen previously. What abbreviations are used for the new data types?</p>
+<p><strong>(LC2.7)</strong> Take a look at both the <code>ChickWeight</code> and <code>chick1_weight</code> data frames by running <code>View(ChickWeight)</code> and <code>View(chick1_weight)</code>. In what respect do these data frames differ?</p>
+<p><strong>(LC2.8)</strong> <code>Glimpse()</code> the <code>ChickWeight</code> data frame again. Notice that two of the variables use a data type that you have seen previously. What are the data types?</p>
+<p><strong>(LC2.9)</strong> One of the <code>ChickWeight</code> variables uses a data type that you have not seen previously. What abbreviation is used for the new data type?</p>
 <div class="learncheck">
 
 </div>
-<p>These two new data types are also used in R for categorical variables, when only a subset of options or “levels” are available. The <code>&lt;ord&gt;</code> or “ordered factor” data type is used when the different levels of the categorical variable are in a specifc order, such as Small, Medium, and Large, etc.. The <fct> or (unordered) “factor” is used when the levels are not in a specific order, such as Red, Blue, Green, etc.</p>
-<div id="geomline" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Linegraphs via <code>geom_line</code></h3>
+<p>These <code>ord</code> and <code>fct</code> data types are used in R for categorical variables, when only a subset of options or “levels” are available. The <code>&lt;ord&gt;</code> or “ordered factor” data type is used when the different levels of the categorical variable are in a specific order, such as Small, Medium, and Large, etc.. The <code>&lt;fct&gt;</code> or (unordered) “factor” is used when the levels are not in a specific order, such as Red, Blue, Green, etc.</p>
+<div id="geomline" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Linegraphs via <code>geom_line</code><a href="2-viz.html#geomline" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s create a time series plot of the body weights saved in the <code>chick1_weight</code> data frame by using <code>geom_line()</code> to create a linegraph, instead of using <code>geom_point()</code> like we used previously to create scatterplots:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="2-viz.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick1_weight, </span>
-<span id="cb21-2"><a href="2-viz.html#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="2-viz.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="2-viz.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick1_weight, </span>
+<span id="cb19-2"><a href="2-viz.html#cb19-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="2-viz.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:dailyweight"></span>
 <img src="ModernDive_files/figure-html/dailyweight-1.png" alt="body weights of Chick 1 on Diet 1" width="\textwidth" />
 <p class="caption">
 FIGURE 2.7: body weights of Chick 1 on Diet 1
 </p>
 </div>
-<p>Much as with the <code>ggplot()</code> code that created the scatterplot of length and weight for brackish fish in Figure <a href="2-viz.html#fig:noalpha">2.2</a>, let’s break down this code piece-by-piece in terms of the grammar of graphics:</p>
+<p>Much as with the <code>ggplot()</code> code that created the scatterplot of brain weight and life span for mammals in Figure <a href="2-viz.html#fig:noalpha">2.2</a>, let’s break down this code piece-by-piece in terms of the grammar of graphics:</p>
 <p>Within the <code>ggplot()</code> function call, we specify two of the components of the grammar of graphics as arguments:</p>
 <ol style="list-style-type: decimal">
 <li>The <code>data</code> to be the <code>chick1_weight</code> data frame by setting <code>data = chick1_weight</code>.</li>
@@ -1050,41 +1077,39 @@ FIGURE 2.7: body weights of Chick 1 on Diet 1
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.11)</strong> Why should linegraphs be avoided when there is not a clear ordering of the x-axis?</p>
-<p><strong>(LC2.12)</strong> Why are linegraphs frequently used when time is the explanatory variable on the x-axis?</p>
-<p><strong>(LC2.13)</strong> Plot a time series of weight for a different Chick.</p>
+<p><strong>(LC2.10)</strong> Why should linegraphs be avoided when there is not a clear ordering of the x-axis?</p>
+<p><strong>(LC2.11)</strong> Why are linegraphs frequently used when time is the explanatory variable on the x-axis?</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="summary-1" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Summary</h3>
+<div id="summary-1" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Summary<a href="2-viz.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Linegraphs, just like scatterplots, display the relationship between two numerical variables. However, it is preferred to use linegraphs over scatterplots when the variable on the x-axis (i.e., the explanatory variable) has an inherent ordering, such as time or altitude.</p>
 </div>
 </div>
-<div id="facets" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Facets</h2>
+<div id="facets" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Facets<a href="2-viz.html#facets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Before continuing with the next of the 5NG, let’s briefly introduce a new concept called <em>faceting</em>. Faceting is used when we’d like to split a particular visualization by the values of another variable. This will create multiple copies of the same type of plot with matching x and y axes, but whose content will differ.</p>
 <p>For example, suppose we were interested in comparing the timeline of weight gain among the 20 chicks fed Diet 1. We could “duplicate” the linegraph above for Chick 1 for the other 19 chicks on Diet 1. In other words, we would plot linegraphs of <code>weight</code> for each <code>Chick</code> on Diet 1 separately.</p>
 <p>First we create a new data frame by filtering ChickWeight for rows with Chicks on Diet 1:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="2-viz.html#cb22-1" aria-hidden="true" tabindex="-1"></a>Diet1_ChickWeight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="2-viz.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Diet <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="2-viz.html#cb20-1" aria-hidden="true" tabindex="-1"></a>Diet1_ChickWeight <span class="ot">&lt;-</span> <span class="fu">filter</span>(ChickWeight, Diet <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Now we make a linegraph for each chick on Diet 1 by adding <code>facet_wrap(~ Chick)</code> layer. Note the <code>~</code> is a “tilde” and can generally be found on the key next to the “1” key on US keyboards. The tilde is required and you’ll receive an error message if you don’t include it here.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="2-viz.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Diet1_ChickWeight, </span>
-<span id="cb23-2"><a href="2-viz.html#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="2-viz.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb23-4"><a href="2-viz.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Chick)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="2-viz.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Diet1_ChickWeight, </span>
+<span id="cb21-2"><a href="2-viz.html#cb21-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="2-viz.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="2-viz.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Chick)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:facetlinegraph"></span>
 <img src="ModernDive_files/figure-html/facetlinegraph-1.png" alt="Faceted histogram of body weights by chicks on Diet 1" width="\textwidth" />
 <p class="caption">
 FIGURE 2.8: Faceted histogram of body weights by chicks on Diet 1
 </p>
 </div>
-<p>We can also specify the number of rows and columns in the grid by using the <code>nrow</code> and <code>ncol</code> arguments inside of  <code>facet_wrap()</code>. For example, say we would like our faceted histogram to have 5 rows instead of 4. We simply add an <code>nrow = 5</code> argument to <code>facet_wrap(~ Chick)</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="2-viz.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Diet1_ChickWeight, </span>
-<span id="cb24-2"><a href="2-viz.html#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="2-viz.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb24-4"><a href="2-viz.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Chick, <span class="at">nrow =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>We can also specify the number of rows and columns in the grid by using the <code>nrow</code> and <code>ncol</code> arguments inside of <code>facet_wrap()</code>. For example, say we would like our faceted histogram to have 5 rows instead of 4. We simply add an <code>nrow = 5</code> argument to <code>facet_wrap(~ Chick)</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="2-viz.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Diet1_ChickWeight, </span>
+<span id="cb22-2"><a href="2-viz.html#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="2-viz.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a href="2-viz.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Chick, <span class="at">nrow =</span> <span class="dv">5</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:facetlinegraph2"></span>
 <img src="ModernDive_files/figure-html/facetlinegraph2-1.png" alt="Faceted histogram with 5 instead of 4 rows." width="\textwidth" />
 <p class="caption">
@@ -1097,17 +1122,17 @@ FIGURE 2.9: Faceted histogram with 5 instead of 4 rows.
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.14)</strong> What do the numbers above each plot correspond to? What about the numbers below the bottom plots?</p>
-<p><strong>(LC2.15)</strong> What other things do you notice about this faceted plot?</p>
-<p><strong>(LC2.16)</strong> How does a faceted plot help us see relationships between two variables?</p>
-<p><strong>(LC2.17)</strong> For which types of datasets would faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.</p>
-<p><strong>(LC2.18)</strong> Does the rate of <code>weight</code> gain over time in the <code>chick_weight_d21</code> dataset have a lot of variability? Why do you say that?</p>
+<p><strong>(LC2.12)</strong> What do the numbers above each plot correspond to? What about the numbers below the bottom plots?</p>
+<p><strong>(LC2.13)</strong> What other things do you notice about this faceted plot?</p>
+<p><strong>(LC2.14)</strong> Does the rate of <code>weight</code> gain over time in the <code>chick_weight_d21</code> dataset have a lot of variability? Why do you say that?</p>
+<p><strong>(LC2.15)</strong> How does a faceted plot help us see relationships between two variables?</p>
+<p><strong>(LC2.16)</strong> For which types of datasets would faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="histograms" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> 5NG#3: Histograms</h2>
+<div id="histograms" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> 5NG#3: Histograms<a href="2-viz.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s consider the <code>weight</code> variable in the <code>ChickWeight</code> data frame once again, but unlike with the linegraphs in Section <a href="2-viz.html#linegraphs">2.4</a>, let’s say we don’t care about its relationship with time, but rather we only care about how the values of <code>weight</code> <em>distribute</em> in 3-week old chicks. In other words:</p>
 <ol style="list-style-type: decimal">
 <li>What are the smallest and largest values?</li>
@@ -1116,19 +1141,18 @@ FIGURE 2.9: Faceted histogram with 5 instead of 4 rows.
 <li>What are frequent and infrequent values?</li>
 </ol>
 <p>First, we filter the <code>ChickWeight</code> data frame for the desired rows, each chick’s weight at Day 21:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="2-viz.html#cb25-1" aria-hidden="true" tabindex="-1"></a>chick_weight_d21 <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="2-viz.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Time <span class="sc">==</span> <span class="dv">21</span>)</span></code></pre></div>
-<p>One way to visualize the <em>distribution</em>  of this single variable <code>weight</code> is to plot the weights on a horizontal line as we do in Figure <a href="2-viz.html#fig:weight-on-line">2.10</a>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="2-viz.html#cb23-1" aria-hidden="true" tabindex="-1"></a>chick_weight_d21 <span class="ot">&lt;-</span> <span class="fu">filter</span>(ChickWeight, Time <span class="sc">==</span> <span class="dv">21</span>)</span></code></pre></div>
+<p>One way to visualize the <em>distribution</em> of this single variable <code>weight</code> is to plot the weights on a horizontal line as we do in Figure <a href="2-viz.html#fig:weight-on-line">2.10</a>:</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:weight-on-line"></span>
 <img src="ModernDive_files/figure-html/weight-on-line-1.png" alt="Plot of body weights for Chick 1" width="\textwidth" />
 <p class="caption">
 FIGURE 2.10: Plot of body weights for Chick 1
 </p>
 </div>
-<p>This gives us a general idea of how the values of <code>weight</code> distribute: observe that weights vary from around 74 grams up to 373 grams. Furthermore, there appear to be more recorded weights between 200 g and 300 g than outside this range. However, because of the high degree of overplotting in the points, it’s hard to get a sense of exactly how many values are between say 150 g and 200 g.</p>
-<p>What is commonly produced instead of Figure <a href="2-viz.html#fig:weight-on-line">2.10</a> is known as a  <em>histogram</em>. A histogram is a plot that visualizes the <em>distribution</em> of a numerical value as follows:</p>
+<p>This gives us a general idea of how the values of <code>weight</code> distribute: observe that weights vary from around 70 grams up to 370 grams. Furthermore, there appear to be more recorded weights between 150 g and 250 g than outside this range. However, because of the high degree of overplotting in the points, it’s hard to get a sense of exactly how many values are between say 150 g and 200 g.</p>
+<p>What is commonly produced instead of Figure <a href="2-viz.html#fig:weight-on-line">2.10</a> is known as a <em>histogram</em>. A histogram is a plot that visualizes the <em>distribution</em> of a numerical value as follows:</p>
 <ol style="list-style-type: decimal">
-<li>We first cut up the x-axis into a series of  <em>bins</em>, where each bin represents a range of values.</li>
+<li>We first cut up the x-axis into a series of <em>bins</em>, where each bin represents a range of values.</li>
 <li>For each bin, we count the number of observations that fall in the range corresponding to that bin.</li>
 <li>Then for each bin, we draw a bar whose height marks the corresponding count.</li>
 </ol>
@@ -1145,11 +1169,11 @@ FIGURE 2.11: Example histogram.
 <li>The bin for the 140-160 g range has a height of 6. In other words, six of the Day 21 weight recordings are between 140-160 g.</li>
 </ol>
 <p>All 16 bins spanning 60 g to 380 g on the x-axis have this interpretation.</p>
-<div id="geomhistogram" class="section level3" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Histograms via <code>geom_histogram</code></h3>
-<p>Let’s now present the <code>ggplot()</code> code to plot your first histogram! Unlike with scatterplots and linegraphs, there is now only one variable being mapped in <code>aes()</code>: the single numerical variable <code>weight</code>. The y-aesthetic of a histogram, the count of the observations in each bin, gets computed for you automatically. Furthermore, the geometric object layer is now a <code>geom_histogram()</code>.  After running the following code, you’ll see the histogram in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram">2.12</a> as well as warning messages. We’ll discuss the warning message first.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="2-viz.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
-<span id="cb26-2"><a href="2-viz.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div id="geomhistogram" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Histograms via <code>geom_histogram</code><a href="2-viz.html#geomhistogram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s now present the <code>ggplot()</code> code to plot your first histogram! Unlike with scatterplots and linegraphs, there is now only one variable being mapped in <code>aes()</code>: the single numerical variable <code>weight</code>. The y-aesthetic of a histogram, the count of the observations in each bin, gets computed for you automatically. Furthermore, the geometric object layer is now a <code>geom_histogram()</code>. After running the following code, you’ll see the histogram in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram">2.12</a> as well as warning messages. We’ll discuss the warning message first.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="2-viz.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="2-viz.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:chick-weight-d21-histogram"></span>
 <img src="ModernDive_files/figure-html/chick-weight-d21-histogram-1.png" alt="Histogram of chick weights at day 21." width="\textwidth" />
@@ -1159,32 +1183,32 @@ FIGURE 2.12: Histogram of chick weights at day 21.
 </div>
 <p>The warning message is telling us that the histogram was constructed using <code>bins = 30</code> for 30 equally spaced bins. This is known in computer programming as a default value; unless you override this default number of bins with a number you specify, R will choose 30 by default. We’ll see in the next section how to change the number of bins to another value than the default.</p>
 <p>Now let’s unpack the resulting histogram in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram">2.12</a>. Observe that values less than 150 g as well as values above 325 g are rather rare. However, because of the large number of bins, it’s hard to get a sense for which range of weights is spanned by each bin; everything is one giant amorphous blob. So let’s add white vertical borders demarcating the bins by adding a <code>color = "white"</code> argument to <code>geom_histogram()</code> and ignore the warning about setting the number of bins to a better value:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="2-viz.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="2-viz.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="2-viz.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="2-viz.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:chick-weight-d21-histogram-2"></span>
 <img src="ModernDive_files/figure-html/chick-weight-d21-histogram-2-1.png" alt="Histogram of chick weights at day 21." width="\textwidth" />
 <p class="caption">
 FIGURE 2.13: Histogram of chick weights at day 21.
 </p>
 </div>
-<p>We now have an easier time associating ranges of weights to each of the bins in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram-2">2.13</a>. We can also vary the color of the bars by setting the  <code>fill</code> argument. For example, you can set the bin colors to be “blue steel” by setting <code>fill = "steelblue"</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="2-viz.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="2-viz.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
-<p>If you’re curious, run  <code>colors()</code> to see all 657 possible choice of colors in R!</p>
+<p>We now have an easier time associating ranges of weights to each of the bins in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram-2">2.13</a>. We can also vary the color of the bars by setting the <code>fill</code> argument. For example, you can set the bin colors to be “blue steel” by setting <code>fill = "steelblue"</code>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="2-viz.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="2-viz.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
+<p>If you’re curious, run <code>colors()</code> to see all 657 possible choice of colors in R!</p>
 </div>
-<div id="adjustbins" class="section level3" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Adjusting the bins</h3>
+<div id="adjustbins" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Adjusting the bins<a href="2-viz.html#adjustbins" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Observe in Figure <a href="2-viz.html#fig:chick-weight-d21-histogram-2">2.13</a> that in the 100-200 g range there appear to be about 10 bins. Thus each bin has width 100 divided by about 10, or about 10 g. Let’s improve this histogram by adjusting the number of bins in our histogram in one of two ways:</p>
 <ol style="list-style-type: decimal">
-<li>By adjusting the number of bins via the  <code>bins</code> argument to <code>geom_histogram()</code>.</li>
-<li>By adjusting the width of the bins via the  <code>binwidth</code> argument to <code>geom_histogram()</code>.</li>
+<li>By adjusting the number of bins via the <code>bins</code> argument to <code>geom_histogram()</code>.</li>
+<li>By adjusting the width of the bins via the <code>binwidth</code> argument to <code>geom_histogram()</code>.</li>
 </ol>
 <p>Using the first method, we have the power to specify how many bins we would like to cut the x-axis up in. As mentioned in the previous section, the default number of bins is 30. We can override this default, to say 20 bins, as follows:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="2-viz.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="2-viz.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="2-viz.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="2-viz.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <p>Using the second method, instead of specifying the number of bins, we specify the width of the bins by using the <code>binwidth</code> argument in the <code>geom_histogram()</code> layer. For example, let’s set the width of each bin to be 20 g.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="2-viz.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
-<span id="cb31-2"><a href="2-viz.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="2-viz.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick_weight_d21, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="2-viz.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <p>We compare both resulting histograms side-by-side in Figure <a href="2-viz.html#fig:hist-bins">2.14</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:hist-bins"></span>
 <img src="ModernDive_files/figure-html/hist-bins-1.png" alt="Setting histogram bins in two ways." width="\textwidth" />
@@ -1197,22 +1221,22 @@ FIGURE 2.14: Setting histogram bins in two ways.
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.19)</strong> What does changing the number of bins from 30 to 20 tell us about the distribution of weights?</p>
-<p><strong>(LC2.20)</strong> Would you classify the distribution of weights as symmetric or skewed in one direction or another?</p>
-<p><strong>(LC2.21)</strong> What would you guess is the “center” value in this distribution? Why did you make that choice?</p>
-<p><strong>(LC2.22)</strong> Is this data spread out greatly from the center or is it close? Why?</p>
+<p><strong>(LC2.17)</strong> What does changing the number of bins from 30 to 20 tell us about the distribution of weights?</p>
+<p><strong>(LC2.18)</strong> Would you classify the distribution of weights as symmetric or skewed in one direction or another?</p>
+<p><strong>(LC2.19)</strong> What would you guess is the “center” value in this distribution? Why did you make that choice?</p>
+<p><strong>(LC2.20)</strong> Is this data spread out greatly from the center or is it close? Explain your answer.</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="summary-2" class="section level3" number="2.6.3">
-<h3><span class="header-section-number">2.6.3</span> Summary</h3>
+<div id="summary-2" class="section level3 hasAnchor" number="2.6.3">
+<h3><span class="header-section-number">2.6.3</span> Summary<a href="2-viz.html#summary-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Histograms, unlike scatterplots and linegraphs, present information on only a single numerical variable. Specifically, they are visualizations of the distribution of the numerical variable in question.</p>
 </div>
 </div>
-<div id="boxplots" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> 5NG#4: Boxplots</h2>
-<p>While faceted histograms are one type of visualization used to compare the distribution of a numerical variable split by the values of another variable, another type of visualization that achieves this same goal is a <em>side-by-side boxplot</em>. A boxplot  is constructed from the information provided in the <em>five-number summary</em> of a numerical variable: minimum, first quartile, median, third quartile, and maximum values (see Appendix <a href="A-appendixA.html#appendix-stat-terms">A.1</a>).</p>
+<div id="boxplots" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> 5NG#4: Boxplots<a href="2-viz.html#boxplots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While faceted histograms are one type of visualization used to compare the distribution of a numerical variable split by the values of another variable, another type of visualization that achieves this same goal is a <em>side-by-side boxplot</em>. A boxplot is constructed from the information provided in the <em>five-number summary</em> of a numerical variable: minimum, first quartile, median, third quartile, and maximum values (see Appendix <a href="A-appendixA.html#appendix-stat-terms">A.1</a>).</p>
 <p>To keep things simple for now, let’s only consider the Day 21 weight recordings for the 16 chicks on Diet 1, each represented as a jittered point in Figure <a href="2-viz.html#fig:Diet11">2.15</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:Diet11"></span>
 <img src="ModernDive_files/figure-html/Diet11-1.png" alt="Day 21 weights of Diet 1 chicks represented as jittered points." width="\textwidth" />
@@ -1241,30 +1265,30 @@ FIGURE 2.16: Building up a boxplot of Diet 1 chick weights.
 <li>25% of points fall between the bottom edge of the box and the solid middle line, which is the median of 166 g. Thus, 25% of observations were between 138 g and 166 g and 50% of observations were below 166 g.</li>
 <li>25% of points fall between the solid middle line and the top edge of the box, which is the third quartile of 208 g. It follows that 25% of observations were between 166 g and 208 g and 75% of observations were below 208 g.</li>
 <li>25% of points fall above the top edge of the box. In other words, 25% of observations were above 208 g.</li>
-<li>The middle 50% of points lie within the <em>interquartile range (IQR)</em>  between the first and third quartile. Thus, the IQR for this example is 208 - 138 = 70 g. The interquartile range is a measure of a numerical variable’s <em>spread</em>.</li>
+<li>The middle 50% of points lie within the <em>interquartile range (IQR)</em> between the first and third quartile. Thus, the IQR for this example is 208 - 138 = 70 g. The interquartile range is a measure of a numerical variable’s <em>spread</em>.</li>
 </ol>
-<p>Furthermore, in the rightmost plot of Figure <a href="2-viz.html#fig:Diet12">2.16</a>, we see the <em>whiskers</em>  of the boxplot. The whiskers stick out from either end of the box all the way to the minimum and maximum observed weights of 96 g and 305 g, respectively. However, the whiskers don’t always extend to the smallest and largest observed values as they do here. They in fact extend no more than 1.5 <span class="math inline">\(\times\)</span> the interquartile range from either end of the box. In this case of the Diet 1 weights, no more than 1.5 <span class="math inline">\(\times\)</span> 70 g = 105 g from either end of the box. Any observed values outside this range get marked with points called <em>outliers</em>, which we’ll see in the next section.</p>
-<div id="geomboxplot" class="section level3" number="2.7.1">
-<h3><span class="header-section-number">2.7.1</span> Boxplots via <code>geom_boxplot</code></h3>
-<p>Let’s now create a side-by-side boxplot  of Day 21 weights split by the four diets. We do this by first filtering for the rows where <code>Time</code> equals <code>21</code> days. We then plot these values, mapping the <code>Diet</code> variable to the x-position aesthetic, the <code>weight</code> variable to the y-position aesthetic, and adding a <code>geom_boxplot()</code> layer:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="2-viz.html#cb32-1" aria-hidden="true" tabindex="-1"></a>Time21_ChickWeight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="2-viz.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Time <span class="sc">==</span> <span class="dv">21</span>)</span>
-<span id="cb32-3"><a href="2-viz.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Time21_ChickWeight, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Diet, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="2-viz.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p>Furthermore, in the rightmost plot of Figure <a href="2-viz.html#fig:Diet12">2.16</a>, we see the <em>whiskers</em> of the boxplot. The whiskers stick out from either end of the box all the way to the minimum and maximum observed weights of 96 g and 305 g, respectively. However, the whiskers don’t always extend to the smallest and largest observed values as they do here. They in fact extend no more than 1.5 <span class="math inline">\(\times\)</span> the interquartile range from either end of the box. In this case of the Diet 1 weights, no more than 1.5 <span class="math inline">\(\times\)</span> 70 g = 105 g from either end of the box. Any observed values outside this range get marked with points called <em>outliers</em>, which we’ll see in the next section.</p>
+<div id="geomboxplot" class="section level3 hasAnchor" number="2.7.1">
+<h3><span class="header-section-number">2.7.1</span> Boxplots via <code>geom_boxplot</code><a href="2-viz.html#geomboxplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s now create a side-by-side boxplot of Day 21 weights split by the four diets. We do this by first filtering for the rows where <code>Time</code> equals <code>21</code> days. We then plot these values, mapping the <code>Diet</code> variable to the x-position aesthetic, the <code>weight</code> variable to the y-position aesthetic, and adding a <code>geom_boxplot()</code> layer:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="2-viz.html#cb30-1" aria-hidden="true" tabindex="-1"></a>Time21_ChickWeight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="2-viz.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Time <span class="sc">==</span> <span class="dv">21</span>)</span>
+<span id="cb30-3"><a href="2-viz.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Time21_ChickWeight, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Diet, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="2-viz.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:Dietweightbox"></span>
 <img src="ModernDive_files/figure-html/Dietweightbox-1.png" alt="Side-by-side boxplot of weight split by Diet." width="\textwidth" />
 <p class="caption">
 FIGURE 2.17: Side-by-side boxplot of weight split by Diet.
 </p>
 </div>
-<p>Note that boxplots require a categorical – not a numerical – variable to be mapped to the x-position aesthetic. Although the Diets are numbered, recall that this variable is stored as a factor (<code>&lt;fct&gt;</code>) data type, which you can confirm using <code>glimpse(ChickWeight)</code>. So R knows that this is a categorical variable on the x-position aesthetic. If the variable <code>Diet</code> had been stored as a <code>&lt;num&gt;</code> data type instead, we would have needed to convert it into a categorical variable by using the <code>factor()</code>  function.</p>
+<p>Note that boxplots require a categorical – not a numerical – variable to be mapped to the x-position aesthetic. Although the Diets are numbered, recall that this variable is stored as a factor (<code>&lt;fct&gt;</code>) data type, which you can confirm using <code>glimpse(ChickWeight)</code>. So R knows that this is a categorical variable on the x-position aesthetic. If the variable <code>Diet</code> had been stored as a <code>&lt;num&gt;</code> data type instead, we would have needed to convert it into a categorical variable by using the <code>factor()</code> function.</p>
 <p>The resulting Figure <a href="2-viz.html#fig:Dietweightbox">2.17</a> shows four separate “box and whiskers” plots similar to the rightmost plot of Figure <a href="2-viz.html#fig:Diet12">2.16</a> of only Diet 1 weights. Thus the different boxplots are shown “side-by-side.”</p>
 <ul>
 <li>The “box” portions of the visualization represent the 1st quartile, the median (the 2nd quartile), and the 3rd quartile.</li>
 <li>The height of each box (the value of the 3rd quartile minus the value of the 1st quartile) is the interquartile range (IQR). It is a measure of the spread of the middle 50% of values, with longer boxes indicating more variability.</li>
 <li>The “whisker” portions of these plots extend out from the bottoms and tops of the boxes and represent points less than the 25th percentile and greater than the 75th percentiles, respectively. They’re set to extend out no more than <span class="math inline">\(1.5 \times IQR\)</span> units away from either end of the boxes. We say “no more than” because the ends of the whiskers have to correspond to observed weights. The length of these whiskers show how the data outside the middle 50% of values vary, with longer whiskers indicating more variability.</li>
 </ul>
-<p>If any values had been more than <span class="math inline">\(1.5 \times IQR\)</span> away from either box end and therefore beyond the whiskers, then they would have been indicated by dots. These so-called  <em>outliers</em> can be thought of as anomalous (“out-of-the-ordinary”) values. It is important to keep in mind that the definition of an outlier is somewhat arbitrary and not absolute. In these boxplots, they are defined by the length of the whiskers, which are no more than <span class="math inline">\(1.5 \times IQR\)</span> units long for each boxplot.
+<p>If any values had been more than <span class="math inline">\(1.5 \times IQR\)</span> away from either box end and therefore beyond the whiskers, then they would have been indicated by dots. These so-called <em>outliers</em> can be thought of as anomalous (“out-of-the-ordinary”) values. It is important to keep in mind that the definition of an outlier is somewhat arbitrary and not absolute. In these boxplots, they are defined by the length of the whiskers, which are no more than <span class="math inline">\(1.5 \times IQR\)</span> units long for each boxplot.
 <!--Perhaps replace dataset to include outliers--></p>
 <p>Looking at this side-by-side plot we can see that Diet 3 produced chicks with the highest median weight at Day 21 as evidenced by the higher solid line in the middle of its box. We can easily compare weights across diets by drawing imaginary horizontal lines across the plot. Furthermore, the heights of the four boxes as quantified by the interquartile ranges are informative too; they tell us about variability, or spread, of weights recorded for a given diet.</p>
 <div class="learncheck">
@@ -1272,29 +1296,29 @@ FIGURE 2.17: Side-by-side boxplot of weight split by Diet.
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.23)</strong> Which diet produced the greatest variability in weights? Explain your reasoning.</p>
-<p><strong>(LC2.24)</strong> Boxplots provide a simple way to identify outliers. Why may outliers be easier to identify when looking at a boxplot instead of a faceted histogram?</p>
+<p><strong>(LC2.21)</strong> Which diet produced the greatest variability in weights? Explain your reasoning.</p>
+<p><strong>(LC2.22)</strong> Boxplots provide a simple way to identify outliers. Why may outliers be easier to identify when looking at a boxplot instead of a faceted histogram?</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="summary-3" class="section level3" number="2.7.2">
-<h3><span class="header-section-number">2.7.2</span> Summary</h3>
+<div id="summary-3" class="section level3 hasAnchor" number="2.7.2">
+<h3><span class="header-section-number">2.7.2</span> Summary<a href="2-viz.html#summary-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Side-by-side boxplots provide us with a way to compare the distribution of a numerical variable across multiple values of another variable. One can see where the median falls across the different groups by comparing the solid lines in the center of the boxes.</p>
 <p>To study the spread of a numerical variable within one of the boxes, look at both the length of the box and also how far the whiskers extend from either end of the box. Outliers are even more easily identified when looking at a boxplot than when looking at a histogram as they are marked with distinct points.</p>
 </div>
 </div>
-<div id="geombar" class="section level2" number="2.8">
-<h2><span class="header-section-number">2.8</span> 5NG#5: Barplots</h2>
-<p>Both histograms and boxplots are tools to visualize the distribution of numerical variables. Another commonly desired task is to visualize the distribution of a categorical variable. This is a simpler task, as we are simply counting different categories within a categorical variable, also known as the  <em>levels</em> of the categorical variable. Often the best way to visualize these different counts, also known as  <em>frequencies</em>, is with barplots (also called barcharts).</p>
+<div id="geombar" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> 5NG#5: Barplots<a href="2-viz.html#geombar" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Both histograms and boxplots are tools to visualize the distribution of numerical variables. Another commonly desired task is to visualize the distribution of a categorical variable. This is a simpler task, as we are simply counting different categories within a categorical variable, also known as the <em>levels</em> of the categorical variable. Often the best way to visualize these different counts, also known as <em>frequencies</em>, is with barplots (also called barcharts).</p>
 <p>One complication, however, is how your data is represented. Is the categorical variable of interest “pre-counted” or not? For example, run the following code that manually creates two data frames representing a collection of fruit: 3 apples and 2 oranges.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="2-viz.html#cb33-1" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb33-2"><a href="2-viz.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb33-3"><a href="2-viz.html#cb33-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb33-4"><a href="2-viz.html#cb33-4" aria-hidden="true" tabindex="-1"></a>fruits_counted <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb33-5"><a href="2-viz.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>),</span>
-<span id="cb33-6"><a href="2-viz.html#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">number =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb33-7"><a href="2-viz.html#cb33-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="2-viz.html#cb31-1" aria-hidden="true" tabindex="-1"></a>fruits <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb31-2"><a href="2-viz.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb31-3"><a href="2-viz.html#cb31-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-4"><a href="2-viz.html#cb31-4" aria-hidden="true" tabindex="-1"></a>fruits_counted <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb31-5"><a href="2-viz.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>),</span>
+<span id="cb31-6"><a href="2-viz.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">number =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb31-7"><a href="2-viz.html#cb31-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>We see both the <code>fruits</code> and <code>fruits_counted</code> data frames represent the same collection of fruit. Whereas <code>fruits</code> just lists the fruit individually…</p>
 <pre><code># A tibble: 5 × 1
   fruit 
@@ -1311,20 +1335,20 @@ FIGURE 2.17: Side-by-side boxplot of weight split by Diet.
 1 apple       3
 2 orange      2</code></pre>
 <p>Depending on how your categorical data is represented, you’ll need to add a different <code>geom</code>etric layer type to your <code>ggplot()</code> to create a barplot, as we now explore.</p>
-<div id="barplots-via-geom_bar-or-geom_col" class="section level3" number="2.8.1">
-<h3><span class="header-section-number">2.8.1</span> Barplots via <code>geom_bar</code> or <code>geom_col</code></h3>
-<p>Let’s generate barplots using these two different representations of the same basket of fruit: 3 apples and 2 oranges. Using the <code>fruits</code> data frame where all 5 fruits are listed individually in 5 rows, we map the <code>fruit</code> variable to the x-position aesthetic and add a  <code>geom_bar()</code> layer:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="2-viz.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> fruits, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fruit)) <span class="sc">+</span></span>
-<span id="cb36-2"><a href="2-viz.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div id="barplots-via-geom_bar-or-geom_col" class="section level3 hasAnchor" number="2.8.1">
+<h3><span class="header-section-number">2.8.1</span> Barplots via <code>geom_bar</code> or <code>geom_col</code><a href="2-viz.html#barplots-via-geom_bar-or-geom_col" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s generate barplots using these two different representations of the same basket of fruit: 3 apples and 2 oranges. Using the <code>fruits</code> data frame where all 5 fruits are listed individually in 5 rows, we map the <code>fruit</code> variable to the x-position aesthetic and add a <code>geom_bar()</code> layer:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="2-viz.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> fruits, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fruit)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="2-viz.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:geombar"></span>
 <img src="ModernDive_files/figure-html/geombar-1.png" alt="Barplot when counts are not pre-counted." width="\textwidth" />
 <p class="caption">
 FIGURE 2.18: Barplot when counts are not pre-counted.
 </p>
 </div>
-<p>However, using the <code>fruits_counted</code> data frame where the fruits have been “pre-counted,” we once again map the <code>fruit</code> variable to the x-position aesthetic, but here we also map the <code>count</code> variable to the y-position aesthetic, and add a  <code>geom_col()</code> layer instead.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="2-viz.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> fruits_counted, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fruit, <span class="at">y =</span> number)) <span class="sc">+</span></span>
-<span id="cb37-2"><a href="2-viz.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
+<p>However, using the <code>fruits_counted</code> data frame where the fruits have been “pre-counted”, we once again map the <code>fruit</code> variable to the x-position aesthetic, but here we also map the <code>count</code> variable to the y-position aesthetic, and add a <code>geom_col()</code> layer instead.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="2-viz.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> fruits_counted, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fruit, <span class="at">y =</span> number)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="2-viz.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:geomcol"></span>
 <img src="ModernDive_files/figure-html/geomcol-1.png" alt="Barplot when counts are pre-counted." width="\textwidth" />
 <p class="caption">
@@ -1336,28 +1360,26 @@ FIGURE 2.19: Barplot when counts are pre-counted.
 <li>Is <em>not</em> pre-counted in your data frame, we use <code>geom_bar()</code>.</li>
 <li>Is pre-counted in your data frame, we use <code>geom_col()</code> with the y-position aesthetic mapped to the variable that has the counts.</li>
 </ul>
-<p>Let’s now go back to the <code>all_fishdata</code> data frame from earlier (Subsection <a href="1-getting-started.html#fishbasedataframe">1.4.2</a>) and visualize the distribution of the categorical variable <code>DemersPelag</code>, which indicates the preferred habitat for each fish species. In other words, let’s visualize the number of fish species preferring each of the following environments: benthopelagic, pelagic, demersal, pelagic-neritic, reef-associated, bathypelagic, bathydemersal, and pelagic-oceanic (see the <a href="https://www.fishbase.se/manual/english/fishbasethe_species_table.htm">fishbase manual</a> for a description of each habitat). Recall from Subsection <a href="1-getting-started.html#exploredataframes">1.4.3</a> when you first explored the <code>all_fishdata</code> data frame, you saw that each row corresponds to a fish species In other words, the <code>all_fishdata</code> data frame is more like the <code>fruits</code> data frame than the <code>fruits_counted</code> data frame because the fish species have not been pre-counted by <code>DemersPelag</code>. Thus we should use <code>geom_bar()</code> instead of <code>geom_col()</code> to create a barplot. Much like a <code>geom_histogram()</code>, there is only one variable in the <code>aes()</code> aesthetic mapping: the variable <code>DemersPelag</code> gets mapped to the <code>x</code>-position. As a difference though, histograms have bars that touch whereas bar graphs have white space between the bars going from left to right.</p>
+<p>Let’s now go back to the <code>mammals</code> data frame from earlier (Subsection <a href="1-getting-started.html#mammalsdb">1.4</a>) and visualize the distribution of the categorical variable <code>predation</code>, which indicates the likelihood of the mammalian species to be preyed upon (1, lowest; 5, highest). In other words, let’s visualize the number of mammalian species in each of the 5 <code>predation</code> categories. Recall from Subsection <a href="1-getting-started.html#exploredataframes">1.4.3</a> when you first explored the <code>mammals</code> data frame, you saw that each row corresponds to a species. In other words, the <code>mammals</code> data frame is more like the <code>fruits</code> data frame than the <code>fruits_counted</code> data frame because the species have not been pre-counted by <code>predation</code>. Thus we should use <code>geom_bar()</code> instead of <code>geom_col()</code> to create a barplot. Much like a <code>geom_histogram()</code>, there is only one variable in the <code>aes()</code> aesthetic mapping: the variable <code>predation</code> gets mapped to the <code>x</code>-position.</p>
 
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="2-viz.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag)) <span class="sc">+</span></span>
-<span id="cb38-2"><a href="2-viz.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb38-3"><a href="2-viz.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">30</span>,<span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="2-viz.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="2-viz.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:habitatsbar"></span>
-<img src="ModernDive_files/figure-html/habitatsbar-1.png" alt="Number of fish species preferring each habitat using geom_bar()." width="\textwidth" />
+<img src="ModernDive_files/figure-html/habitatsbar-1.png" alt="Number of species in each predation category using geom_bar()." width="\textwidth" />
 <p class="caption">
-FIGURE 2.20: Number of fish species preferring each habitat using geom_bar().
+FIGURE 2.20: Number of species in each predation category using geom_bar().
 </p>
 </div>
-<p>Note that the last line of R code rotates and shifts the labels so that they don’t overlap.</p>
-<p>Observe in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a> that demersal, benthopelagic, and reef-associated environments were the preferred habitat for the most fish species.</p>
-<p>Alternatively, say you had a data frame where the number of fish species preferring each habitat (the <code>DemersPelag</code> variable) was pre-counted as in Table <a href="2-viz.html#tab:all-fishdata-counted">2.3</a>.</p>
+<p>Observe in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a> that <code>predation</code> category 4 has the fewest species. Also notice that bar graphs have white space between the bars whereas histograms have bars that touch.</p>
+<p>Alternatively, you may have a data frame where the number of mammalian species in each <code>predation</code> category was pre-counted as in Table <a href="2-viz.html#tab:all-fishdata-counted">2.3</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:all-fishdata-counted">TABLE 2.3: </span>Number of fish species pre-counted by preferred habitat.
+<span id="tab:all-fishdata-counted">TABLE 2.3: </span>Number of mammalian species pre-counted by predation category.
 </caption>
 <thead>
 <tr>
-<th style="text-align:left;">
-DemersPelag
+<th style="text-align:right;">
+predation
 </th>
 <th style="text-align:right;">
 number
@@ -1366,216 +1388,139 @@ number
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
--1
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bathydemersal
-</td>
-<td style="text-align:right;">
-2324
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-bathypelagic
-</td>
-<td style="text-align:right;">
-1408
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-benthopelagic
-</td>
-<td style="text-align:right;">
-11561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-demersal
-</td>
-<td style="text-align:right;">
-12024
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pelagic
-</td>
-<td style="text-align:right;">
-1164
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pelagic-neritic
-</td>
-<td style="text-align:right;">
-906
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pelagic-oceanic
-</td>
-<td style="text-align:right;">
-496
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-reef-associated
-</td>
-<td style="text-align:right;">
-4923
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SL
-</td>
-<td style="text-align:right;">
-11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TL
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-unknown
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-WD
-</td>
 <td style="text-align:right;">
 1
 </td>
+<td style="text-align:right;">
+14
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
-26772
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+14
 </td>
 </tr>
 </tbody>
 </table>
-<p>In order to create a barplot visualizing the distribution of the categorical variable <code>DemersPelag</code> in this case, we would now use <code>geom_col()</code> instead of <code>geom_bar()</code>, with an additional <code>y = number</code> in the aesthetic mapping on top of the <code>x = DemersPelag</code>. The resulting barplot would be identical to Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>.</p>
+<p>In order to create a barplot visualizing the distribution of the categorical variable <code>predation</code> in this case, we would now use <code>geom_col()</code> instead of <code>geom_bar()</code>, with an additional <code>y = number</code> in the aesthetic mapping on top of the <code>x = predation</code>. The resulting barplot would be identical to Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>.</p>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.25)</strong> Why are histograms inappropriate for categorical variables?</p>
-<p><strong>(LC2.26)</strong> What is the difference between histograms and barplots?</p>
-<p><strong>(LC2.27)</strong> How many fish species prefer bathypelagic environments?</p>
-<p><strong>(LC2.28)</strong> What was the 4th most preferred habitat for fish species? How could we rearrange the table to get this answer more quickly?</p>
+<p><strong>(LC2.23)</strong> Why are histograms inappropriate for categorical variables?</p>
+<p><strong>(LC2.24)</strong> What is the difference between histograms and barplots?</p>
+<p><strong>(LC2.25)</strong> What was the 2nd most common <code>predation</code> category for the mammalian species? How could we rearrange the table to get this answer more quickly?</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="must-avoid-pie-charts" class="section level3" number="2.8.2">
-<h3><span class="header-section-number">2.8.2</span> Must avoid pie charts!</h3>
-<p>One of the most common plots used to visualize the distribution of categorical data is the  pie chart. While they may seem harmless enough, pie charts actually present a problem in that humans are unable to judge angles well. As Naomi Robbins describes in her book, <em>Creating More Effective Graphs</em> <span class="citation">(<a href="#ref-robbins2013" role="doc-biblioref">Robbins 2013</a>)</span>, we overestimate angles greater than 90 degrees and we underestimate angles less than 90 degrees. In other words, it is difficult for us to determine the relative size of one piece of the pie compared to another.</p>
-<p>Let’s examine the same data used in our previous barplot of the number of fish species preferring each <code>DemersPelag</code> environment in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>, but this time we will use a pie chart in Figure <a href="2-viz.html#fig:DemersPelagpie">2.21</a>. Try to answer the following questions:</p>
-<ul>
-<li>How much larger is the portion of the pie for bathydemersal compared to bathypelagic?</li>
-<li>What is the fifth most preferred <code>DemersPelag</code> habitat for fish species?</li>
-</ul>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:DemersPelagpie"></span>
-<img src="ModernDive_files/figure-html/DemersPelagpie-1.png" alt="The dreaded pie chart." width="\textwidth" />
-<p class="caption">
-FIGURE 2.21: The dreaded pie chart.
-</p>
-</div>
-<p>While it is quite difficult to answer these questions when looking at the pie chart in Figure <a href="2-viz.html#fig:DemersPelagpie">2.21</a>, we can much more easily answer these questions using the barchart in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>. This is true since barplots present the information in a way such that comparisons between categories can be made with single horizontal lines, whereas pie charts present the information in a way such that comparisons must be made by  comparing angles.</p>
-<div class="learncheck">
-<p>
-<strong><em>Learning check</em></strong>
-</p>
-</div>
-<p><strong>(LC2.29)</strong> Why should pie charts be avoided and replaced by barplots?</p>
-<p><strong>(LC2.30)</strong> Why do you think people continue to use pie charts?</p>
-<div class="learncheck">
-
-</div>
-</div>
-<div id="two-categ-barplot" class="section level3" number="2.8.3">
-<h3><span class="header-section-number">2.8.3</span> Two categorical variables</h3>
-<p>Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the <em>joint</em> distribution of two categorical variables at the same time. Let’s examine the <em>joint</em> distribution of fish species by <code>DemersPelag</code> as well as <code>BodyShapeI</code>. In other words, the number of fish species for each <code>DemersPelag</code> and <code>BodyShapeI</code> combination.</p>
-<p>For example, the number of fish species preferring a bathydemersal habitat with a fusiform/normal shape, the number preferring a bathydemersal habitat with an elongated shape, and so on. Recall the <code>ggplot()</code> code that created the barplot of <code>DemersPelag</code> frequency in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="2-viz.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag)) <span class="sc">+</span> </span>
-<span id="cb39-2"><a href="2-viz.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p>We can now map the additional variable <code>BodyShapeI</code> by adding <code>fill = BodyShape1</code> inside the <code>aes()</code> aesthetic mapping.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="2-viz.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag, <span class="at">fill =</span> BodyShapeI)) <span class="sc">+</span></span>
-<span id="cb40-2"><a href="2-viz.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb40-3"><a href="2-viz.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">30</span>,<span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<div id="two-categ-barplot" class="section level3 hasAnchor" number="2.8.2">
+<h3><span class="header-section-number">2.8.2</span> Two categorical variables<a href="2-viz.html#two-categ-barplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the <em>joint</em> distribution of two categorical variables at the same time. Let’s examine the <em>joint</em> distribution of mammalian species by <code>predation</code> as well as <code>exposure</code>, (an index of how exposed the mammal is during sleep). In other words, the number of species for each combination of <code>predation</code> and <code>exposure</code>. For example, the number of species with <code>predation</code> category 2 and <code>exposure</code> category. Recall the <code>ggplot()</code> code that created the barplot of <code>predation</code> frequency in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="2-viz.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation)) <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="2-viz.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>We can now map the additional variable <code>exposure</code> by adding <code>fill = factor(exposure)</code> inside the <code>aes()</code> aesthetic mapping. Note that we use the <code>factor()</code> function here because the <code>fill</code> argument is expecting a factor, so we <em>coerced</em> <code>exposure</code> from <code>int</code> to the <code>fct</code> data type.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="2-viz.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation, <span class="at">fill =</span> <span class="fu">factor</span>(exposure))) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="2-viz.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:all-fishdata-stacked-bar"></span>
-<img src="ModernDive_files/figure-html/all-fishdata-stacked-bar-1.png" alt="Stacked barplot of fish species by preferred habitat (DemersPelag) and body shape (BodyShapeI)." width="\textwidth" />
+<img src="ModernDive_files/figure-html/all-fishdata-stacked-bar-1.png" alt="Stacked barplot of mammalian species by predation category and exposure index." width="\textwidth" />
 <p class="caption">
-FIGURE 2.22: Stacked barplot of fish species by preferred habitat (DemersPelag) and body shape (BodyShapeI).
+FIGURE 2.21: Stacked barplot of mammalian species by predation category and exposure index.
 </p>
 </div>
-<p>Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar">2.22</a> is an example of a  <em>stacked barplot</em>. While simple to make, in certain aspects it is not ideal. For example, it is difficult to compare the heights of the different colors between the bars, corresponding to comparing the number of fish species with each <code>BodyShapeI</code> type between the preferred <code>DemersPelag</code> habitats.</p>
-<p>Before we continue, let’s address some common points of confusion among new R users. First, the <code>fill</code> aesthetic corresponds to the color used to fill the bars, while the <code>color</code> aesthetic corresponds to the color of the outline of the bars. This is identical to how we added color to our histogram in Subsection <a href="2-viz.html#geomhistogram">2.6.1</a>: we set the outline of the bars to white by setting <code>color = "white"</code> and the colors of the bars to blue steel by setting <code>fill = "steelblue"</code>. Observe in Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar-color">2.23</a> that mapping <code>BodyShapeI</code> to <code>color</code> and not <code>fill</code> yields grey bars with different colored outlines.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="2-viz.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag, <span class="at">color =</span> BodyShapeI)) <span class="sc">+</span></span>
-<span id="cb41-2"><a href="2-viz.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb41-3"><a href="2-viz.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">30</span>,<span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<p>Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar">2.21</a> is an example of a <em>stacked barplot</em>. While simple to make, in certain aspects it is not ideal. For example, it is difficult to compare the heights of the different colors between the bars, corresponding to comparing the number of species with each <code>exposure</code> type between the <code>predation</code> categories.</p>
+<p>Before we continue, let’s address some common points of confusion among new R users. First, the <code>fill</code> aesthetic corresponds to the color used to fill the bars, while the <code>color</code> aesthetic corresponds to the color of the outline of the bars. This is identical to how we added color to our histogram in Subsection <a href="2-viz.html#geomhistogram">2.6.1</a>: we set the outline of the bars to white by setting <code>color = "white"</code> and the colors of the bars to blue steel by setting <code>fill = "steelblue"</code>. Observe in Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar-color">2.22</a> that mapping <code>exposure</code> to <code>color</code> and not <code>fill</code> yields grey bars with different colored outlines.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="2-viz.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation, <span class="at">color =</span> <span class="fu">factor</span>(exposure))) <span class="sc">+</span></span>
+<span id="cb39-2"><a href="2-viz.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:all-fishdata-stacked-bar-color"></span>
 <img src="ModernDive_files/figure-html/all-fishdata-stacked-bar-color-1.png" alt="Stacked barplot with color aesthetic used instead of fill." width="\textwidth" />
 <p class="caption">
-FIGURE 2.23: Stacked barplot with color aesthetic used instead of fill.
+FIGURE 2.22: Stacked barplot with color aesthetic used instead of fill.
 </p>
 </div>
-<p>Second, note that <code>fill</code> is another aesthetic mapping much like <code>x</code>-position; thus we were careful to include it within the parentheses of the <code>aes()</code> mapping. The following code, where the <code>fill</code> aesthetic is specified outside the <code>aes()</code> mapping will yield an error. This is a fairly common error that new <code>ggplot</code> users make:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="2-viz.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag), <span class="at">fill =</span> BodyShapeI) <span class="sc">+</span></span>
-<span id="cb42-2"><a href="2-viz.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p>An alternative to stacked barplots are  <em>side-by-side barplots</em>, also known as <em>dodged barplots</em>, as seen in Figure <a href="2-viz.html#fig:all-fishdata-dodged-bar-color">2.24</a>. The code to create a side-by-side barplot is identical to the code to create a stacked barplot, but with a  <code>position = "dodge"</code> argument added to <code>geom_bar()</code>. In other words, we are overriding the default barplot type, which is a <em>stacked</em> barplot, and specifying it to be a side-by-side barplot instead.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="2-viz.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag, <span class="at">fill =</span> BodyShapeI)) <span class="sc">+</span></span>
-<span id="cb43-2"><a href="2-viz.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb43-3"><a href="2-viz.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">30</span>,<span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<p>Second, note that <code>fill</code> is another aesthetic mapping much like <code>x</code>-position; thus we were careful to include it within the parentheses of the <code>aes()</code> mapping. The following code, where the <code>fill</code> aesthetic is specified outside the <code>aes()</code> mapping will not produce the desired plot. This is a fairly common error that new <code>ggplot</code> users make:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="2-viz.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation), <span class="at">fill =</span> <span class="fu">factor</span>(exposure)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="2-viz.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>An alternative to stacked barplots are <em>side-by-side barplots</em>, also known as <em>dodged barplots</em>, as seen in Figure <a href="2-viz.html#fig:all-fishdata-dodged-bar-color">2.23</a>. The code to create a side-by-side barplot is identical to the code to create a stacked barplot, but with a <code>position = "dodge"</code> argument added to <code>geom_bar()</code>. In other words, we are overriding the default barplot type, which is a <em>stacked</em> barplot, and specifying it to be a side-by-side barplot instead.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="2-viz.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation, <span class="at">fill =</span> <span class="fu">factor</span>(exposure))) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="2-viz.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:all-fishdata-dodged-bar-color"></span>
-<img src="ModernDive_files/figure-html/all-fishdata-dodged-bar-color-1.png" alt="Side-by-side barplot comparing number of fish species by DemersPelag and BodyShapeI variables." width="\textwidth" />
+<img src="ModernDive_files/figure-html/all-fishdata-dodged-bar-color-1.png" alt="Side-by-side barplot comparing number of species by predation and exposure variables." width="\textwidth" />
 <p class="caption">
-FIGURE 2.24: Side-by-side barplot comparing number of fish species by DemersPelag and BodyShapeI variables.
+FIGURE 2.23: Side-by-side barplot comparing number of species by predation and exposure variables.
 </p>
 </div>
-<p>Note the width of the bars differs; for example, the bars for <code>pelagic</code> are wider than for <code>demersal</code>. We can make one tweak to the <code>position</code> argument to get them to be the same size in terms of width as the other bars by using the more robust <code>position_dodge()</code> function.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="2-viz.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag, <span class="at">fill =</span> BodyShapeI)) <span class="sc">+</span></span>
-<span id="cb44-2"><a href="2-viz.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">preserve =</span> <span class="st">&quot;single&quot;</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:all-fishdata-dodged-bar-color-tweak"></span>
-<img src="ModernDive_files/figure-html/all-fishdata-dodged-bar-color-tweak-1.png" alt="Side-by-side barplot comparing number of all_fishdata by DemersPelag and BodyShapeI (with formatting tweak)." width="\textwidth" />
-<p class="caption">
-FIGURE 2.25: Side-by-side barplot comparing number of all_fishdata by DemersPelag and BodyShapeI (with formatting tweak).
-</p>
-</div>
-<p>Lastly, another type of barplot is a  <em>faceted barplot</em>. Recall in Section <a href="2-viz.html#facets">2.5</a> we visualized the distribution of weight gain for the chicks on Diet 1 <em>split</em> by the Chick identifier (1-50) using facets. We apply the same principle to our barplot visualizing the frequency of <code>DemersPelag</code> split by <code>BodyShapeI</code>: instead of mapping <code>BodyShapeI</code> to <code>fill</code> we include it as the variable to create small multiples of the plot across the levels of <code>BodyShapeI</code>.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="2-viz.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag)) <span class="sc">+</span></span>
-<span id="cb45-2"><a href="2-viz.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb45-3"><a href="2-viz.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> BodyShapeI, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb45-4"><a href="2-viz.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">30</span>,<span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<p>Another type of graph to visualize two categorical variables at the same time is a <em>faceted barplot</em>. Recall in Section <a href="2-viz.html#facets">2.5</a> we visualized the distribution of weight gain for the chicks on Diet 1 <em>split</em> by the Chick identifier (1-50) using facets. We apply the same principle to our barplot visualizing the frequency of <code>predation</code> split by <code>exposure</code>: instead of mapping <code>exposure</code> to <code>fill</code>, we include it as the variable to create small multiples of the plot across the levels of <code>exposure</code>.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="2-viz.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation)) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="2-viz.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb42-3"><a href="2-viz.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> exposure, <span class="at">ncol =</span> <span class="dv">1</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:facet-bar-vert"></span>
-<img src="ModernDive_files/figure-html/facet-bar-vert-1.png" alt="Faceted barplot comparing the number of fish species by the DemersPelag and BodyShapeI variables." width="\textwidth" />
+<img src="ModernDive_files/figure-html/facet-bar-vert-1.png" alt="Faceted barplot comparing the number of species by the predation and exposure variables." width="\textwidth" />
 <p class="caption">
-FIGURE 2.26: Faceted barplot comparing the number of fish species by the DemersPelag and BodyShapeI variables.
+FIGURE 2.24: Faceted barplot comparing the number of species by the predation and exposure variables.
+</p>
+</div>
+<p>Finally, in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a>, we will visualize the joint frequency of two categorical variables at the same time using a <em>mosaic</em> plot.</p>
+<div class="learncheck">
+<p>
+<strong><em>Learning check</em></strong>
+</p>
+</div>
+<p><strong>(LC2.26)</strong> What kinds of questions are not easily answered by looking at Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar">2.21</a>?</p>
+<p><strong>(LC2.27)</strong> What can you say, if anything, about the relationship between <code>predation</code> category and <code>exposure</code> index in regards to the number of mammalian species?</p>
+<p><strong>(LC2.28)</strong> Why might the side-by-side barplot be preferable to a stacked barplot in this case?</p>
+<p><strong>(LC2.29)</strong> What are the disadvantages of using a dodged barplot, in general?</p>
+<p><strong>(LC2.30)</strong> Why is the faceted barplot preferred to the side-by-side and stacked barplots in this case?</p>
+<p><strong>(LC2.31)</strong> What information about the different exposure indexes of different predation categories is more easily seen in the faceted barplot?</p>
+<div class="learncheck">
+
+</div>
+</div>
+<div id="summary-4" class="section level3 hasAnchor" number="2.8.3">
+<h3><span class="header-section-number">2.8.3</span> Summary<a href="2-viz.html#summary-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Barplots are a common way of displaying the distribution of a categorical variable, or in other words the frequency with which the different categories (also called <em>levels</em>) occur. They are easy to understand and make it easy to make comparisons across levels. Furthermore, when trying to visualize the relationship of two categorical variables, you have many options: stacked barplots, side-by-side barplots, and faceted barplots. Depending on what aspect of the relationship you are trying to emphasize, you will need to make a choice between these three types of barplots and own that choice.</p>
+</div>
+</div>
+<div id="plots-to-avoid" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Plots to avoid!<a href="2-viz.html#plots-to-avoid" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When we visualize data, the goal is to display the key features as clearly and succinctly as possible. These key features may include the central location of our data (e.g., median), its spread (e.g., IQR), and the sample size of each group. Depending on the data to display (numerical/categorical, one/multiple variables), some plots are more effective at presenting the key features of the data. In this section, we describe two plots that are frequently seen in the scientific literature but are less effective than common alternatives and should therefore be avoided.</p>
+<div id="barplots-with-a-continuous-variable" class="section level3 hasAnchor" number="2.9.1">
+<h3><span class="header-section-number">2.9.1</span> Barplots with a continuous variable<a href="2-viz.html#barplots-with-a-continuous-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first plot to avoid is a bar plot to display the distribution of a <em>continuous</em> (numerical) variable. But wait, then why was Section <a href="2-viz.html#geombar">2.8</a> all about how to create bar plots? Recall from the opening paragraph of Section <a href="2-viz.html#geombar">2.8</a> that barplots should be used to visualize the distribution of <em>categorical</em> variables, while histograms and boxplots should be used to visualize the distribution of <em>numerical</em> variables. Despite this, a recent study <span class="citation">(<a href="#ref-Riedel2022" role="doc-biblioref">Riedel et al. 2022</a>)</span> found that bar plots are more often used to inappropriately display continuous data than they are used appropriately to display count data.</p>
+<p>So, what is the problem with using barplots to display continuous data? As shown in Figure <a href="2-viz.html#fig:barplot-anatomy">2.25</a>, barplots hide important information that can be easily indicated using a scatterplot (dotplot) or boxplot. While the bar graph displays the mean of the data and some indication of its spread, it hides much of the data (zone of invisibility). In contrast, the dotplot succinctly presents the <em>complete</em> distribution of the numerical variable <em>and</em> indicates the sample size of each group. Furthermore, the bar graph includes a lot of “dead space” (zone of irrelevance) distracting our attention from the difference between means compared to the spread. For these reasons, more and more scientific journals are banning the use of barplots to display continuous data – and you should too.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:barplot-anatomy"></span>
+<img src="images/copyright/gr4_lrg.png" alt="Bar graphs hide important information about continuous data. Source: (Weissgerber et al. 2017), CC BY 4.0." width="\textwidth" />
+<p class="caption">
+FIGURE 2.25: Bar graphs hide important information about continuous data. Source: <span class="citation">(<a href="#ref-WEISSGERBER201720592" role="doc-biblioref">Weissgerber et al. 2017</a>)</span>, CC BY 4.0.
 </p>
 </div>
 <div class="learncheck">
@@ -1583,26 +1528,44 @@ FIGURE 2.26: Faceted barplot comparing the number of fish species by the DemersP
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC2.31)</strong> What kinds of questions are not easily answered by looking at Figure <a href="2-viz.html#fig:all-fishdata-stacked-bar">2.22</a>?</p>
-<p><strong>(LC2.32)</strong> What can you say, if anything, about the relationship between preferred habitat and body shape in regards to the number of fish species?</p>
-<p><strong>(LC2.33)</strong> Why might the side-by-side barplot be preferable to a stacked barplot in this case?</p>
-<p><strong>(LC2.34)</strong> What are the disadvantages of using a dodged barplot, in general?</p>
-<p><strong>(LC2.35)</strong> Why is the faceted barplot preferred to the side-by-side and stacked barplots in this case?</p>
-<p><strong>(LC2.36)</strong> What information about the different preferred habitats of different body shapes is more easily seen in the faceted barplot?</p>
+<p><strong>(LC2.32)</strong> Why should barplots be avoided when displaying continuous data?</p>
+<p><strong>(LC2.33)</strong> Why do you think people continue to use barplots when displaying continuous data</p>
 <div class="learncheck">
 
 </div>
 </div>
-<div id="summary-4" class="section level3" number="2.8.4">
-<h3><span class="header-section-number">2.8.4</span> Summary</h3>
-<p>Barplots are a common way of displaying the distribution of a categorical variable, or in other words the frequency with which the different categories (also called <em>levels</em>) occur. They are easy to understand and make it easy to make comparisons across levels. Furthermore, when trying to visualize the relationship of two categorical variables, you have many options: stacked barplots, side-by-side barplots, and faceted barplots. Depending on what aspect of the relationship you are trying to emphasize, you will need to make a choice between these three types of barplots and own that choice.</p>
+<div id="pie-charts" class="section level3 hasAnchor" number="2.9.2">
+<h3><span class="header-section-number">2.9.2</span> Pie charts<a href="2-viz.html#pie-charts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One of the most common plots used to visualize the distribution of categorical data is the pie chart. While they may seem harmless enough, pie charts actually present a problem in that humans are unable to judge angles well. As Naomi Robbins describes in her book, <em>Creating More Effective Graphs</em> <span class="citation">(<a href="#ref-robbins2013" role="doc-biblioref">Robbins 2013</a>)</span>, we overestimate angles greater than 90 degrees and we underestimate angles less than 90 degrees. In other words, it is difficult for us to determine the relative size of one piece of the pie compared to another.</p>
+<p>Let’s examine the same data used in our previous barplot of the number of mammalian species preferring each <code>predation</code> environment in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>, but this time we will use a pie chart in Figure <a href="2-viz.html#fig:predationpie">2.26</a>. Try to answer the following questions:</p>
+<ul>
+<li>How much larger is the portion of the pie for predation category 2 compared to category 4?</li>
+<li>What is the second most common <code>predation</code> category for mammalian species?</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:predationpie"></span>
+<img src="ModernDive_files/figure-html/predationpie-1.png" alt="The dreaded pie chart." width="\textwidth" />
+<p class="caption">
+FIGURE 2.26: The dreaded pie chart.
+</p>
+</div>
+<p>While it is quite difficult to answer these questions when looking at the pie chart in Figure <a href="2-viz.html#fig:predationpie">2.26</a>, we can much more easily answer these questions using the barchart in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>. This is true since barplots present the information in a way such that comparisons between categories can be made with single horizontal lines, whereas pie charts present the information in a way such that comparisons must be made by comparing angles.</p>
+<div class="learncheck">
+<p>
+<strong><em>Learning check</em></strong>
+</p>
+</div>
+<p><strong>(LC2.34)</strong> Why should pie charts be avoided and replaced by barplots?</p>
+<p><strong>(LC2.35)</strong> Why do you think people continue to use pie charts?</p>
+<div class="learncheck">
+
 </div>
 </div>
-<div id="data-vis-conclusion" class="section level2" number="2.9">
-<h2><span class="header-section-number">2.9</span> Conclusion</h2>
-<div id="summary-table" class="section level3" number="2.9.1">
-<h3><span class="header-section-number">2.9.1</span> Summary table</h3>
-<p>Let’s recap all five of the five named graphs (5NG)  in Table <a href="2-viz.html#tab:viz-summary-table">2.4</a> summarizing their differences. Using these 5NG, you’ll be able to visualize the distributions and relationships of variables contained in a wide array of datasets. This will be even more the case as we start to map more variables to more of each <code>geom</code>etric object’s <code>aes</code>thetic attribute options, further unlocking the awesome power of the <code>ggplot2</code> package.</p>
+</div>
+<div id="data-vis-conclusion" class="section level2 hasAnchor" number="2.10">
+<h2><span class="header-section-number">2.10</span> Conclusion<a href="2-viz.html#data-vis-conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="summary-table" class="section level3 hasAnchor" number="2.10.1">
+<h3><span class="header-section-number">2.10.1</span> Summary table<a href="2-viz.html#summary-table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s recap all five of the five named graphs (5NG) in Table <a href="2-viz.html#tab:viz-summary-table">2.4</a> summarizing their differences. Using these 5NG, you’ll be able to visualize the distributions and relationships of variables contained in a wide array of datasets. This will be even more the case as we start to map more variables to more of each <code>geom</code>etric object’s <code>aes</code>thetic attribute options, further unlocking the awesome power of the <code>ggplot2</code> package.</p>
 <table>
 <caption>
 <span id="tab:viz-summary-table">TABLE 2.4: </span>Summary of Five Named Graphs
@@ -1712,27 +1675,27 @@ Stacked, side-by-side, and faceted barplots show the joint distribution of 2 cat
 </tbody>
 </table>
 </div>
-<div id="function-argument-specification" class="section level3" number="2.9.2">
-<h3><span class="header-section-number">2.9.2</span> Function argument specification</h3>
+<div id="function-argument-specification" class="section level3 hasAnchor" number="2.10.2">
+<h3><span class="header-section-number">2.10.2</span> Function argument specification<a href="2-viz.html#function-argument-specification" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s go over some important points about specifying the arguments (i.e., inputs) to functions. Run the following two segments of code:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="2-viz.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment 1:</span></span>
-<span id="cb46-2"><a href="2-viz.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> all_fishdata, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag)) <span class="sc">+</span></span>
-<span id="cb46-3"><a href="2-viz.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb46-4"><a href="2-viz.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="2-viz.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment 2:</span></span>
-<span id="cb46-6"><a href="2-viz.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_fishdata, <span class="fu">aes</span>(<span class="at">x =</span> DemersPelag)) <span class="sc">+</span></span>
-<span id="cb46-7"><a href="2-viz.html#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p>You’ll notice that both code segments create the same barplot, even though in the second segment we omitted the <code>data =</code> and <code>mapping =</code> code argument names. This is because the <code>ggplot()</code> function by default assumes that the <code>data</code> argument comes first and the <code>mapping</code> argument comes second.  As long as you specify the data frame in question first and the <code>aes()</code> mapping second, you can omit the explicit statement of the argument names <code>data =</code> and <code>mapping =</code>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="2-viz.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment 1:</span></span>
+<span id="cb43-2"><a href="2-viz.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mammals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> predation)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="2-viz.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb43-4"><a href="2-viz.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="2-viz.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment 2:</span></span>
+<span id="cb43-6"><a href="2-viz.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mammals, <span class="fu">aes</span>(<span class="at">x =</span> predation)) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="2-viz.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>You’ll notice that both code segments create the same barplot, even though in the second segment we omitted the <code>data =</code> and <code>mapping =</code> code argument names. This is because the <code>ggplot()</code> function by default assumes that the <code>data</code> argument comes first and the <code>mapping</code> argument comes second. As long as you specify the data frame in question first and the <code>aes()</code> mapping second, you can omit the explicit statement of the argument names <code>data =</code> and <code>mapping =</code>.</p>
 <p>Going forward for the rest of this book, all <code>ggplot()</code> code will be like the second segment: with the <code>data =</code> and <code>mapping =</code> explicit naming of the argument omitted with the default ordering of arguments respected. We’ll do this for brevity’s sake; it’s common to see this style when reviewing other R users’ code.</p>
 </div>
-<div id="additional-resources-1" class="section level3" number="2.9.3">
-<h3><span class="header-section-number">2.9.3</span> Additional resources</h3>
+<div id="additional-resources-1" class="section level3 hasAnchor" number="2.10.3">
+<h3><span class="header-section-number">2.10.3</span> Additional resources<a href="2-viz.html#additional-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!--
 
 
 An R script file of all R code used in this chapter is available [here](scripts/02-visualization.R).
 -->
-<p>If you want to further unlock the power of the <code>ggplot2</code> package for data visualization, we suggest that you check out RStudio’s “Data Visualization with ggplot2” cheatsheet. This cheatsheet summarizes much more than what we’ve discussed in this chapter. (For example in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>, you saw that we could add code to rotate labels.) In particular, the ggplot2 cheatsheet presents many more than the 5 <code>geom</code>etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the <code>geom</code>etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio in late 2019, you can access this cheatsheet by going to the RStudio Menu Bar -&gt; Help -&gt; Cheatsheets -&gt; “Data Visualization with ggplot2.” You can see a preview in the figure below.</p>
+<p>If you want to further unlock the power of the <code>ggplot2</code> package for data visualization, we suggest that you check out RStudio’s “Data Visualization with ggplot2” cheatsheet. This cheatsheet summarizes much more than what we’ve discussed in this chapter. (For example in Figure <a href="2-viz.html#fig:habitatsbar">2.20</a>, you saw that we could add code to rotate labels.) In particular, the ggplot2 cheatsheet presents many more than the 5 <code>geom</code>etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the <code>geom</code>etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -&gt; Help -&gt; Cheat Sheets -&gt; “Data Visualization with ggplot2.” You can see a preview in the figure below.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ggplot-cheatsheet"></span>
 <img src="images/cheatsheets/ggplot_cheatsheet-1.png" alt="Data Visualization with ggplot2 cheatsheet." width="\textwidth" />
 <p class="caption">
@@ -1740,35 +1703,31 @@ FIGURE 2.27: Data Visualization with ggplot2 cheatsheet.
 </p>
 </div>
 </div>
-<div id="whats-to-come-3" class="section level3" number="2.9.4">
-<h3><span class="header-section-number">2.9.4</span> What’s to come</h3>
-<p>Recall in Figure <a href="2-viz.html#fig:noalpha">2.2</a> in Section <a href="2-viz.html#scatterplots">2.3</a> we visualized the relationship between length and weight of brackish fish species in all_fishdata. This necessitated paring down the <code>all_fishdata</code> data frame to a new data frame <code>brackish_fish</code> consisting of only <code>Brack == -1</code> fish species first:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="2-viz.html#cb47-1" aria-hidden="true" tabindex="-1"></a>brackish_fish <span class="ot">&lt;-</span> all_fishdata <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href="2-viz.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Brack <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb47-3"><a href="2-viz.html#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="2-viz.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> brackish_fish, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Length, <span class="at">y =</span> Weight)) <span class="sc">+</span> </span>
-<span id="cb47-5"><a href="2-viz.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p>Furthermore recall in Figure <a href="2-viz.html#fig:dailyweight">2.7</a> in Section <a href="2-viz.html#linegraphs">2.4</a> we visualized weight gain over time for Chick 1 on Diet 1. This necessitated paring down the <code>ChickWeight</code> data frame to a new data frame <code>chick1_weight</code> consisting of body weight recordings only for <code>Chick == 1</code>, and <code>Diet == 1</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="2-viz.html#cb48-1" aria-hidden="true" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href="2-viz.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Chick <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> Diet <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb48-3"><a href="2-viz.html#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="2-viz.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> chick1_weight, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Time, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
-<span id="cb48-5"><a href="2-viz.html#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p>These two code segments were a preview of Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling using the <code>dplyr</code> package. Data wrangling is the process of transforming and modifying existing data with the intent of making it more appropriate for analysis purposes. For example, these two code segments used the <code>filter()</code> function to create new data frames (<code>brackish_fish</code> and <code>chick1_weight</code>) by choosing only a subset of rows of existing data frames (<code>all_fishdata</code> and <code>ChickWeight</code>). In the next chapter, we’ll formally introduce the <code>filter()</code> and other data wrangling functions as well as the <em>pipe operator</em> <code>%&gt;%</code> which allows you to combine multiple data wrangling actions into a single sequential <em>chain</em> of actions. On to Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling!</p>
+<div id="whats-to-come-3" class="section level3 hasAnchor" number="2.10.4">
+<h3><span class="header-section-number">2.10.4</span> What’s to come<a href="2-viz.html#whats-to-come-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recall in Figure <a href="2-viz.html#fig:dailyweight">2.7</a> in Section <a href="2-viz.html#linegraphs">2.4</a> we visualized weight gain over time for Chick 1. This necessitated paring down the <code>ChickWeight</code> data frame to a new data frame <code>chick1_weight</code> consisting of body weight recordings only for <code>Chick == 1</code>:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="2-viz.html#cb44-1" aria-hidden="true" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> <span class="fu">filter</span>(ChickWeight, Chick <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>This code segment is a preview of Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling using the <code>dplyr</code> package. Data wrangling is the process of transforming and modifying existing data with the intent of making it more appropriate for analysis purposes. For example, this code segment used the <code>filter()</code> function to create a new data frame (<code>chick1_weight</code>) by choosing only a subset of rows of an existing data frames (<code>ChickWeight</code>). In the next chapter, we’ll formally introduce the <code>filter()</code> and other data wrangling functions as well as the <em>pipe operator</em> <code>%&gt;%</code> which allows you to combine multiple data wrangling actions into a single sequential <em>chain</em> of actions. On to Chapter <a href="3-wrangling.html#wrangling">3</a> on data wrangling!</p>
 
 </div>
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-rds2016" class="csl-entry">
 Grolemund, Garrett, and Hadley Wickham. 2017. <em>R for Data Science</em>. First. Sebastopol, CA: O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
 </div>
+<div id="ref-Riedel2022" class="csl-entry">
+Riedel, Nico, Robert Schulz, Vartan Kazezian, and Tracey L Weissgerber. 2022. <span>“<span class="nocase">Replacing bar graphs of continuous data with more informative graphics: Are we making progress?</span>”</span> <em>Clinical Science</em>, July. <a href="https://doi.org/10.1042/CS20220287">https://doi.org/10.1042/CS20220287</a>.
+</div>
 <div id="ref-robbins2013" class="csl-entry">
 Robbins, Naomi. 2013. <em>Creating More Effective Graphs</em>. First. New York, NY: Chart House.
 </div>
+<div id="ref-WEISSGERBER201720592" class="csl-entry">
+Weissgerber, Tracey L., Marko Savic, Stacey J. Winham, Dejana Stanisavljevic, Vesna D. Garovic, and Natasa M. Milic. 2017. <span>“Data Visualization, Bar Naked: A Free Tool for Creating Interactive Graphics.”</span> <em>Journal of Biological Chemistry</em> 292 (50): 20592–98. https://doi.org/<a href="https://doi.org/10.1074/jbc.RA117.000147">https://doi.org/10.1074/jbc.RA117.000147</a>.
+</div>
 <div id="ref-R-ggplot2" class="csl-entry">
-Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2022. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
 </div>
 <div id="ref-wilkinson2005" class="csl-entry">
 Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)</em>. First. Secaucus, NJ: Springer-Verlag.
@@ -1784,7 +1743,6 @@ Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)<
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1825,7 +1783,7 @@ gitbook.start({
 },
 "download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

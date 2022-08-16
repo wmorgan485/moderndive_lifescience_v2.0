@@ -35,7 +35,27 @@ Before we can start exploring data in R, there are some key concepts to understa
 2. How do I code in R?
 3. What are R packages?
 
-We'll introduce these concepts in the upcoming Sections \@ref(r-rstudio)-\@ref(packages). If you are already somewhat familiar with these concepts, feel free to skip to Section \@ref(rfishbase) where we'll introduce our first dataset, which contains information on the taxonomy, biology, trophic ecology, life history, and uses of >33,000 fish species [see https://fishbase.org]. This is a dataset we will explore in depth for much of the rest of this book. 
+We'll introduce these concepts in the upcoming Sections \@ref(r-rstudio)-\@ref(packages). If you are already somewhat familiar with these concepts, feel free to skip to Section \@ref(mammalsdb) where we'll introduce our first biological dataset with information on 39 species of mammals [see http://www.statsci.org/data/general/sleep.html].  
+
+
+```{block loa1, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*  
+• Use RStudio to enter and run code.  
+• Use the following terms: data frame, vector, data frame, function/command, argument.  
+• Distinguish between R messages, warnings, and errors -- and respond accordingly.  
+• Learn coding by copying, pasting and tweaking existing code.  
+• Install and load R packages of functions and data.  
+• Do computational tasks by using R functions.  
+• View a data frame in R.  
+• Import data from external sources, including.csv and .xlsx files, into R.  
+• Recognize quantitative (numerical) and categorical (factor) variables.  
+• Access help files in R.  
+\vspace{-0.1in}
+```
 
 
 
@@ -115,7 +135,7 @@ We now introduce some basic programming concepts and terminology. Instead of ask
     + *Data types*: integers, doubles/numerics, logicals, and characters. \index{data types} Integers are values like -1, 0, 2, 4092. Doubles or numerics are a larger set of values containing both the integers but also fractions and decimal values like -24.932 and 0.8. Logicals are either `TRUE` or `FALSE` while characters are text such as "cabbage", "Hamilton", "The Wire is the greatest TV show ever", and "This ramen is delicious." Note that characters are often denoted with the quotation marks around them.
 * *Vectors*: a series of values. These are created using the `c()` function, where `c()` stands for "combine" or "concatenate." For example, `c(6, 11, 13, 31, 90, 92)` creates a six element series of positive integer values \index{vectors}.
 * *Factors*: *categorical data* are commonly represented in R as factors. \index{factors} Categorical data can also be represented as *strings*. We'll study this difference as we progress through the book.
-* *Data frames*: rectangular spreadsheets. They are representations of datasets in R where the rows correspond to *observations* and the columns correspond to *variables* that describe the observations. \index{data frame} We'll cover data frames later in Section \@ref(rfishbase).
+* *Data frames*: rectangular spreadsheets. They are representations of datasets in R where the rows correspond to *observations* and the columns correspond to *variables* that describe the observations. \index{data frame} We'll cover data frames later in Section \@ref(mammalsdb).
 * *Conditionals*: \index{conditionals}
   + Testing for equality in R using `==` (and not `=`, which is typically used for assignment). For example, `2 + 1 == 3` compares `2 + 1` to `3` and is correct R code, while `2 + 1 = 3` will return an error.
   + Boolean algebra: `TRUE/FALSE` statements and mathematical operators such as `<` (less than), `<=` (less than or equal), and `!=` (not equal to). \index{Boolean algebra} For example, `4 + 2 >= 3` will return `TRUE`, but `3 + 5 <= 1` will return `FALSE`.
@@ -135,7 +155,7 @@ R will show red text in the console pane in three different situations:
 
 * **Errors**: \index{R!errors} When the red text is a legitimate error, it will be prefaced with "Error in…" and will try to explain what went wrong. Generally when there's an error, the code will not run. For example, we'll see in Subsection \@ref(package-use) if you see `Error in ggplot(...) : could not find function "ggplot"`, it means that the `ggplot()` function is not accessible because the package that contains the function (`ggplot2`) was not loaded with `library(ggplot2)`. Thus you cannot use the `ggplot()` function without the `ggplot2` package being loaded first.
 * **Warnings**: \index{R!warnings} When the red text is a warning, it will be prefaced with "Warning:" and R will try to explain why there's a warning. Generally your code will still work, but with some caveats. For example, you will see in Chapter \@ref(viz) if you create a scatterplot based on a dataset where two of the rows of data have missing entries that would be needed to create points in the scatterplot, you will see this warning: `Warning: Removed 2 rows containing missing values (geom_point)`. R will still produce the scatterplot with all the remaining non-missing values, but it is warning you that two of the points aren't there.
-* **Messages**: \index{R!messages} When the red text doesn't start with either "Error" or "Warning", it's *just a friendly message*. You'll see these messages when you load *R packages* in the upcoming Subsection \@ref(package-loading) or when you read data saved in spreadsheet files with the `read_csv()` function as you'll see in Chapter \@ref(tidy). These are helpful diagnostic messages and they don't stop your code from working. Additionally, you'll see these messages when you install packages too using `install.packages()` as discussed in Subsection \@ref(package-installation).
+* **Messages**: \index{R!messages} When the red text doesn't start with either "Error" or "Warning", it's *just a friendly message*. You'll see these messages when you load *R packages* in the upcoming Subsection \@ref(package-loading) or when you read data saved in spreadsheet files with the `read_csv()` function as you'll see in Section \@ref(csv). These are helpful diagnostic messages and they don't stop your code from working. Additionally, you'll see these messages when you install packages too using `install.packages()` as discussed in Subsection \@ref(package-installation).
 
 Remember, when you see red text in the console, *don't panic*. It doesn't necessarily mean anything is wrong. Rather:
 
@@ -219,7 +239,7 @@ Much like an app on your phone, you only have to install a package once. However
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat the earlier installation steps, but for the `dplyr`, `rfishbase`, and `knitr` packages. This will install the earlier mentioned `dplyr` package for data wrangling, the `rfishbase` package containing data on >33,000 fish species, and the `knitr` package for generating easy-to-read tables in R. We'll use these packages in the next section.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat the earlier installation steps, but for the `dplyr`, `openintro`, and `knitr` packages. This will install the earlier mentioned `dplyr` package for data wrangling, the `openintro` package contains the `mammals` data set with information on 39 mammalian species, and the `knitr` package for generating easy-to-read tables in R. We'll use these packages in the next section.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -227,8 +247,10 @@ Much like an app on your phone, you only have to install a package once. However
 ```
  
 \vspace{0.1in}
- 
-Note that if you'd like your output on your computer to match up exactly with the output presented throughout the book, you may want to use the exact versions of the packages that we used. You can find a full listing of these packages and their versions in Appendix \@ref(appendixE). This likely won't be relevant for novices, but we included it for reproducibility reasons.
+
+<!-- 
+Note that if you'd like your output on your computer to match up exactly with the output presented throughout the book, you may want to use the exact versions of the packages that we used. You can find a full listing of these packages and their versions in the Appendix \@ref(appendixE). This likely won't be relevant for novices, but we included it for reproducibility reasons.
+-->
 
 ### Package loading {#package-loading}
 
@@ -256,7 +278,7 @@ Error in library(ggplot2) : there is no package called ‘ggplot2’
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `rfishbase`, and `knitr` packages as well by repeating the earlier steps.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `openintro`, `readr` and `knitr` packages as well by repeating the earlier steps.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -279,70 +301,60 @@ This is a different error message than the one you just saw on a package not hav
 
 
 
-## Explore your first datasets {#rfishbase}
+## Explore your first data sets {#mammalsdb}
 
 Let's put everything we've learned so far into practice and start exploring some real data! Data comes to us in a variety of formats, from pictures to text to numbers.  Throughout this book, we'll focus on datasets that are saved in "spreadsheet"-type format. This is probably the most common way data are collected and saved in many fields.  Remember from Subsection \@ref(programming-concepts) that these "spreadsheet"-type datasets are called _data frames_ in R. \index{data frame} We'll focus on working with data saved as data frames throughout this book.
 
 Let's first load all the packages needed for this chapter, assuming you've already installed them. Read Section \@ref(packages) for information on how to install and load R packages if you haven't already.
 
-```{r message=FALSE}
-library(rfishbase)
+```{r message=FALSE, warning=FALSE}
+library(openintro)
 library(dplyr)
 library(knitr)
+library(readr)
 ```
 
 At the beginning of all subsequent chapters in this book, we'll always have a list of packages that you should have installed and loaded in order to work with that chapter's R code. 
 
-### `rfishbase` package  {#rfishpackage}
+### `openintro` package  {#openintropackage}
 
-Daniel Pauly hypothesized that the growth rate of fish was affected by the gill surface area; however, he had difficulty gathering the large amount of data needed to complete his Ph.D. research in the 1970's. Dr. Pauly went on to become a leader in global fisheries management, working to protect fish populations from unsustainable harvesting. In addition to promoting technology for monitoring fish populations, he helped develop [FishBase](https://fishbase.org), an online database with a wealth of information on over 30,000 species of fish and the fisheries where they live. 
+The `openintro` package is developed by the OpenIntro project, which provides free educational resources. You can find a list of all included data sets on the [package reference page](http://openintrostat.github.io/openintro/reference/index.html) as well as by running `data(package = "openintro")` in the R console after loading the package.
 
-Fishbase contains dozens of data tables, with information about individual fish species, including morphological characteristics, food items consumed, population size and age structure, swimming speed, and much, much more. Information about a single species can be readily accessed from the FishBase web site at <https://fishbase.org>, but this interface becomes limiting for large scale data analysis. The `rfishbase` \index{R packages!rfishbase} R package that we will be using contains many functions for accessing the online data tables available at [fishbase.org](https://fishbase.org).
 
-### `fishbase` data frame {#fishbasedataframe}
+### `mammals` data frame {#mammalsdataframe}
 
-As you will see, there are many ways to access datasets in R. We'll start with `fishbase`, a dataset built into the `rfishbase` \index{R packages!rfishbase} R package that contains species information about all of the fish data available online at <https://fishbase.org>.
+As you will see, there are many ways to access data sets in R. We'll start with `mammals`, a dataset built into the `openintro` \index{R packages!mammals} R package that contains sleep data and other information about 39 mammalian species.
 
-We'll begin by previewing the `fishbase` data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the `fishbase` data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary. 
+We'll begin by previewing the `mammals` data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the `mammals` data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary. 
 
 ```{r eval=FALSE}
-fishbase
+mammals
 ```
 
-```{r echo=FALSE, purl=FALSE}
+```{r echo=FALSE, warning=FALSE, purl=FALSE}
 # This redundant code is used for dynamic non-static in-line text output purposes
-fishbase %>% as_tibble()
 library(scales)
-fishbase_rows <- fishbase %>%
+mammals_rows <- mammals %>%
   nrow() %>%
   comma()
-fishbase_cols <- fishbase %>% ncol()
+mammals_cols <- mammals %>% ncol()
 ```
 
 Let's unpack this output:
 
-* ``A tibble: `r fishbase_rows` x `r fishbase_cols` ``: A `tibble` is a specific kind of data frame in R.\index{tibble}  This particular data frame has
-    + `` `r fishbase_rows` `` rows corresponding to different *observations*. Here, each observation is a fish species
-    + `` `r fishbase_cols` `` columns corresponding to `r fishbase_cols` *variables* describing each observation.
-* `SpecCode`, `Genus`, `Species`, `SpeciesRefNo`, etc. are the different columns, in other words, the different variables of this dataset.
-* We then have a preview of the first 10 rows of observations corresponding to the first 10 species. R is only showing the first 10 rows, because if it showed all `` `r fishbase_rows` `` rows, it would overwhelm your screen.
-* ``... with `r (fishbase %>% nrow() - 10) %>% comma()` more rows, and `r fishbase_cols - 11` more variables:`` indicating to us that `r (fishbase %>% nrow() - 10) %>% comma()` more rows of data and `r fishbase_cols - 11` more variables could not fit in this screen.
+* ``A tibble: `r mammals_rows` x `r mammals_cols` ``: A `tibble` is a specific kind of data frame in R.\index{tibble}  This particular data frame has
+    + `` `r mammals_rows` `` rows corresponding to different *observations*. Here, each observation is a mammalian species.
+    + `` `r mammals_cols` `` columns corresponding to `r mammals_cols` *variables* describing each observation.
+* `body_wt`, `brain_wt`, `non_dreaming`, `dreaming`, etc. are the different columns, in other words, the different variables of this dataset.
+* We then have a preview of the first 10 rows of observations corresponding to the first 10 species. R is only showing the first 10 rows, because if it showed all `` `r mammals_rows` `` rows, it would overwhelm your screen.
+* ``... with `r (mammals %>% nrow() - 10) %>% comma()` more rows, and `r mammals_cols - 11` more variables:`` indicating to us that `r (mammals %>% nrow() - 10) %>% comma()` more rows of data and `r mammals_cols - 11` more variables could not fit in this screen. (If you're screen is wide enough all `r mammals_cols` variables may fit and there will be no more variables to show.)
 
-In addition to datasets built into packages, we can also import data from external sources using functions. For example, the `species()` function of the `rfishbase` \index{R packages!rfishbase} package is used to access an online data table at FishBase.org. Run the following two lines of code by typing or copying-and-pasting in your console.
-
-```{r}
-all_fishdata <- species()
-all_fishdata
-```
-
-The first line of code `all_fishdata <- species()` runs the `species()` function to retrieve data from the FishBase Species table. The left arrow `<-` tells R to save the data by *assigning* (or putting) it into a data frame named `all_fishdata`. 
-
-Typing the name of the data frame `all_fishdata` in the second line of code, then displays the data. Unfortunately, this output does not allow us to explore the data very well, but it does give a nice preview. Let's look at some different ways to explore data frames more closely.
+Unfortunately, this output does not allow us to explore the data very well, but it does give a nice preview. Let's look at some different ways to explore data frames more closely.
 
 
 ### Exploring data frames {#exploredataframes}
 
-There are many ways to get a feel for the data contained in a complex data frame such as `all_fishdata`. We present two functions that take as their "argument" (their input) the data frame in question. We also include another method for exploring one particular column of a data frame:
+There are many ways to get a feel for the data contained in a complex data frame such as `mammals`. We present three ways here: 
 
 1. The `View()` function brings up RStudio's built-in data viewer.
 1. The `glimpse()` function is included in the `dplyr` package.
@@ -350,9 +362,9 @@ There are many ways to get a feel for the data contained in a complex data frame
 
 **1. `View()`**:
 
-Run `View(all_fishdata)` \index{R packages!utils!View()} in your console in RStudio, either by typing it or cutting-and-pasting it into the console pane. (Note the uppercase `V` in `View()`. R is case-sensitive, so you'll get an error message if you run `view(all_fishdata)` instead.) 
+Run `View(mammals)` \index{R packages!utils!View()} in your console in RStudio, either by typing it or cutting-and-pasting it into the console pane. (Note the uppercase `V` in `View()`. R is case-sensitive, so you'll get an error message if you run `view(mammals)` instead.) 
 
-Explore this data frame in the resulting pop up viewer. You should get into the habit of viewing any data frames you encounter. 
+Explore this data frame in the resulting pop up viewer. You should get into the habit of viewing any data frames you encounter. Note that there are *missing values* \index{missing values}, which are encoded as `NA` for "not available" or "not applicable." If a value for a particular row and a particular column does not exist, `NA` is stored instead. Values can be missing for many reasons. Perhaps the data was collected but someone forgot to enter it. Perhaps the data was not collected at all because it was too difficult to do so. Perhaps there was an erroneous value that someone entered that has been corrected to read as missing. You'll often encounter issues with missing values when working with real data; we'll describe some ways to deal with the missing values in Chapter \@ref(wrangling).
 
 \vspace{0.1in}
 
@@ -362,12 +374,12 @@ Explore this data frame in the resulting pop up viewer. You should get into the 
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does any *ONE* row in this `all_fishdata` dataset refer to?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What does any *ONE* row in this `mammals` dataset refer to?
 
 - A. Data on a species 
 - B. Data on a family
 - C. Data on a genus
-- D. Data on fish weight
+- D. Data on mammalian weight
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -376,21 +388,21 @@ Explore this data frame in the resulting pop up viewer. You should get into the 
 
 \vspace{0.1in}
 
-Note that if you look in the leftmost column of the `View(all_fishdata)` output, you will see a column of numbers. These are the row numbers of the dataset. If you glance across a row with the same number, say row 5, you can get an idea of what each row is representing. This will allow you to identify what object is being described in a given row by taking note of the values of the columns in that specific row. This is often called the *observational unit*.\index{observational unit} The observational unit in this example is an individual fish species. You can identify the observational unit by determining what "thing" is being measured or described by each of the variables. 
+Note that if you look in the leftmost column of the `View(mammals)` output, you will see a column of numbers. These are the row numbers of the dataset. If you glance across a row with the same number, say row 5, you can get an idea of what each row is representing. This will allow you to identify what object is being described in a given row by taking note of the values of the columns in that specific row. This is often called the *observational unit*.\index{observational unit} The observational unit in this example is an individual mammalian species. You can identify the observational unit by determining what "thing" is being measured or described by each of the variables. 
 
 **2. `glimpse()`**:
 
 The second way we'll cover to explore a data frame is using the `glimpse()` function \index{dplyr!glimpse()} included in the \index{dplyr|seealso{R packages!dplyr}} `dplyr` package. Thus, you can only use the `glimpse()` function after you've loaded the `dplyr` package by running `library(dplyr)`. This function provides us with an alternative perspective for exploring a data frame that highlights the variables:
 
 ```{r}
-glimpse(all_fishdata)
+glimpse(mammals)
 ```
 
 Observe that `glimpse()` will give you the first few entries of each variable in a row after the variable name.  In addition, the *data type* (see Subsection \@ref(programming-concepts)) of the variable is given immediately after each variable's name inside `< >`.  
 
-Here, `int` and  `dbl` refer to "integer" and "double", which are computer coding terminology for quantitative/numerical variables. "Doubles" take up twice the size to store on a computer compared to integers. 
+Here, `int` and  `dbl` refer to "integer" and "double", which are computer coding terms for quantitative/numerical variables. "Doubles" take up twice the size to store on a computer compared to integers. 
 
-In contrast, `chr` refers to "character", which is computer terminology for text data. In most forms, text data, such as the `Genus` or `Species` of a fish, are categorical variables. There are other types of variables in R, some of which we will encounter later. 
+In contrast, `fct` refers to "factor", which is computer terminology for categorical data. Categorical data and other text can also be stored as a `chr` or "character" data type. There are other types of variables in R, some of which we will encounter later. 
 
 \vspace*{0.05in}
 
@@ -400,7 +412,7 @@ In contrast, `chr` refers to "character", which is computer terminology for text
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are some other examples in this dataset of *categorical* variables?  What makes them different than *quantitative* variables?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Examine the `births14` data set in the `openintro` package. What are examples in this dataset of *categorical* variables?  What makes them different than *quantitative* variables?
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -414,17 +426,17 @@ In contrast, `chr` refers to "character", which is computer terminology for text
 Lastly, the `$` operator \index{operators!dollar sign} allows us to extract and then explore a single variable within a data frame. For example, run the following in your console
 
 ```{r eval=FALSE}
-all_fishdata$Species
+mammals$species
 ```
 
-We used the `$` operator to extract only the `Species` variable and return it as a vector of length `r (all_fishdata %>% nrow())`\index{vectors}. We'll only be occasionally exploring data frames using the `$` operator, instead favoring the `View()` and `glimpse()` functions.
+We used the `$` operator to extract only the `species` variable and return it as a vector of length `r (mammals %>% nrow())`\index{vectors}. We'll only be occasionally exploring data frames using the `$` operator, instead favoring the `View()` and `glimpse()` functions.
 
 
 ### Identification and measurement variables {#identification-vs-measurement-variables}
 
-By running `View(all_fishdata)`, we can explore the different *variables* listed in the columns. Notice that there are many different types of variables.  Some of the variables like `DepthRangeDeep`, `Vulnerability`, and `Length` are what we will call *quantitative* variables. \index{quantitative} These variables are numerical in nature and usually stored as `int` or `dbl` data types.  Other variables here are \index{categorical} *categorical*, such as `BodyShapeI`, `DemersPelag`, and `Saltwater` and are usually stored as a `chr` data type, but note that `Saltwater` is stored as a `dbl`.
+By running `View(mammals)`, we can explore the different *variables* listed in the columns. Notice that there are many different types of variables.  Some of the variables like `body_wt` and `brain_wt` are *quantitative* variables. \index{quantitative} These variables are numerical in nature and usually stored as `int` or `dbl` data types.  As noted above, other variables, such as `species`, are \index{categorical} *categorical* and stored as a `fct` data type. The `danger` variable is also categorical, but is stored as an `int`. More commonly, categorical variables are stored as a `chr` data type as seen in the `births14` data set that you examined in the previous Learning Check.
 
-We can also distinguish between *identification variables* and *measurement variables*. For example, in the output of `glimpse(all_fishdata)` the variables `SpecCode` and `Species` are what we will call *identification variables*, variables that uniquely identify each observational unit. In this case, the identification variables uniquely identify each fish species. Such variables are mainly used in practice to uniquely identify each row in a data frame. `SpecCode` gives the unique code provided by FishBase for that fish species, while the `Species` variable gives the valid scientific name of the fish species. Most of the remaining variables (such as `BodyShapeI`, `Saltwater`, `DemersPelag`, `DepthRangeDeep`, `Vulnerability`, `Length`) are often called *measurement* or *characteristic* variables: variables that describe properties of each observational unit. For example, `BodyShapeI` and `Length` describe the body shape and typical length (in cm) of each fish species. 
+We can also distinguish between *identification variables* and *measurement variables*. For example, in the output of `glimpse(mammals)` the variable `species` is what we will call an *identification variable*, one that uniquely identifies each observational unit. In this case, the identification variable uniquely identifies each mammalian species. Such variables are mainly used in practice to uniquely identify each row in a data frame. The `species` variable gives the valid scientific name of the mammalian species. The remaining variables (from `body_wt` to `danger`) are often called *measurement* or *characteristic* variables: variables that describe properties of each observational unit. For example, `exposure` characterizes how much exposed each mammalian species is during sleep (1, least exposed; 5, most exposed). 
 
 Furthermore, sometimes a single variable might not be enough to uniquely identify each observational unit: combinations of variables might be needed (e.g., your first and last name on a class roster). While it is not an absolute rule, for organizational purposes it is considered good practice to have your identification variables in the leftmost columns of your data frame.
 
@@ -434,7 +446,7 @@ Furthermore, sometimes a single variable might not be enough to uniquely identif
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Can you guess what properties of each fish species are described in the variables `Saltwater`, `DemersPelag`, `DepthRangeDeep`, and `Vulnerability` of the `all_fishdata` data frame? 
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Can you guess what properties of each mammalian species are described in the variables `body_wt`, `non_dreaming`, and `danger` of the `mammals` data frame? 
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -444,14 +456,14 @@ Furthermore, sometimes a single variable might not be enough to uniquely identif
 
 ### Help files
 
-Another nice feature of R are help files, which provide documentation for various functions and datasets. You can bring up help files by adding a `?` \index{operators!?} before the name of a function or data frame and then run this in the console. You will then be presented with a page showing the corresponding documentation if it exists.  For example, let's look at the help file for the `fishbase` data frame and the `species` function.
+Another nice feature of R are help files, which provide documentation for various functions and datasets. You can bring up help files by adding a `?` \index{operators!?} before the name of a function or data frame and then run this in the console. You will then be presented with a page showing the corresponding documentation if it exists.  For example, let's look at the help file for the `mammals` data set
 
 ```{r eval=FALSE}
-?fishbase
-?species
+?mammals
 ```
 
-Each help file should pop up in the Help pane of RStudio. If you have questions about a function or data frame included in an R package, you should get in the habit of consulting the help file right away. While these help files are a good starting point, you may often find it necessary to look online for additional assistance. 
+Each help file should pop up in the Help pane of RStudio. If you have questions about a function or data frame included in an R package, you should get in the habit of consulting the help file right away. However, while these help files are a good starting point, you may often find it necessary to look online for additional assistance. 
+
 
 ```{block lc3-3d, type="learncheck", purl=FALSE}
 \vspace{-0.15in}
@@ -459,15 +471,68 @@ Each help file should pop up in the Help pane of RStudio. If you have questions 
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Look at the help file for the `species` function. Revise your earlier guesses about what the variables `Saltwater`, `DemersPelag`, `DepthRangeDeep`, and `Vulnerability` each describe.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Look at the help file for the `mammals` data frame. Revise your earlier guesses about what the describe.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
 \vspace{-0.25in}
 ```
+-->
 
 
 
+## Importing data {#csv}
+
+Instead of using a data frame built into an R package as we did above, more often you will use your own data saved on your computer or you will access data from an online source. Next we'll show you how to import spreadsheet data from an external source into R. 
+
+Spreadsheet data is often saved in one of the three common formats: *comma separated values* `.csv` \index{CSV file}, Excel `.xlsx` spreadsheet, or [Google Sheets](https://www.google.com/sheets/about/).
+
+A *comma separated values* `.csv` \index{CSV file} file is a bare-bones spreadsheet where:
+
+* Each line in the file corresponds to one row of data/one observation.
+* Values for each line are separated with commas. In other words, the values of different variables are separated by commas in each row.
+* The first line is often, but not always, a *header* row indicating the names of the columns/variables.
+
+An Excel `.xlsx` spreadsheet file is based on Microsoft's proprietary Excel software. As opposed to bare-bones `.csv` files, `.xlsx` Excel files contain a lot of meta-data\index{meta-data} (data about data). Recall we saw a previous example of meta-data in Section \@ref(groupby) when adding "group structure" meta-data to a data frame by using the `group_by()` verb. Some examples of Excel spreadsheet meta-data include the use of bold and italic fonts, colored cells, different column widths, and formula macros.
+
+A [Google Sheets](https://www.google.com/sheets/about/) file is a "cloud" or online-based way to work with a spreadsheet. Google Sheets allows you to download your data in both comma separated values `.csv` and Excel `.xlsx` formats. One way to import Google Sheets data in R is to go to the Google Sheets menu bar -> File -> Download as -> Select "Microsoft Excel" or "Comma-separated values" and then load that data into R. A more advanced way to import Google Sheets data in R is by using the [`googlesheets`](https://cran.r-project.org/web/packages/googlesheets/vignettes/basic-usage.html) package, a method we leave to a more advanced data science book.
+
+We'll cover two methods for importing `.csv` and `.xlsx` spreadsheet data in R: one using the console and the other using RStudio's graphical user interface, abbreviated as "GUI."
+
+### Using the console
+
+First, let's import a Comma Separated Values `.csv` file that exists on the internet. The `.csv` file `chap12e2BlackbirdTestosterone.csv` compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in  Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175.	Let's use the `read_csv()` function from the `readr` \index{R packages!readr!read\_csv()} [@R-readr] package to read the dataset from the *Analysis of Biological Data* textbook website, import it into R, and save it in a data frame called `blackbird`.
+
+```{r message=FALSE, eval=FALSE}
+blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+```
+
+```{r message=FALSE, echo=FALSE, purl=FALSE}
+blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+blackbird
+```
+
+Note that the `read_csv()` function included in the `readr` package is different than the `read.csv()` function that comes installed with R. While the difference in the names might seem trivial (an `_` instead of a `.`), the `read_csv()` function is, in our opinion, easier to use since it can more easily read data off the web and generally imports data at a much faster speed. Furthermore, the `read_csv()` function included in the `readr` saves data frames as `tibbles` by default. 
+
+
+### Using RStudio's interface
+
+Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by going to <a href="https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv</a>, then
+
+1. Go to the Files pane of RStudio.
+2. Navigate to the directory (i.e., folder on your computer) where the downloaded `chap12e2BlackbirdTestosterone.csv` file is saved. For example, this might be in your Downloads folder.
+3. Click on `chap12e2BlackbirdTestosterone.csv`.
+4. Click "Import Dataset..." 
+
+At this point, you should see a screen pop-up like in Figure \@ref(fig:read-excel). After clicking on the "Import" \index{RStudio!import data} button on the bottom right of Figure \@ref(fig:read-excel), RStudio will save this spreadsheet's data in a data frame called `chap12e2BlackbirdTestosterone` and display its contents in the spreadsheet viewer. 
+
+```{r read-excel, echo=FALSE, fig.cap="Importing an Excel file to R.", purl=FALSE}
+include_graphics("images/rstudio_screenshots/read_excel.png")
+```
+
+Furthermore, note the "Code Preview" block in the bottom right of Figure \@ref(fig:read-excel). You can copy and paste this code to reload your data again later programmatically, instead of repeating this manual point-and-click process. Let's see how.
+
+Copy the text in the "Code Preview" block and then create an "R Script" file by selecting RStudio's "File" menu, "New File" and then "R Script". Paste your copied text into this new file and then save it as "Chapter1_script". Later, we'll show you how to use R scripts to save and run a sequence of commands. 
 
 
 ## Conclusion
@@ -495,7 +560,7 @@ include_graphics("images/copyright/getting-used-to-R.png")
 
 ### What's to come?
 
-We're now going to start the "Data Science with `tidyverse`" portion of this book in Chapter \@ref(viz) as shown in Figure \@ref(fig:moderndive-flowchart) with what we feel is the most important tool in a data scientist's toolbox: data visualization. We'll continue to explore the data included in the `all_fishdata` dataset using the `ggplot2` package for data visualization. You'll see that data visualization is a powerful tool to add to your toolbox for data exploration that provides additional insight to what the `View()` and `glimpse()` functions can provide. 
+We're now going to start the "Data Science with `tidyverse`" portion of this book in Chapter \@ref(viz) as shown in Figure \@ref(fig:moderndive-flowchart) with what we feel is the most important tool in a data scientist's toolbox: data visualization. We'll continue to explore the data included in the `mammals` dataset using the `ggplot2` package for data visualization. You'll see that data visualization is a powerful tool to add to your toolbox for data exploration that provides additional insight to what the `View()` and `glimpse()` functions can provide. 
 
 (ref:flowchart2) *ModernDive for Life Scientists* flowchart - on to Part I!
 

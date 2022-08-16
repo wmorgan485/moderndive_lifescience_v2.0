@@ -1,5 +1,5 @@
 ## ----message=FALSE------------------------------------------------------------
-library(rfishbase)
+library(openintro)
 library(ggplot2)
 library(dplyr)
 
@@ -16,42 +16,33 @@ library(dplyr)
 
 
 
-## -----------------------------------------------------------------------------
-brackish_fish <- all_fishdata %>% 
-  filter(Brack == -1)
-
-
-
-
-
-
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) +
+## ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) +
 ##   geom_point()
 
 
 
 
 ## ----nolayers, fig.cap="A plot with no layers.", fig.height=2.5---------------
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight))
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) 
 
 
 
 
 
 
-## ----alpha, fig.cap="Arrival vs. departure delays scatterplot with alpha = 0.2.", fig.height=4.9----
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
+## ----alpha, fig.cap="Brain weight vs. life span scatterplot with alpha = 0.2.", fig.height=4.9----
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
   geom_point(alpha = 0.2)
 
 
 
 
-## ----jitter, fig.cap="Arrival versus departure delays jittered scatterplot.", fig.height=4.7----
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
-  geom_jitter(width = 30, height = 30)
+## ----jitter, fig.cap="Brain weight vs. life span jittered scatterplot.", fig.height=4.7----
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
+  geom_jitter(width = 30, height = 1)
 
 
 
@@ -59,8 +50,7 @@ ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) +
 
 
 ## -----------------------------------------------------------------------------
-chick1_weight <- ChickWeight %>% 
-  filter(Chick == 1 & Diet == 1)
+chick1_weight <- filter(ChickWeight, Chick == 1)
 
 
 
@@ -78,8 +68,7 @@ ggplot(data = chick1_weight,
 
 
 ## -----------------------------------------------------------------------------
-Diet1_ChickWeight <- ChickWeight %>% 
-  filter(Diet == 1)
+Diet1_ChickWeight <- filter(ChickWeight, Diet == 1)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -105,8 +94,7 @@ Diet1_ChickWeight <- ChickWeight %>%
 
 
 ## -----------------------------------------------------------------------------
-chick_weight_d21 <- ChickWeight %>% 
-  filter(Time == 21)
+chick_weight_d21 <- filter(ChickWeight, Time == 21)
 
 
 ## ----weight-on-line, echo=FALSE, fig.height=0.8, fig.cap="Plot of body weights for Chick 1"----
@@ -197,15 +185,8 @@ ggplot(data = fruits_counted, mapping = aes(x = fruit, y = number)) +
 
 
 ## ----habitatsbar, fig.cap="(ref:geombar)", fig.height=2.8---------------------
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
-  geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-
-
-
-
-
-
+ggplot(data = mammals, mapping = aes(x = predation)) +
+  geom_bar() 
 
 
 
@@ -215,51 +196,52 @@ ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
+## ggplot(data = mammals, mapping = aes(x = predation)) +
 ##   geom_bar()
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-##   geom_bar() +
-##   theme(axis.text.x=element_text(angle=30,hjust=1))
+## ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+##   geom_bar()
 
 
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, color = BodyShapeI)) +
-##   geom_bar() +
-##   theme(axis.text.x=element_text(angle=30,hjust=1))
+## ggplot(data = mammals, mapping = aes(x = predation, color = factor(exposure))) +
+##   geom_bar()
 
 
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag), fill = BodyShapeI) +
+## ggplot(data = mammals, mapping = aes(x = predation), fill = factor(exposure)) +
 ##   geom_bar()
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-##   geom_bar(position = "dodge") +
-##   theme(axis.text.x=element_text(angle=30,hjust=1))
+## ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+##   geom_bar(position = "dodge")
 
 
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-##   geom_bar(position = position_dodge(preserve = "single"))
-
-
-
-
-## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
+## ggplot(data = mammals, mapping = aes(x = predation)) +
 ##   geom_bar() +
-##   facet_wrap(~ BodyShapeI, ncol = 1) +
-##   theme(axis.text.x=element_text(angle=30,hjust=1))
+##   facet_wrap(~ exposure, ncol = 1)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -272,11 +254,11 @@ ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
 
 ## ---- eval=FALSE--------------------------------------------------------------
 ## # Segment 1:
-## ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
+## ggplot(data = mammals, mapping = aes(x = predation)) +
 ##   geom_bar()
 ## 
 ## # Segment 2:
-## ggplot(all_fishdata, aes(x = DemersPelag)) +
+## ggplot(mammals, aes(x = predation)) +
 ##   geom_bar()
 
 
@@ -287,17 +269,5 @@ ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## brackish_fish <- all_fishdata %>%
-##   filter(Brack == -1)
-## 
-## ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) +
-##   geom_point()
-
-
-## ---- eval=FALSE--------------------------------------------------------------
-## chick1_weight <- ChickWeight %>%
-##   filter(Chick == 1 & Diet == 1)
-## 
-## ggplot(data = chick1_weight, mapping = aes(x = Time, y = weight)) +
-##   geom_line()
+## chick1_weight <- filter(ChickWeight, Chick == 1)
 

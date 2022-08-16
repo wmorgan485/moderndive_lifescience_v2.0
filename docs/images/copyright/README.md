@@ -4,3 +4,9 @@ Permission to use these copyrighted images was obtained from the authors:
 * `guess_the_correlation.png`: Omar Wagih [source](http://guessthecorrelation.com/)
 * `there_is_only_one_test.png`: Allen Downey [source](http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html)
 * `getting-used-to-R.png`: Chester Ismay and Patrick C. Kennedy [source](https://rbasics.netlify.com/)
+
+
+These images are under the Creative Commons Attribution 4.0 International license:
+
+*`gr4_lrg.jpg` 
+[source](https://www.jbc.org/article/S0021-9258(20)32792-7/fulltext#articleInformation).

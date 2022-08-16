@@ -45,12 +45,30 @@ At their most basic, graphics/plots/charts (we use these terms interchangeably i
 As we will see, plots \index{plots} also help us to identify patterns and outliers in our data.  We'll see that a common extension of these ideas is to compare the *distribution* \index{distribution} of one numerical variable, such as what are the center and spread of the values, as we go across the levels of a different categorical variable.
 
 
+```{block loa2, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Objectives_**
+
+*At the end of this chapter, you should be able to…*  
+• Explore and present data using plots (a.k.a., charts and graphics) in R.  
+• Use the grammar of graphics to create basic plots by specifying the data, its mapping and the geometric object(s).  
+• Produce more complex plots by adding layers to modify labels, add facets, etc.  
+• Adjust plot features such as colors and bin number by modifying function arguments (inputs).  
+• Select and create the most appropriate graph to visualize your data.  
+• Recognize and correct difficulties in visualizing data due to overplotting.  
+• Interpret data presented in histograms and boxplots.  
+• Explain the problems with using bar charts to present quantitative data and pie charts to present categorical data.  
+\vspace{-0.1in}
+```
+
+
 ### Needed packages {-}
 
 Let's load all the packages needed for this chapter (this assumes you've already installed them). Read Section \@ref(packages) for information on how to install and load R packages.
 
 ```{r message=FALSE}
-library(rfishbase)
+library(openintro)
 library(ggplot2)
 library(dplyr)
 ```
@@ -220,46 +238,22 @@ We'll also present some variations of these plots, but with this basic repertoir
 
 ## 5NG#1: Scatterplots {#scatterplots}
 
-The simplest of the 5NG are *scatterplots*, \index{scatterplots} also called *bivariate plots*. They allow you to visualize the *relationship* between two numerical variables. While you may already be familiar with scatterplots, let's view them through the lens of the grammar of graphics we presented in Section \@ref(grammarofgraphics). Specifically, we will visualize the relationship between the following two numerical variables in the `all_fishdata` data frame we created in Chapter \@ref(fishbasedataframe):
+The simplest of the 5NG are *scatterplots*, \index{scatterplots} also called *bivariate plots*. They allow you to visualize the *relationship* between two numerical variables. While you may already be familiar with scatterplots, let's view them through the lens of the grammar of graphics we presented in Section \@ref(grammarofgraphics). Specifically, we will visualize the relationship between the following two numerical variables in the `mammals` data frame we created in Chapter \@ref(mammalsdb):
 
-1. `Length`: typical length (in cm) of a fish species on the horizontal "x" axis and
-1. `Weight`: typical weight (in g) on the vertical "y" axis
+1. `brain_wt`: brain weight (in kg) on the horizontal "x" axis and
+1. `life_span`: total number of hours of sleep on the vertical "y" axis  
+for each mammalian species.
 
-for brackish fish species. (If the `all_fishdata` set is not in your Environment, rerun the `all_fishdata <- species()` command to reproduce it.)
 
 ```{r purl=FALSE, echo=FALSE}
 # This redundant code is used for dynamic non-static in-line text output purposes
-species_rows <- all_fishdata %>%
+species_rows <- mammals %>%
   nrow() %>%
   comma()
-brack_species_rows <- all_fishdata %>%
-  filter(Brack == -1) %>%
+brack_species_rows <- mammals %>%
   nrow() %>%
   comma()
 ```
-
-This requires paring down the data from all `r species_rows` fish species to only the `r brack_species_rows` *brackish* species that live in brackish (slightly salty) environments at any stage of development. We do this so our scatterplot will involve a manageable `r brack_species_rows` points, and not an overwhelmingly large number. To achieve this, we'll take the `all_fishdata` data frame, filter the rows so that only the `r brack_species_rows` rows corresponding to brackish fish species are kept, and save this in a new data frame called `brackish_fish` using the `<-` *assignment* operator: \index{operators!assignment (<-)} 
-
-```{r}
-brackish_fish <- all_fishdata %>% 
-  filter(Brack == -1)
-```
-
-For now, we suggest you don't worry if you don't fully understand this code. We'll see later in Chapter \@ref(wrangling) on data wrangling that this code uses the `dplyr` package for data wrangling to achieve our goal: it takes the `all_fishdata` data frame and `filter`s it to only return the rows where `Brack` is equal to `-1` (paradoxically indicating that this is true, as opposed to 0/false). Recall from Section \@ref(code) that testing for equality is specified with \index{using == instead of =} `==` and not `=`. Convince yourself that this code achieves what it is supposed to by exploring the resulting data frame by running `View(brackish_fish)`. You'll see that it has `r brack_species_rows` rows, consisting of only `r brack_species_rows` brackish fish species. 
-
-```{block lc-brackish_fish, type="learncheck", purl=FALSE}
-\vspace{-0.15in}
-**_Learning check_**
-\vspace{-0.1in}
-```
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Take a look at both the `all_fishdata` and `brackish_fish` data frames by running `View(all_fishdata)` and `View(brackish_fish)`. Does the `brackish_fish` data frame seem to contain the expected rows?
-
-```{block, type="learncheck", purl=FALSE}
-\vspace{-0.25in}
-\vspace{-0.25in}
-```
-
 
 ### Scatterplots via `geom_point` {#geompoint}
 
@@ -272,32 +266,32 @@ if (is_latex_output()) {
 ```
 
 ```{r, eval=FALSE}
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
   geom_point()
 ```
 
 Within the `ggplot()` \index{ggplot2!ggplot()} function, we specify two of the components of the grammar of graphics as arguments (i.e., inputs):
 
-1. The `data` as the `brackish_fish` data frame via `data = brackish_fish`.
-1. The `aes`thetic \index{ggplot2!mapping} `mapping` by setting `mapping = aes(x = Length, y = Weight)`. Specifically, the variable `Length` maps to the `x` position aesthetic, while the variable `Weight` maps to the `y` position.
+1. The `data` as the `mammals` data frame via `data = mammals`.
+1. The `aes`thetic \index{ggplot2!mapping} `mapping` by setting `mapping = aes(x = brain_wt, y = life_span)`. Specifically, the variable `brain_wt` maps to the `x` position aesthetic, while the variable `life_span` maps to the `y` position.
         
 We then add a layer to the `ggplot()` function call using the `+` sign. The added layer in question specifies the third component of the grammar: the `geom`etric object. In this case, the geometric object is set to be points by specifying `geom_point()`. After running these two lines of code in your console, you'll notice two outputs: a warning message and the graphic shown in Figure \@ref(fig:noalpha).
 
-```{r noalpha, fig.cap="Length versus weight for brackish species in all_fishdata.", fig.height=1.8, warning=TRUE, echo=FALSE, purl=FALSE}
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) +
+```{r noalpha, fig.cap="Brain weight vs. life span in mammals data frame.", fig.height=1.8, warning=TRUE, echo=FALSE, purl=FALSE}
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
   geom_point()
 ```
 
-Let's first unpack the graphic in Figure \@ref(fig:noalpha). Observe that a *positive relationship* exists overall between `Length` and `Weight`: as fish lengths increase, fish weights tend to also increase. Observe also the large number of points clustered near (0, 0).
+Let's first unpack the graphic in Figure \@ref(fig:noalpha). Observe that a *positive relationship* exists overall between `brain_wt` and `life_span`: as `brain_wt` increases, the `life_span` tends to also increase. Observe also the large number of points clustered near (0, 0), which we'll discuss further in Subsection \@ref(overplotting).
 
-Let's turn our attention to the warning message. R is alerting us to the fact that many rows were ignored due to missing information. For these rows, either the value for `Length` or `Weight` or both were missing (recorded in R as `NA`), and thus these rows were ignored in our plot.
+Now, let's turn our attention to the warning message. R is alerting us to the fact that some rows were ignored due to missing information. For these rows, either the value for `brain_wt` or `life_span` or both were missing, and thus these rows were ignored in our plot. 
 
 Before we continue, let's make a few more observations about this code that created the scatterplot. Note that the `+` sign comes at the end of lines, and not at the beginning. You'll get an error in R if you put it at the beginning of a line. \index{ggplot2!+} When adding layers to a plot, you are encouraged to start a new line after the `+` (by pressing the Return/Enter button on your keyboard) so that the code for each layer is on a new line. As we add more and more layers to plots, you'll see this will greatly improve the legibility of your code.
 
 To stress the importance of adding the layer specifying the `geom`etric object, consider Figure \@ref(fig:nolayers) where no layers are added. Because the `geom`etric object was not specified, we have a blank plot which is not very useful!
 
 ```{r nolayers, fig.cap="A plot with no layers.", fig.height=2.5}
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight))
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) 
 ```
 
 ```{block lc-scatterplots, type="learncheck", purl=FALSE}
@@ -306,13 +300,13 @@ ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight))
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some practical reasons why `Length` and `Weight` have a positive relationship?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  What are some practical reasons why `brain_wt` and `life_span` have a positive relationship?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  For which of these two variables, `Length` and `Weight`, is the data more frequently missing?  How did you determine this?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  For which of these two variables, `brain_wt` and `life_span`, is the data more frequently missing?  How did you determine this?
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are some other features of the plot that stand out to you?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Create a new scatterplot using different quantitative variables in the `brackish_fish` data frame by modifying the example given.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Create a new scatterplot using different quantitative variables in the `mammals` data frame by modifying the example given.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -333,8 +327,8 @@ The first way of addressing overplotting is to change the transparency/opacity o
 
 Note how the following code is identical to the code in Section \@ref(scatterplots) that created the scatterplot with overplotting, but with `alpha = 0.2` added to the `geom_point()` function:
 
-```{r alpha, fig.cap="Arrival vs. departure delays scatterplot with alpha = 0.2.", fig.height=4.9}
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
+```{r alpha, fig.cap="Brain weight vs. life span scatterplot with alpha = 0.2.", fig.height=4.9}
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
   geom_point(alpha = 0.2)
 ```
 
@@ -366,12 +360,12 @@ Keep in mind, however, that jittering is strictly a visualization tool; even aft
 
 To create a jittered scatterplot, instead of using `geom_point()`, we use `geom_jitter()`. Observe how the following code is very similar to the code that created the scatterplot with overplotting in Subsection \@ref(geompoint), but with `geom_point()` \index{ggplot2!geom\_point()} replaced with `geom_jitter()`. 
 
-```{r jitter, fig.cap="Arrival versus departure delays jittered scatterplot.", fig.height=4.7}
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
-  geom_jitter(width = 30, height = 30)
+```{r jitter, fig.cap="Brain weight vs. life span jittered scatterplot.", fig.height=4.7}
+ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) + 
+  geom_jitter(width = 30, height = 1)
 ```
 
-In order to specify how much jitter to add, we adjusted the `width` and `height` arguments to `geom_jitter()`.  This corresponds to how hard you'd like to shake the plot in horizontal x-axis units and vertical y-axis units, respectively. In this case, both axes are in minutes. How much jitter should we add using the `width` and `height` arguments? On the one hand, it is important to add just enough jitter to break any overlap in points, but on the other hand, not so much that we completely alter the original pattern in points.
+In order to specify how much jitter to add, we adjusted the `width` and `height` arguments to `geom_jitter()`.  This corresponds to how hard you'd like to shake the plot in horizontal x-axis units and vertical y-axis units, respectively. How much jitter should we add using the `width` and `height` arguments? On the one hand, it is important to add just enough jitter to break any overlap in points, but on the other hand, not so much that we completely alter the original pattern in points.
 
 As can be seen in the resulting Figure \@ref(fig:jitter), in this case jittering doesn't really provide much new insight. In this particular case, it can be argued that changing the transparency of the points by setting `alpha` proved more effective.  When would it be better to use a jittered scatterplot? When would it be better to alter the points' transparency? There is no single right answer that applies to all situations. You need to make a subjective choice and own that choice. At the very least when confronted with overplotting, however, we suggest you make both types of plots and see which one better emphasizes the point you are trying to make. 
 
@@ -383,7 +377,7 @@ As can be seen in the resulting Figure \@ref(fig:jitter), in this case jittering
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Why is setting the `alpha` argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** After viewing Figure \@ref(fig:alpha), give an approximate range of lengths and weights of fish species that occur most frequently. How has that region changed compared to when you observed the same plot without `alpha = 0.2` set in Figure \@ref(fig:noalpha)?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** After viewing Figure \@ref(fig:alpha), give an approximate range of brain weights and life spans that occur most frequently in mammalian species. How has that region changed compared to when you observed the same plot without `alpha = 0.2` set in Figure \@ref(fig:noalpha)?
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -409,13 +403,12 @@ The most common examples of linegraphs have some notion of time on the x-axis: h
 
 Let's explore the `ChickWeight` data frame by running `View(ChickWeight)` and `glimpse(ChickWeight)`. Furthermore let's read the associated help file by running `?ChickWeight` to bring up the help file. 
 
-Observe that there is a variable called `weight` which records the weight (in grams) for the first 21 days of 50 new born chicks fed one of four different diets (1-4). However, for simplicity let's focus on weights of Chick 1 on Diet 1. 
+Observe that there is a variable called `weight` which records the weight (in grams) for the first 21 days of 50 new born chicks fed one of four different diets (1-4). However, for simplicity let's focus on weights of Chick 1. 
 
-Recall in Section \@ref(scatterplots), we used the `filter()` function to only choose the subset of rows of `all_fishdata` corresponding to brackish fish. We similarly use `filter()` \index{dplyr!filter()} here, but by using the `&` operator we will choose the subset of rows of `ChickWeight` using two criteria: where the `Chick` is `1` and the `Diet` is `1`. (Since Chick 1 was only fed Diet 1, this is redundant, but it illustrates how to filter on multiple criteria.)
+To focus on Chick 1, we will use `dplyr's` `filter()` \index{dplyr!filter()} function to choose the subset of rows in `ChickWeight` corresponding to Chick 1. Recall from Section \@ref(code) that testing for equality is specified with `==` and not `=`. If you don't fully understand the code, don't worry for now; we'll cover the `filter` function in more depth in Chapter \@ref(wrangling) on data wrangling.
 
 ```{r}
-chick1_weight <- ChickWeight %>% 
-  filter(Chick == 1 & Diet == 1)
+chick1_weight <- filter(ChickWeight, Chick == 1)
 ```
 
 ```{block lc-early_january_weather, type="learncheck", purl=FALSE}
@@ -426,16 +419,16 @@ chick1_weight <- ChickWeight %>%
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look at both the `ChickWeight` and `chick1_weight` data frames by running `View(ChickWeight)` and `View(chick1_weight)`. In what respect do these data frames differ?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** `Glimpse()` the `ChickWeight` data frame again. Notice that two of the variables use a data type that you have seen previously. What is the data type? What abbreviations are used for the new data types?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** `Glimpse()` the `ChickWeight` data frame again. Notice that two of the variables use a data type that you have seen previously. What are the data types? 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Two of the `ChickWeight` variables use data types that you have not seen previously. What abbreviations are used for the new data types?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** One of the `ChickWeight` variables uses a data type that you have not seen previously. What abbreviation is used for the new data type?
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
 \vspace{-0.25in}
 ```
 
-These two new data types are also used in R for categorical variables, when only a subset of options or "levels" are available. The `<ord>` or "ordered factor" data type is used when the different levels of the categorical variable are in a specifc order, such as Small, Medium, and Large, etc.. The <fct> or (unordered) "factor" is used when the levels are not in a specific order, such as Red, Blue, Green, etc.
+These `ord` and `fct` data types are used in R for categorical variables, when only a subset of options or "levels" are available. The `<ord>` or "ordered factor" data type is used when the different levels of the categorical variable are in a specific order, such as Small, Medium, and Large, etc.. The `<fct>` or (unordered) "factor" is used when the levels are not in a specific order, such as Red, Blue, Green, etc.
 
 ### Linegraphs via `geom_line` {#geomline}
 
@@ -447,7 +440,7 @@ ggplot(data = chick1_weight,
   geom_line()
 ```
 
-Much as with the `ggplot()` code that created the scatterplot of length and weight for brackish fish in Figure \@ref(fig:noalpha), let's break down this code piece-by-piece in terms of the grammar of graphics:
+Much as with the `ggplot()` code that created the scatterplot of brain weight and life span for mammals in Figure \@ref(fig:noalpha), let's break down this code piece-by-piece in terms of the grammar of graphics:
 
 Within the `ggplot()` function call, we specify two of the components of the grammar of graphics as arguments:
 
@@ -465,8 +458,6 @@ We add a layer to the `ggplot()` function call using the `+` sign. The layer in 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Why should linegraphs be avoided when there is not a clear ordering of the x-axis?
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why are linegraphs frequently used when time is the explanatory variable on the x-axis?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Plot a time series of weight for a different Chick.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -490,8 +481,7 @@ For example, suppose we were interested in comparing the timeline of weight gain
 First we create a new data frame by filtering ChickWeight for rows with Chicks on Diet 1:
 
 ```{r}
-Diet1_ChickWeight <- ChickWeight %>% 
-  filter(Diet == 1)
+Diet1_ChickWeight <- filter(ChickWeight, Diet == 1)
 ```
 
 Now we make a linegraph for each chick on Diet 1 by adding `facet_wrap(~ Chick)` layer. Note the `~` is a "tilde" and can generally be found on the key next to the "1" key on US keyboards. The tilde is required and you'll receive an error message if you don't include it here. 
@@ -558,11 +548,11 @@ Observe in both Figures \@ref(fig:facetlinegraph) and \@ref(fig:facetlinegraph2)
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What other things do you notice about this faceted plot?
 
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Does the rate of `weight` gain over time in the `chick_weight_d21` dataset have a lot of variability?  Why do you say that?
+
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How does a faceted plot help us see relationships between two variables?
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** For which types of datasets would faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Does the rate of `weight` gain over time in the `chick_weight_d21` dataset have a lot of variability?  Why do you say that?
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -586,8 +576,7 @@ Let's consider the `weight` variable in the `ChickWeight` data frame once again,
 First, we filter the `ChickWeight` data frame for the desired rows, each chick's weight at Day 21:
 
 ```{r}
-chick_weight_d21 <- ChickWeight %>% 
-  filter(Time == 21)
+chick_weight_d21 <- filter(ChickWeight, Time == 21)
 ```
 
 One way to visualize the *distribution* \index{distribution} of this single variable `weight` is to plot the weights on a horizontal line as we do in Figure \@ref(fig:weight-on-line):
@@ -603,7 +592,7 @@ ggplot(data = chick_weight_d21, mapping = aes(x = weight, y = factor("A"))) +
 hist_title <- "Histogram of Chick Weights on Day 21"
 ```
 
-This gives us a general idea of how the values of `weight` distribute: observe that weights vary from around `r round(min(chick_weight_d21$weight, na.rm = TRUE), 0)` grams up to `r round(max(chick_weight_d21$weight, na.rm = TRUE), 0)` grams.  Furthermore, there appear to be more recorded weights between 200 g and 300 g than outside this range. However, because of the high degree of overplotting in the points, it's hard to get a sense of exactly how many values are between say 150 g and 200 g.
+This gives us a general idea of how the values of `weight` distribute: observe that weights vary from around `r round(min(chick_weight_d21$weight, na.rm = TRUE), -1)` grams up to `r round(max(chick_weight_d21$weight, na.rm = TRUE), -1)` grams.  Furthermore, there appear to be more recorded weights between 150 g and 250 g than outside this range. However, because of the high degree of overplotting in the points, it's hard to get a sense of exactly how many values are between say 150 g and 200 g.
 
 What is commonly produced instead of Figure \@ref(fig:weight-on-line) is known as a \index{histograms} *histogram*.  A histogram is a plot that visualizes the *distribution* of a numerical value as follows:
 
@@ -699,7 +688,7 @@ hist_1 + hist_2
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What would you guess is the "center" value in this distribution?  Why did you make that choice?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Is this data spread out greatly from the center or is it close?  Why?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Is this data spread out greatly from the center or is it close?  Explain your answer.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -898,29 +887,26 @@ Compare the barplots in Figures \@ref(fig:geombar) and \@ref(fig:geomcol). They 
 * Is *not* pre-counted in your data frame, we use `geom_bar()`.
 * Is pre-counted in your data frame, we use `geom_col()` with the y-position aesthetic mapped to the variable that has the counts.
 
-Let's now go back to the `all_fishdata` data frame from earlier (Subsection \@ref(fishbasedataframe)) and visualize the distribution of the categorical variable `DemersPelag`, which indicates the preferred habitat for each fish species. In other words, let's visualize the number of fish species preferring each of the following environments: benthopelagic, pelagic,  demersal, pelagic-neritic, reef-associated,  bathypelagic, bathydemersal, and pelagic-oceanic (see the [fishbase manual](https://www.fishbase.se/manual/english/fishbasethe_species_table.htm) for a description of each habitat).   Recall from Subsection \@ref(exploredataframes) when you first explored the `all_fishdata` data frame, you saw that each row corresponds to a fish species In other words, the `all_fishdata` data frame is more like the `fruits` data frame than the `fruits_counted` data frame because the fish species have not been pre-counted by `DemersPelag`. Thus we should use `geom_bar()` instead of `geom_col()` to create a barplot. Much like a `geom_histogram()`, there is only one variable in the `aes()` aesthetic mapping: the variable `DemersPelag` gets mapped to the `x`-position. As a difference though, histograms have bars that touch whereas bar graphs have white space between the bars going from left to right.
+Let's now go back to the `mammals` data frame from earlier (Subsection \@ref(mammalsdb)) and visualize the distribution of the categorical variable `predation`, which indicates the likelihood of the mammalian species to be preyed upon (1, lowest; 5, highest). In other words, let's visualize the number of mammalian species in each of the 5 `predation` categories.   Recall from Subsection \@ref(exploredataframes) when you first explored the `mammals` data frame, you saw that each row corresponds to a species. In other words, the `mammals` data frame is more like the `fruits` data frame than the `fruits_counted` data frame because the species have not been pre-counted by `predation`. Thus we should use `geom_bar()` instead of `geom_col()` to create a barplot. Much like a `geom_histogram()`, there is only one variable in the `aes()` aesthetic mapping: the variable `predation` gets mapped to the `x`-position. 
 
-(ref:geombar) Number of fish species preferring each habitat using geom_bar().
+(ref:geombar) Number of species in each predation category using geom_bar().
 
 ```{r habitatsbar, fig.cap="(ref:geombar)", fig.height=2.8}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
-  geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
+ggplot(data = mammals, mapping = aes(x = predation)) +
+  geom_bar() 
 ```
 
-Note that the last line of R code rotates and shifts the labels so that they don't overlap.
+Observe in Figure \@ref(fig:habitatsbar) that `predation` category 4 has the fewest species. Also notice that bar graphs have white space between the bars whereas histograms have bars that touch.
 
-Observe in Figure \@ref(fig:habitatsbar) that demersal, benthopelagic, and reef-associated environments were the preferred habitat for the most fish species. 
-
-Alternatively, say you had a data frame where the number of fish species preferring each habitat (the `DemersPelag` variable) was pre-counted as in Table \@ref(tab:all-fishdata-counted).
+Alternatively, you may have a data frame where the number of mammalian species in each `predation` category was pre-counted as in Table \@ref(tab:all-fishdata-counted).
 
 ```{r all-fishdata-counted, message=FALSE, echo=FALSE, purl=FALSE}
-fish_counted <- all_fishdata %>%
-  group_by(DemersPelag) %>%
+mammals_counted <- mammals %>%
+  group_by(predation) %>%
   summarize(number = n())
-kable(fish_counted,
+kable(mammals_counted,
   digits = 3,
-  caption = "Number of fish species pre-counted by preferred habitat.",
+  caption = "Number of mammalian species pre-counted by predation category.",
   booktabs = TRUE,
   longtable = TRUE,
   linesep = ""
@@ -931,7 +917,7 @@ kable(fish_counted,
   )
 ```
 
-In order to create a barplot visualizing the distribution of the categorical variable `DemersPelag` in this case, we would now use `geom_col()` instead of `geom_bar()`, with an additional `y = number` in the aesthetic mapping on top of the `x = DemersPelag`. The resulting barplot would be identical to Figure \@ref(fig:habitatsbar).
+In order to create a barplot visualizing the distribution of the categorical variable `predation` in this case, we would now use `geom_col()` instead of `geom_bar()`, with an additional `y = number` in the aesthetic mapping on top of the `x = predation`. The resulting barplot would be identical to Figure \@ref(fig:habitatsbar).
 
 ```{block lc-barplot, type="learncheck", purl=FALSE}
 \vspace{-0.15in}
@@ -943,9 +929,7 @@ In order to create a barplot visualizing the distribution of the categorical var
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the difference between histograms and barplots?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How many fish species prefer bathypelagic environments?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What was the 4th most preferred habitat for fish species? How could we rearrange the table to get this answer more quickly?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What was the 2nd most common `predation` category for the mammalian species? How could we rearrange the table to get this answer more quickly?
 
 ```{block, type='learncheck', purl=FALSE}
 \vspace{-0.25in}
@@ -953,18 +937,180 @@ In order to create a barplot visualizing the distribution of the categorical var
 ```
 
 
-### Must avoid pie charts!
+
+### Two categorical variables {#two-categ-barplot}
+
+Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the *joint* distribution of two categorical variables at the same time.  Let's examine the *joint* distribution of mammalian species by `predation` as well as `exposure`, (an index of how exposed the mammal is during sleep). In other words, the number of species for each combination of `predation` and `exposure`. For example, the number of species with `predation` category 2 and `exposure` category. Recall the `ggplot()` code that created the barplot of `predation` frequency in Figure \@ref(fig:habitatsbar):
+
+```{r, eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation)) + 
+  geom_bar()
+```
+
+We can now map the additional variable `exposure` by adding `fill = factor(exposure)` inside the `aes()` aesthetic mapping. Note that we use the `factor()` function here because the `fill` argument is expecting a factor, so we *coerced*  `exposure` from `int` to the `fct` data type.
+
+```{r eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+  geom_bar()
+```
+
+```{r all-fishdata-stacked-bar, echo=FALSE, fig.cap="Stacked barplot of mammalian species by predation category and exposure index.", fig.height=2.8, purl=FALSE}
+if (is_html_output()) {
+  ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+    geom_bar() 
+} else {
+  ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+    geom_bar() +
+    scale_fill_grey() 
+}
+```
+
+Figure \@ref(fig:all-fishdata-stacked-bar) is an example of a \index{barplot!stacked} *stacked barplot*.  While simple to make, in certain aspects it is not ideal. For example, it is difficult to compare the heights of the different colors between the bars, corresponding to comparing the number of species with each `exposure` type between the `predation` categories.
+
+Before we continue, let's address some common points of confusion among new R users. First, the `fill` aesthetic corresponds to the color used to fill the bars, while the `color` aesthetic corresponds to the color of the outline of the bars. This is identical to how we added color to our histogram in Subsection \@ref(geomhistogram): we set the outline of the bars to white by setting `color = "white"` and the colors of the bars to blue steel by setting `fill = "steelblue"`. Observe in Figure \@ref(fig:all-fishdata-stacked-bar-color) that mapping `exposure` to `color` and not `fill` yields grey bars with different colored outlines.
+
+```{r eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation, color = factor(exposure))) +
+  geom_bar()
+```
+
+```{r all-fishdata-stacked-bar-color, fig.cap="Stacked barplot with color aesthetic used instead of fill.", fig.height=2.2, echo=FALSE, purl=FALSE}
+if (is_html_output()) {
+ggplot(data = mammals, mapping = aes(x = predation, color = factor(exposure))) +
+    geom_bar() 
+} else {
+ggplot(data = mammals, mapping = aes(x = predation, color = factor(exposure))) +
+    geom_bar() +
+    scale_color_grey() 
+}
+```
+
+Second, note that `fill` is another aesthetic mapping much like `x`-position; thus we were careful to include it within the parentheses of the `aes()` mapping. The following code, where the `fill` aesthetic is specified outside the `aes()` mapping will not produce the desired plot. This is a fairly common error that new `ggplot` users make:
+
+```{r, eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation), fill = factor(exposure)) +
+  geom_bar()
+```
+
+An alternative to stacked barplots are \index{barplot!side-by-side} *side-by-side barplots*, also known as *dodged barplots*, as seen in Figure \@ref(fig:all-fishdata-dodged-bar-color). The code to create a side-by-side barplot is identical to the code to create a stacked barplot, but with a \index{ggplot2!position} `position = "dodge"` argument added to `geom_bar()`. In other words, we are overriding the default barplot type, which is a *stacked* barplot, and specifying it to be a side-by-side barplot instead.
+
+```{r eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+  geom_bar(position = "dodge") 
+```
+
+```{r all-fishdata-dodged-bar-color, fig.cap="Side-by-side barplot comparing number of species by predation and exposure variables.", fig.height=3.5, echo=FALSE, purl=FALSE}
+if (is_html_output()) {
+  ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+    geom_bar(position = "dodge") 
+} else {
+  ggplot(data = mammals, mapping = aes(x = predation, fill = factor(exposure))) +
+    geom_bar(position = "dodge") +
+    scale_fill_grey() 
+}
+```
+
+Another type of graph to visualize two categorical variables at the same time is a \index{barplot!faceted} *faceted barplot*. Recall in Section \@ref(facets) we visualized the distribution of weight gain for the chicks on Diet 1 *split* by the Chick identifier (1-50) using facets. We apply the same principle to our barplot visualizing the frequency of `predation` split by `exposure`: instead of mapping `exposure` to `fill`, we include it as the variable to create small multiples of the plot across the levels of `exposure`.
+
+```{r eval=FALSE}
+ggplot(data = mammals, mapping = aes(x = predation)) +
+  geom_bar() +
+  facet_wrap(~ exposure, ncol = 1) 
+```
+
+```{r facet-bar-vert, fig.cap="Faceted barplot comparing the number of species by the predation and exposure variables.", fig.height=6, echo=FALSE, purl=FALSE}
+shape_facet_ncol <- ggplot(data = mammals, mapping = aes(x = predation)) +
+  geom_bar() +
+  facet_wrap(~ exposure, ncol = 1) 
+
+if (is_latex_output()) {
+  shape_facet_ncol +
+    theme(
+      strip.text = element_text(colour = "black"),
+      strip.background = element_rect(fill = "grey93")
+    )
+} else {
+  shape_facet_ncol
+}
+```
+
+Finally, in Section \@ref(ht-activity), we will visualize the joint frequency of two categorical variables at the same time using a *mosaic* plot.
+
+```{block lc-barplot-stacked, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What kinds of questions are not easily answered by looking at Figure \@ref(fig:all-fishdata-stacked-bar)?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What can you say, if anything, about the relationship between `predation` category and `exposure` index in regards to the number of mammalian species?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why might the side-by-side barplot be preferable to a stacked barplot in this case?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are the disadvantages of using a dodged barplot, in general?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why is the faceted barplot preferred to the side-by-side and stacked barplots in this case?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What information about the different exposure indexes of different  predation categories is more easily seen in the faceted barplot?
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
+
+### Summary
+
+Barplots are a common way of displaying the distribution of a categorical variable, or in other words the frequency with which the different categories (also called *levels*) occur.  They are easy to understand and make it easy to make comparisons across levels.  Furthermore, when trying to visualize the relationship of two categorical variables, you have many options: stacked barplots, side-by-side barplots, and faceted barplots. Depending on what aspect of the relationship you are trying to emphasize, you will need to make a choice between these three types of barplots and own that choice.
+
+
+
+## Plots to avoid!
+
+When we visualize data, the goal is to display the key features as clearly and succinctly as possible. These key features may include the central location of our data (e.g., median), its spread (e.g., IQR), and the sample size of each group. Depending on the data to display (numerical/categorical, one/multiple variables), some plots are more effective at presenting the key features of the data. In this section, we describe two plots that are frequently seen in the scientific literature but are less effective than common alternatives and should therefore be avoided. 
+
+### Barplots with a continuous variable
+
+The first plot to avoid is a bar plot to display the distribution of a *continuous* (numerical) variable. But wait, then why was Section \@ref(geombar) all about how to create bar plots? Recall from the opening paragraph of Section \@ref(geombar) that barplots should be used to visualize the distribution of *categorical* variables, while histograms and boxplots should be used to visualize the distribution of *numerical* variables. Despite this, a recent study [@Riedel2022] found that bar plots are more often used to inappropriately display continuous data than they are used appropriately to display count data. 
+
+So, what is the problem with using barplots to display continuous data? As shown in Figure \@ref(fig:barplot-anatomy), barplots hide important information that can be easily indicated using a scatterplot (dotplot) or boxplot. While the bar graph displays the mean of the data and some indication of its spread, it hides much of the data (zone of invisibility). In contrast, the dotplot succinctly presents the *complete* distribution of the numerical variable *and* indicates the sample size of each group. Furthermore, the bar graph includes a lot of "dead space" (zone of irrelevance) distracting our attention from the difference between means compared to the spread. For these reasons, more and more scientific journals are banning the use of barplots to display continuous data -- and you should too. 
+
+(ref:WEISSGERBER2017) Bar graphs hide important information about continuous data. Source: [@WEISSGERBER201720592], CC BY 4.0.
+
+```{r barplot-anatomy, echo=FALSE, fig.cap="(ref:WEISSGERBER2017)", fig.height=6, echo=FALSE, purl=FALSE}
+include_graphics("images/copyright/gr4_lrg.png")
+```   
+
+
+```{block lc-barplots, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why should barplots be avoided when displaying continuous data?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why do you think people continue to use barplots when displaying continuous data
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
+
+### Pie charts
 
 One of the most common plots used to visualize the distribution of categorical data is the \index{pie charts} pie chart. While they may seem harmless enough, pie charts actually present a problem in that humans are unable to judge angles well. As Naomi Robbins describes in her book, *Creating More Effective Graphs* [@robbins2013], we overestimate angles greater than 90 degrees and we underestimate angles less than 90 degrees. In other words, it is difficult for us to determine the relative size of one piece of the pie compared to another.  
 
-Let's examine the same data used in our previous barplot of the number of fish species preferring each `DemersPelag` environment in Figure \@ref(fig:habitatsbar), but this time we will use a pie chart in Figure \@ref(fig:DemersPelagpie). Try to answer the following questions:
+Let's examine the same data used in our previous barplot of the number of mammalian species preferring each `predation` environment in Figure \@ref(fig:habitatsbar), but this time we will use a pie chart in Figure \@ref(fig:predationpie). Try to answer the following questions:
 
-* How much larger is the portion of the pie for bathydemersal compared to bathypelagic? 
-* What is the fifth most preferred `DemersPelag` habitat for fish species?
+* How much larger is the portion of the pie for predation category 2 compared to category 4? 
+* What is the second most common `predation` category for mammalian species?
 
-```{r DemersPelagpie, echo=FALSE, fig.cap="The dreaded pie chart.", fig.height=4.8, purl=FALSE}
+```{r predationpie, echo=FALSE, fig.cap="The dreaded pie chart.", fig.height=4.8, purl=FALSE}
 if (is_html_output()) {
-  ggplot(all_fishdata, mapping = aes(x = factor(1), fill = DemersPelag)) +
+  ggplot(mammals, mapping = aes(x = factor(1), fill = factor(predation))) +
     geom_bar(width = 1) +
     coord_polar(theta = "y") +
     theme(
@@ -978,7 +1124,7 @@ if (is_html_output()) {
     ) +
     guides(fill = guide_legend(keywidth = 0.8, keyheight = 0.8))
 } else {
-  ggplot(all_fishdata, mapping = aes(x = factor(1), fill = DemersPelag)) +
+  ggplot(mammals, mapping = aes(x = factor(1), fill = factor(predation))) +
     geom_bar(width = 1) +
     coord_polar(theta = "y") +
     theme_light() +
@@ -996,7 +1142,7 @@ if (is_html_output()) {
 }
 ```
 
-While it is quite difficult to answer these questions when looking at the pie chart in Figure \@ref(fig:DemersPelagpie), we can much more easily answer these questions using the barchart in Figure \@ref(fig:habitatsbar). This is true since barplots present the information in a way such that comparisons between categories can be made with single horizontal lines, whereas pie charts present the information in a way such that comparisons must be made by \index{pie charts!problems with} comparing angles. 
+While it is quite difficult to answer these questions when looking at the pie chart in Figure \@ref(fig:predationpie), we can much more easily answer these questions using the barchart in Figure \@ref(fig:habitatsbar). This is true since barplots present the information in a way such that comparisons between categories can be made with single horizontal lines, whereas pie charts present the information in a way such that comparisons must be made by \index{pie charts!problems with} comparing angles. 
 
 ```{block lc-pie-charts, type="learncheck", purl=FALSE}
 \vspace{-0.15in}
@@ -1012,164 +1158,6 @@ While it is quite difficult to answer these questions when looking at the pie ch
 \vspace{-0.25in}
 \vspace{-0.25in}
 ```
-
-
-### Two categorical variables {#two-categ-barplot}
-
-Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the *joint* distribution of two categorical variables at the same time.  Let's examine the *joint* distribution of fish species by `DemersPelag` as well as `BodyShapeI`. In other words, the number of fish species for each `DemersPelag` and `BodyShapeI` combination. 
-
-For example, the number of fish species preferring a bathydemersal habitat with a fusiform/normal shape, the number preferring  a bathydemersal habitat with an elongated shape, and so on. Recall the `ggplot()` code that created the barplot of `DemersPelag` frequency in Figure \@ref(fig:habitatsbar):
-
-```{r, eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) + 
-  geom_bar()
-```
-
-We can now map the additional variable `BodyShapeI` by adding `fill = BodyShape1` inside the `aes()` aesthetic mapping.
-
-```{r eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-  geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-```
-
-```{r all-fishdata-stacked-bar, echo=FALSE, fig.cap="Stacked barplot of fish species by preferred habitat (DemersPelag) and body shape (BodyShapeI).", fig.height=2.8, purl=FALSE}
-if (is_html_output()) {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-} else {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar() +
-    scale_fill_grey() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-}
-```
-
-Figure \@ref(fig:all-fishdata-stacked-bar) is an example of a \index{barplot!stacked} *stacked barplot*.  While simple to make, in certain aspects it is not ideal. For example, it is difficult to compare the heights of the different colors between the bars, corresponding to comparing the number of fish species with each `BodyShapeI` type between the preferred `DemersPelag` habitats.
-
-Before we continue, let's address some common points of confusion among new R users. First, the `fill` aesthetic corresponds to the color used to fill the bars, while the `color` aesthetic corresponds to the color of the outline of the bars. This is identical to how we added color to our histogram in Subsection \@ref(geomhistogram): we set the outline of the bars to white by setting `color = "white"` and the colors of the bars to blue steel by setting `fill = "steelblue"`. Observe in Figure \@ref(fig:all-fishdata-stacked-bar-color) that mapping `BodyShapeI` to `color` and not `fill` yields grey bars with different colored outlines.
-
-```{r eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, color = BodyShapeI)) +
-  geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-```
-
-```{r all-fishdata-stacked-bar-color, fig.cap="Stacked barplot with color aesthetic used instead of fill.", fig.height=2.2, echo=FALSE, purl=FALSE}
-if (is_html_output()) {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, color = BodyShapeI)) +
-    geom_bar() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-} else {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, color = BodyShapeI)) +
-    geom_bar() +
-    scale_color_grey() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-}
-```
-
-Second, note that `fill` is another aesthetic mapping much like `x`-position; thus we were careful to include it within the parentheses of the `aes()` mapping. The following code, where the `fill` aesthetic is specified outside the `aes()` mapping will yield an error. This is a fairly common error that new `ggplot` users make:
-
-```{r, eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag), fill = BodyShapeI) +
-  geom_bar()
-```
-
-An alternative to stacked barplots are \index{barplot!side-by-side} *side-by-side barplots*, also known as *dodged barplots*, as seen in Figure \@ref(fig:all-fishdata-dodged-bar-color). The code to create a side-by-side barplot is identical to the code to create a stacked barplot, but with a \index{ggplot2!position} `position = "dodge"` argument added to `geom_bar()`. In other words, we are overriding the default barplot type, which is a *stacked* barplot, and specifying it to be a side-by-side barplot instead.
-
-```{r eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-  geom_bar(position = "dodge") + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-```
-
-```{r all-fishdata-dodged-bar-color, fig.cap="Side-by-side barplot comparing number of fish species by DemersPelag and BodyShapeI variables.", fig.height=3.5, echo=FALSE, purl=FALSE}
-if (is_html_output()) {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar(position = "dodge") + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-} else {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar(position = "dodge") +
-    scale_fill_grey() + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-}
-```
-
-Note the width of the bars differs; for example, the bars for `pelagic` are wider than for `demersal`. We can make one tweak to the `position` argument to get them to be the same size in terms of width as the other bars by using the more robust `position_dodge()` function.
-
-```{r eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-  geom_bar(position = position_dodge(preserve = "single"))
-```
-
-```{r all-fishdata-dodged-bar-color-tweak, echo=FALSE, fig.cap="Side-by-side barplot comparing number of all_fishdata by DemersPelag and BodyShapeI (with formatting tweak).", fig.height=2.5, purl=FALSE}
-if (is_html_output()) {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar(position = position_dodge(preserve = "single"))
-} else {
-  ggplot(data = all_fishdata, mapping = aes(x = DemersPelag, fill = BodyShapeI)) +
-    geom_bar(position = position_dodge(preserve = "single")) +
-    scale_fill_grey()
-}
-```
-
-Lastly, another type of barplot is a \index{barplot!faceted} *faceted barplot*. Recall in Section \@ref(facets) we visualized the distribution of weight gain for the chicks on Diet 1 *split* by the Chick identifier (1-50) using facets. We apply the same principle to our barplot visualizing the frequency of `DemersPelag` split by `BodyShapeI`: instead of mapping `BodyShapeI` to `fill` we include it as the variable to create small multiples of the plot across the levels of `BodyShapeI`.
-
-```{r eval=FALSE}
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
-  geom_bar() +
-  facet_wrap(~ BodyShapeI, ncol = 1) + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-```
-
-```{r facet-bar-vert, fig.cap="Faceted barplot comparing the number of fish species by the DemersPelag and BodyShapeI variables.", fig.height=6, echo=FALSE, purl=FALSE}
-shape_facet_ncol <- ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
-  geom_bar() +
-  facet_wrap(~BodyShapeI, ncol = 1) + 
-  theme(axis.text.x=element_text(angle=30,hjust=1))
-
-if (is_latex_output()) {
-  shape_facet_ncol +
-    theme(
-      strip.text = element_text(colour = "black"),
-      strip.background = element_rect(fill = "grey93")
-    )
-} else {
-  shape_facet_ncol
-}
-```
-
-```{block lc-barplot-stacked, type="learncheck", purl=FALSE}
-\vspace{-0.15in}
-**_Learning check_**
-\vspace{-0.1in}
-```
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What kinds of questions are not easily answered by looking at Figure \@ref(fig:all-fishdata-stacked-bar)?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What can you say, if anything, about the relationship between preferred habitat and body shape in regards to the number of fish species?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why might the side-by-side barplot be preferable to a stacked barplot in this case?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What are the disadvantages of using a dodged barplot, in general?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why is the faceted barplot preferred to the side-by-side and stacked barplots in this case?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What information about the different preferred habitats of different body shapes is more easily seen in the faceted barplot?
-
-```{block, type="learncheck", purl=FALSE}
-\vspace{-0.25in}
-\vspace{-0.25in}
-```
-
-
-### Summary
-
-Barplots are a common way of displaying the distribution of a categorical variable, or in other words the frequency with which the different categories (also called *levels*) occur.  They are easy to understand and make it easy to make comparisons across levels.  Furthermore, when trying to visualize the relationship of two categorical variables, you have many options: stacked barplots, side-by-side barplots, and faceted barplots. Depending on what aspect of the relationship you are trying to emphasize, you will need to make a choice between these three types of barplots and own that choice.
-
-
 
 
 
@@ -1225,11 +1213,11 @@ Let's go over some important points about specifying the arguments (i.e., inputs
 
 ```{r, eval=FALSE}
 # Segment 1:
-ggplot(data = all_fishdata, mapping = aes(x = DemersPelag)) +
+ggplot(data = mammals, mapping = aes(x = predation)) +
   geom_bar()
 
 # Segment 2:
-ggplot(all_fishdata, aes(x = DemersPelag)) +
+ggplot(mammals, aes(x = predation)) +
   geom_bar()
 ```
 
@@ -1251,7 +1239,7 @@ generate_r_file_link("02-visualization.R")
 ```
 -->
 
-If you want to further unlock the power of the `ggplot2` package for data visualization, we suggest that you check out RStudio's "Data Visualization with ggplot2" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter. (For example in Figure \@ref(fig:habitatsbar), you saw that we could add code to rotate labels.) In particular, the ggplot2 cheatsheet presents many more than the 5 `geom`etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the `geom`etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio in late 2019, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheatsheets -> "Data Visualization with ggplot2." `r if(is_html_output()) "You can see a preview in the figure below."`
+If you want to further unlock the power of the `ggplot2` package for data visualization, we suggest that you check out RStudio's "Data Visualization with ggplot2" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter. (For example in Figure \@ref(fig:habitatsbar), you saw that we could add code to rotate labels.) In particular, the ggplot2 cheatsheet presents many more than the 5 `geom`etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the `geom`etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Data Visualization with ggplot2." `r if(is_html_output()) "You can see a preview in the figure below."`
 
 ```{r ggplot-cheatsheet, echo=FALSE, fig.cap="Data Visualization with ggplot2 cheatsheet.", purl=FALSE}
 if (is_html_output()) {
@@ -1262,24 +1250,11 @@ if (is_html_output()) {
 
 ### What's to come {#whats-to-come-3}
 
-Recall in Figure \@ref(fig:noalpha) in Section \@ref(scatterplots) we visualized the relationship between length and weight of brackish fish species in all_fishdata. This necessitated paring down the `all_fishdata` data frame to a new data frame `brackish_fish` consisting of only `Brack == -1` fish species first:
+Recall in Figure \@ref(fig:dailyweight) in Section \@ref(linegraphs) we visualized weight gain over time for Chick 1.  This necessitated paring down the `ChickWeight` data frame to a new data frame `chick1_weight` consisting of body weight recordings only for `Chick == 1`:
 
 ```{r, eval=FALSE}
-brackish_fish <- all_fishdata %>% 
-  filter(Brack == -1)
-
-ggplot(data = brackish_fish, mapping = aes(x = Length, y = Weight)) + 
-  geom_point()
+chick1_weight <- filter(ChickWeight, Chick == 1)
 ```
 
-Furthermore recall in Figure \@ref(fig:dailyweight) in Section \@ref(linegraphs) we visualized weight gain over time for Chick 1 on Diet 1.  This necessitated paring down the `ChickWeight` data frame to a new data frame `chick1_weight` consisting of body weight recordings only for `Chick == 1`, and `Diet == 1`:
+This code segment is a preview of Chapter \@ref(wrangling) on data wrangling using the `dplyr` package. Data wrangling is the process of transforming and modifying existing data with the intent of making it more appropriate for analysis purposes. For example, this code segment used the `filter()` function to create a new data frame (`chick1_weight`) by choosing only a subset of rows of an existing data frames (`ChickWeight`). In the next chapter, we'll formally introduce the `filter()` and other data wrangling functions as well as the *pipe operator* `%>%` which allows you to combine multiple data wrangling actions into a single sequential *chain* of actions. On to Chapter \@ref(wrangling) on data wrangling!
 
-```{r, eval=FALSE}
-chick1_weight <- ChickWeight %>% 
-  filter(Chick == 1 & Diet == 1)
-
-ggplot(data = chick1_weight, mapping = aes(x = Time, y = weight)) +
-  geom_line()
-```
-
-These two code segments were a preview of Chapter \@ref(wrangling) on data wrangling using the `dplyr` package. Data wrangling is the process of transforming and modifying existing data with the intent of making it more appropriate for analysis purposes. For example, these two code segments used the `filter()` function to create new data frames (`brackish_fish` and `chick1_weight`) by choosing only a subset of rows of existing data frames (`all_fishdata` and `ChickWeight`). In the next chapter, we'll formally introduce the `filter()` and other data wrangling functions as well as the *pipe operator* `%>%` which allows you to combine multiple data wrangling actions into a single sequential *chain* of actions. On to Chapter \@ref(wrangling) on data wrangling!

@@ -40,43 +40,48 @@ set.seed(76)
 <!--
 Now that we are equipped with data visualization skills from Chapter \@ref(viz), data wrangling skills from Chapter \@ref(wrangling), and an understanding of how to import data and the concept of a "tidy" data format from Chapter \@ref(tidy), let's now proceed with data modeling.
 -->
-The fundamental premise of data modeling is to make explicit the relationship between:
 
-* an *outcome variable* $y$, also called a *dependent variable* or response variable, \index{variables!response / outcome / dependent} and
-* an *explanatory/predictor variable* $x$, also called an *independent variable* or \index{variables!explanatory / predictor / independent} covariate.
+The fundamental premise of data modeling is to make explicit the relationship between an *response variable* $y$, also called a dependent variable or outcome variable, \index{variables!response / outcome / dependent} and
+* an *explanatory variable* $x$, also called an independent variable, predictor variable, or \index{variables!explanatory / predictor / independent} covariate. Another way to state this is using mathematical terminology: we will model the outcome variable $y$ "as a function" of the explanatory/predictor variable $x$. When we say "function" here, we are referring to a mathematical function (not functions in R like `ggplot()`). 
 
-Another way to state this is using mathematical terminology: we will model the outcome variable $y$ "as a function" of the explanatory/predictor variable $x$. When we say "function" here, we aren't referring to functions in R like the `ggplot()` function, but rather as a mathematical function. But, why do we have two different labels, explanatory and predictor, for the variable $x$? That's because even though the two terms are often used interchangeably, roughly speaking data modeling serves one of two purposes:
+While there exist many techniques for modeling, such as tree-based models and neural networks, in this book we'll focus on one particular technique: *linear regression*. \index{regression!linear} Linear regression is one of the most commonly-used and easy-to-understand approaches to modeling.
+
+Linear regression involves a *numerical* outcome variable $y$ and explanatory variables $x$ that are either *numerical* or *categorical*. Furthermore, the relationship between $y$ and $x$ is assumed to be linear, or in other words, a line. However, we'll see that what constitutes a "line" will vary depending on the nature of your explanatory variables $x$.
+
+In Chapter \@ref(regression) on basic regression, we'll only consider models with a single explanatory variable $x$. In Section \@ref(model1), the explanatory variable will be numerical. This scenario is known as *simple linear regression*. In Section \@ref(model2), the explanatory variable will be categorical.
+
+In Chapter \@ref(inference-for-regression) on inference for regression, we'll revisit our regression models and analyze the results using the tools for *statistical inference* developed in Chapters \@ref(sampling), \@ref(confidence-intervals), and \@ref(hypothesis-testing) on sampling, bootstrapping and confidence intervals, and hypothesis testing and $p$-values, respectively.
+
+In Chapter \@ref(multiple-regression) on multiple regression, we'll extend the ideas behind basic regression and consider models with two explanatory variables $x_1$ and $x_2$.  In Section \@ref(model4), we'll have one numerical and one categorical variable. In Section \@ref(model3), we'll have two categorical explanatory variables. In particular, we'll consider two such models: *interaction* and *parallel slopes* models.
+
+### Modeling for explanation or prediction {-#reg-modeling}
+
+Why do we have two different labels, explanatory and predictor, for the variable $x$? That's because even though the two terms are often used interchangeably, roughly speaking data modeling serves one of two purposes:
 
 1. **Modeling for explanation**: When you want to explicitly describe and quantify the relationship between the outcome variable $y$ and a set of explanatory variables $x$, determine the significance of any relationships, have measures summarizing these relationships, and possibly identify any *causal* relationships between the variables. 
 1. **Modeling for prediction**: When you want to predict an outcome variable $y$ based on the information contained in a set of predictor variables $x$. Unlike modeling for explanation, however, you don't care so much about understanding how all the variables relate and interact with one another, but rather only whether you can make good predictions about $y$ using the information in $x$.
 
 For example, say you are interested in an outcome variable $y$ of whether patients develop lung cancer and information $x$ on their risk factors, such as smoking habits, age, and socioeconomic status. If we are modeling for explanation, we would be interested in both describing and quantifying the effects of the different risk factors. One reason could be that you want to design an intervention to reduce lung cancer incidence in a population, such as targeting smokers of a specific age group with advertising for smoking cessation programs. If we are modeling for prediction, however, we wouldn't care so much about understanding how all the individual risk factors contribute to lung cancer, but rather only whether we can make good predictions of which people will contract lung cancer.
 
-In this book, we'll focus on modeling for explanation and hence refer to $x$ as *explanatory variables*. If you are interested in learning about modeling for prediction, we suggest you check out books and courses on the field of *machine learning* such as [*An Introduction to Statistical Learning with Applications in R (ISLR)*](http://www-bcf.usc.edu/~gareth/ISL/) [@islr2017]. Furthermore, while there exist many techniques for modeling, such as tree-based models and neural networks, in this book we'll focus on one particular technique: *linear regression*. \index{regression!linear} Linear regression is one of the most commonly-used and easy-to-understand approaches to modeling.
+We'll generally focus on modeling for explanation and hence refer to $x$ as *explanatory variables*. If you are interested in learning about modeling for prediction, we suggest you check out books and courses on the field of *machine learning* such as [*An Introduction to Statistical Learning with Applications in R (ISLR)*](http://www-bcf.usc.edu/~gareth/ISL/) [@islr2017]. 
 
-Linear regression involves a *numerical* outcome variable $y$ and explanatory variables $x$ that are either *numerical* or *categorical*. Furthermore, the relationship between $y$ and $x$ is assumed to be linear, or in other words, a line. However, we'll see that what constitutes a "line" will vary depending on the nature of your explanatory variables $x$.
+```{block loa8, type="review", purl=FALSE}
+\vspace{-0.15in}
 
-In Chapter \@ref(regression) on basic regression, we'll only consider models with a single explanatory variable $x$. In Section \@ref(model1), the explanatory variable will be numerical. This scenario is known as *simple linear regression*. In Section \@ref(model2), the explanatory variable will be categorical.
+**_Chapter Learning Objectives_**
 
-In Chapter \@ref(multiple-regression) on multiple regression, we'll extend the ideas behind basic regression and consider models with two explanatory variables $x_1$ and $x_2$.  In Section \@ref(model4), we'll have one numerical and one categorical variable. In Section \@ref(model3), we'll have two categorical explanatory variables. In particular, we'll consider two such models: *interaction* and *parallel slopes* models.
-
-In Chapter \@ref(inference-for-regression) on inference for regression, we'll revisit our regression models and analyze the results using the tools for *statistical inference* developed in Chapters \@ref(sampling), \@ref(confidence-intervals), and \@ref(hypothesis-testing) on sampling, bootstrapping and confidence intervals, and hypothesis testing and $p$-values, respectively.
-
-Let's now begin with basic regression, \index{regression!basic} which refers to linear regression models with a single explanatory variable $x$. We'll also discuss important statistical concepts like the *correlation coefficient*, that "correlation isn't necessarily causation," and what it means for a line to be "best-fitting."
-
+*At the end of this chapter, you should be able to…*   
+• Calculate the correlation coefficient to estimate the strength of association between two variables.   
+• Interpret a regression table to estimate the intercept and slope of a simple regression line.  
+• Compute the fitted values and residuals for observed values.  
+• Interpret a regression table to estimate the baseline and offset values of linear regression with a categorical explanatory variable.  
+• Explain how correlation can occur without causation.  
+\vspace{-0.1in}
+```
 
 ### Needed packages {-#reg-packages}
 
-Let's now load all the packages needed for this chapter (this assumes you've already installed them). In this chapter, we introduce some new packages:
-
-1. The `tidyverse` "umbrella" [@R-tidyverse] package. Recall from our discussion in Section \@ref(tidyverse-package) that loading the `tidyverse` package by running `library(tidyverse)` loads the following commonly used data science packages all at once:
-    + `ggplot2` for data visualization
-    + `dplyr` for data wrangling
-    + `tidyr` for converting data to "tidy" format
-    + `readr` for importing spreadsheet data into R
-    + As well as the more advanced `purrr`, `tibble`, `stringr`, and `forcats` packages
-1. The `moderndive` \index{R packages!moderndive} package of datasets and functions for tidyverse-friendly introductory linear regression.
-1. The `skimr` [@R-skimr] package, which provides a simple-to-use function to quickly compute a wide array of commonly used summary statistics. \index{summary statistics}
+Let's now load all the packages needed for this chapter (this assumes you've already installed them). In this chapter, we introduce the `moderndive` \index{R packages!moderndive} package of datasets and functions for tidyverse-friendly introductory linear regression.
 
 If needed, read Section \@ref(packages) for information on how to install and load R packages.
 
@@ -115,8 +120,7 @@ library(kableExtra)
 library(patchwork)
 ```
 
-
-
+Let's now begin with basic regression, \index{regression!basic} which refers to linear regression models with a single explanatory variable $x$. We'll also discuss important statistical concepts like the *correlation coefficient*, that "correlation isn't necessarily causation," and what it means for a line to be "best-fitting."
 
 
 ## One numerical explanatory variable {#model1}
@@ -225,6 +229,8 @@ For the numerical variables `age` and `proportion.black` it returns:
 
 Looking at this output, we can see how the values of both variables distribute. For example, the mean nose coloration was 0.322 black, whereas the mean "age"  was 4.31 years. Furthermore, the middle 50% of nose coloration was between 0.165 and 0.433 (the first and third quartiles), whereas the middle 50% of age falls within 2.18 to 5.85 years.
 
+####Correlation coefficient
+
 The `skim()` function only returns what are known as *univariate* \index{univariate} summary statistics: functions that take a single variable and return some numerical summary of that variable. However, there also exist *bivariate* \index{bivariate} summary statistics: functions that take in two variables and return some summary of those two variables. In particular, when the two variables are numerical, we can compute the \index{correlation (coefficient)} *correlation coefficient*. Generally speaking, *coefficients* are quantitative expressions of a specific phenomenon.  A *correlation coefficient* is a quantitative expression of the *strength of the linear relationship between two numerical variables*. Its value ranges between -1 and 1 where:
 
 * -1 indicates a perfect *negative relationship*: As one variable increases, the value of the other variable tends to go down, following a straight line.
@@ -296,7 +302,15 @@ cor_ch5 <- LionNoses %>%
   pull()
 ```
 
-In our case, the correlation coefficient of `r cor_ch5` indicates that the relationship between proportion black and age is "clearly positive." There is a certain amount of subjectivity in interpreting correlation coefficients, especially those that aren't close to the extreme values of -1, 0, and 1. To develop your intuition about correlation coefficients, play the "Guess the Correlation" 1980's style video game mentioned in Subsection \@ref(additional-resources-basic-regression).
+In our case, the correlation coefficient of `r cor_ch5` indicates that the relationship between proportion black and age is "clearly positive." There is a certain amount of subjectivity in interpreting correlation coefficients, especially those that aren't close to the extreme values of -1, 0, and 1. To develop your intuition about correlation coefficients, play the "Guess the Correlation" 1980's style video game called "Guess the Correlation", at <http://guessthecorrelation.com/>.
+
+(ref:guess-corr) Preview of "Guess the Correlation" game.
+
+```{r guess-the-correlation, echo=FALSE, fig.cap="(ref:guess-corr)", purl=FALSE, out.width="70%", purl=FALSE}
+include_graphics("images/copyright/guess_the_correlation.png")
+```
+
+
 
 Let's now perform the last of the steps in an exploratory data analysis: creating data visualizations. Since both the `proportion.black` and `age` variables are numerical, a scatterplot is an appropriate graph to visualize this data. Let's do this using `geom_point()` and display the result in Figure \@ref(fig:numxplot1). 
 
@@ -310,7 +324,7 @@ ggplot(LionNoses, aes(x = age, y = proportion.black)) +
 
 Observe that most ages lie between 1 and 5 years, while most nose coloration proportions lie between 0.1 and 0.3 black. Furthermore, while opinions may vary, it is our opinion that the relationship between proportion black and age is "clearly positive." This is consistent with our earlier computed correlation coefficient of `r cor_ch5`.
 
-Let's build on the scatterplot in Figure \@ref(fig:numxplot1) by adding a "best-fitting" line: of all possible lines we can draw on this scatterplot, it is the line that "best" fits through the cloud of points. We do this by adding a new `geom_smooth(method = "lm", se = FALSE)` layer to the `ggplot()` code that created the scatterplot in Figure \@ref(fig:numxplot1). The `method = "lm"` argument sets the line to be a "`l`inear `m`odel." The `se = FALSE` \index{ggplot2!geom\_smooth()} argument suppresses _standard error_ uncertainty bars. (We'll define the concept of _standard error_ later in Subsection \@ref(sampling-definitions).)
+Let's build on the scatterplot in Figure \@ref(fig:numxplot1) by adding a "best-fitting" line: of all possible lines we can draw on this scatterplot, it is the line that "best" fits through the cloud of points. We do this by adding a new `geom_smooth(method = "lm", se = FALSE)` layer to the `ggplot()` code that created the scatterplot in Figure \@ref(fig:numxplot1). The `method = "lm"` argument sets the line to be a "`l`inear `m`odel." The `se = FALSE` \index{ggplot2!geom\_smooth()} argument suppresses _standard error_ uncertainty bars. (We defined the concept of _standard error_ earlier in Subsection \@ref(sampling-definitions).)
 
 ```{r numxplot3, fig.cap="Regression line.", message=FALSE}
 ggplot(LionNoses, aes(x = age, y = proportion.black)) +
@@ -777,28 +791,28 @@ intercept <- get_regression_table(lifeExp_model) %>%
 
 # Americas
 offset_americas <- get_regression_table(lifeExp_model) %>%
-  filter(term == "continentAmericas") %>%
+  filter(term == "continent: Americas") %>%
   pull(estimate) %>%
   round(1)
 mean_americas <- intercept + offset_americas
 
 # Asia
 offset_asia <- get_regression_table(lifeExp_model) %>%
-  filter(term == "continentAsia") %>%
+  filter(term == "continent: Asia") %>%
   pull(estimate) %>%
   round(1)
 mean_asia <- intercept + offset_asia
 
 # Europe
 offset_europe <- get_regression_table(lifeExp_model) %>%
-  filter(term == "continentEurope") %>%
+  filter(term == "continent: Europe") %>%
   pull(estimate) %>%
   round(1)
 mean_europe <- intercept + offset_europe
 
 # Oceania
 offset_oceania <- get_regression_table(lifeExp_model) %>%
-  filter(term == "continentOceania") %>%
+  filter(term == "continent: Oceania") %>%
   pull(estimate) %>%
   round(1)
 mean_oceania <- intercept + offset_oceania
@@ -1337,9 +1351,30 @@ If you're even more curious about how these and other wrapper functions work, ta
 
 
 
-
-
 ## Conclusion {#reg-conclusion}
+
+
+```{block cls08, type="review", purl=FALSE}
+\vspace{-0.15in}
+
+**_Chapter Learning Summary_**
+
+* Data modeling examines the relationship between an outcome/response variable and one or more explanatory/predictor variables.  
+* Linear regression assumes a linear relationship between a numerical outcome variable and explanatory variables.  
+* Simple linear regression assumes a linear relationship between a numerical outcome variable and a single *numerical* explanatory variable.  
+* The correlation coefficient quantifies the strength of the linear relationship between two numerical variables.  
+* The regression, or best-fitting, line minimizes the distance between the line and the observed values and can be modeled with the mathematical equation $\hat{y} = b_0 + b_1 \cdot x$.  
+* The fitted value, $\hat{y}$, is the value of $y$ on the regression line for a given value of $x$.  
+* The residual is the difference between the fitted value $\hat{y}$ and the observed value $y$.  
+* Basic linear regression can be extended to model the relationship between a numerical outcome variable and a *categorical* explanatory variable.  
+* Linear regression with a categorical explanatory variable uses indicator functions (or dummy variables) that return a value of 1, if the explanatory variable is true, or 0, if not.  
+* With a categorical explanatory variable, the intercept is the fitted value of the baseline comparison group and the slope is the offset of another group from the intercept.  
+* When two variables are correlated, it doesn’t necessarily mean that one causes the other.  
+* The regression, or best-fitting, line is the line that minimizes the sum of squared residuals.  
+* A wrapper function chains together other functions to seamlessly perform a desired function.  
+\vspace{-0.1in}
+```
+
 <!--
 ### Additional resources {#additional-resources-basic-regression}
 
@@ -1353,14 +1388,6 @@ if (is_latex_output()) {
 generate_r_file_link("05-regression.R")
 ```
 -->
-
-As we suggested in Subsection \@ref(model1EDA), interpreting coefficients that are not close to the extreme values of -1, 0, and 1 can be somewhat subjective. To help develop your sense of correlation coefficients, we suggest you play the 80s-style video game called, "Guess the Correlation", at <http://guessthecorrelation.com/>.
-
-(ref:guess-corr) Preview of "Guess the Correlation" game.
-
-```{r guess-the-correlation, echo=FALSE, fig.cap="(ref:guess-corr)", purl=FALSE, out.width="70%", purl=FALSE}
-include_graphics("images/copyright/guess_the_correlation.png")
-```
 
 
 ### What's to come?

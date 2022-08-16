@@ -9,15 +9,6 @@ library(fivethirtyeight)
 
 
 
-## ----message=FALSE, eval=FALSE------------------------------------------------
-## library(readr)
-## blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
-
-
-
-
-
-
 
 
 ## -----------------------------------------------------------------------------
@@ -92,27 +83,34 @@ blackbird_smaller
 
 
 ## -----------------------------------------------------------------------------
-ControlGroup <- WeightLoss %>% 
+WeeklyAverage <- WeightLoss %>% 
   group_by(group) %>% 
   summarise(mean_wl1 = mean(wl1), 
             mean_wl2 = mean(wl2), 
-            mean_wl3 = mean(wl3)) %>% 
-  filter(group == "Control") 
-ControlGroup
+            mean_wl3 = mean(wl3))
+WeeklyAverage
 
 
 ## -----------------------------------------------------------------------------
-ControlGroup_tidy <- ControlGroup %>% 
-  rename(`1` = mean_wl1, `2` = mean_wl2, `3` = mean_wl3) %>% 
-  pivot_longer(names_to = "month", 
-               values_to = "weightloss", 
-               cols = -group,
-               names_transform = list(month = as.integer)) 
-ControlGroup_tidy
+WeeklyAverage_tidy <- WeeklyAverage %>% 
+  pivot_longer(cols = -group,
+               names_to = "month", 
+               values_to = "weightloss") 
+WeeklyAverage_tidy
+
+
+## -----------------------------------------------------------------------------
+WeeklyAverage_tidy <- WeeklyAverage %>% 
+  pivot_longer(cols = -group,
+               names_to = "month",
+               names_prefix = "mean_wl",
+               names_transform = list(month = as.integer),
+               values_to = "weightloss") 
+WeeklyAverage_tidy
 
 
 ## ----guat-dem-tidy, fig.cap="Weight loss scores of control group.", fig.height=3----
-ggplot(ControlGroup_tidy, aes(x = month, y = weightloss)) +
+ggplot(WeeklyAverage_tidy, aes(x = month, y = weightloss, color = group)) +
   geom_line() +
-  labs(x = "Month", y = "Weight Loss Score")
+  labs(x = "Month", y = "Weight Loss Score", color = "Study group")
 

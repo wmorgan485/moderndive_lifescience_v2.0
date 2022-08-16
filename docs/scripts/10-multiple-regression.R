@@ -68,6 +68,8 @@ ToothGrowth %>%
 
 
 
+
+
 ## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
 ##   geom_point() +
@@ -85,10 +87,8 @@ ToothGrowth %>%
 
 
 
-## ----echo=FALSE---------------------------------------------------------------
-dose_coef <- get_regression_table(len_model_parallel_slopes) %>%
-  filter(term == "dose") %>%
-  pull(estimate)
+
+
 
 
 
@@ -149,7 +149,6 @@ glimpse(IntertidalAlgae)
 ##   labs(x = "Herbivore treatment", y = "Square root of area covered",
 ##        title = "Area coverage and herbivore treatment") +
 ##   geom_smooth(method = "lm", se = FALSE)
-##   # geom_parallel_slopes(se = FALSE)
 
 
 

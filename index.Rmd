@@ -1,6 +1,6 @@
 --- 
-title: "`r ifelse(knitr::is_latex_output(), 'Modern Biological Data Analysis: A ModernDive into R For Life Scientists, v. 2.0', 'Modern Biological Data Analysis')`"
-subtitle: "A ModernDive into R For Life Scientists, v. 2.0"
+title: "`r ifelse(knitr::is_latex_output(), 'Modern Biological Data Analysis: A ModernDive into R For Life Scientists, v. 2.1', 'Modern Biological Data Analysis')`"
+subtitle: "A ModernDive into R For Life Scientists, v. 2.1"
 author: "`r ifelse(knitr::is_latex_output(), 'Chester Ismay and Albert Y. Kim', 'Chester Ismay and Albert Y. Kim <br> Foreword by Kelly S. McConville <br> Adapted by William R. Morgan')`"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 site: bookdown::bookdown_site
@@ -29,12 +29,12 @@ favicon: "images/logos/favicons/favicon.ico"
 ```{r set-options, include=FALSE, purl=FALSE}
 # Current version information: Date here should match the date in the YAML above.
 # Remove .9000 tag and set date to release date when releasing
-version <- "1.1.0"
-date <- "July 2, 2020"
+version <- "2.1.0"
+date <- "August 24, 2022"
 
 # Latest release information:
-latest_release_version <- "1.1.0"
-latest_release_date <- "July 2, 2020"
+latest_release_version <- "2.1.0"
+latest_release_date <- "August 24, 2022"
 
 # knitr pkg is needed throughout book
 if (!"knitr" %in% installed.packages()) {
@@ -266,14 +266,14 @@ image_link <- function(path,
 ```
 -->
 
-```{block, type='learncheck', include=!is_latex_output(), purl=FALSE}
-**Please note that you are currently looking at an adaptation of *ModernDive* (version 2.0) for *BIOL-20300 Research Skills for Life Scientists* at The College of Wooster.**
+```{block, type='announcement', include=!is_latex_output(), purl=FALSE}
+**Note: This book is an adaptation of *ModernDive* (version 2.0) for *BIOL-20300 Research Skills for Life Scientists* at The College of Wooster.** Here is the original [website](https://moderndive.com/) for *Statistical Inference via Data Science:  A ModernDive into R and the Tidyverse*! 
 ```
 
 ```{r, echo=FALSE, include=!is_latex_output(), purl=FALSE}
 dev_version <- TRUE
 ```
-<!-- include=FALSE for PDF sending to CRC -->
+<!-- include=FALSE for PDF sending to CRC 
 ```{block, include=is_html_output(), purl=FALSE}
 Here is the original [website](https://moderndive.com/) for *Statistical Inference via Data Science:  A ModernDive into R and the Tidyverse*! Visit its [GitHub repository for this site](https://github.com/moderndive/ModernDive_book) and find the book on [Amazon](https://www.amazon.com/Statistical-Inference-via-Data-Science/dp/0367409828/). You can also purchase it at [CRC Press](https://www.routledge.com/Statistical-Inference-via-Data-Science-A-ModernDive-into-R-and-the-Tidyverse/Ismay-Kim/p/book/9780367409821) using promo code **ADC21** for a discounted price.
 ```
@@ -288,7 +288,7 @@ if (is_html_output()) {
 }
 ```
 </br>
-
+-->
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work by [Chester Ismay](https://chester.rbind.io/) and [Albert Y. Kim](https://rudeboybert.rbind.io/), and adapted by [William R. Morgan](https://wooster.edu/bios/wmorgan/), is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 

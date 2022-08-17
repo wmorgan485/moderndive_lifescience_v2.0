@@ -327,7 +327,7 @@ As you will see, there are many ways to access data sets in R. We'll start with 
 
 We'll begin by previewing the `mammals` data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the `mammals` data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary. 
 
-```{r eval=FALSE}
+```{r purl=FALSE}
 mammals
 ```
 

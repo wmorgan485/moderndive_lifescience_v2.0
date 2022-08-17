@@ -38,12 +38,12 @@ We present a map of your upcoming journey in Figure \@ref(fig:moderndive-figure)
 include_graphics("images/flowcharts/flowchart/flowchart_ModDiveLifeSci_white.png")
 ```
 
-You'll first get started with data in Chapter \@ref(getting-started) where you'll learn about the difference between R and RStudio, start coding in R, install and load your first R packages, and explore your first dataset. Then you'll cover the following three portions of this book:
+You'll first get started with data in Chapter \@ref(getting-started) where you'll learn about the difference between R and RStudio, start coding in R, install and load your first R packages, and explore and import datasets. Then you'll cover the following three portions of this book:
 
 1. Data science with `tidyverse`. You'll assemble your data science toolbox using `tidyverse` packages. In particular, you'll
     + Ch.\@ref(viz): Visualize data using the `ggplot2` package.
     + Ch.\@ref(wrangling): Wrangle data using the `dplyr` package.
-    + Ch.\@ref(tidy): Learn about the concept of "tidy" data as a standardized data input and output format for all packages in the `tidyverse`. Furthermore, you'll learn how to import spreadsheet files into R using the `readr` package.
+    + Ch.\@ref(tidy): Learn about the concept of "tidy" data as a standardized data input and output format for all packages in the `tidyverse`.  
 1. Statistical inference with `infer`. Using your newly acquired data science tools and helper functions from the `moderndive` package, you'll unpack statistical inference using the `infer` package. In particular, you'll:
     + Ch.\@ref(sampling): Learn about the role that sampling variability plays in statistical inference and the role that sample size plays in this sampling variability.
     + Ch.\@ref(confidence-intervals): Construct confidence intervals using bootstrapping.

@@ -13,8 +13,6 @@ library(knitr)
 library(readr)
 
 
-## ----eval=FALSE---------------------------------------------------------------
-## mammals
 
 
 

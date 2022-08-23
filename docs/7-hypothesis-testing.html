@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-08-16" />
+<meta name="date" content="2022-08-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -702,38 +702,90 @@ methods.<br />
 <li><code>readr</code> for importing spreadsheet data into R</li>
 <li>As well as the more advanced <code>purrr</code>, <code>tibble</code>, <code>stringr</code>, and <code>forcats</code> packages</li>
 </ul>
-<p>If needed, read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install and load R packages.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="7-hypothesis-testing.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb285-2"><a href="7-hypothesis-testing.html#cb285-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb285-3"><a href="7-hypothesis-testing.html#cb285-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
-<span id="cb285-4"><a href="7-hypothesis-testing.html#cb285-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
-<span id="cb285-5"><a href="7-hypothesis-testing.html#cb285-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmosaic)</span></code></pre></div>
+<p>Before you load the following packages, first check that they are installed by looking in RStudio’s Packages tab. The <code>abd</code> package also requires the <code>lattice</code>, <code>grid</code>, <code>mosaic</code>, and <code>nlme</code> packages, so look for these too. If any of the needed packages are missing, read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install R packages.</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="7-hypothesis-testing.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb286-2"><a href="7-hypothesis-testing.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb286-3"><a href="7-hypothesis-testing.html#cb286-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb286-4"><a href="7-hypothesis-testing.html#cb286-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
+<span id="cb286-5"><a href="7-hypothesis-testing.html#cb286-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmosaic)</span></code></pre></div>
 </div>
 <div id="ht-activity" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Clutch size and malaria resistance<a href="7-hypothesis-testing.html#ht-activity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s begin with a study investigating if there is an association between susceptibility of birds to parasites following increased egg production.</p>
 <div id="is-there-a-tradeoff-between-reproduction-and-immune-defense" class="section level3 hasAnchor" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Is there a tradeoff between reproduction and immune defense?<a href="7-hypothesis-testing.html#is-there-a-tradeoff-between-reproduction-and-immune-defense" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>What limits the number of offspring that an individual can produce? One idea is that there is a trade-off between devoting resources to reproduction versus devoting resources to systems for self-preservation, including defenses against parasites and other pathogens. To test this idea, Oppliger et al. (1996) removed the first two eggs laid in half the nests of a breeding population of the bird species <em>Paus major</em>. To compensate, the females in these nests produced one more egg, on average, than females in the control group, whose nests were left intact. Two weeks after egg hatching, the presence of malaria in each female parent was assessed. A summary of the results can be found in the <code>BirdMalaria</code> dataset of the <code>abd</code> package. Let’s have a look.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="7-hypothesis-testing.html#cb286-1" aria-hidden="true" tabindex="-1"></a>BirdMalaria</span></code></pre></div>
-<pre><code># A tibble: 65 × 2
-   treatment response  
-   &lt;fct&gt;     &lt;fct&gt;     
- 1 Control   Malaria   
- 2 Control   Malaria   
- 3 Control   Malaria   
- 4 Control   Malaria   
- 5 Control   Malaria   
- 6 Control   Malaria   
- 7 Control   Malaria   
- 8 Control   No Malaria
- 9 Control   No Malaria
-10 Control   No Malaria
-# … with 55 more rows</code></pre>
+<p>What limits the number of offspring that an individual can produce? One idea is that there is a trade-off between devoting resources to reproduction versus devoting resources to systems for self-preservation, including defenses against parasites and other pathogens. To test this idea, Oppliger et al. (1996) removed the first two eggs laid in half the nests of a breeding population of the bird species <em>Paus major</em>. To compensate, the females in these nests produced one more egg, on average, than females in the control group, whose nests were left intact. Two weeks after egg hatching, the presence of malaria in each female parent was assessed. A summary of the results can be found in the <code>GreatTitMalaria</code> dataset of the <code>abd</code> package. Let’s have a look.</p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="7-hypothesis-testing.html#cb287-1" aria-hidden="true" tabindex="-1"></a>GreatTitMalaria</span></code></pre></div>
+<pre><code>     treatment   response
+1      Control    Malaria
+2      Control    Malaria
+3      Control    Malaria
+4      Control    Malaria
+5      Control    Malaria
+6      Control    Malaria
+7      Control    Malaria
+8      Control No Malaria
+9      Control No Malaria
+10     Control No Malaria
+11     Control No Malaria
+12     Control No Malaria
+13     Control No Malaria
+14     Control No Malaria
+15     Control No Malaria
+16     Control No Malaria
+17     Control No Malaria
+18     Control No Malaria
+19     Control No Malaria
+20     Control No Malaria
+21     Control No Malaria
+22     Control No Malaria
+23     Control No Malaria
+24     Control No Malaria
+25     Control No Malaria
+26     Control No Malaria
+27     Control No Malaria
+28     Control No Malaria
+29     Control No Malaria
+30     Control No Malaria
+31     Control No Malaria
+32     Control No Malaria
+33     Control No Malaria
+34     Control No Malaria
+35     Control No Malaria
+36 Egg removal    Malaria
+37 Egg removal    Malaria
+38 Egg removal    Malaria
+39 Egg removal    Malaria
+40 Egg removal    Malaria
+41 Egg removal    Malaria
+42 Egg removal    Malaria
+43 Egg removal    Malaria
+44 Egg removal    Malaria
+45 Egg removal    Malaria
+46 Egg removal    Malaria
+47 Egg removal    Malaria
+48 Egg removal    Malaria
+49 Egg removal    Malaria
+50 Egg removal    Malaria
+51 Egg removal No Malaria
+52 Egg removal No Malaria
+53 Egg removal No Malaria
+54 Egg removal No Malaria
+55 Egg removal No Malaria
+56 Egg removal No Malaria
+57 Egg removal No Malaria
+58 Egg removal No Malaria
+59 Egg removal No Malaria
+60 Egg removal No Malaria
+61 Egg removal No Malaria
+62 Egg removal No Malaria
+63 Egg removal No Malaria
+64 Egg removal No Malaria
+65 Egg removal No Malaria</code></pre>
 <p>Let’s perform an exploratory data analysis of the relationship between the two categorical variables malaria and <code>treatment</code>. Recall that we saw in Subsection <a href="2-viz.html#two-categ-barplot">2.8.2</a> that one way we can visualize such a relationship is by using a stacked barplot.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="7-hypothesis-testing.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(BirdMalaria, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb288-2"><a href="7-hypothesis-testing.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb288-3"><a href="7-hypothesis-testing.html#cb288-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Treatment&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="7-hypothesis-testing.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(GreatTitMalaria, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb289-2"><a href="7-hypothesis-testing.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb289-3"><a href="7-hypothesis-testing.html#cb289-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Treatment&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:BirdMalaria-barplot"></span>
 <img src="ModernDive_files/figure-html/BirdMalaria-barplot-1.png" alt="Barplot relating bird treatment to malaria infection." width="\textwidth" />
 <p class="caption">
@@ -742,10 +794,10 @@ FIGURE 7.1: Barplot relating bird treatment to malaria infection.
 </div>
 <p>Observe in Figure <a href="7-hypothesis-testing.html#fig:BirdMalaria-barplot">7.1</a> that while some of the females on the control nests were infected with the malaria parasite, a greater fraction of females on the experimentally-manipulated nests were infected.</p>
 <p>Because of the difference in the number of females in the two treatment groups, it’s a little difficult to compare the rates of infection. To see this better, let’s introduce another type of plot called a mosaic plot, which uses <code>geom_mosaic()</code> from the <code>ggmosaic</code> package.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="7-hypothesis-testing.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(BirdMalaria) <span class="sc">+</span></span>
-<span id="cb289-2"><a href="7-hypothesis-testing.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(treatment), </span>
-<span id="cb289-3"><a href="7-hypothesis-testing.html#cb289-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb289-4"><a href="7-hypothesis-testing.html#cb289-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Relative frequency&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="7-hypothesis-testing.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(GreatTitMalaria) <span class="sc">+</span></span>
+<span id="cb290-2"><a href="7-hypothesis-testing.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_mosaic</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">product</span>(treatment), </span>
+<span id="cb290-3"><a href="7-hypothesis-testing.html#cb290-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb290-4"><a href="7-hypothesis-testing.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Treatment&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Relative frequency&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:BirdMalaria-mosaicplot"></span>
 <img src="ModernDive_files/figure-html/BirdMalaria-mosaicplot-1.png" alt="Mosaic plot relating bird treatment to frequency of malaria infection." width="\textwidth" />
 <p class="caption">
@@ -758,7 +810,7 @@ FIGURE 7.2: Mosaic plot relating bird treatment to frequency of malaria infectio
 </div>
 <div id="shuffling-once" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Shuffling once<a href="7-hypothesis-testing.html#shuffling-once" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To run the simulations, we will work with the original <code>BirdMalaria</code> dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn’t affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our <code>BirdMalaria</code> data frame, the <code>treatment</code> variable would thus be an irrelevant label for predicting malaria infection. If these <code>treatment</code> labels were irrelevant, then we could randomly reassign them by “shuffling” them to no consequence!</p>
+<p>To run the simulations, we will work with the original <code>GreatTitMalaria</code> dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn’t affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our <code>GreatTitMalaria</code> data frame, the <code>treatment</code> variable would thus be an irrelevant label for predicting malaria infection. If these <code>treatment</code> labels were irrelevant, then we could randomly reassign them by “shuffling” them to no consequence!</p>
 <p>To illustrate this idea, in Table <a href="7-hypothesis-testing.html#tab:compare-six">7.1</a> we narrow our focus to 6 arbitrarily chosen females of the 65 . The malaria column shows that 3 females were infected while 3 weren’t. The <code>treatment</code> column shows the nest treatment, control or egg removal.</p>
 <p>However, in our hypothesized universe of no effect of egg removal, treatment is irrelevant and thus it is of no consequence to randomly “shuffle” the values of <code>treatment</code>. The <code>shuffled_treatment</code> column shows one such possible random shuffling. Observe in the last column how the number of females in the <code>Egg removal</code> group and the <code>Control</code> group remains the same at 3 each, but they are now listed in a different order.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
@@ -861,12 +913,12 @@ FIGURE 7.3: Standard deck of 52 playing cards.
 FIGURE 7.4: Shuffling a deck of cards.
 </p>
 </div>
-<p>We’ve saved one such shuffling in the <code>BirdMalaria_shuffled</code> data frame. If you compare the original <code>BirdMalaria</code> and the shuffled <code>BirdMalaria_shuffled</code> data frames, you’ll see that while the malaria variable is identical, the <code>shuffled_treatment</code> variable differs from <code>treatment</code>.</p>
-<p>Let’s repeat the same exploratory data analysis we did for the original <code>BirdMalaria</code> data on our <code>BirdMalaria_shuffled</code> data frame. Let’s create a bar plot visualizing the relationship between malaria and the new shuffled <code>treatment</code> variable and compare this to the original unshuffled version in Figure <a href="7-hypothesis-testing.html#fig:BirdMalaria-barplot-permuted">7.5</a>.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="7-hypothesis-testing.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(BirdMalaria_shuffled, </span>
-<span id="cb290-2"><a href="7-hypothesis-testing.html#cb290-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> shuffled_treatment, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb290-3"><a href="7-hypothesis-testing.html#cb290-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb290-4"><a href="7-hypothesis-testing.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Shuffled treatment&quot;</span>)</span></code></pre></div>
+<p>We’ve saved one such shuffling in the <code>GreatTitMalaria_shuffled</code> data frame. If you compare the original <code>GreatTitMalaria</code> and the shuffled <code>GreatTitMalaria_shuffled</code> data frames, you’ll see that while the malaria variable is identical, the <code>shuffled_treatment</code> variable differs from <code>treatment</code>.</p>
+<p>Let’s repeat the same exploratory data analysis we did for the original <code>GreatTitMalaria</code> data on our <code>GreatTitMalaria_shuffled</code> data frame. Let’s create a bar plot visualizing the relationship between malaria and the new shuffled <code>treatment</code> variable and compare this to the original unshuffled version in Figure <a href="7-hypothesis-testing.html#fig:BirdMalaria-barplot-permuted">7.5</a>.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="7-hypothesis-testing.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(GreatTitMalaria_shuffled, </span>
+<span id="cb291-2"><a href="7-hypothesis-testing.html#cb291-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> shuffled_treatment, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb291-3"><a href="7-hypothesis-testing.html#cb291-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb291-4"><a href="7-hypothesis-testing.html#cb291-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Shuffled treatment&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:BirdMalaria-barplot-permuted"></span>
 <img src="ModernDive_files/figure-html/BirdMalaria-barplot-permuted-1.png" alt="Barplots of relationship of response with treatment (left) and shuffled treatment (right)." width="\textwidth" />
 <p class="caption">
@@ -875,9 +927,9 @@ FIGURE 7.5: Barplots of relationship of response with treatment (left) and shuff
 </div>
 <p>In the original data, in the left barplot, the rate of malaria (red) in females following egg removal is clearly much greater than the rate in control females. In comparison, with the new “shuffled” data visualized in the right barplot, the rates of malaria appear pretty similar between the females in the two groups.</p>
 <p>Let’s also compute the proportion of female birds with malaria for each <code>shuffled_treatment</code> group:</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="7-hypothesis-testing.html#cb291-1" aria-hidden="true" tabindex="-1"></a>BirdMalaria_shuffled <span class="sc">%&gt;%</span> </span>
-<span id="cb291-2"><a href="7-hypothesis-testing.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(shuffled_treatment, response) <span class="sc">%&gt;%</span> </span>
-<span id="cb291-3"><a href="7-hypothesis-testing.html#cb291-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="co"># Same as summarize(n = n())</span></span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="7-hypothesis-testing.html#cb292-1" aria-hidden="true" tabindex="-1"></a>GreatTitMalaria_shuffled <span class="sc">%&gt;%</span> </span>
+<span id="cb292-2"><a href="7-hypothesis-testing.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(shuffled_treatment, response) <span class="sc">%&gt;%</span> </span>
+<span id="cb292-3"><a href="7-hypothesis-testing.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>() <span class="co"># Same as summarize(n = n())</span></span></code></pre></div>
 <pre><code># A tibble: 4 × 3
 # Groups:   shuffled_treatment [2]
   shuffled_treatment response       n
@@ -895,9 +947,9 @@ FIGURE 7.5: Barplots of relationship of response with treatment (left) and shuff
 <p>Imagine that we repeated the shuffling process above 99 more times and recorded the values in 99 more <code>shuffled__treatment</code> columns. The <code>shuffled_results</code> dataset includes the results of one such scenario</p>
 <p>For each of these 100 columns of <em>shuffles</em>, we computed the difference in malaria rates between control and experimentally treated birds, and in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-1">7.6</a> we display their distribution in a histogram. We also mark the observed difference in malaria rate that occurred in real life of 0.3 = 30% with a dark line.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:null-distribution-1"></span>
-<img src="ModernDive_files/figure-html/null-distribution-1-1.png" alt="Distribution of shuffled differences in BirdMalaria." width="\textwidth" />
+<img src="ModernDive_files/figure-html/null-distribution-1-1.png" alt="Distribution of shuffled differences in GreatTitMalaria." width="\textwidth" />
 <p class="caption">
-FIGURE 7.6: Distribution of shuffled differences in BirdMalaria.
+FIGURE 7.6: Distribution of shuffled differences in GreatTitMalaria.
 </p>
 </div>
 <p>Before we discuss the distribution of the histogram, we emphasize the key thing to remember: this histogram represents differences in malaria rates that one would observe in our <em>hypothesized universe</em> where egg removal has no effect on susceptibility to the malaria parasite.</p>
@@ -1046,7 +1098,7 @@ H_0 &amp;: p_{e} - p_{c} = 0\\
 \]</span></p>
 <p>Observe how the alternative hypothesis <span class="math inline">\(H_A\)</span> is one-sided with <span class="math inline">\(p_{e} - p_{c} &gt; 0\)</span>. Had we opted for a two-sided alternative, we would have set <span class="math inline">\(p_{e} - p_{c} \neq 0\)</span>. To keep things simple for now, we’ll stick with the simpler one-sided alternative. We’ll present an example of a two-sided alternative in Section <a href="7-hypothesis-testing.html#ht-case-study">7.5</a>.</p>
 <p>Third, a <strong>test statistic</strong> is a <em>point estimate/sample statistic</em> formula used for hypothesis testing. Note that a sample statistic is merely a summary statistic based on a sample of observations. Recall from Section <a href="3-wrangling.html#summarize">3.5</a> that a summary statistic takes in many values and returns only one. Here, the samples would be the <span class="math inline">\(n_e\)</span> = 30 experimentally-treated females and the <span class="math inline">\(n_c\)</span> = 35 control females. Hence, the point estimate of interest is the difference in sample proportions <span class="math inline">\(\widehat{p}_{e} - \widehat{p}_{c}\)</span>.</p>
-<p>Fourth, the <strong>observed test statistic</strong> is the value of the test statistic that we observed in real life. In our case, we computed this value using the data saved in the <code>BirdMalaria</code> data frame. It was the observed difference of <span class="math inline">\(\widehat{p}_{e} -\widehat{p}_{c} = 0.5 - 0.2 = 0.3 = 30\%\)</span> in favor of control birds.</p>
+<p>Fourth, the <strong>observed test statistic</strong> is the value of the test statistic that we observed in real life. In our case, we computed this value using the data saved in the <code>GreatTitMalaria</code> data frame. It was the observed difference of <span class="math inline">\(\widehat{p}_{e} -\widehat{p}_{c} = 0.5 - 0.2 = 0.3 = 30\%\)</span> in favor of control birds.</p>
 <p>Fifth, the <strong>null distribution</strong> is the sampling distribution of the test statistic <em>assuming the null hypothesis <span class="math inline">\(H_0\)</span> is true</em>. Ooof! That’s a long one! Let’s unpack it slowly. The key to understanding the null distribution is that the null hypothesis <span class="math inline">\(H_0\)</span> is <em>assumed</em> to be true. We’re not saying that <span class="math inline">\(H_0\)</span> is true at this point, we’re only assuming it to be true for hypothesis testing purposes. In our case, this corresponds to our hypothesized universe of no effect of egg removal on infection rates. Assuming the null hypothesis <span class="math inline">\(H_0\)</span>, also stated as “Under <span class="math inline">\(H_0\)</span>,” how does the test statistic vary due to sampling variation? In our case, how will the difference in sample proportions <span class="math inline">\(\widehat{p}_{c} - \widehat{p}_{e}\)</span> vary due to sampling under <span class="math inline">\(H_0\)</span>? Recall from Subsection <a href="5-sampling.html#sampling-definitions">5.3.2</a> that distributions displaying how point estimates vary due to sampling variation are called <em>sampling distributions</em>. The only additional thing to keep in mind about null distributions is that they are sampling distributions <em>assuming the null hypothesis <span class="math inline">\(H_0\)</span> is true</em>.</p>
 <p>In our case, we previously visualized a null distribution in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-1">7.6</a>, which we re-display in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-2">7.7</a> using our new notation and terminology. It is the distribution of the 100 differences in sample proportions our friends computed <em>assuming</em> a hypothetical universe of no treatment effect. We also mark the value of the observed test statistic of 0.3 with a vertical line.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:null-distribution-2"></span>
@@ -1067,7 +1119,7 @@ we need to include the observed test statistic in our calculation.
 -->
 <p>Seventh and lastly, in many hypothesis testing procedures, it is commonly recommended to set the <strong>significance level</strong> of the test beforehand. It is denoted by the Greek letter <span class="math inline">\(\alpha\)</span> (pronounced “alpha”). This value acts as a cutoff on the <span class="math inline">\(p\)</span>-value, where if the <span class="math inline">\(p\)</span>-value falls below <span class="math inline">\(\alpha\)</span>, we would “reject the null hypothesis <span class="math inline">\(H_0\)</span>.”</p>
 <p>Alternatively, if the <span class="math inline">\(p\)</span>-value does not fall below <span class="math inline">\(\alpha\)</span>, we would “fail to reject <span class="math inline">\(H_0\)</span>.” Note the latter statement is not quite the same as saying we “accept <span class="math inline">\(H_0\)</span>.” This distinction is rather subtle and not immediately obvious. So we’ll revisit it later in Section <a href="7-hypothesis-testing.html#ht-interpretation">7.4</a>.</p>
-<p>While different fields tend to use different values of <span class="math inline">\(\alpha\)</span>, some commonly used values for <span class="math inline">\(\alpha\)</span> are 0.1, 0.01, and 0.05; with 0.05 being the choice people often make without putting much thought into it. We’ll talk more about <span class="math inline">\(\alpha\)</span> significance levels in Section <a href="7-hypothesis-testing.html#ht-interpretation">7.4</a>, but first let’s fully conduct the hypothesis test corresponding to our BirdMalaria activity using the <code>infer</code> package.</p>
+<p>While different fields tend to use different values of <span class="math inline">\(\alpha\)</span>, some commonly used values for <span class="math inline">\(\alpha\)</span> are 0.1, 0.01, and 0.05; with 0.05 being the choice people often make without putting much thought into it. We’ll talk more about <span class="math inline">\(\alpha\)</span> significance levels in Section <a href="7-hypothesis-testing.html#ht-interpretation">7.4</a>, but first let’s fully conduct the hypothesis test corresponding to our GreatTitMalaria activity using the <code>infer</code> package.</p>
 </div>
 <div id="ht-infer" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Conducting hypothesis tests<a href="7-hypothesis-testing.html#ht-infer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1099,8 +1151,8 @@ FIGURE 7.9: Hypothesis testing with the infer package.
 <h4>1. <code>specify</code> variables<a href="7-hypothesis-testing.html#specify-variables-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Recall that we use the <code>specify()</code> verb to specify the response variable and, if needed, any explanatory variables for our study. In this case, since we are interested in any potential effects of treatment on infection rates, we set <code>response</code> as the response variable and <code>treatment</code> as the explanatory variable. We do so using <code>formula = response ~ explanatory</code> where <code>response</code> is the name of the response variable in the data frame and <code>treatment</code> is the name of the explanatory variable. So in our case it is <code>response ~ treatment</code>.</p>
 <p>Furthermore, since we are interested in the proportion of female birds with <code>"Malaria"</code>, and not the proportion of birds with <code>"No Malaria"</code>, we set the argument <code>success</code> to <code>"Malaria"</code>.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="7-hypothesis-testing.html#cb293-1" aria-hidden="true" tabindex="-1"></a>BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb293-2"><a href="7-hypothesis-testing.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="7-hypothesis-testing.html#cb294-1" aria-hidden="true" tabindex="-1"></a>GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb294-2"><a href="7-hypothesis-testing.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) </span></code></pre></div>
 <pre><code>Response: response (factor)
 Explanatory: treatment (factor)
 # A tibble: 65 × 2
@@ -1117,7 +1169,7 @@ Explanatory: treatment (factor)
  9 No Malaria Control  
 10 No Malaria Control  
 # … with 55 more rows</code></pre>
-<p>Again, notice how the <code>BirdMalaria</code> data itself doesn’t change, but the <code>Response: response (factor)</code> and <code>Explanatory: treatment (factor)</code> <em>meta-data</em> do. This is similar to how the <code>group_by()</code> verb from <code>dplyr</code> doesn’t change the data, but only adds “grouping” meta-data, as we saw in Section <a href="3-wrangling.html#groupby">3.6</a>.</p>
+<p>Again, notice how the <code>GreatTitMalaria</code> data itself doesn’t change, but the <code>Response: response (factor)</code> and <code>Explanatory: treatment (factor)</code> <em>meta-data</em> do. This is similar to how the <code>group_by()</code> verb from <code>dplyr</code> doesn’t change the data, but only adds “grouping” meta-data, as we saw in Section <a href="3-wrangling.html#groupby">3.6</a>.</p>
 </div>
 <div id="hypothesize-the-null" class="section level4 unnumbered hasAnchor">
 <h4>2. <code>hypothesize</code> the null<a href="7-hypothesis-testing.html#hypothesize-the-null" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1134,9 +1186,9 @@ H_0 &amp;: p_{e} - p_{c} = 0\\
 <li><code>"independence"</code> for hypotheses involving two samples.</li>
 </ul>
 <p>In our case, since we have two samples (the birds on control nests and those on nests with egg removal), we set <code>null = "independence"</code>.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="7-hypothesis-testing.html#cb295-1" aria-hidden="true" tabindex="-1"></a>BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb295-2"><a href="7-hypothesis-testing.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb295-3"><a href="7-hypothesis-testing.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="7-hypothesis-testing.html#cb296-1" aria-hidden="true" tabindex="-1"></a>GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb296-2"><a href="7-hypothesis-testing.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb296-3"><a href="7-hypothesis-testing.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>)</span></code></pre></div>
 <pre><code>Response: response (factor)
 Explanatory: treatment (factor)
 Null Hypothesis: independence
@@ -1167,11 +1219,11 @@ H_0 &amp;: \mu = 1993\\
 <div id="generate-replicates-3" class="section level4 unnumbered hasAnchor">
 <h4>3. <code>generate</code> replicates<a href="7-hypothesis-testing.html#generate-replicates-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>After we <code>hypothesize()</code> the null hypothesis, we <code>generate()</code> replicates of “shuffled” datasets assuming the null hypothesis is true. We do this by repeating the shuffling exercise you performed in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a> several times. Instead of merely doing it 100 times as our groups of friends did, let’s use the computer to repeat this 1000 times by setting <code>reps = 1000</code> in the <code>generate()</code> function. However, unlike for confidence intervals where we generated replicates using <code>type = "bootstrap"</code> resampling with replacement, we’ll now perform shuffles/permutations by setting <code>type = "permute"</code>. Recall that shuffles/permutations are a kind of resampling, but unlike the bootstrap method, they involve resampling <em>without</em> replacement.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="7-hypothesis-testing.html#cb297-1" aria-hidden="true" tabindex="-1"></a>BirdMalaria_generate <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb297-2"><a href="7-hypothesis-testing.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb297-3"><a href="7-hypothesis-testing.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb297-4"><a href="7-hypothesis-testing.html#cb297-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>)</span>
-<span id="cb297-5"><a href="7-hypothesis-testing.html#cb297-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(BirdMalaria_generate)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="7-hypothesis-testing.html#cb298-1" aria-hidden="true" tabindex="-1"></a>GreatTitMalaria_generate <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb298-2"><a href="7-hypothesis-testing.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb298-3"><a href="7-hypothesis-testing.html#cb298-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb298-4"><a href="7-hypothesis-testing.html#cb298-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>)</span>
+<span id="cb298-5"><a href="7-hypothesis-testing.html#cb298-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(GreatTitMalaria_generate)</span></code></pre></div>
 <pre><code>[1] 65000</code></pre>
 <!-- 
 v2 TODO: Consider:
@@ -1180,39 +1232,42 @@ infer:::permute_once() shuffles the y variable instead of the x. This ends up be
 to explain given how we set up the cards tactile example before. I think it's best to avoid displaying `BirdMalaria_generate`
 here since it has malaria shuffled. 
 -->
-<p>Observe that the resulting data frame has 65,000 rows. This is because we performed shuffles/permutations for each of the 65 rows 1000 times and <span class="math inline">\(65,000 = 1000 \cdot 65\)</span>. If you explore the <code>BirdMalaria_generate</code> data frame with <code>View()</code>, you’ll notice that the variable <code>replicate</code> indicates which resample each row belongs to. So it has the value <code>1</code> 65 times, the value <code>2</code> 65 times, all the way through to the value 1000, again 65 times.</p>
+<p>Observe that the resulting data frame has 65,000 rows. This is because we performed shuffles/permutations for each of the 65 rows 1000 times and <span class="math inline">\(65,000 = 1000 \cdot 65\)</span>. If you explore the <code>GreatTitMalaria_generate</code> data frame with <code>View()</code>, you’ll notice that the variable <code>replicate</code> indicates which resample each row belongs to. So it has the value <code>1</code> 65 times, the value <code>2</code> 65 times, all the way through to the value 1000, again 65 times.</p>
 </div>
 <div id="calculate-summary-statistics-3" class="section level4 unnumbered hasAnchor">
 <h4>4. <code>calculate</code> summary statistics<a href="7-hypothesis-testing.html#calculate-summary-statistics-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now that we have generated 1000 replicates of “shuffles” assuming the null hypothesis is true, let’s <code>calculate()</code> the appropriate summary statistic for each of our 1000 shuffles. From Section <a href="7-hypothesis-testing.html#understanding-ht">7.2</a>, point estimates related to hypothesis testing have a specific name: <em>test statistics</em>. Since the unknown population parameter of interest is the difference in population proportions <span class="math inline">\(p_{e} - p_{c}\)</span>, the test statistic here is the difference in sample proportions <span class="math inline">\(\widehat{p}_{e} - \widehat{p}_{c}\)</span>.</p>
 <p>For each of our 1000 shuffles, we can calculate this test statistic by setting <code>stat = "diff in props"</code>. Furthermore, since we are interested in <span class="math inline">\(\widehat{p}_{e} - \widehat{p}_{c}\)</span> we set <code>order = c("Egg removal", "Control")</code>. As we stated earlier, the order of the subtraction does not matter, so long as you stay consistent throughout your analysis and tailor your interpretations accordingly.</p>
 <p>Let’s save the result in a data frame called <code>null_distribution</code>:</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="7-hypothesis-testing.html#cb299-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb299-2"><a href="7-hypothesis-testing.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb299-3"><a href="7-hypothesis-testing.html#cb299-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb299-4"><a href="7-hypothesis-testing.html#cb299-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb299-5"><a href="7-hypothesis-testing.html#cb299-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span>
-<span id="cb299-6"><a href="7-hypothesis-testing.html#cb299-6" aria-hidden="true" tabindex="-1"></a>null_distribution</span></code></pre></div>
-<pre><code># A tibble: 1,000 × 2
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="7-hypothesis-testing.html#cb300-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb300-2"><a href="7-hypothesis-testing.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb300-3"><a href="7-hypothesis-testing.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb300-4"><a href="7-hypothesis-testing.html#cb300-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb300-5"><a href="7-hypothesis-testing.html#cb300-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span>
+<span id="cb300-6"><a href="7-hypothesis-testing.html#cb300-6" aria-hidden="true" tabindex="-1"></a>null_distribution</span></code></pre></div>
+<pre><code>Response: response (factor)
+Explanatory: treatment (factor)
+Null Hypothesis: independence
+# A tibble: 1,000 × 2
    replicate       stat
        &lt;int&gt;      &lt;dbl&gt;
- 1         1 -0.176190 
- 2         2  0.0714286
- 3         3  0.319048 
- 4         4  0.0714286
- 5         5  0.0714286
- 6         6 -0.0523810
- 7         7  0.195238 
- 8         8 -0.0523810
- 9         9  0.0714286
-10        10 -0.114286 
+ 1         1  0.176190 
+ 2         2 -0.0714286
+ 3         3 -0.319048 
+ 4         4 -0.0714286
+ 5         5 -0.0714286
+ 6         6  0.0523810
+ 7         7 -0.195238 
+ 8         8  0.0523810
+ 9         9 -0.0714286
+10        10  0.114286 
 # … with 990 more rows</code></pre>
 <p>Observe that we have 1000 values of <code>stat</code>, each representing one instance of <span class="math inline">\(\widehat{p}_{e} - \widehat{p}_{c}\)</span> in a hypothesized world of no treatment effect. Observe as well that we chose the name of this data frame carefully: <code>null_distribution</code>. Recall once again from Section <a href="7-hypothesis-testing.html#understanding-ht">7.2</a> that sampling distributions when the null hypothesis <span class="math inline">\(H_0\)</span> is assumed to be true have a special name: the <em>null distribution</em>.</p>
 <p>What was the <em>observed</em> difference in infection rates? In other words, what was the <em>observed test statistic</em> <span class="math inline">\(\widehat{p}_{e} - \widehat{p}_{c}\)</span>? Recall from Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a> that we computed this observed difference by hand to be 0.5 - 0.2 = 0.3 = 30%. We can also compute this value using the previous <code>infer</code> code but with the <code>hypothesize()</code> and <code>generate()</code> steps removed. Let’s save this in <code>obs_diff_prop</code>:</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="7-hypothesis-testing.html#cb301-1" aria-hidden="true" tabindex="-1"></a>obs_diff_prop <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb301-2"><a href="7-hypothesis-testing.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb301-3"><a href="7-hypothesis-testing.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span>
-<span id="cb301-4"><a href="7-hypothesis-testing.html#cb301-4" aria-hidden="true" tabindex="-1"></a>obs_diff_prop</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="7-hypothesis-testing.html#cb302-1" aria-hidden="true" tabindex="-1"></a>obs_diff_prop <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb302-2"><a href="7-hypothesis-testing.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb302-3"><a href="7-hypothesis-testing.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span>
+<span id="cb302-4"><a href="7-hypothesis-testing.html#cb302-4" aria-hidden="true" tabindex="-1"></a>obs_diff_prop</span></code></pre></div>
 <pre><code>Response: response (factor)
 Explanatory: treatment (factor)
 # A tibble: 1 × 1
@@ -1224,7 +1279,7 @@ Explanatory: treatment (factor)
 <h4>5. <code>visualize</code> the p-value<a href="7-hypothesis-testing.html#visualize-the-p-value" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The final step is to measure how surprised we are by a malaria infection difference of 30% in a hypothesized universe of no treatment effect. If the observed difference of 0.3 is highly unlikely, then we would be inclined to reject the validity of our hypothesized universe.</p>
 <p>We start by visualizing the <em>null distribution</em> of our 1000 values of <span class="math inline">\(\widehat{p}_{c} - \widehat{p}_{e}\)</span> using <code>visualize()</code> in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-infer">7.10</a>. Recall that these are values of the difference in infection rates assuming <span class="math inline">\(H_0\)</span> is true. This corresponds to being in our hypothesized universe of no treatment effect.</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="7-hypothesis-testing.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="7-hypothesis-testing.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:null-distribution-infer"></span>
 <img src="ModernDive_files/figure-html/null-distribution-infer-1.png" alt="Null distribution." width="\textwidth" />
 <p class="caption">
@@ -1234,8 +1289,8 @@ FIGURE 7.10: Null distribution.
 <p>Let’s now add what happened in real life to Figure <a href="7-hypothesis-testing.html#fig:null-distribution-infer">7.10</a>, the observed difference in infection rates of 0.5 - 0.2 = 0.3 = 30%. However, instead of merely adding a vertical line using <code>geom_vline()</code>, let’s use the <code>shade_p_value()</code> function with <code>obs_stat</code> set to the observed test statistic value we saved in <code>obs_diff_prop</code>.</p>
 <p>Furthermore, we’ll set the <code>direction = "right"</code> reflecting our alternative hypothesis <span class="math inline">\(H_A: p_{e} - p_{c} &gt; 0\)</span>. Recall our alternative hypothesis <span class="math inline">\(H_A\)</span> is that <span class="math inline">\(p_{e} - p_{c} &gt; 0\)</span>, stating that there is a higher infection rate in experimental females compared to control females. “More extreme” here corresponds to differences that are “greater” or “more positive” or “more to the right” Hence we set the <code>direction</code> argument of <code>shade_p_value()</code> to be <code>"right"</code>.</p>
 <p>On the other hand, had our alternative hypothesis <span class="math inline">\(H_A\)</span> been the other possible one-sided alternative <span class="math inline">\(p_{e} - p_{c} &lt; 0\)</span>, suggesting that the experimental treatment decreases susceptibility to infection, we would’ve set <code>direction = "left"</code>. Had our alternative hypothesis <span class="math inline">\(H_A\)</span> been two-sided <span class="math inline">\(p_{e} - p_{c} \neq 0\)</span>, suggesting an effect in either direction, we would’ve set <code>direction = "both"</code>.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="7-hypothesis-testing.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution, <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb304-2"><a href="7-hypothesis-testing.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_diff_prop, <span class="at">direction =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="7-hypothesis-testing.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution, <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb305-2"><a href="7-hypothesis-testing.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_diff_prop, <span class="at">direction =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:null-distribution-infer-2"></span>
 <img src="ModernDive_files/figure-html/null-distribution-infer-2-1.png" alt="Shaded histogram to show $p$-value." width="\textwidth" />
 <p class="caption">
@@ -1248,42 +1303,42 @@ FIGURE 7.11: Shaded histogram to show <span class="math inline">\(p\)</span>-val
 </blockquote>
 <p>So judging by the shaded region in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-infer-2">7.11</a>, it seems we would rarely observe differences in infection rates of 0.3 = 30% or more in a hypothesized universe of no treatment effect. In other words, the <span class="math inline">\(p\)</span>-value is very small. Hence, we would be inclined to reject this hypothesized universe, or using statistical language we would “reject <span class="math inline">\(H_0\)</span>.”</p>
 <p>What fraction of the null distribution is shaded? In other words, what is the exact value of the <span class="math inline">\(p\)</span>-value? We can compute it using the <code>get_p_value()</code> function with the same arguments as the previous <code>shade_p_value()</code> code:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="7-hypothesis-testing.html#cb305-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">%&gt;%</span> </span>
-<span id="cb305-2"><a href="7-hypothesis-testing.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_diff_prop, <span class="at">direction =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="7-hypothesis-testing.html#cb306-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">%&gt;%</span> </span>
+<span id="cb306-2"><a href="7-hypothesis-testing.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_diff_prop, <span class="at">direction =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
-1   0.011</code></pre>
-<p>Keeping the definition of a <span class="math inline">\(p\)</span>-value in mind, the probability of observing a difference in infection rates as large as 0.3 = 30% due to sampling variation alone in the null distribution is 0.011 = 1.1%. Since this <span class="math inline">\(p\)</span>-value is smaller than our pre-specified significance level <span class="math inline">\(\alpha\)</span> = 0.05, we reject the null hypothesis <span class="math inline">\(H_0: p_{e} - p_{c} = 0\)</span>. In other words, this <span class="math inline">\(p\)</span>-value is sufficiently small to reject our hypothesized universe of no treatment effect. We instead have enough evidence to change our mind in favor of the egg removal treatment having an effect on susceptibility to malaria infection. Observe that whether we reject the null hypothesis <span class="math inline">\(H_0\)</span> or not depends in large part on our choice of significance level <span class="math inline">\(\alpha\)</span>. We’ll discuss this more in Subsection <a href="7-hypothesis-testing.html#choosing-alpha">7.4.3</a>.</p>
+1   0.007</code></pre>
+<p>Keeping the definition of a <span class="math inline">\(p\)</span>-value in mind, the probability of observing a difference in infection rates as large as 0.3 = 30% due to sampling variation alone in the null distribution is 0.007 = 0.7%. Since this <span class="math inline">\(p\)</span>-value is smaller than our pre-specified significance level <span class="math inline">\(\alpha\)</span> = 0.05, we reject the null hypothesis <span class="math inline">\(H_0: p_{e} - p_{c} = 0\)</span>. In other words, this <span class="math inline">\(p\)</span>-value is sufficiently small to reject our hypothesized universe of no treatment effect. We instead have enough evidence to change our mind in favor of the egg removal treatment having an effect on susceptibility to malaria infection. Observe that whether we reject the null hypothesis <span class="math inline">\(H_0\)</span> or not depends in large part on our choice of significance level <span class="math inline">\(\alpha\)</span>. We’ll discuss this more in Subsection <a href="7-hypothesis-testing.html#choosing-alpha">7.4.3</a>.</p>
 </div>
 </div>
 <div id="comparing-infer-workflows" class="section level3 hasAnchor" number="7.3.2">
 <h3><span class="header-section-number">7.3.2</span> Comparison with confidence intervals<a href="7-hypothesis-testing.html#comparing-infer-workflows" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One of the great things about the <code>infer</code> package is that we can jump seamlessly between conducting hypothesis tests and constructing confidence intervals with minimal changes! Recall the code from the previous section that creates the null distribution, which in turn is needed to compute the <span class="math inline">\(p\)</span>-value:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="7-hypothesis-testing.html#cb307-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span> </span>
-<span id="cb307-2"><a href="7-hypothesis-testing.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb307-3"><a href="7-hypothesis-testing.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb307-4"><a href="7-hypothesis-testing.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb307-5"><a href="7-hypothesis-testing.html#cb307-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
-<p>To create the corresponding bootstrap distribution needed to construct a 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span>, we only need to make two changes. First, we remove the <code>hypothesize()</code> step since we are no longer assuming a null hypothesis <span class="math inline">\(H_0\)</span> is true. We can do this by deleting or commenting out the <code>hypothesize()</code> line of code. Second, we switch the <code>type</code> of resampling in the <code>generate()</code> step to be <code>"bootstrap"</code> instead of <code>"permute"</code>.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="7-hypothesis-testing.html#cb308-1" aria-hidden="true" tabindex="-1"></a>bootstrap_distribution <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="7-hypothesis-testing.html#cb308-1" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span> </span>
 <span id="cb308-2"><a href="7-hypothesis-testing.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb308-3"><a href="7-hypothesis-testing.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change 1 - Remove hypothesize():</span></span>
-<span id="cb308-4"><a href="7-hypothesis-testing.html#cb308-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hypothesize(null = &quot;independence&quot;) %&gt;% </span></span>
-<span id="cb308-5"><a href="7-hypothesis-testing.html#cb308-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change 2 - Switch type from &quot;permute&quot; to &quot;bootstrap&quot;:</span></span>
-<span id="cb308-6"><a href="7-hypothesis-testing.html#cb308-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb308-7"><a href="7-hypothesis-testing.html#cb308-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
+<span id="cb308-3"><a href="7-hypothesis-testing.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb308-4"><a href="7-hypothesis-testing.html#cb308-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb308-5"><a href="7-hypothesis-testing.html#cb308-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
+<p>To create the corresponding bootstrap distribution needed to construct a 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span>, we only need to make two changes. First, we remove the <code>hypothesize()</code> step since we are no longer assuming a null hypothesis <span class="math inline">\(H_0\)</span> is true. We can do this by deleting or commenting out the <code>hypothesize()</code> line of code. Second, we switch the <code>type</code> of resampling in the <code>generate()</code> step to be <code>"bootstrap"</code> instead of <code>"permute"</code>.</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="7-hypothesis-testing.html#cb309-1" aria-hidden="true" tabindex="-1"></a>bootstrap_distribution <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span> </span>
+<span id="cb309-2"><a href="7-hypothesis-testing.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb309-3"><a href="7-hypothesis-testing.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change 1 - Remove hypothesize():</span></span>
+<span id="cb309-4"><a href="7-hypothesis-testing.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># hypothesize(null = &quot;independence&quot;) %&gt;% </span></span>
+<span id="cb309-5"><a href="7-hypothesis-testing.html#cb309-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change 2 - Switch type from &quot;permute&quot; to &quot;bootstrap&quot;:</span></span>
+<span id="cb309-6"><a href="7-hypothesis-testing.html#cb309-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb309-7"><a href="7-hypothesis-testing.html#cb309-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
 <p>Using this <code>bootstrap_distribution</code>, let’s first compute the percentile-based confidence intervals, as we did in Section <a href="6-confidence-intervals.html#bootstrap-process">6.4</a>:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="7-hypothesis-testing.html#cb309-1" aria-hidden="true" tabindex="-1"></a>percentile_ci <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">%&gt;%</span> </span>
-<span id="cb309-2"><a href="7-hypothesis-testing.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">&quot;percentile&quot;</span>)</span>
-<span id="cb309-3"><a href="7-hypothesis-testing.html#cb309-3" aria-hidden="true" tabindex="-1"></a>percentile_ci</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="7-hypothesis-testing.html#cb310-1" aria-hidden="true" tabindex="-1"></a>percentile_ci <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">%&gt;%</span> </span>
+<span id="cb310-2"><a href="7-hypothesis-testing.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">&quot;percentile&quot;</span>)</span>
+<span id="cb310-3"><a href="7-hypothesis-testing.html#cb310-3" aria-hidden="true" tabindex="-1"></a>percentile_ci</span></code></pre></div>
 <pre><code># A tibble: 1 × 2
-   lower_ci   upper_ci
-      &lt;dbl&gt;      &lt;dbl&gt;
-1 -0.505840 -0.0700739</code></pre>
-<p>Using our shorthand interpretation for 95% confidence intervals from Subsection <a href="6-confidence-intervals.html#shorthand">6.5.2</a>, we are 95% “confident” that the true difference in population proportions <span class="math inline">\(p_{e} - p_{c}\)</span> is between (-0.506, -0.07). Let’s visualize <code>bootstrap_distribution</code> and this percentile-based 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span> in Figure <a href="7-hypothesis-testing.html#fig:bootstrap-distribution-two-prop-percentile">7.12</a>.</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="7-hypothesis-testing.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(bootstrap_distribution) <span class="sc">+</span> </span>
-<span id="cb311-2"><a href="7-hypothesis-testing.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> percentile_ci)</span></code></pre></div>
+   lower_ci upper_ci
+      &lt;dbl&gt;    &lt;dbl&gt;
+1 0.0700739 0.505840</code></pre>
+<p>Using our shorthand interpretation for 95% confidence intervals from Subsection <a href="6-confidence-intervals.html#shorthand">6.5.2</a>, we are 95% “confident” that the true difference in population proportions <span class="math inline">\(p_{e} - p_{c}\)</span> is between (0.07, 0.506). Let’s visualize <code>bootstrap_distribution</code> and this percentile-based 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span> in Figure <a href="7-hypothesis-testing.html#fig:bootstrap-distribution-two-prop-percentile">7.12</a>.</p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="7-hypothesis-testing.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(bootstrap_distribution) <span class="sc">+</span> </span>
+<span id="cb312-2"><a href="7-hypothesis-testing.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> percentile_ci)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:bootstrap-distribution-two-prop-percentile"></span>
 <img src="ModernDive_files/figure-html/bootstrap-distribution-two-prop-percentile-1.png" alt="Percentile-based 95\% confidence interval." width="\textwidth" />
 <p class="caption">
@@ -1292,17 +1347,17 @@ FIGURE 7.12: Percentile-based 95% confidence interval.
 </div>
 <p>Notice a key value that is not included in the 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span>: the value 0. In other words, a difference of 0 is not included in our net, suggesting that <span class="math inline">\(p_{e}\)</span> and <span class="math inline">\(p_{c}\)</span> are truly different! Furthermore, observe how the entirety of the 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span> lies above 0, suggesting that this difference is positive for the experimental birds.</p>
 <p>Since the bootstrap distribution appears to be roughly normally shaped, we can also use the standard error method as we did in Section <a href="6-confidence-intervals.html#bootstrap-process">6.4</a>. In this case, we must specify the <code>point_estimate</code> argument as the observed difference in infection rates 0.3 = 30% saved in <code>obs_diff_prop</code>. This value acts as the center of the confidence interval.</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="7-hypothesis-testing.html#cb312-1" aria-hidden="true" tabindex="-1"></a>se_ci <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">%&gt;%</span> </span>
-<span id="cb312-2"><a href="7-hypothesis-testing.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">&quot;se&quot;</span>, </span>
-<span id="cb312-3"><a href="7-hypothesis-testing.html#cb312-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">point_estimate =</span> obs_diff_prop)</span>
-<span id="cb312-4"><a href="7-hypothesis-testing.html#cb312-4" aria-hidden="true" tabindex="-1"></a>se_ci</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="7-hypothesis-testing.html#cb313-1" aria-hidden="true" tabindex="-1"></a>se_ci <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">%&gt;%</span> </span>
+<span id="cb313-2"><a href="7-hypothesis-testing.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.95</span>, <span class="at">type =</span> <span class="st">&quot;se&quot;</span>, </span>
+<span id="cb313-3"><a href="7-hypothesis-testing.html#cb313-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">point_estimate =</span> obs_diff_prop)</span>
+<span id="cb313-4"><a href="7-hypothesis-testing.html#cb313-4" aria-hidden="true" tabindex="-1"></a>se_ci</span></code></pre></div>
 <pre><code># A tibble: 1 × 2
    lower_ci upper_ci
       &lt;dbl&gt;    &lt;dbl&gt;
 1 0.0752680 0.524732</code></pre>
 <p>Let’s visualize <code>bootstrap_distribution</code> again, but now the standard error based 95% confidence interval for <span class="math inline">\(p_{e} - p_{c}\)</span> in Figure <a href="7-hypothesis-testing.html#fig:bootstrap-distribution-two-prop-se">7.13</a>. Again, notice how the value 0 is not included in our confidence interval, again suggesting that <span class="math inline">\(p_{e}\)</span> and <span class="math inline">\(p_{c}\)</span> are truly different!</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="7-hypothesis-testing.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(bootstrap_distribution) <span class="sc">+</span> </span>
-<span id="cb314-2"><a href="7-hypothesis-testing.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> se_ci)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="7-hypothesis-testing.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(bootstrap_distribution) <span class="sc">+</span> </span>
+<span id="cb315-2"><a href="7-hypothesis-testing.html#cb315-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_confidence_interval</span>(<span class="at">endpoints =</span> se_ci)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:bootstrap-distribution-two-prop-se"></span>
 <img src="ModernDive_files/figure-html/bootstrap-distribution-two-prop-se-1.png" alt="Standard error-based 95\% confidence interval." width="\textwidth" />
 <p class="caption">
@@ -1315,13 +1370,13 @@ FIGURE 7.13: Standard error-based 95% confidence interval.
 </p>
 </div>
 <p><strong>(LC7.1)</strong> Why does the following code produce an error? In other words, what about the response and predictor variables make this not a possible computation with the <code>infer</code> package?</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="7-hypothesis-testing.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
-<span id="cb315-2"><a href="7-hypothesis-testing.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb315-3"><a href="7-hypothesis-testing.html#cb315-3" aria-hidden="true" tabindex="-1"></a>null_distribution_cean <span class="ot">&lt;-</span> BirdMalaria <span class="sc">%&gt;%</span></span>
-<span id="cb315-4"><a href="7-hypothesis-testing.html#cb315-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb315-5"><a href="7-hypothesis-testing.html#cb315-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb315-6"><a href="7-hypothesis-testing.html#cb315-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb315-7"><a href="7-hypothesis-testing.html#cb315-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="7-hypothesis-testing.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb316-2"><a href="7-hypothesis-testing.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb316-3"><a href="7-hypothesis-testing.html#cb316-3" aria-hidden="true" tabindex="-1"></a>null_distribution_cean <span class="ot">&lt;-</span> GreatTitMalaria <span class="sc">%&gt;%</span></span>
+<span id="cb316-4"><a href="7-hypothesis-testing.html#cb316-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> response <span class="sc">~</span> treatment, <span class="at">success =</span> <span class="st">&quot;Malaria&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb316-5"><a href="7-hypothesis-testing.html#cb316-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb316-6"><a href="7-hypothesis-testing.html#cb316-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb316-7"><a href="7-hypothesis-testing.html#cb316-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Egg removal&quot;</span>, <span class="st">&quot;Control&quot;</span>))</span></code></pre></div>
 <p><strong>(LC7.2)</strong> Why are we relatively confident that the distributions of the sample proportions will be good approximations of the population distributions of infection proportions for the two treatment groups?</p>
 <p><strong>(LC7.3)</strong> Using the definition of <em>p-value</em>, write in words what the <span class="math inline">\(p\)</span>-value represents for the hypothesis test comparing the infection rates for control and experimental birds.</p>
 <div class="learncheck">
@@ -1383,7 +1438,7 @@ FIGURE 7.14: Allen Downey’s hypothesis testing framework.
 <li>We ultimately decide to either “fail to reject <span class="math inline">\(H_0\)</span>” or “reject <span class="math inline">\(H_0\)</span>.”</li>
 </ol>
 <p>So while gut instinct may suggest “failing to reject <span class="math inline">\(H_0\)</span>” and “accepting <span class="math inline">\(H_0\)</span>” are equivalent statements, they are not. “Accepting <span class="math inline">\(H_0\)</span>” is equivalent to finding a defendant innocent. However, courts do not find defendants “innocent,” but rather they find them “not guilty.” Putting things differently, defense attorneys do not need to prove that their clients are innocent, rather they only need to prove that clients are not “guilty beyond a reasonable doubt”.</p>
-<p>So going back to our bird study in Section <a href="7-hypothesis-testing.html#ht-infer">7.3</a>, recall that our hypothesis test was <span class="math inline">\(H_0: p_{e} - p_{c} = 0\)</span> versus <span class="math inline">\(H_A: p_{e} - p_{c} &gt; 0\)</span> and that we used a pre-specified significance level of <span class="math inline">\(\alpha\)</span> = 0.05. We found a <span class="math inline">\(p\)</span>-value of 0.011. Since the <span class="math inline">\(p\)</span>-value was smaller than <span class="math inline">\(\alpha\)</span> = 0.05, we rejected <span class="math inline">\(H_0\)</span>. In other words, we found needed levels of evidence in this particular sample to say that <span class="math inline">\(H_0\)</span> is false at the <span class="math inline">\(\alpha\)</span> = 0.05 significance level. We also state this conclusion using non-statistical language: we found enough evidence in this data to suggest that there was a treatment effect at play.</p>
+<p>So going back to our bird study in Section <a href="7-hypothesis-testing.html#ht-infer">7.3</a>, recall that our hypothesis test was <span class="math inline">\(H_0: p_{e} - p_{c} = 0\)</span> versus <span class="math inline">\(H_A: p_{e} - p_{c} &gt; 0\)</span> and that we used a pre-specified significance level of <span class="math inline">\(\alpha\)</span> = 0.05. We found a <span class="math inline">\(p\)</span>-value of 0.007. Since the <span class="math inline">\(p\)</span>-value was smaller than <span class="math inline">\(\alpha\)</span> = 0.05, we rejected <span class="math inline">\(H_0\)</span>. In other words, we found needed levels of evidence in this particular sample to say that <span class="math inline">\(H_0\)</span> is false at the <span class="math inline">\(\alpha\)</span> = 0.05 significance level. We also state this conclusion using non-statistical language: we found enough evidence in this data to suggest that there was a treatment effect at play.</p>
 </div>
 <div id="types-of-errors" class="section level3 hasAnchor" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> Types of errors<a href="7-hypothesis-testing.html#types-of-errors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1439,7 +1494,7 @@ FIGURE 7.16: Type I and Type II errors in hypothesis tests.
 <div id="imdb-data" class="section level3 hasAnchor" number="7.5.1">
 <h3><span class="header-section-number">7.5.1</span> Horned lizards dataset<a href="7-hypothesis-testing.html#imdb-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>HornedLizards</code> dataset in the <code>abd</code> package contains information on 184 horned lizards. The <code>group</code> variable indicates the predation status (living or killed) and the <code>horn.length</code> variable indicates the squamosal horn length (in mm) of each lizard. We are interested in whether <code>living</code> horned lizards have a greater <code>horn.length</code> on average than <code>killed</code> ones.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="7-hypothesis-testing.html#cb316-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="7-hypothesis-testing.html#cb317-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span></code></pre></div>
 <pre><code># A tibble: 185 × 2
    horn.length group 
          &lt;dbl&gt; &lt;fct&gt; 
@@ -1455,9 +1510,9 @@ FIGURE 7.16: Type I and Type II errors in hypothesis tests.
 10        25.6 living
 # … with 175 more rows</code></pre>
 <p>Let’s perform an exploratory data analysis of this data. Recall from Subsection <a href="2-viz.html#geomboxplot">2.7.1</a> that a boxplot is a visualization we can use to show the relationship between a numerical and a categorical variable. Another option you saw in Section <a href="2-viz.html#facets">2.5</a> would be to use a faceted histogram. However, in the interest of brevity, let’s only present the boxplot in Figure <a href="7-hypothesis-testing.html#fig:killed-living-boxplot">7.17</a>.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="7-hypothesis-testing.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> HornedLizards, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> horn.length)) <span class="sc">+</span></span>
-<span id="cb318-2"><a href="7-hypothesis-testing.html#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb318-3"><a href="7-hypothesis-testing.html#cb318-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Squamosal horn length&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="7-hypothesis-testing.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> HornedLizards, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> horn.length)) <span class="sc">+</span></span>
+<span id="cb319-2"><a href="7-hypothesis-testing.html#cb319-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb319-3"><a href="7-hypothesis-testing.html#cb319-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Squamosal horn length&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:killed-living-boxplot"></span>
 <img src="ModernDive_files/figure-html/killed-living-boxplot-1.png" alt="Boxplot of squamosal horn length vs. group." width="\textwidth" />
 <p class="caption">
@@ -1466,11 +1521,11 @@ FIGURE 7.17: Boxplot of squamosal horn length vs. group.
 </div>
 <p>Eyeballing Figure <a href="7-hypothesis-testing.html#fig:killed-living-boxplot">7.17</a>, living horned lizards have a greater median horn length than killed. Do we have reason to believe, however, that there is a <em>significant</em> difference between the mean <code>horn.length</code> for killed horned lizards compared to living horned lizards? Although the boxplot does show that the median sample horn length is higher for living horned lizards, it’s hard to conclude if this difference is statistically significant or due to random chance in the sample of horned lizards studied. After all, there is a fair amount of overlap between the boxes. Recall that the median isn’t necessarily the same as the mean either, depending on whether the distribution is skewed.</p>
 <p>Did you notice the warning above that one row contains “non-finite” values? Apparently one row has missing values – which explains why the dataset has 185 rows instead of the expected 184 observations. Before we proceed further, let’s use <code>tidyr::drop_na</code> to drop the row with missing data to potentially avoid trouble later on.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="7-hypothesis-testing.html#cb319-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="7-hypothesis-testing.html#cb320-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code></pre></div>
 <p>Let’s calculate some summary statistics – the number of horned lizards, the mean horn length, and the standard deviation – split by the binary categorical variable <code>group</code>. We’ll do this using <code>dplyr</code> data wrangling verbs. Notice in particular how we count the number of each type of lizard using the <code>n()</code> summary function.</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="7-hypothesis-testing.html#cb320-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb320-2"><a href="7-hypothesis-testing.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
-<span id="cb320-3"><a href="7-hypothesis-testing.html#cb320-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_length =</span> <span class="fu">mean</span>(horn.length), <span class="at">std_dev =</span> <span class="fu">sd</span>(horn.length))</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="7-hypothesis-testing.html#cb321-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb321-2"><a href="7-hypothesis-testing.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb321-3"><a href="7-hypothesis-testing.html#cb321-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_length =</span> <span class="fu">mean</span>(horn.length), <span class="at">std_dev =</span> <span class="fu">sd</span>(horn.length))</span></code></pre></div>
 <pre><code># A tibble: 2 × 4
   group      n mean_length std_dev
   &lt;fct&gt;  &lt;int&gt;       &lt;dbl&gt;   &lt;dbl&gt;
@@ -1576,7 +1631,7 @@ Difference in sample means
 </tr>
 </tbody>
 </table>
-<p>So, whereas the sampling bowl exercise in Section <a href="5-sampling.html#sampling-activity">5.1</a> concerned <em>proportions</em>, the pennies exercise in Section <a href="6-confidence-intervals.html#resampling-tactile">6.1</a> concerned <em>means</em>, the case study on whether yawning is contagious in Section <a href="6-confidence-intervals.html#case-study-two-prop-ci">6.6</a> and the BirdMalaria activity in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a> concerned <em>differences in proportions</em>, we are now concerned with <em>differences in means</em>.</p>
+<p>So, whereas the sampling bowl exercise in Section <a href="5-sampling.html#sampling-activity">5.1</a> concerned <em>proportions</em>, the pennies exercise in Section <a href="6-confidence-intervals.html#resampling-tactile">6.1</a> concerned <em>means</em>, the case study on whether yawning is contagious in Section <a href="6-confidence-intervals.html#case-study-two-prop-ci">6.6</a> and the GreatTitMalaria activity in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a> concerned <em>differences in proportions</em>, we are now concerned with <em>differences in means</em>.</p>
 <p>In other words, the population parameter of interest is the difference in population mean ratings <span class="math inline">\(\mu_k - \mu_l\)</span>, where <span class="math inline">\(\mu_k\)</span> is the mean horn length of all killed horned lizards and similarly <span class="math inline">\(\mu_l\)</span> is the mean horn length of all living horned lizards. Additionally the point estimate/sample statistic of interest is the difference in sample means <span class="math inline">\(\overline{x}_k - \overline{x}_l\)</span>, where <span class="math inline">\(\overline{x}_k\)</span> is the mean horn.length of the <span class="math inline">\(n_k\)</span> = 30 horned lizards in our sample and <span class="math inline">\(\overline{x}_l\)</span> is the mean horn length of the <span class="math inline">\(n_l\)</span> = 154 in our sample. Based on our earlier exploratory data analysis, our estimate <span class="math inline">\(\overline{x}_k - \overline{x}_l\)</span> is <span class="math inline">\(21.987 - 24.281 = -2.295\)</span>.</p>
 <p>So there appears to be a difference of -2.295 in favor of living horned lizards. The question is, however, could this difference of -2.295 be merely due to chance and sampling variation? Or are these results indicative of a true difference in mean ratings for <em>all</em> living and killed horned lizards? To answer this question, we’ll use hypothesis testing.</p>
 </div>
@@ -1589,13 +1644,13 @@ H_0 &amp;: \mu_k - \mu_l = 0\\
 \text{vs } H_A&amp;: \mu_k - \mu_l \neq 0
 \end{aligned}
 \]</span></p>
-<p>In other words, the null hypothesis <span class="math inline">\(H_0\)</span> suggests that both living and killed horned lizards have the same mean horn.length. This is the “hypothesized universe” we’ll <em>assume</em> is true. On the other hand, the alternative hypothesis <span class="math inline">\(H_A\)</span> suggests that there is a difference. Unlike the one-sided alternative we used in the BirdMalaria exercise <span class="math inline">\(H_A: p_e - p_c &gt; 0\)</span>, we are now considering a two-sided alternative of <span class="math inline">\(H_A: \mu_k - \mu_l \neq 0\)</span>.</p>
+<p>In other words, the null hypothesis <span class="math inline">\(H_0\)</span> suggests that both living and killed horned lizards have the same mean horn.length. This is the “hypothesized universe” we’ll <em>assume</em> is true. On the other hand, the alternative hypothesis <span class="math inline">\(H_A\)</span> suggests that there is a difference. Unlike the one-sided alternative we used in the GreatTitMalaria exercise <span class="math inline">\(H_A: p_e - p_c &gt; 0\)</span>, we are now considering a two-sided alternative of <span class="math inline">\(H_A: \mu_k - \mu_l \neq 0\)</span>.</p>
 <p>Furthermore, we’ll pre-specify a low significance level of <span class="math inline">\(\alpha\)</span> = 0.01. By setting this value low, all things being equal, there is a lower chance that the <span class="math inline">\(p\)</span>-value will be less than <span class="math inline">\(\alpha\)</span>. Thus, there is a lower chance that we’ll reject the null hypothesis <span class="math inline">\(H_0\)</span> in favor of the alternative hypothesis <span class="math inline">\(H_A\)</span>. In other words, we’ll reject the hypothesis that there is no difference in mean ratings for all killed and living horned lizards, only if we have quite strong evidence.</p>
 <div id="specify-variables-4" class="section level4 unnumbered hasAnchor">
 <h4>1. <code>specify</code> variables<a href="7-hypothesis-testing.html#specify-variables-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let’s now perform all the steps of the <code>infer</code> workflow. We first <code>specify()</code> the variables of interest in the <code>HornedLizards</code> data frame using the formula <code>horn.length ~ group</code>. This tells <code>infer</code> that the numerical variable <code>horn.length</code> is the outcome variable, while the binary variable <code>group</code> is the explanatory variable. Note that unlike previously when we were interested in proportions, since we are now interested in the mean of a numerical variable, we do not need to set the <code>success</code> argument.</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="7-hypothesis-testing.html#cb322-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb322-2"><a href="7-hypothesis-testing.html#cb322-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group)</span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="7-hypothesis-testing.html#cb323-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb323-2"><a href="7-hypothesis-testing.html#cb323-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group)</span></code></pre></div>
 <pre><code>Response: horn.length (numeric)
 Explanatory: group (factor)
 # A tibble: 184 × 2
@@ -1617,9 +1672,9 @@ Explanatory: group (factor)
 <div id="hypothesize-the-null-1" class="section level4 unnumbered hasAnchor">
 <h4>2. <code>hypothesize</code> the null<a href="7-hypothesis-testing.html#hypothesize-the-null-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We set the null hypothesis <span class="math inline">\(H_0: \mu_k - \mu_l = 0\)</span> by using the <code>hypothesize()</code> function. Since we have two samples, killed and living horned lizards, we set <code>null</code> to be <code>"independence"</code> as we described in Section <a href="7-hypothesis-testing.html#ht-infer">7.3</a>.</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="7-hypothesis-testing.html#cb324-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb324-2"><a href="7-hypothesis-testing.html#cb324-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb324-3"><a href="7-hypothesis-testing.html#cb324-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="7-hypothesis-testing.html#cb325-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb325-2"><a href="7-hypothesis-testing.html#cb325-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb325-3"><a href="7-hypothesis-testing.html#cb325-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>)</span></code></pre></div>
 <pre><code>Response: horn.length (numeric)
 Explanatory: group (factor)
 Null Hypothesis: independence
@@ -1642,22 +1697,22 @@ Null Hypothesis: independence
 <h4>3. <code>generate</code> replicates<a href="7-hypothesis-testing.html#generate-replicates-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>After we have set the null hypothesis, we generate “shuffled” replicates assuming the null hypothesis is true by repeating the shuffling/permutation exercise you performed in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a>.</p>
 <p>We’ll repeat this resampling without replacement of <code>type = "permute"</code> a total of <code>reps = 1000</code> times. Feel free to run the code below to check out what the <code>generate()</code> step produces.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="7-hypothesis-testing.html#cb326-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb326-2"><a href="7-hypothesis-testing.html#cb326-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb326-3"><a href="7-hypothesis-testing.html#cb326-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb326-4"><a href="7-hypothesis-testing.html#cb326-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb326-5"><a href="7-hypothesis-testing.html#cb326-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">View</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="7-hypothesis-testing.html#cb327-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb327-2"><a href="7-hypothesis-testing.html#cb327-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb327-3"><a href="7-hypothesis-testing.html#cb327-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb327-4"><a href="7-hypothesis-testing.html#cb327-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb327-5"><a href="7-hypothesis-testing.html#cb327-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">View</span>()</span></code></pre></div>
 </div>
 <div id="calculate-summary-statistics-4" class="section level4 unnumbered hasAnchor">
 <h4>4. <code>calculate</code> summary statistics<a href="7-hypothesis-testing.html#calculate-summary-statistics-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now that we have 1000 replicated “shuffles” assuming the null hypothesis <span class="math inline">\(H_0\)</span> that both <code>killed</code> and <code>living</code> HornedLizards on average have the same horn lengths, let’s <code>calculate()</code> the appropriate summary statistic for these 1000 replicated shuffles. From Section <a href="7-hypothesis-testing.html#understanding-ht">7.2</a>, summary statistics relating to hypothesis testing have a specific name: <em>test statistics</em>. Since the unknown population parameter of interest is the difference in population means <span class="math inline">\(\mu_{k} - \mu_{l}\)</span>, the test statistic of interest here is the difference in sample means <span class="math inline">\(\overline{x}_{k} - \overline{x}_{l}\)</span>.</p>
 <p>For each of our 1000 shuffles, we can calculate this test statistic by setting <code>stat = "diff in means"</code>. Furthermore, since we are interested in <span class="math inline">\(\overline{x}_{k} - \overline{x}_{l}\)</span>, we set <code>order = c("killed", "living")</code>. Let’s save the results in a data frame called <code>null_distribution_HornedLizards</code>:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="7-hypothesis-testing.html#cb327-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb327-2"><a href="7-hypothesis-testing.html#cb327-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb327-3"><a href="7-hypothesis-testing.html#cb327-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb327-4"><a href="7-hypothesis-testing.html#cb327-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb327-5"><a href="7-hypothesis-testing.html#cb327-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
-<span id="cb327-6"><a href="7-hypothesis-testing.html#cb327-6" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="7-hypothesis-testing.html#cb328-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb328-2"><a href="7-hypothesis-testing.html#cb328-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb328-3"><a href="7-hypothesis-testing.html#cb328-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb328-4"><a href="7-hypothesis-testing.html#cb328-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb328-5"><a href="7-hypothesis-testing.html#cb328-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
+<span id="cb328-6"><a href="7-hypothesis-testing.html#cb328-6" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards</span></code></pre></div>
 <pre><code># A tibble: 1,000 × 2
    replicate       stat
        &lt;int&gt;      &lt;dbl&gt;
@@ -1673,10 +1728,10 @@ Null Hypothesis: independence
 10        10  0.616840 
 # … with 990 more rows</code></pre>
 <p>Observe that we have 1000 values of <code>stat</code>, each representing one instance of <span class="math inline">\(\overline{x}_{k} - \overline{x}_{l}\)</span>. The 1000 values form the <em>null distribution</em>, which is the technical term for the sampling distribution of the difference in sample means <span class="math inline">\(\overline{x}_{k} - \overline{x}_{l}\)</span> assuming <span class="math inline">\(H_0\)</span> is true. What happened in real life? What was the observed difference in horn lengths? What was the <em>observed test statistic</em> <span class="math inline">\(\overline{x}_{k} - \overline{x}_{l}\)</span>? Recall from our earlier data wrangling, this observed difference in means was <span class="math inline">\(21.987 - 24.281 = -2.295\)</span>. We can also achieve this using the code that constructed the null distribution <code>null_distribution_HornedLizards</code> but with the <code>hypothesize()</code> and <code>generate()</code> steps removed. Let’s save this in <code>obs_diff_means</code>:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="7-hypothesis-testing.html#cb329-1" aria-hidden="true" tabindex="-1"></a>obs_diff_means <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb329-2"><a href="7-hypothesis-testing.html#cb329-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb329-3"><a href="7-hypothesis-testing.html#cb329-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
-<span id="cb329-4"><a href="7-hypothesis-testing.html#cb329-4" aria-hidden="true" tabindex="-1"></a>obs_diff_means</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="7-hypothesis-testing.html#cb330-1" aria-hidden="true" tabindex="-1"></a>obs_diff_means <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb330-2"><a href="7-hypothesis-testing.html#cb330-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb330-3"><a href="7-hypothesis-testing.html#cb330-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
+<span id="cb330-4"><a href="7-hypothesis-testing.html#cb330-4" aria-hidden="true" tabindex="-1"></a>obs_diff_means</span></code></pre></div>
 <pre><code>Response: horn.length (numeric)
 Explanatory: group (factor)
 # A tibble: 1 × 1
@@ -1686,9 +1741,9 @@ Explanatory: group (factor)
 </div>
 <div id="visualize-the-p-value-1" class="section level4 unnumbered hasAnchor">
 <h4>5. <code>visualize</code> the p-value<a href="7-hypothesis-testing.html#visualize-the-p-value-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Lastly, in order to compute the <span class="math inline">\(p\)</span>-value, we have to assess how “extreme” the observed difference in means of -2.295 is. We do this by comparing -2.295 to our null distribution, which was constructed in a hypothesized universe of no true difference in average horn lengths between the two groups. Let’s visualize both the null distribution and the <span class="math inline">\(p\)</span>-value in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-HornedLizards-2">7.18</a>. Unlike our example in Subsection <a href="7-hypothesis-testing.html#infer-workflow-ht">7.3.1</a> involving BirdMalaria, since we have a two-sided <span class="math inline">\(H_A: \mu_k - \mu_l \neq 0\)</span>, we have to allow for both possibilities for <em>more extreme</em>, so we set <code>direction = "both"</code>.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="7-hypothesis-testing.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards, <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb331-2"><a href="7-hypothesis-testing.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_diff_means, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<p>Lastly, in order to compute the <span class="math inline">\(p\)</span>-value, we have to assess how “extreme” the observed difference in means of -2.295 is. We do this by comparing -2.295 to our null distribution, which was constructed in a hypothesized universe of no true difference in average horn lengths between the two groups. Let’s visualize both the null distribution and the <span class="math inline">\(p\)</span>-value in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-HornedLizards-2">7.18</a>. Unlike our example in Subsection <a href="7-hypothesis-testing.html#infer-workflow-ht">7.3.1</a> involving GreatTitMalaria, since we have a two-sided <span class="math inline">\(H_A: \mu_k - \mu_l \neq 0\)</span>, we have to allow for both possibilities for <em>more extreme</em>, so we set <code>direction = "both"</code>.</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="7-hypothesis-testing.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards, <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb332-2"><a href="7-hypothesis-testing.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_diff_means, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:null-distribution-HornedLizards-2"></span>
 <img src="ModernDive_files/figure-html/null-distribution-HornedLizards-2-1.png" alt="Null distribution, observed test statistic, and $p$-value." width="\textwidth" />
 <p class="caption">
@@ -1697,8 +1752,8 @@ FIGURE 7.18: Null distribution, observed test statistic, and <span class="math i
 </div>
 <p>Let’s go over the elements of this plot. First, the histogram is the <em>null distribution</em>. Second, the solid line is the <em>observed test statistic</em>, or the difference in sample means we observed in real life of <span class="math inline">\(21.987 - 24.281 = -2.295\)</span>. Third, the two shaded areas of the histogram form the <em><span class="math inline">\(p\)</span>-value</em>, or the probability of obtaining a test statistic just as or more extreme than the observed test statistic <em>assuming the null hypothesis <span class="math inline">\(H_0\)</span> is true</em>.</p>
 <p>What proportion of the null distribution is shaded? In other words, what is the numerical value of the <span class="math inline">\(p\)</span>-value? We use the <code>get_p_value()</code> function to compute this value:</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="7-hypothesis-testing.html#cb332-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb332-2"><a href="7-hypothesis-testing.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_diff_means, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="7-hypothesis-testing.html#cb333-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb333-2"><a href="7-hypothesis-testing.html#cb333-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_diff_means, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
@@ -1759,9 +1814,9 @@ FIGURE 7.20: Examples of t-distributions and the z curve.
 <p>So, assuming the null hypothesis <span class="math inline">\(H_0\)</span> is true, our formula for the test statistic simplifies a bit:</p>
 <p><span class="math display">\[t = \dfrac{ (\bar{x}_k - \bar{x}_l) - 0}{ \sqrt{\dfrac{{s_k}^2}{n_k} + \dfrac{{s_l}^2}{n_l}}  } = \dfrac{ \bar{x}_k - \bar{x}_l}{ \sqrt{\dfrac{{s_k}^2}{n_k} + \dfrac{{s_l}^2}{n_l}}  }\]</span></p>
 <p>Let’s compute the values necessary for this two-sample <span class="math inline">\(t\)</span>-statistic. Recall the summary statistics we computed during our exploratory data analysis in Section <a href="7-hypothesis-testing.html#imdb-data">7.5.1</a>.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="7-hypothesis-testing.html#cb334-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb334-2"><a href="7-hypothesis-testing.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
-<span id="cb334-3"><a href="7-hypothesis-testing.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_rating =</span> <span class="fu">mean</span>(horn.length), <span class="at">std_dev =</span> <span class="fu">sd</span>(horn.length))</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="7-hypothesis-testing.html#cb335-1" aria-hidden="true" tabindex="-1"></a>HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb335-2"><a href="7-hypothesis-testing.html#cb335-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb335-3"><a href="7-hypothesis-testing.html#cb335-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_rating =</span> <span class="fu">mean</span>(horn.length), <span class="at">std_dev =</span> <span class="fu">sd</span>(horn.length))</span></code></pre></div>
 <pre><code># A tibble: 2 × 4
   group      n mean_rating std_dev
   &lt;fct&gt;  &lt;int&gt;       &lt;dbl&gt;   &lt;dbl&gt;
@@ -1778,22 +1833,22 @@ FIGURE 7.20: Examples of t-distributions and the z curve.
 <div id="null-distribution" class="section level3 unnumbered hasAnchor">
 <h3>Null distribution<a href="7-hypothesis-testing.html#null-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s revisit the null distribution for the test statistic <span class="math inline">\(\bar{x}_k - \bar{x}_l\)</span> we constructed in Section <a href="7-hypothesis-testing.html#ht-case-study">7.5</a>. Let’s visualize this in the left-hand plot of Figure <a href="7-hypothesis-testing.html#fig:comparing-diff-means-t-stat">7.21</a>.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="7-hypothesis-testing.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct null distribution of xbar_a - xbar_r:</span></span>
-<span id="cb336-2"><a href="7-hypothesis-testing.html#cb336-2" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb336-3"><a href="7-hypothesis-testing.html#cb336-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb336-4"><a href="7-hypothesis-testing.html#cb336-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb336-5"><a href="7-hypothesis-testing.html#cb336-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb336-6"><a href="7-hypothesis-testing.html#cb336-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
-<span id="cb336-7"><a href="7-hypothesis-testing.html#cb336-7" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
-<p>The <code>infer</code> package also includes some built-in theory-based test statistics as well. So instead of calculating the test statistic of interest as the <code>"diff in means"</code> <span class="math inline">\(\bar{x}_k - \bar{x}_l\)</span>, we can calculate this defined two-sample <span class="math inline">\(t\)</span>-statistic by setting <code>stat = "t"</code>. Let’s visualize this in the right-hand plot of Figure <a href="7-hypothesis-testing.html#fig:comparing-diff-means-t-stat">7.21</a>.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="7-hypothesis-testing.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct null distribution of t:</span></span>
-<span id="cb337-2"><a href="7-hypothesis-testing.html#cb337-2" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards_t <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="7-hypothesis-testing.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct null distribution of xbar_a - xbar_r:</span></span>
+<span id="cb337-2"><a href="7-hypothesis-testing.html#cb337-2" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
 <span id="cb337-3"><a href="7-hypothesis-testing.html#cb337-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
 <span id="cb337-4"><a href="7-hypothesis-testing.html#cb337-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb337-5"><a href="7-hypothesis-testing.html#cb337-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb337-6"><a href="7-hypothesis-testing.html#cb337-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Notice we switched stat from &quot;diff in means&quot; to &quot;t&quot;</span></span>
-<span id="cb337-7"><a href="7-hypothesis-testing.html#cb337-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;t&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
-<span id="cb337-8"><a href="7-hypothesis-testing.html#cb337-8" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<span id="cb337-6"><a href="7-hypothesis-testing.html#cb337-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
+<span id="cb337-7"><a href="7-hypothesis-testing.html#cb337-7" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>The <code>infer</code> package also includes some built-in theory-based test statistics as well. So instead of calculating the test statistic of interest as the <code>"diff in means"</code> <span class="math inline">\(\bar{x}_k - \bar{x}_l\)</span>, we can calculate this defined two-sample <span class="math inline">\(t\)</span>-statistic by setting <code>stat = "t"</code>. Let’s visualize this in the right-hand plot of Figure <a href="7-hypothesis-testing.html#fig:comparing-diff-means-t-stat">7.21</a>.</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="7-hypothesis-testing.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct null distribution of t:</span></span>
+<span id="cb338-2"><a href="7-hypothesis-testing.html#cb338-2" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards_t <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb338-3"><a href="7-hypothesis-testing.html#cb338-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-4"><a href="7-hypothesis-testing.html#cb338-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-5"><a href="7-hypothesis-testing.html#cb338-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">&quot;permute&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-6"><a href="7-hypothesis-testing.html#cb338-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Notice we switched stat from &quot;diff in means&quot; to &quot;t&quot;</span></span>
+<span id="cb338-7"><a href="7-hypothesis-testing.html#cb338-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;t&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
+<span id="cb338-8"><a href="7-hypothesis-testing.html#cb338-8" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:comparing-diff-means-t-stat"></span>
 <img src="ModernDive_files/figure-html/comparing-diff-means-t-stat-1.png" alt="Comparing the null distributions of two test statistics." width="\textwidth" />
 <p class="caption">
@@ -1802,7 +1857,7 @@ FIGURE 7.21: Comparing the null distributions of two test statistics.
 </div>
 <p>Observe that while the shape of the null distributions of both the difference in means <span class="math inline">\(\bar{x}_k - \bar{x}_l\)</span> and the two-sample <span class="math inline">\(t\)</span>-statistics are similar, the scales on the x-axis are different. The two-sample <span class="math inline">\(t\)</span>-statistic values are spread out over a larger range.</p>
 <p>However, a traditional theory-based <span class="math inline">\(t\)</span>-test doesn’t look at the simulated histogram in <code>null_distribution_HornedLizards_t</code>, but instead it looks at the <span class="math inline">\(t\)</span>-distribution curve with the appropriate degrees of freedom equal. Since the samples sizes here differ significantly, the degrees of freedom was calculated using the complicated formula referenced previously, and hence is significantly different from the “close enough approximation” that works when the sample sizes are equal. Let’s overlay this <span class="math inline">\(t\)</span>-distribution curve over the top of our simulated two-sample <span class="math inline">\(t\)</span>-statistics using the <code>method = "both"</code> argument in <code>visualize()</code>.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="7-hypothesis-testing.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">method =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="7-hypothesis-testing.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">method =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-stat-3"></span>
 <img src="ModernDive_files/figure-html/t-stat-3-1.png" alt="Null distribution using t-statistic and t-distribution." width="\textwidth" />
 <p class="caption">
@@ -1811,10 +1866,10 @@ FIGURE 7.22: Null distribution using t-statistic and t-distribution.
 </div>
 <p>Observe that the curve does a good job of approximating the histogram here. To calculate the <span class="math inline">\(p\)</span>-value in this case, we need to figure out how much of the total area under the <span class="math inline">\(t\)</span>-distribution curve is at or “more extreme” than our observed two-sample <span class="math inline">\(t\)</span>-statistic. Since <span class="math inline">\(H_A: \mu_k - \mu_l \neq 0\)</span> is a two-sided alternative, we need to add up the areas in both tails.</p>
 <p>We first compute the observed two-sample <span class="math inline">\(t\)</span>-statistic using <code>infer</code> verbs. This shortcut calculation further assumes that the null hypothesis is true: that the population of killed and living horned lizards have an equal average horn.length.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="7-hypothesis-testing.html#cb339-1" aria-hidden="true" tabindex="-1"></a>obs_two_sample_t <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
-<span id="cb339-2"><a href="7-hypothesis-testing.html#cb339-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
-<span id="cb339-3"><a href="7-hypothesis-testing.html#cb339-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;t&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
-<span id="cb339-4"><a href="7-hypothesis-testing.html#cb339-4" aria-hidden="true" tabindex="-1"></a>obs_two_sample_t</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="7-hypothesis-testing.html#cb340-1" aria-hidden="true" tabindex="-1"></a>obs_two_sample_t <span class="ot">&lt;-</span> HornedLizards <span class="sc">%&gt;%</span> </span>
+<span id="cb340-2"><a href="7-hypothesis-testing.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> horn.length <span class="sc">~</span> group) <span class="sc">%&gt;%</span> </span>
+<span id="cb340-3"><a href="7-hypothesis-testing.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;t&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;killed&quot;</span>, <span class="st">&quot;living&quot;</span>))</span>
+<span id="cb340-4"><a href="7-hypothesis-testing.html#cb340-4" aria-hidden="true" tabindex="-1"></a>obs_two_sample_t</span></code></pre></div>
 <pre><code>Response: horn.length (numeric)
 Explanatory: group (factor)
 # A tibble: 1 × 1
@@ -1822,8 +1877,8 @@ Explanatory: group (factor)
      &lt;dbl&gt;
 1 -4.26337</code></pre>
 <p>We want to find the percentage of values that are at or below <code>obs_two_sample_t</code> <span class="math inline">\(= -4.263\)</span> or at or above <code>-obs_two_sample_t</code> <span class="math inline">\(= 4.263\)</span>. We use the <code>shade_p_value()</code> function with the <code>direction</code> argument set to <code>"both"</code> to do this:</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="7-hypothesis-testing.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">method =</span> <span class="st">&quot;both&quot;</span>) <span class="sc">+</span></span>
-<span id="cb341-2"><a href="7-hypothesis-testing.html#cb341-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_two_sample_t, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="7-hypothesis-testing.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">method =</span> <span class="st">&quot;both&quot;</span>) <span class="sc">+</span></span>
+<span id="cb342-2"><a href="7-hypothesis-testing.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_two_sample_t, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <pre><code>Warning: Check to make sure the conditions have been met for the theoretical method. {infer}
 currently does not check these for you.</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-stat-4"></span>
@@ -1833,8 +1888,8 @@ FIGURE 7.23: Null distribution using t-statistic and t-distribution with <span c
 </p>
 </div>
 <p>(We’ll discuss this warning message shortly.) What is the <span class="math inline">\(p\)</span>-value? We apply <code>get_p_value()</code> to our null distribution saved in <code>null_distribution_HornedLizards_t</code>:</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="7-hypothesis-testing.html#cb343-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards_t <span class="sc">%&gt;%</span> </span>
-<span id="cb343-2"><a href="7-hypothesis-testing.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_two_sample_t, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="7-hypothesis-testing.html#cb344-1" aria-hidden="true" tabindex="-1"></a>null_distribution_HornedLizards_t <span class="sc">%&gt;%</span> </span>
+<span id="cb344-2"><a href="7-hypothesis-testing.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_two_sample_t, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;

@@ -8,13 +8,12 @@ library(ggmosaic)
 
 
 
-
 ## -----------------------------------------------------------------------------
-BirdMalaria
+GreatTitMalaria
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(BirdMalaria, aes(x = treatment, fill = response)) +
+## ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
 ##   geom_bar() +
 ##   labs(x = "Treatment")
 
@@ -22,7 +21,7 @@ BirdMalaria
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## ggplot(BirdMalaria) +
+## ggplot(GreatTitMalaria) +
 ##   geom_mosaic(aes(x = product(treatment),
 ##                   fill = response)) +
 ##   labs(x = "Treatment", y = "Relative frequency")
@@ -39,7 +38,7 @@ BirdMalaria
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## ggplot(BirdMalaria_shuffled,
+## ggplot(GreatTitMalaria_shuffled,
 ##        aes(x = shuffled_treatment, fill = response)) +
 ##   geom_bar() +
 ##   labs(x = "Shuffled treatment")
@@ -47,7 +46,7 @@ BirdMalaria
 
 
 ## -----------------------------------------------------------------------------
-BirdMalaria_shuffled %>% 
+GreatTitMalaria_shuffled %>% 
   group_by(shuffled_treatment, response) %>% 
   tally() # Same as summarize(n = n())
 
@@ -92,12 +91,12 @@ BirdMalaria_shuffled %>%
 
 
 ## -----------------------------------------------------------------------------
-BirdMalaria %>% 
+GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") 
 
 
 ## -----------------------------------------------------------------------------
-BirdMalaria %>% 
+GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence")
 
@@ -105,17 +104,17 @@ BirdMalaria %>%
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## BirdMalaria_generate <- BirdMalaria %>%
+## GreatTitMalaria_generate <- GreatTitMalaria %>%
 ##   specify(formula = response ~ treatment, success = "Malaria") %>%
 ##   hypothesize(null = "independence") %>%
 ##   generate(reps = 1000, type = "permute")
-## nrow(BirdMalaria_generate)
+## nrow(GreatTitMalaria_generate)
 
 
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## null_distribution <- BirdMalaria %>%
+## null_distribution <- GreatTitMalaria %>%
 ##   specify(formula = response ~ treatment, success = "Malaria") %>%
 ##   hypothesize(null = "independence") %>%
 ##   generate(reps = 1000, type = "permute") %>%
@@ -126,7 +125,7 @@ BirdMalaria %>%
 
 
 ## -----------------------------------------------------------------------------
-obs_diff_prop <- BirdMalaria %>% 
+obs_diff_prop <- GreatTitMalaria %>% 
   specify(response ~ treatment, success = "Malaria") %>% 
   calculate(stat = "diff in props", order = c("Egg removal", "Control"))
 obs_diff_prop
@@ -148,7 +147,7 @@ null_distribution %>%
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## null_distribution <- BirdMalaria %>%
+## null_distribution <- GreatTitMalaria %>%
 ##   specify(formula = response ~ treatment, success = "Malaria") %>%
 ##   hypothesize(null = "independence") %>%
 ##   generate(reps = 1000, type = "permute") %>%
@@ -156,7 +155,7 @@ null_distribution %>%
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## bootstrap_distribution <- BirdMalaria %>%
+## bootstrap_distribution <- GreatTitMalaria %>%
 ##   specify(formula = response ~ treatment, success = "Malaria") %>%
 ##   # Change 1 - Remove hypothesize():
 ##   # hypothesize(null = "independence") %>%
@@ -197,7 +196,7 @@ se_ci
 ## ---- eval=FALSE--------------------------------------------------------------
 ## library(moderndive)
 ## library(infer)
-## null_distribution_cean <- BirdMalaria %>%
+## null_distribution_cean <- GreatTitMalaria %>%
 ##   specify(formula = response ~ treatment, success = "Malaria") %>%
 ##   hypothesize(null = "independence") %>%
 ##   generate(reps = 1000, type = "permute") %>%

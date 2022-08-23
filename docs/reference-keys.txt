@@ -6,7 +6,7 @@ fig:RStudio-interface
 fig:R-vs-R-packages
 fig:easy-way-install
 fig:read-excel
-fig:unnamed-chunk-28
+fig:unnamed-chunk-30
 fig:moderndive-flowchart
 tab:gapminder-2007
 fig:gapminder
@@ -193,7 +193,7 @@ fig:p-value-slope
 tab:table-ch11
 tab:model4-data-preview
 fig:numxcatxplot1
-tab:unnamed-chunk-441
+tab:unnamed-chunk-442
 tab:regtable-interaction
 tab:interaction-summary
 fig:numxcatx-parallel

@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-08-16" />
+<meta name="date" content="2022-08-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -716,11 +716,11 @@ variable.<br />
 <h3>Needed packages<a href="8-regression.html#reg-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s now load all the packages needed for this chapter (this assumes you’ve already installed them). In this chapter, we introduce the <code>moderndive</code> package of datasets and functions for tidyverse-friendly introductory linear regression.</p>
 <p>If needed, read Section <a href="1-getting-started.html#packages">1.3</a> for information on how to install and load R packages.</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="8-regression.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb345-2"><a href="8-regression.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
-<span id="cb345-3"><a href="8-regression.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb345-4"><a href="8-regression.html#cb345-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
-<span id="cb345-5"><a href="8-regression.html#cb345-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="8-regression.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb346-2"><a href="8-regression.html#cb346-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb346-3"><a href="8-regression.html#cb346-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb346-4"><a href="8-regression.html#cb346-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(abd)</span>
+<span id="cb346-5"><a href="8-regression.html#cb346-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code></pre></div>
 <p>Let’s now begin with basic regression, which refers to linear regression models with a single explanatory variable <span class="math inline">\(x\)</span>. We’ll also discuss important statistical concepts like the <em>correlation coefficient</em>, that “correlation isn’t necessarily causation,” and what it means for a line to be “best-fitting.”</p>
 </div>
 <div id="model1" class="section level2 hasAnchor" number="8.1">
@@ -734,7 +734,7 @@ variable.<br />
 <div id="model1EDA" class="section level3 hasAnchor" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Exploratory data analysis<a href="8-regression.html#model1EDA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The data on the 32 male lions can be found in the <code>LionNoses</code> data frame included in the <code>abd</code> package.</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="8-regression.html#cb346-1" aria-hidden="true" tabindex="-1"></a>LionNoses</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="8-regression.html#cb347-1" aria-hidden="true" tabindex="-1"></a>LionNoses</span></code></pre></div>
 <pre><code>    age proportion.black
 1   1.1             0.21
 2   1.5             0.14
@@ -776,19 +776,19 @@ variable.<br />
 </ol>
 <p>Let’s perform the first common step in an exploratory data analysis: looking at the raw data values. Because this step seems so trivial, unfortunately many data analysts ignore it. However, getting an early sense of what your raw data looks like can often prevent many larger issues down the road.</p>
 <p>You can do this by using RStudio’s spreadsheet viewer or by using the <code>glimpse()</code> function as introduced in Subsection <a href="1-getting-started.html#exploredataframes">1.4.3</a> on exploring data frames:</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="8-regression.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(LionNoses)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="8-regression.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(LionNoses)</span></code></pre></div>
 <pre><code>Rows: 32
 Columns: 2
-$ age              &lt;dbl&gt; 1.1, 1.5, 1.9, 2.2, 2.6, 3.2, 3.2, 2.9, 2.4, 2.1, 1.9, 1.9, 1.9, 1.9, 2.8…
-$ proportion.black &lt;dbl&gt; 0.21, 0.14, 0.11, 0.13, 0.12, 0.13, 0.12, 0.18, 0.23, 0.22, 0.20, 0.17, 0…</code></pre>
+$ age              &lt;dbl&gt; 1.1, 1.5, 1.9, 2.2, 2.6, 3.2, 3.2, 2.9, 2.4, 2.1, 1.9, 1.9, 1.9, …
+$ proportion.black &lt;dbl&gt; 0.21, 0.14, 0.11, 0.13, 0.12, 0.13, 0.12, 0.18, 0.23, 0.22, 0.20,…</code></pre>
 <p>Let’s fully describe the variables in <code>LionNoses</code>:</p>
 <ol style="list-style-type: decimal">
 <li><code>proportion.black</code>: A numerical variable of the relative coloration of the nose. This is the outcome variable <span class="math inline">\(y\)</span> of interest.</li>
 <li><code>age</code>: A numerical variable of the male lion’s age. This will be the explanatory variable <span class="math inline">\(x\)</span>.</li>
 </ol>
 <p>An alternative way to look at the raw data values is by choosing a random sample of the rows in <code>LionNoses</code> by piping it into the <code>sample_n()</code> function from the <code>dplyr</code> package. Here we set the <code>size</code> argument to be <code>5</code>, indicating that we want a random sample of 5 rows. We display the results in Table <a href="8-regression.html#tab:five-random-courses">8.1</a>. Note that due to the random nature of the sampling, you will likely end up with a different subset of 5 rows.</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="8-regression.html#cb350-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span></span>
-<span id="cb350-2"><a href="8-regression.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="8-regression.html#cb351-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span></span>
+<span id="cb351-2"><a href="8-regression.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:five-random-courses">TABLE 8.1: </span>A random sample of 5 out of the 32 lions
@@ -847,15 +847,15 @@ proportion.black
 </tbody>
 </table>
 <p>Now that we’ve looked at the raw values in our <code>LionNoses</code> data frame and got a preliminary sense of the data, let’s move on to the next common step in an exploratory data analysis: computing summary statistics. Let’s start by computing the mean and median of our numerical outcome variable denoted as <code>proportion.black</code> and our numerical explanatory variable <code>age</code>. We’ll do this by using the <code>summarize()</code> function from <code>dplyr</code> along with the <code>mean()</code> and <code>median()</code> summary functions we saw in Section <a href="3-wrangling.html#summarize">3.5</a>.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="8-regression.html#cb351-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span></span>
-<span id="cb351-2"><a href="8-regression.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age), <span class="at">mean_proportion.black =</span> <span class="fu">mean</span>(proportion.black),</span>
-<span id="cb351-3"><a href="8-regression.html#cb351-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_age =</span> <span class="fu">median</span>(age), <span class="at">median_proportion.black =</span> <span class="fu">median</span>(proportion.black))</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="8-regression.html#cb352-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span></span>
+<span id="cb352-2"><a href="8-regression.html#cb352-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age), <span class="at">mean_proportion.black =</span> <span class="fu">mean</span>(proportion.black),</span>
+<span id="cb352-3"><a href="8-regression.html#cb352-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_age =</span> <span class="fu">median</span>(age), <span class="at">median_proportion.black =</span> <span class="fu">median</span>(proportion.black))</span></code></pre></div>
 <pre><code>  mean_age mean_proportion.black median_age median_proportion.black
 1     4.31                 0.322        3.5                   0.265</code></pre>
 <!-- Move skim section to Chap. 3-->
 <p>However, what if we want other summary statistics as well, such as the standard deviation (a measure of spread), the minimum and maximum values, and various percentiles?</p>
 <p>Typing out all these summary statistic functions in <code>summarize()</code> would be long and tedious. Instead, let’s use the convenient <code>skim()</code> function from the <code>skimr</code> package that you saw earlier in Section <a href="3-wrangling.html#summarize">3.5</a>. This function takes in a data frame, “skims” it, and returns commonly used summary statistics. Let’s take the <code>LionNoses</code> data frame, with the outcome and explanatory variables <code>proportion.black</code> and <code>age</code>, and pipe them into the <code>skim()</code> function:</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="8-regression.html#cb353-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="8-regression.html#cb354-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
 <!--
 TODO: 
 Update skimr::skim() output to match v2.0.1
@@ -897,13 +897,13 @@ FIGURE 8.1: Nine different correlation coefficients.
 </div>
 <p>The correlation coefficient can be computed using the <code>get_correlation()</code> function in the <code>moderndive</code> package. In this case, the inputs to the function are the two numerical variables for which we want to calculate the correlation coefficient.</p>
 <p>We put the name of the outcome variable on the left-hand side of the <code>~</code> “tilde” sign, while putting the name of the explanatory variable on the right-hand side. This is known as R’s <em>formula notation</em>. We will use this same “formula” syntax with regression later in this chapter.</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="8-regression.html#cb354-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> </span>
-<span id="cb354-2"><a href="8-regression.html#cb354-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> proportion.black <span class="sc">~</span> age)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="8-regression.html#cb355-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> </span>
+<span id="cb355-2"><a href="8-regression.html#cb355-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> proportion.black <span class="sc">~</span> age)</span></code></pre></div>
 <pre><code>   cor
 1 0.79</code></pre>
 <p>An alternative way to compute correlation is to use the <code>cor()</code> summary function within a <code>summarize()</code> command:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="8-regression.html#cb356-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> </span>
-<span id="cb356-2"><a href="8-regression.html#cb356-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(proportion.black, age))</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="8-regression.html#cb357-1" aria-hidden="true" tabindex="-1"></a>LionNoses <span class="sc">%&gt;%</span> </span>
+<span id="cb357-2"><a href="8-regression.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(proportion.black, age))</span></code></pre></div>
 <p>In our case, the correlation coefficient of 0.79 indicates that the relationship between proportion black and age is “clearly positive.” There is a certain amount of subjectivity in interpreting correlation coefficients, especially those that aren’t close to the extreme values of -1, 0, and 1. To develop your intuition about correlation coefficients, play the “Guess the Correlation” 1980’s style video game called “Guess the Correlation”, at <a href="http://guessthecorrelation.com/" class="uri">http://guessthecorrelation.com/</a>.</p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:guess-the-correlation"></span>
@@ -921,12 +921,12 @@ FIGURE 8.3: Lion age and nose coloration.
 </div>
 <p>Observe that most ages lie between 1 and 5 years, while most nose coloration proportions lie between 0.1 and 0.3 black. Furthermore, while opinions may vary, it is our opinion that the relationship between proportion black and age is “clearly positive.” This is consistent with our earlier computed correlation coefficient of 0.79.</p>
 <p>Let’s build on the scatterplot in Figure <a href="8-regression.html#fig:numxplot1">8.3</a> by adding a “best-fitting” line: of all possible lines we can draw on this scatterplot, it is the line that “best” fits through the cloud of points. We do this by adding a new <code>geom_smooth(method = "lm", se = FALSE)</code> layer to the <code>ggplot()</code> code that created the scatterplot in Figure <a href="8-regression.html#fig:numxplot1">8.3</a>. The <code>method = "lm"</code> argument sets the line to be a “<code>l</code>inear <code>m</code>odel.” The <code>se = FALSE</code> argument suppresses <em>standard error</em> uncertainty bars. (We defined the concept of <em>standard error</em> earlier in Subsection <a href="5-sampling.html#sampling-definitions">5.3.2</a>.)</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="8-regression.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(LionNoses, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> proportion.black)) <span class="sc">+</span></span>
-<span id="cb357-2"><a href="8-regression.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb357-3"><a href="8-regression.html#cb357-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age (years)&quot;</span>, </span>
-<span id="cb357-4"><a href="8-regression.html#cb357-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Proportion of black nose&quot;</span>,</span>
-<span id="cb357-5"><a href="8-regression.html#cb357-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Scatterplot of relationship of relative coloration and age of male lions.&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb357-6"><a href="8-regression.html#cb357-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="8-regression.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(LionNoses, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> proportion.black)) <span class="sc">+</span></span>
+<span id="cb358-2"><a href="8-regression.html#cb358-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb358-3"><a href="8-regression.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age (years)&quot;</span>, </span>
+<span id="cb358-4"><a href="8-regression.html#cb358-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Proportion of black nose&quot;</span>,</span>
+<span id="cb358-5"><a href="8-regression.html#cb358-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Scatterplot of relationship of relative coloration and age of male lions.&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb358-6"><a href="8-regression.html#cb358-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:numxplot3"></span>
 <img src="ModernDive_files/figure-html/numxplot3-1.png" alt="Regression line." width="\textwidth" />
 <p class="caption">
@@ -961,10 +961,10 @@ FIGURE 8.4: Regression line.
 <li>We first “fit” the linear regression model using the <code>lm()</code> function and save it in <code>lion_model</code>.</li>
 <li>We get the regression table by applying the <code>get_regression_table()</code> function from the <code>moderndive</code> package to <code>lion_model</code>.</li>
 </ol>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="8-regression.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb358-2"><a href="8-regression.html#cb358-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
-<span id="cb358-3"><a href="8-regression.html#cb358-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb358-4"><a href="8-regression.html#cb358-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="8-regression.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb359-2"><a href="8-regression.html#cb359-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
+<span id="cb359-3"><a href="8-regression.html#cb359-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb359-4"><a href="8-regression.html#cb359-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:regtable">TABLE 8.2: </span>Linear regression table
@@ -1059,10 +1059,10 @@ age
 <p>We only state that there is an <em>associated</em> increase and not necessarily a <em>causal</em> increase. For example, perhaps it’s not that higher “age” directly cause higher proportions of black per se. Instead, the following could hold true: lions with blacker noses are more likely to survive and hence have higher ages. In other words, just because two variables are strongly associated, it doesn’t necessarily mean that one causes the other. This is summed up in the often quoted phrase, “correlation is not necessarily causation.” We discuss this idea further in Subsection <a href="8-regression.html#correlation-is-not-causation">8.3.1</a>.</p>
 <p>Furthermore, we say that this associated increase is <em>on average</em> 0.059 years of <code>age</code>, because you might have two lions whose <code>age</code> scores differ by 1 unit, but their difference in proportion black won’t necessarily be exactly 0.059. What the slope of 0.059 is saying is that across all possible lions, the <em>average</em> difference in proportion black between two lions whose <code>age</code> differ by one is 0.059.</p>
 <p>Now that we’ve learned how to compute the equation for the regression line in Figure <a href="8-regression.html#fig:numxplot3">8.4</a> using the values in the <code>estimate</code> column of Table <a href="8-regression.html#tab:regtable">8.2</a>, and how to interpret the resulting intercept and slope, let’s revisit the code that generated this table:</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="8-regression.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb359-2"><a href="8-regression.html#cb359-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
-<span id="cb359-3"><a href="8-regression.html#cb359-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb359-4"><a href="8-regression.html#cb359-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="8-regression.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb360-2"><a href="8-regression.html#cb360-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
+<span id="cb360-3"><a href="8-regression.html#cb360-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb360-4"><a href="8-regression.html#cb360-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
 <p>First, we “fit” the linear regression model to the <code>data</code> using the <code>lm()</code> function and save this as <code>lion_model</code>. When we say “fit”, we mean “find the best fitting line to this data.” <code>lm()</code> stands for “linear model” and is used as follows: <code>lm(y ~ x, data = data_frame_name)</code> where:</p>
 <ul>
 <li><code>y</code> is the outcome variable, followed by a tilde <code>~</code>. In our case, <code>y</code> is set to <code>proportion.black</code>.</li>
@@ -1135,8 +1135,8 @@ FIGURE 8.6: Example of observed value, fitted value, and residual.
 </div>
 <p>Now say we want to compute both the fitted value <span class="math inline">\(\widehat{y} = b_0 + b_1 \cdot x\)</span> and the residual <span class="math inline">\(y - \widehat{y}\)</span> for <em>all</em> 32 lions in the study. Recall that each lion corresponds to one of the 32 rows in the <code>LionNoses</code> data frame and also one of the 32 points in the regression plot in Figure <a href="8-regression.html#fig:numxplot4">8.6</a>.</p>
 <p>We could repeat the previous calculations we performed by hand 32 times, but that would be tedious and time consuming. Instead, let’s do this using a computer with the <code>get_regression_points()</code> function. Just like the <code>get_regression_table()</code> function, the <code>get_regression_points()</code> function is a “wrapper” function. However, this function returns a different output. Let’s apply the <code>get_regression_points()</code> function to <code>lion_model</code>, which is where we saved our <code>lm()</code> model in the previous section. In Table <a href="8-regression.html#tab:regression-points-1">8.4</a> we present the results of only the 21st through 24th courses for brevity’s sake.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="8-regression.html#cb360-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lion_model)</span>
-<span id="cb360-2"><a href="8-regression.html#cb360-2" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="8-regression.html#cb361-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lion_model)</span>
+<span id="cb361-2"><a href="8-regression.html#cb361-2" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
 <table>
 <caption>
 <span id="tab:regression-points-1">TABLE 8.4: </span>Regression points (for only the 21st through 24th lions)
@@ -1274,18 +1274,18 @@ residual
 <div id="model2EDA" class="section level3 hasAnchor" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Exploratory data analysis<a href="8-regression.html#model2EDA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The data on the 142 countries can be found in the <code>gapminder</code> data frame included in the <code>gapminder</code> package. However, to keep things simple, let’s <code>filter()</code> for only those observations/rows corresponding to the year 2007. Additionally, let’s <code>select()</code> only the subset of the variables we’ll consider in this chapter. We’ll save this data in a new data frame called <code>gapminder2007</code>:</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="8-regression.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
-<span id="cb361-2"><a href="8-regression.html#cb361-2" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
-<span id="cb361-3"><a href="8-regression.html#cb361-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb361-4"><a href="8-regression.html#cb361-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, lifeExp, continent, gdpPercap)</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="8-regression.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb362-2"><a href="8-regression.html#cb362-2" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb362-3"><a href="8-regression.html#cb362-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb362-4"><a href="8-regression.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, lifeExp, continent, gdpPercap)</span></code></pre></div>
 <p>Let’s perform the first common step in an exploratory data analysis: looking at the raw data values. You can do this by using RStudio’s spreadsheet viewer or by using the <code>glimpse()</code> command as introduced in Subsection <a href="1-getting-started.html#exploredataframes">1.4.3</a> on exploring data frames:</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="8-regression.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gapminder2007)</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="8-regression.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gapminder2007)</span></code></pre></div>
 <pre><code>Rows: 142
 Columns: 4
-$ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, &quot;Australia&quot;, &quot;Austri…
-$ lifeExp   &lt;dbl&gt; 43.8, 76.4, 72.3, 42.7, 75.3, 81.2, 79.8, 75.6, 64.1, 79.4, 56.7, 65.6, 74.9, 50…
-$ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Oceania, Europe, Asia, Asia, Europe, Afr…
-$ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391, 33693, 1441, 3822, 7446…</code></pre>
+$ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, &quot;Australia&quot;,…
+$ lifeExp   &lt;dbl&gt; 43.8, 76.4, 72.3, 42.7, 75.3, 81.2, 79.8, 75.6, 64.1, 79.4, 56.7, 65.6, …
+$ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Oceania, Europe, Asia, Asia, Eur…
+$ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391, 33693, 1441, 38…</code></pre>
 <p>Observe that <code>Observations: 142</code> indicates that there are 142 rows/observations in <code>gapminder2007</code>, where each row corresponds to one country. In other words, the <em>observational unit</em> is an individual country. Furthermore, observe that the variable <code>continent</code> is of type <code>&lt;fct&gt;</code>, which stands for <em>factor</em>, which is R’s way of encoding categorical variables.</p>
 <p>A full description of all the variables included in <code>gapminder</code> can be found by reading the associated help file (run <code>?gapminder</code> in the console). However, let’s fully describe only the 4 variables we selected in <code>gapminder2007</code>:</p>
 <ol style="list-style-type: decimal">
@@ -1295,7 +1295,7 @@ $ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391,
 <li><code>gdpPercap</code>: A numerical variable of that country’s GDP per capita in US inflation-adjusted dollars that we’ll use as another outcome variable <span class="math inline">\(y\)</span> in the <em>Learning check</em> at the end of this subsection.</li>
 </ol>
 <p>Let’s look at a random sample of five out of the 142 countries in Table <a href="8-regression.html#tab:model2-data-preview">8.5</a>.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="8-regression.html#cb364-1" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="8-regression.html#cb365-1" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model2-data-preview">TABLE 8.5: </span>Random sample of 5 out of 142 countries
@@ -1390,9 +1390,9 @@ Europe
 </tbody>
 </table>
 <p>Note that random sampling will likely produce a different subset of 5 rows for you than what’s shown. Now that we’ve looked at the raw values in our <code>gapminder2007</code> data frame and got a sense of the data, let’s move on to computing summary statistics. Let’s once again apply the <code>skim()</code> function from the <code>skimr</code> package. Recall from our previous EDA that this function takes in a data frame, “skims” it, and returns commonly used summary statistics. Let’s take our <code>gapminder2007</code> data frame, <code>select()</code> only the outcome and explanatory variables <code>lifeExp</code> and <code>continent</code>, and pipe them into the <code>skim()</code> function:</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="8-regression.html#cb365-1" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="sc">%&gt;%</span></span>
-<span id="cb365-2"><a href="8-regression.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(lifeExp, continent) <span class="sc">%&gt;%</span></span>
-<span id="cb365-3"><a href="8-regression.html#cb365-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="8-regression.html#cb366-1" aria-hidden="true" tabindex="-1"></a>gapminder2007 <span class="sc">%&gt;%</span></span>
+<span id="cb366-2"><a href="8-regression.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(lifeExp, continent) <span class="sc">%&gt;%</span></span>
+<span id="cb366-3"><a href="8-regression.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span></code></pre></div>
 <pre><code>Skim summary statistics
  n obs: 142 
  n variables: 2 
@@ -1413,10 +1413,10 @@ Europe
 </ul>
 <p>Turning our attention to the summary statistics of the numerical variable <code>lifeExp</code>, we observe that the global median life expectancy in 2007 was 71.94. Thus, half of the world’s countries (71 countries) had a life expectancy less than 71.94. The mean life expectancy of 67.01 is lower, however. Why is the mean life expectancy lower than the median?</p>
 <p>We can answer this question by performing the last of the three common steps in an exploratory data analysis: creating data visualizations. Let’s visualize the distribution of our outcome variable <span class="math inline">\(y\)</span> = <code>lifeExp</code> in Figure <a href="8-regression.html#fig:lifeExp2007hist">8.7</a>.</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="8-regression.html#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb367-2"><a href="8-regression.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb367-3"><a href="8-regression.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Life expectancy&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of countries&quot;</span>,</span>
-<span id="cb367-4"><a href="8-regression.html#cb367-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of distribution of worldwide life expectancies&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="8-regression.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb368-2"><a href="8-regression.html#cb368-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb368-3"><a href="8-regression.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Life expectancy&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of countries&quot;</span>,</span>
+<span id="cb368-4"><a href="8-regression.html#cb368-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of distribution of worldwide life expectancies&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:lifeExp2007hist"></span>
 <img src="ModernDive_files/figure-html/lifeExp2007hist-1.png" alt="Histogram of life expectancy in 2007." width="\textwidth" />
 <p class="caption">
@@ -1425,12 +1425,12 @@ FIGURE 8.7: Histogram of life expectancy in 2007.
 </div>
 <p>We see that this data is <em>left-skewed</em>, also known as <em>negatively</em> skewed: there are a few countries with low life expectancy that are bringing down the mean life expectancy. However, the median is less sensitive to the effects of such outliers; hence, the median is greater than the mean in this case.</p>
 <p>Remember, however, that we want to compare life expectancies both between continents and within continents. In other words, our visualizations need to incorporate some notion of the variable <code>continent</code>. We can do this easily with a faceted histogram. Recall from Section <a href="2-viz.html#facets">2.5</a> that facets allow us to split a visualization by the different values of another variable. We display the resulting visualization in Figure <a href="8-regression.html#fig:catxplot0b">8.8</a> by adding a <code>facet_wrap(~ continent, nrow = 2)</code> layer.</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="8-regression.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb368-2"><a href="8-regression.html#cb368-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb368-3"><a href="8-regression.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Life expectancy&quot;</span>, </span>
-<span id="cb368-4"><a href="8-regression.html#cb368-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of countries&quot;</span>,</span>
-<span id="cb368-5"><a href="8-regression.html#cb368-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of distribution of worldwide life expectancies&quot;</span>) <span class="sc">+</span></span>
-<span id="cb368-6"><a href="8-regression.html#cb368-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="8-regression.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb369-2"><a href="8-regression.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb369-3"><a href="8-regression.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Life expectancy&quot;</span>, </span>
+<span id="cb369-4"><a href="8-regression.html#cb369-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of countries&quot;</span>,</span>
+<span id="cb369-5"><a href="8-regression.html#cb369-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of distribution of worldwide life expectancies&quot;</span>) <span class="sc">+</span></span>
+<span id="cb369-6"><a href="8-regression.html#cb369-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:catxplot0b"></span>
 <img src="ModernDive_files/figure-html/catxplot0b-1.png" alt="Life expectancy in 2007." width="\textwidth" />
 <p class="caption">
@@ -1439,10 +1439,10 @@ FIGURE 8.8: Life expectancy in 2007.
 </div>
 <p>Observe that unfortunately the distribution of African life expectancies is much lower than the other continents, while in Europe life expectancies tend to be higher and furthermore do not vary as much. On the other hand, both Asia and Africa have the most variation in life expectancies. There is the least variation in Oceania, but keep in mind that there are only two countries in Oceania: Australia and New Zealand.</p>
 <p>Recall that an alternative method to visualize the distribution of a numerical variable split by a categorical variable is by using a side-by-side boxplot. We map the categorical variable <code>continent</code> to the <span class="math inline">\(x\)</span>-axis and the different life expectancies within each continent on the <span class="math inline">\(y\)</span>-axis in Figure <a href="8-regression.html#fig:catxplot1">8.9</a>.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="8-regression.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
-<span id="cb369-2"><a href="8-regression.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb369-3"><a href="8-regression.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Continent&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Life expectancy&quot;</span>,</span>
-<span id="cb369-4"><a href="8-regression.html#cb369-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Life expectancy by continent&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="8-regression.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder2007, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb370-2"><a href="8-regression.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb370-3"><a href="8-regression.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Continent&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Life expectancy&quot;</span>,</span>
+<span id="cb370-4"><a href="8-regression.html#cb370-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Life expectancy by continent&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:catxplot1"></span>
 <img src="ModernDive_files/figure-html/catxplot1-1.png" alt="Life expectancy in 2007." width="\textwidth" />
 <p class="caption">
@@ -1452,10 +1452,10 @@ FIGURE 8.9: Life expectancy in 2007.
 <p>Some people prefer comparing the distributions of a numerical variable between different levels of a categorical variable using a boxplot instead of a faceted histogram. This is because we can make quick comparisons between the categorical variable’s levels with imaginary horizontal lines. For example, observe in Figure <a href="8-regression.html#fig:catxplot1">8.9</a> that we can quickly convince ourselves that Oceania has the highest median life expectancies by drawing an imaginary horizontal line at <span class="math inline">\(y\)</span> = 80. Furthermore, as we observed in the faceted histogram in Figure <a href="8-regression.html#fig:catxplot0b">8.8</a>, Africa and Asia have the largest variation in life expectancy as evidenced by their large interquartile ranges (the heights of the boxes).</p>
 <p>It’s important to remember, however, that the solid lines in the middle of the boxes correspond to the medians (the middle value) rather than the mean (the average). So, for example, if you look at Asia, the solid line denotes the median life expectancy of around 72 years. This tells us that half of all countries in Asia have a life expectancy below 72 years, whereas half have a life expectancy above 72 years.</p>
 <p>Let’s compute the median and mean life expectancy for each continent with a little more data wrangling and display the results in Table <a href="8-regression.html#tab:catxplot0">8.6</a>.</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="8-regression.html#cb370-1" aria-hidden="true" tabindex="-1"></a>lifeExp_by_continent <span class="ot">&lt;-</span> gapminder2007 <span class="sc">%&gt;%</span></span>
-<span id="cb370-2"><a href="8-regression.html#cb370-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span></span>
-<span id="cb370-3"><a href="8-regression.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(lifeExp), </span>
-<span id="cb370-4"><a href="8-regression.html#cb370-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(lifeExp))</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="8-regression.html#cb371-1" aria-hidden="true" tabindex="-1"></a>lifeExp_by_continent <span class="ot">&lt;-</span> gapminder2007 <span class="sc">%&gt;%</span></span>
+<span id="cb371-2"><a href="8-regression.html#cb371-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span></span>
+<span id="cb371-3"><a href="8-regression.html#cb371-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(lifeExp), </span>
+<span id="cb371-4"><a href="8-regression.html#cb371-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(lifeExp))</span></code></pre></div>
 <table>
 <caption>
 <span id="tab:catxplot0">TABLE 8.6: </span>Life expectancy by continent
@@ -1632,8 +1632,8 @@ Oceania
 <li>We first “fit” the linear regression model using the <code>lm(y ~ x, data)</code> function and save it in <code>lifeExp_model</code>.</li>
 <li>We get the regression table by applying the <code>get_regression_table()</code> function from the <code>moderndive</code> package to <code>lifeExp_model</code>.</li>
 </ol>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="8-regression.html#cb371-1" aria-hidden="true" tabindex="-1"></a>lifeExp_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> continent, <span class="at">data =</span> gapminder2007)</span>
-<span id="cb371-2"><a href="8-regression.html#cb371-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lifeExp_model)</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="8-regression.html#cb372-1" aria-hidden="true" tabindex="-1"></a>lifeExp_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> continent, <span class="at">data =</span> gapminder2007)</span>
+<span id="cb372-2"><a href="8-regression.html#cb372-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lifeExp_model)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:catxplot4b">TABLE 8.8: </span>Linear regression table
@@ -1879,8 +1879,8 @@ comes out correct in the HTML output.
 <li>Residuals <span class="math inline">\(y - \widehat{y}\)</span>, or the error between the observed value and the fitted value</li>
 </ol>
 <p>We obtained these values and other values using the <code>get_regression_points()</code> function from the <code>moderndive</code> package. This time, however, let’s add an argument setting <code>ID = "country"</code>: this is telling the function to use the variable <code>country</code> in <code>gapminder2007</code> as an <em>identification variable</em> in the output. This will help contextualize our analysis by matching values to countries.</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="8-regression.html#cb372-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lifeExp_model, <span class="at">ID =</span> <span class="st">&quot;country&quot;</span>)</span>
-<span id="cb372-2"><a href="8-regression.html#cb372-2" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="8-regression.html#cb373-1" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lifeExp_model, <span class="at">ID =</span> <span class="st">&quot;country&quot;</span>)</span>
+<span id="cb373-2"><a href="8-regression.html#cb373-2" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:model2-residuals">TABLE 8.9: </span>Regression points (First 10 out of 142 countries)
@@ -2143,13 +2143,13 @@ FIGURE 8.12: Example of observed value, fitted value, and residual.
 \sum_{i=1}^{n}(y_i - \widehat{y}_i)^2
 \]</span></p>
 <p>Let’s use our data wrangling tools from Chapter <a href="3-wrangling.html#wrangling">3</a> to compute the sum of squared residuals exactly:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="8-regression.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb373-2"><a href="8-regression.html#cb373-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, </span>
-<span id="cb373-3"><a href="8-regression.html#cb373-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> LionNoses)</span>
-<span id="cb373-4"><a href="8-regression.html#cb373-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb373-5"><a href="8-regression.html#cb373-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression points:</span></span>
-<span id="cb373-6"><a href="8-regression.html#cb373-6" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lion_model)</span>
-<span id="cb373-7"><a href="8-regression.html#cb373-7" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="8-regression.html#cb374-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb374-2"><a href="8-regression.html#cb374-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(proportion.black <span class="sc">~</span> age, </span>
+<span id="cb374-3"><a href="8-regression.html#cb374-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> LionNoses)</span>
+<span id="cb374-4"><a href="8-regression.html#cb374-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb374-5"><a href="8-regression.html#cb374-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression points:</span></span>
+<span id="cb374-6"><a href="8-regression.html#cb374-6" aria-hidden="true" tabindex="-1"></a>regression_points <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(lion_model)</span>
+<span id="cb374-7"><a href="8-regression.html#cb374-7" aria-hidden="true" tabindex="-1"></a>regression_points</span></code></pre></div>
 <pre><code># A tibble: 32 × 5
       ID proportion.black   age proportion.black_hat residual
    &lt;int&gt;            &lt;dbl&gt; &lt;dbl&gt;                &lt;dbl&gt;    &lt;dbl&gt;
@@ -2164,10 +2164,10 @@ FIGURE 8.12: Example of observed value, fitted value, and residual.
  9     9             0.23   2.4                0.21     0.02 
 10    10             0.22   2.1                0.193    0.027
 # … with 22 more rows</code></pre>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="8-regression.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum of squared residuals</span></span>
-<span id="cb375-2"><a href="8-regression.html#cb375-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span></span>
-<span id="cb375-3"><a href="8-regression.html#cb375-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">squared_residuals =</span> residual<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb375-4"><a href="8-regression.html#cb375-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_of_squared_residuals =</span> <span class="fu">sum</span>(squared_residuals))</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="8-regression.html#cb376-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum of squared residuals</span></span>
+<span id="cb376-2"><a href="8-regression.html#cb376-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span></span>
+<span id="cb376-3"><a href="8-regression.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">squared_residuals =</span> residual<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb376-4"><a href="8-regression.html#cb376-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_of_squared_residuals =</span> <span class="fu">sum</span>(squared_residuals))</span></code></pre></div>
 <pre><code># A tibble: 1 × 1
   sum_of_squared_residuals
                      &lt;dbl&gt;
@@ -2204,10 +2204,10 @@ FIGURE 8.13: Regression line and two others.
 </ol>
 <p>What is going on behind the scenes with the <code>get_regression_table()</code> and <code>get_regression_points()</code> functions? We mentioned in Subsection <a href="8-regression.html#model1table">8.1.2</a> that these were examples of <em>wrapper functions</em>. Such functions take other pre-existing functions and “wrap” them into single functions that hide the user from their inner workings. This way all the user needs to worry about is what the inputs look like and what the outputs look like. In this subsection, we’ll “get under the hood” of these functions and see how the “engine” of these wrapper functions works.</p>
 <p>Recall our two-step process to generate a regression table from Subsection <a href="8-regression.html#model1table">8.1.2</a>:</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="8-regression.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
-<span id="cb377-2"><a href="8-regression.html#cb377-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
-<span id="cb377-3"><a href="8-regression.html#cb377-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
-<span id="cb377-4"><a href="8-regression.html#cb377-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="8-regression.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit regression model:</span></span>
+<span id="cb378-2"><a href="8-regression.html#cb378-2" aria-hidden="true" tabindex="-1"></a>lion_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> proportion.black <span class="sc">~</span> age, <span class="at">data =</span> LionNoses)</span>
+<span id="cb378-3"><a href="8-regression.html#cb378-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression table:</span></span>
+<span id="cb378-4"><a href="8-regression.html#cb378-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(lion_model)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:recall-table">TABLE 8.10: </span>Regression table
@@ -2292,13 +2292,13 @@ age
 <li><code>clean_names()</code> from the <a href="https://github.com/sfirke/janitor"><code>janitor</code> package</a> <span class="citation">(<a href="#ref-R-janitor" role="doc-biblioref">Firke 2021</a>)</span></li>
 </ul>
 <p>and “wraps” them into a single function that takes in a saved <code>lm()</code> linear model, here <code>lion_model</code>, and returns a regression table saved as a “tidy” data frame. Here is how we used the <code>tidy()</code> and <code>clean_names()</code> functions to produce Table <a href="8-regression.html#tab:regtable-broom">8.11</a>:</p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="8-regression.html#cb378-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb378-2"><a href="8-regression.html#cb378-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb378-3"><a href="8-regression.html#cb378-3" aria-hidden="true" tabindex="-1"></a>lion_model <span class="sc">%&gt;%</span></span>
-<span id="cb378-4"><a href="8-regression.html#cb378-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb378-5"><a href="8-regression.html#cb378-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb378-6"><a href="8-regression.html#cb378-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb378-7"><a href="8-regression.html#cb378-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lower_ci =</span> conf_low, <span class="at">upper_ci =</span> conf_high)</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="8-regression.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb379-2"><a href="8-regression.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb379-3"><a href="8-regression.html#cb379-3" aria-hidden="true" tabindex="-1"></a>lion_model <span class="sc">%&gt;%</span></span>
+<span id="cb379-4"><a href="8-regression.html#cb379-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb379-5"><a href="8-regression.html#cb379-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb379-6"><a href="8-regression.html#cb379-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb379-7"><a href="8-regression.html#cb379-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lower_ci =</span> conf_low, <span class="at">upper_ci =</span> conf_high)</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:regtable-broom">TABLE 8.11: </span>Regression table using tidy() from broom package
@@ -2379,13 +2379,13 @@ age
 </table>
 <p>Yikes! That’s a lot of code! So, in order to simplify your lives, we made the editorial decision to “wrap” all the code into <code>get_regression_table()</code>, freeing you from the need to understand the inner workings of the function. Note that the <code>mutate_if()</code> function is from the <code>dplyr</code> package and applies the <code>round()</code> function to three significant digits precision only to those variables that are numerical.</p>
 <p>Similarly, the <code>get_regression_points()</code> function is another wrapper function, but this time returning information about the individual points involved in a regression model like the fitted values, observed values, and the residuals. <code>get_regression_points()</code> uses the <code>augment()</code> function in the <a href="https://broom.tidyverse.org/"><code>broom</code> package</a> instead of the <code>tidy()</code> function as with <code>get_regression_table()</code> to produce the data shown in Table <a href="8-regression.html#tab:regpoints-augment">8.12</a>:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="8-regression.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb379-2"><a href="8-regression.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb379-3"><a href="8-regression.html#cb379-3" aria-hidden="true" tabindex="-1"></a>lion_model <span class="sc">%&gt;%</span></span>
-<span id="cb379-4"><a href="8-regression.html#cb379-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb379-5"><a href="8-regression.html#cb379-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb379-6"><a href="8-regression.html#cb379-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb379-7"><a href="8-regression.html#cb379-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">&quot;std_resid&quot;</span>, <span class="st">&quot;hat&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;cooksd&quot;</span>, <span class="st">&quot;std_resid&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="8-regression.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb380-2"><a href="8-regression.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb380-3"><a href="8-regression.html#cb380-3" aria-hidden="true" tabindex="-1"></a>lion_model <span class="sc">%&gt;%</span></span>
+<span id="cb380-4"><a href="8-regression.html#cb380-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb380-5"><a href="8-regression.html#cb380-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.numeric, round, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb380-6"><a href="8-regression.html#cb380-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb380-7"><a href="8-regression.html#cb380-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">&quot;std_resid&quot;</span>, <span class="st">&quot;hat&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;cooksd&quot;</span>, <span class="st">&quot;std_resid&quot;</span>))</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:regpoints-augment">TABLE 8.12: </span>Regression points using augment() from broom package

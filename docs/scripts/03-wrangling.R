@@ -1,5 +1,5 @@
 ## ---- eval=FALSE--------------------------------------------------------------
-## chick1_weight <- filter(Chickbody_wt, Chick == 1)
+## chick1_weight <- filter(ChickWeight, Chick == 1)
 
 
 
@@ -17,7 +17,7 @@ library(openintro)
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## chick1_weight <- Chickbody_wt %>%
+## chick1_weight <- ChickWeight %>%
 ##   filter(Chick == 1)
 
 
@@ -103,8 +103,7 @@ mammals_sleep
 
 
 ## ---- eval=FALSE--------------------------------------------------------------
-## mammals_reorder <- mammals %>%
-##   mammals_sleep <- mammals %>% select(species, non_dreaming:total_sleep, everything())
+## mammals_reorder <- mammals %>% select(species, non_dreaming:total_sleep, everything())
 ## glimpse(mammals_reorder)
 
 

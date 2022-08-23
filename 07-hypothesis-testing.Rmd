@@ -63,7 +63,7 @@ Let's load all the packages needed for this chapter (this assumes you've already
 * `readr` for importing spreadsheet data into R
 * As well as the more advanced `purrr`, `tibble`, `stringr`, and `forcats` packages
 
-If needed, read Section \@ref(packages) for information on how to install and load R packages. 
+Before you load the following packages, first check that they are installed by looking in RStudio's Packages tab. The `abd` package also requires the `lattice`, `grid`, `mosaic`, and `nlme` packages, so look for these too.  If any of the needed packages are missing, read Section \@ref(packages) for information on how to install R packages. 
 
 ```{r message=FALSE}
 library(tidyverse)
@@ -91,31 +91,28 @@ Let's begin with a study investigating if there is an association between suscep
 
 ### Is there a tradeoff between reproduction and immune defense?
 
-What limits the number of offspring that an individual can produce? One idea is that there is a trade-off between devoting resources to reproduction versus devoting resources to systems for self-preservation, including defenses against parasites and other pathogens. To test this idea, Oppliger et al. (1996) removed the first two eggs laid in half the nests of a breeding population of the bird species *Paus major*. To compensate, the females in these nests produced one more egg, on average, than females in the control group, whose nests were left intact.  Two weeks after egg hatching, the presence of malaria in each female parent was assessed. A summary of the results can be found in the `BirdMalaria` dataset of the `abd` package. Let's have a look.
+What limits the number of offspring that an individual can produce? One idea is that there is a trade-off between devoting resources to reproduction versus devoting resources to systems for self-preservation, including defenses against parasites and other pathogens. To test this idea, Oppliger et al. (1996) removed the first two eggs laid in half the nests of a breeding population of the bird species *Paus major*. To compensate, the females in these nests produced one more egg, on average, than females in the control group, whose nests were left intact.  Two weeks after egg hatching, the presence of malaria in each female parent was assessed. A summary of the results can be found in the `GreatTitMalaria` dataset of the `abd` package. Let's have a look.
 
-```{r, echo=FALSE, purl=FALSE}
-BirdMalaria <- GreatTitMalaria %>% tibble()
-```
 ```{r}
-BirdMalaria
+GreatTitMalaria
 ```
 
 Let's perform an exploratory data analysis of the relationship between the two categorical variables malaria and `treatment`. Recall that we saw in Subsection \@ref(two-categ-barplot) that one way we can visualize such a relationship is by using a stacked barplot. 
 
 ```{r eval=FALSE}
-ggplot(BirdMalaria, aes(x = treatment, fill = response)) +
+ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
   geom_bar() +
   labs(x = "Treatment")
 ```
 
 ```{r BirdMalaria-barplot, echo=FALSE, fig.cap="Barplot relating bird treatment to malaria infection.", purl=FALSE}
-BirdMalaria_barplot <- ggplot(BirdMalaria, aes(x = treatment, fill = response)) +
+GreatTitMalaria_barplot <- ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
   geom_bar() +
   labs(x = "Treatment")
 if (is_html_output()) {
-  BirdMalaria_barplot
+  GreatTitMalaria_barplot
 } else {
-  BirdMalaria_barplot + scale_fill_grey()
+  GreatTitMalaria_barplot + scale_fill_grey()
 }
 ```
 
@@ -124,43 +121,43 @@ Observe in Figure \@ref(fig:BirdMalaria-barplot) that while some of the females 
 Because of the difference in the number of females in the two treatment groups, it's a little difficult to compare the rates of infection. To see this better, let's introduce another type of plot called a mosaic plot, which uses `geom_mosaic()` from the `ggmosaic` package.
 
 ```{r eval=FALSE}
-ggplot(BirdMalaria) +
+ggplot(GreatTitMalaria) +
   geom_mosaic(aes(x = product(treatment), 
                   fill = response)) +
   labs(x = "Treatment", y = "Relative frequency")
 ```
 
 ```{r BirdMalaria-mosaicplot, echo=FALSE, fig.cap="Mosaic plot relating bird treatment to frequency of malaria infection.", purl=FALSE}
-BirdMalaria_mosaicplot <- ggplot(BirdMalaria) +
+GreatTitMalaria_mosaicplot <- ggplot(GreatTitMalaria) +
   geom_mosaic(aes(x = product(treatment), 
                   fill = response)) +
   labs(x = "Treatment", y = "Relative frequency")
 if (is_html_output()) {
-  BirdMalaria_mosaicplot
+  GreatTitMalaria_mosaicplot
 } else {
-  BirdMalaria_mosaicplot + scale_fill_grey()
+  GreatTitMalaria_mosaicplot + scale_fill_grey()
 }
 ```
 
 While the bars are also stacked in a mosaic plot, the width of each bar on the x-axis indicates the size of each group. Furthermore, proportions are displayed on the y-axis, rather than counts. In this mosaic plot, it's easier to see that a larger proportion of the experimentally treated females were infected with malaria compared to the control females.
 
 ```{r, echo=FALSE, purl=FALSE}
-observed_test_statistic <- BirdMalaria %>%
+observed_test_statistic <- GreatTitMalaria %>%
   specify(response ~ treatment, success = "Malaria") %>%
   calculate(stat = "diff in props", order = c("Egg removal", "Control")) %>%
   pull(stat) %>%
   round(3)
 
 # This code is used for dynamic non-static in-line text output purposes
-total_C <- BirdMalaria %>% 
+total_C <- GreatTitMalaria %>% 
   filter(treatment=="Control") %>% nrow()
-n_C_Mal <- BirdMalaria %>%
+n_C_Mal <- GreatTitMalaria %>%
   filter(treatment == "Control" & response == "Malaria") %>%
   nrow()
 p_C_Mal <- n_C_Mal / total_C
-total_E <- BirdMalaria %>% 
+total_E <- GreatTitMalaria %>% 
   filter(treatment=="Egg removal") %>% nrow()
-n_E_Mal <- BirdMalaria %>%
+n_E_Mal <- GreatTitMalaria %>%
   filter(treatment == "Egg removal" & response == "Malaria") %>%
   nrow()
 p_E_Mal <- (n_E_Mal / total_E) %>% round(3)
@@ -174,7 +171,7 @@ The question is, however, does this provide *conclusive* evidence that there is 
 
 ### Shuffling once
 
-To run the simulations, we will work with the original `BirdMalaria` dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn't affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our `BirdMalaria` data frame, the `treatment` variable would thus be an irrelevant label for predicting malaria infection. If these `treatment` labels were irrelevant, then we could randomly reassign them by "shuffling" them to no consequence!
+To run the simulations, we will work with the original `GreatTitMalaria` dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn't affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our `GreatTitMalaria` data frame, the `treatment` variable would thus be an irrelevant label for predicting malaria infection. If these `treatment` labels were irrelevant, then we could randomly reassign them by "shuffling" them to no consequence!
 
 To illustrate this idea, in Table \@ref(tab:compare-six) we narrow our focus to 6 arbitrarily chosen females of the `r total_birds` . The malaria column shows that 3 females were infected while 3 weren't. The `treatment` column shows the nest treatment, control or egg removal. 
 
@@ -183,11 +180,11 @@ However, in our hypothesized universe of no effect of egg removal, treatment is 
 ```{r compare-six, echo=FALSE, purl=FALSE}
 set.seed(16)
 # Pick out 6 rows
-BirdMalaria_sample <- BirdMalaria %>%
+GreatTitMalaria_sample <- GreatTitMalaria %>%
   slice(c(36, 39, 2, 22, 24, 55)) %>%
   mutate(`shuffled_treatment` = sample(treatment))
 
-BirdMalaria_sample %>%
+GreatTitMalaria_sample %>%
   kable(
     caption = "One example of shuffling treatment variable",
     booktabs = TRUE,
@@ -212,37 +209,37 @@ In our shuffling simulation, we will start with `r total_C` red cards, the numbe
 include_graphics("images/shutterstock/shutterstock_128283971.jpg")
 ```
 
-We've saved one such shuffling in the `BirdMalaria_shuffled` data frame. If you compare the original `BirdMalaria` and the shuffled `BirdMalaria_shuffled` data frames, you'll see that while the malaria variable is identical, the `shuffled_treatment` variable differs from `treatment`. 
+We've saved one such shuffling in the `GreatTitMalaria_shuffled` data frame. If you compare the original `GreatTitMalaria` and the shuffled `GreatTitMalaria_shuffled` data frames, you'll see that while the malaria variable is identical, the `shuffled_treatment` variable differs from `treatment`. 
 
-Let's repeat the same exploratory data analysis we did for the original `BirdMalaria` data on our `BirdMalaria_shuffled` data frame. Let's create a bar plot visualizing the relationship between malaria and the new shuffled `treatment` variable and compare this to the original unshuffled version in Figure \@ref(fig:BirdMalaria-barplot-permuted).
+Let's repeat the same exploratory data analysis we did for the original `GreatTitMalaria` data on our `GreatTitMalaria_shuffled` data frame. Let's create a bar plot visualizing the relationship between malaria and the new shuffled `treatment` variable and compare this to the original unshuffled version in Figure \@ref(fig:BirdMalaria-barplot-permuted).
 
 ```{r, eval=FALSE}
-ggplot(BirdMalaria_shuffled, 
+ggplot(GreatTitMalaria_shuffled, 
        aes(x = shuffled_treatment, fill = response)) +
   geom_bar() + 
   labs(x = "Shuffled treatment")
 ```
 ```{r BirdMalaria-barplot-permuted, fig.cap="Barplots of relationship of response with treatment (left) and shuffled treatment (right).", fig.height=4.7, echo=FALSE, purl=FALSE}
-BirdMalaria_shuffled <- BirdMalaria %>%
+GreatTitMalaria_shuffled <- GreatTitMalaria %>%
   mutate(`shuffled_treatment` = sample(treatment))
-height1 <- BirdMalaria %>%
+height1 <- GreatTitMalaria %>%
   group_by(treatment) %>%
   summarize(n = n()) %>%
   pull(n) %>%
   max()
-height2 <- BirdMalaria_shuffled %>%
+height2 <- GreatTitMalaria_shuffled %>%
   group_by(shuffled_treatment) %>%
   summarize(n = n()) %>%
   pull(n) %>%
   max()
 height <- max(height1, height2)
 
-plot1 <- ggplot(BirdMalaria, aes(x = treatment, fill = response)) +
+plot1 <- ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
   geom_bar() +
   labs(x = "Treatment", title = "Original") +
   theme(legend.position = "none") +
   coord_cartesian(ylim = c(0, height))
-plot2 <- ggplot(BirdMalaria_shuffled, aes(x = shuffled_treatment, fill = response)) +
+plot2 <- ggplot(GreatTitMalaria_shuffled, aes(x = shuffled_treatment, fill = response)) +
   geom_bar() +
   labs(x = "Shuffled treatment", y = "", title = "Shuffled") +
   coord_cartesian(ylim = c(0, height))
@@ -258,19 +255,19 @@ In the original data, in the left barplot, the rate of malaria (red) in females 
 Let's also compute the proportion of female birds with malaria for each `shuffled_treatment` group:
 
 ```{r}
-BirdMalaria_shuffled %>% 
+GreatTitMalaria_shuffled %>% 
   group_by(shuffled_treatment, response) %>% 
   tally() # Same as summarize(n = n())
 ```
 ```{r, echo=FALSE, purl=FALSE}
 # control stats
-n_C_Mal <- BirdMalaria_shuffled %>%
+n_C_Mal <- GreatTitMalaria_shuffled %>%
   filter(response == "Malaria", shuffled_treatment == "Control") %>%
   nrow()
 prop_C_Mal <- n_C_Mal / (total_C)
 
 # egg removal stats
-n_E_Mal <- BirdMalaria_shuffled %>%
+n_E_Mal <- GreatTitMalaria_shuffled %>%
   filter(response == "Malaria", 
          shuffled_treatment == "Egg removal") %>%
   nrow()
@@ -301,9 +298,9 @@ n_shuffle <- 99L
 Imagine that we repeated the shuffling process above `r n_shuffle` more times and recorded the values in `r n_shuffle` more `shuffled__treatment` columns. The `shuffled_results` dataset includes the results of one such scenario
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
-shuffled_results <- BirdMalaria_shuffled
+shuffled_results <- GreatTitMalaria_shuffled
 for (j in 1:n_shuffle) {
-  shuffled_results <- BirdMalaria %>%  
+  shuffled_results <- GreatTitMalaria %>%  
     transmute(`shuffled_treatment` = sample(treatment)) %>% 
     bind_cols(shuffled_results)
     } 
@@ -342,7 +339,7 @@ shuffled_stats <- bind_rows(shuffled_stats_E, shuffled_stats_C) %>%
 
 For each of these `r n_replicates` columns of _shuffles_, we computed the difference in malaria rates between control and experimentally treated birds, and in Figure \@ref(fig:null-distribution-1) we display their distribution in a histogram. We also mark the observed difference in malaria rate that occurred in real life of `r observed_test_statistic` = `r observed_test_statistic*100`% with a dark line.
 
-```{r null-distribution-1, fig.cap="Distribution of shuffled differences in BirdMalaria.", purl=FALSE, echo=FALSE}
+```{r null-distribution-1, fig.cap="Distribution of shuffled differences in GreatTitMalaria.", purl=FALSE, echo=FALSE}
 ggplot(data = shuffled_stats, aes(x = stat)) +
   geom_histogram(binwidth = 0.1, color = "white") +
   geom_vline(xintercept = observed_test_statistic, color = "red", size = 1) +
@@ -485,7 +482,7 @@ Observe how the alternative hypothesis $H_A$ is one-sided with $p_{e} - p_{c} > 
 
 Third, a **test statistic** \index{hypothesis testing!test statistic} is a *point estimate/sample statistic* formula used for hypothesis testing. Note that a sample statistic is merely a summary statistic based on a sample of observations. Recall from Section \@ref(summarize) that a summary statistic takes in many values and returns only one. Here, the samples would be the $n_e$ = `r total_E` experimentally-treated females and the $n_c$ = `r total_C` control females. Hence, the point estimate of interest is the difference in sample proportions $\widehat{p}_{e} - \widehat{p}_{c}$. 
 
-Fourth, the **observed test statistic** \index{hypothesis testing!observed test statistic} is the value of the test statistic that we observed in real life. In our case, we computed this value using the data saved in the `BirdMalaria` data frame. It was the observed difference of $\widehat{p}_{e} -\widehat{p}_{c} = `r p_E_Mal` - `r p_C_Mal` = `r observed_test_statistic` = `r observed_test_statistic*100`\%$ in favor of control birds.
+Fourth, the **observed test statistic** \index{hypothesis testing!observed test statistic} is the value of the test statistic that we observed in real life. In our case, we computed this value using the data saved in the `GreatTitMalaria` data frame. It was the observed difference of $\widehat{p}_{e} -\widehat{p}_{c} = `r p_E_Mal` - `r p_C_Mal` = `r observed_test_statistic` = `r observed_test_statistic*100`\%$ in favor of control birds.
 
 Fifth, the **null distribution** \index{hypothesis testing!null distribution} is the sampling distribution of the test statistic *assuming the null hypothesis $H_0$ is true*. Ooof! That's a long one! Let's unpack it slowly. The key to understanding the null distribution is that the null hypothesis $H_0$ is *assumed* to be true. We're not saying that $H_0$ is true at this point, we're only assuming it to be true for hypothesis testing purposes. In our case, this corresponds to our hypothesized universe of no effect of egg removal on infection rates. Assuming the null hypothesis $H_0$, also stated as "Under $H_0$," how does the test statistic vary due to sampling variation? In our case, how will the difference in sample proportions $\widehat{p}_{c} - \widehat{p}_{e}$ vary due to sampling under $H_0$? Recall from Subsection \@ref(sampling-definitions) that distributions displaying how point estimates vary due to sampling variation are called *sampling distributions*. The only additional thing to keep in mind about null distributions is that they are sampling distributions *assuming the null hypothesis $H_0$ is true*. 
 
@@ -522,7 +519,7 @@ Seventh and lastly, in many hypothesis testing procedures, it is commonly recomm
 
 Alternatively, if the $p$-value does not fall below $\alpha$, we would "fail to reject $H_0$." Note the latter statement is not quite the same as saying we "accept $H_0$." This distinction is rather subtle and not immediately obvious. So we'll revisit it later in Section \@ref(ht-interpretation).
 
-While different fields tend to use different values of $\alpha$, some commonly used values for $\alpha$ are 0.1, 0.01, and 0.05; with 0.05 being the choice people often make without putting much thought into it. We'll talk more about $\alpha$ significance levels in Section \@ref(ht-interpretation), but first let's fully conduct the hypothesis test corresponding to our BirdMalaria activity using the `infer` package.
+While different fields tend to use different values of $\alpha$, some commonly used values for $\alpha$ are 0.1, 0.01, and 0.05; with 0.05 being the choice people often make without putting much thought into it. We'll talk more about $\alpha$ significance levels in Section \@ref(ht-interpretation), but first let's fully conduct the hypothesis test corresponding to our GreatTitMalaria activity using the `infer` package.
 
 
 
@@ -565,11 +562,11 @@ Recall that we use the `specify()` \index{infer!specify()} verb to specify the r
 Furthermore, since we are interested in the proportion of female birds with `"Malaria"`, and not the proportion of birds with `"No Malaria"`, we set the argument `success` to `"Malaria"`.
 
 ```{r}
-BirdMalaria %>% 
+GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") 
 ```
 
-Again, notice how the `BirdMalaria` data itself doesn't change, but the `Response: response (factor)` and `Explanatory: treatment (factor)` *meta-data* do. This is similar to how the `group_by()` verb from `dplyr` doesn't change the data, but only adds "grouping" meta-data, as we saw in Section \@ref(groupby).
+Again, notice how the `GreatTitMalaria` data itself doesn't change, but the `Response: response (factor)` and `Explanatory: treatment (factor)` *meta-data* do. This is similar to how the `group_by()` verb from `dplyr` doesn't change the data, but only adds "grouping" meta-data, as we saw in Section \@ref(groupby).
 
 #### 2. `hypothesize` the null {-}
 
@@ -590,7 +587,7 @@ In other words, the null hypothesis $H_0$ corresponding to our "hypothesized uni
 In our case, since we have two samples (the birds on control nests and those on nests with egg removal), we set `null = "independence"`.
 
 ```{r}
-BirdMalaria %>% 
+GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence")
 ```
@@ -619,24 +616,24 @@ n_reps <- 1000L
 After we `hypothesize()` the null hypothesis, we `generate()` replicates of "shuffled" datasets assuming the null hypothesis is true. We do this by repeating the shuffling exercise you performed in Section \@ref(ht-activity) several times. Instead of merely doing it `r n_replicates` times as our groups of friends did, let's use the computer to repeat this `r n_reps` times by setting ``reps = `r n_reps` `` in the `generate()` \index{infer!generate()} function. However, unlike for confidence intervals where we generated replicates using `type = "bootstrap"` resampling with replacement, we'll now perform shuffles/permutations by setting `type = "permute"`. Recall that shuffles/permutations are a kind of resampling, but unlike the bootstrap method, they involve resampling *without* replacement. 
 
 ```{r eval=FALSE}
-BirdMalaria_generate <- BirdMalaria %>% 
+GreatTitMalaria_generate <- GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence") %>% 
   generate(reps = 1000, type = "permute")
-nrow(BirdMalaria_generate)
+nrow(GreatTitMalaria_generate)
 ```
 
 ```{r echo=FALSE, purl=FALSE}
-if (!file.exists("rds/BirdMalaria_generate.rds")) {
-  BirdMalaria_generate <- BirdMalaria %>%
+if (!file.exists("rds/GreatTitMalaria_generate.rds")) {
+  GreatTitMalaria_generate <- GreatTitMalaria %>%
     specify(formula = response ~ treatment, success = "Malaria") %>%
     hypothesize(null = "independence") %>%
     generate(reps = 1000, type = "permute")
-  write_rds(BirdMalaria_generate, "rds/BirdMalaria_generate.rds")
+  write_rds(GreatTitMalaria_generate, "rds/GreatTitMalaria_generate.rds")
 } else {
-  BirdMalaria_generate <- read_rds("rds/BirdMalaria_generate.rds")
+  GreatTitMalaria_generate <- read_rds("rds/GreatTitMalaria_generate.rds")
 }
-nrow(BirdMalaria_generate)
+nrow(GreatTitMalaria_generate)
 ```
 
 <!-- 
@@ -647,7 +644,7 @@ to explain given how we set up the cards tactile example before. I think it's be
 here since it has malaria shuffled. 
 -->
 
-Observe that the resulting data frame has `r (total_birds*n_reps) %>% comma()` rows. This is because we performed shuffles/permutations for each of the `r total_birds` rows `r n_reps` times and $`r (total_birds*n_reps) %>% comma()` = `r n_reps` \cdot `r total_birds`$. If you explore the `BirdMalaria_generate` data frame with `View()`, you'll notice that the variable `replicate` indicates which resample each row belongs to. So it has the value `1` `r total_birds` times, the value `2` `r total_birds` times, all the way through to the value `r n_reps`, again `r total_birds` times. 
+Observe that the resulting data frame has `r (total_birds*n_reps) %>% comma()` rows. This is because we performed shuffles/permutations for each of the `r total_birds` rows `r n_reps` times and $`r (total_birds*n_reps) %>% comma()` = `r n_reps` \cdot `r total_birds`$. If you explore the `GreatTitMalaria_generate` data frame with `View()`, you'll notice that the variable `replicate` indicates which resample each row belongs to. So it has the value `1` `r total_birds` times, the value `2` `r total_birds` times, all the way through to the value `r n_reps`, again `r total_birds` times. 
 
 #### 4. `calculate` summary statistics {-}
 
@@ -658,7 +655,7 @@ For each of our `r n_reps` shuffles, we can calculate this test statistic by set
 Let's save the result in a data frame called `null_distribution`:
 
 ```{r eval=FALSE}
-null_distribution <- BirdMalaria %>% 
+null_distribution <- GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence") %>% 
   generate(reps = 1000, type = "permute") %>% 
@@ -667,12 +664,12 @@ null_distribution
 ```
 
 ```{r echo=FALSE, purl=FALSE}
-if (!file.exists("rds/null_distribution_BirdMalaria.rds")) {
-  null_distribution <- BirdMalaria_generate %>%
+if (!file.exists("rds/null_distribution_GreatTitMalaria.rds")) {
+  null_distribution <- GreatTitMalaria_generate %>%
     calculate(stat = "diff in props", order = c("Egg removal", "Control"))
-  write_rds(null_distribution, "rds/null_distribution_BirdMalaria.rds")
+  write_rds(null_distribution, "rds/null_distribution_GreatTitMalaria.rds")
 } else {
-  null_distribution <- read_rds("rds/null_distribution_BirdMalaria.rds")
+  null_distribution <- read_rds("rds/null_distribution_GreatTitMalaria.rds")
 }
 null_distribution
 ```
@@ -682,7 +679,7 @@ Observe that we have `r n_reps` values of `stat`, each representing one  instanc
 What was the *observed* difference in infection rates? In other words, what was the *observed test statistic* $\widehat{p}_{e} - \widehat{p}_{c}$? Recall from Section \@ref(ht-activity) that we computed this observed difference by hand to be `r p_E_Mal` - `r p_C_Mal` = `r observed_test_statistic` = `r observed_test_statistic*100`%. We can also compute this value using the previous `infer` code but with the `hypothesize()` and `generate()` steps removed. Let's save this in `obs_diff_prop`:
 
 ```{r}
-obs_diff_prop <- BirdMalaria %>% 
+obs_diff_prop <- GreatTitMalaria %>% 
   specify(response ~ treatment, success = "Malaria") %>% 
   calculate(stat = "diff in props", order = c("Egg removal", "Control"))
 obs_diff_prop
@@ -735,7 +732,7 @@ Keeping the definition of a $p$-value in mind, the probability of observing a di
 One of the great things about the `infer` package is that we can jump seamlessly between conducting hypothesis tests and constructing confidence intervals with minimal changes! Recall the code from the previous section that creates the null distribution, which in turn is needed to compute the $p$-value:
 
 ```{r eval=FALSE}
-null_distribution <- BirdMalaria %>% 
+null_distribution <- GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence") %>% 
   generate(reps = 1000, type = "permute") %>% 
@@ -745,7 +742,7 @@ null_distribution <- BirdMalaria %>%
 To create the corresponding bootstrap distribution needed to construct a 95% confidence interval for $p_{e} - p_{c}$, we only need to make two changes. \index{infer!switching between tests and confidence intervals} First, we remove the `hypothesize()` step since we are no longer assuming a null hypothesis $H_0$ is true. We can do this by deleting or commenting out the `hypothesize()` line of code. Second, we switch the `type` of resampling in the `generate()` step to be `"bootstrap"` instead of `"permute"`.
 
 ```{r eval=FALSE}
-bootstrap_distribution <- BirdMalaria %>% 
+bootstrap_distribution <- GreatTitMalaria %>% 
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   # Change 1 - Remove hypothesize():
   # hypothesize(null = "independence") %>% 
@@ -755,8 +752,8 @@ bootstrap_distribution <- BirdMalaria %>%
 ```
 
 ```{r echo=FALSE, purl=FALSE}
-if (!file.exists("rds/bootstrap_distribution_BirdMalaria.rds")) {
-  bootstrap_distribution <- BirdMalaria %>%
+if (!file.exists("rds/bootstrap_distribution_GreatTitMalaria.rds")) {
+  bootstrap_distribution <- GreatTitMalaria %>%
     specify(formula = response ~ treatment, success = "Malaria") %>%
     # Change 1 - Remove hypothesize():
     # hypothesize(null = "independence") %>%
@@ -765,10 +762,10 @@ if (!file.exists("rds/bootstrap_distribution_BirdMalaria.rds")) {
     calculate(stat = "diff in props", order = c("Egg removal", "Control"))
   write_rds(
     bootstrap_distribution,
-    "rds/bootstrap_distribution_BirdMalaria.rds"
+    "rds/bootstrap_distribution_GreatTitMalaria.rds"
   )
 } else {
-  bootstrap_distribution <- read_rds("rds/bootstrap_distribution_BirdMalaria.rds")
+  bootstrap_distribution <- read_rds("rds/bootstrap_distribution_GreatTitMalaria.rds")
 }
 ```
 
@@ -843,7 +840,7 @@ if (is_html_output()) {
 ```{r, eval=FALSE}
 library(moderndive)
 library(infer)
-null_distribution_cean <- BirdMalaria %>%
+null_distribution_cean <- GreatTitMalaria %>%
   specify(formula = response ~ treatment, success = "Malaria") %>% 
   hypothesize(null = "independence") %>% 
   generate(reps = 1000, type = "permute") %>% 
@@ -1131,7 +1128,7 @@ sampling_scenarios %>%
   column_spec(5, width = "1in")
 ```
 
-So, whereas the sampling bowl exercise in Section \@ref(sampling-activity) concerned *proportions*, the pennies exercise in Section \@ref(resampling-tactile) concerned *means*, the case study on whether yawning is contagious in Section \@ref(case-study-two-prop-ci) and the BirdMalaria activity in Section \@ref(ht-activity) concerned *differences in proportions*, we are now concerned with *differences in means*. 
+So, whereas the sampling bowl exercise in Section \@ref(sampling-activity) concerned *proportions*, the pennies exercise in Section \@ref(resampling-tactile) concerned *means*, the case study on whether yawning is contagious in Section \@ref(case-study-two-prop-ci) and the GreatTitMalaria activity in Section \@ref(ht-activity) concerned *differences in proportions*, we are now concerned with *differences in means*. 
 
 In other words, the population parameter of interest is the difference in population mean ratings $\mu_k - \mu_l$, where $\mu_k$ is the mean horn length of all killed horned lizards and similarly $\mu_l$ is the mean horn length of all living horned lizards. Additionally the point estimate/sample statistic of interest is the difference in sample means $\overline{x}_k - \overline{x}_l$, where $\overline{x}_k$ is the mean horn.length of the $n_k$ = `r n_killed` horned lizards in our sample and $\overline{x}_l$ is the mean horn length of the $n_l$ = `r n_living` in our sample. Based on our earlier exploratory data analysis, our estimate $\overline{x}_k - \overline{x}_l$ is $`r x_bar_killed %>% round(3)` - `r x_bar_living %>% round(3)` = `r (x_bar_killed - x_bar_living) %>% round(3)`$. 
 
@@ -1149,7 +1146,7 @@ H_0 &: \mu_k - \mu_l = 0\\
 \end{aligned}
 $$
 
-In other words, the null hypothesis $H_0$ suggests that both living and killed horned lizards have the same mean horn.length. This is the "hypothesized universe" we'll *assume* is true. On the other hand, the alternative hypothesis $H_A$ suggests that there is a difference. Unlike the one-sided alternative we used in the BirdMalaria exercise $H_A: p_e - p_c > 0$, we are now considering a two-sided alternative of $H_A: \mu_k - \mu_l \neq 0$. 
+In other words, the null hypothesis $H_0$ suggests that both living and killed horned lizards have the same mean horn.length. This is the "hypothesized universe" we'll *assume* is true. On the other hand, the alternative hypothesis $H_A$ suggests that there is a difference. Unlike the one-sided alternative we used in the GreatTitMalaria exercise $H_A: p_e - p_c > 0$, we are now considering a two-sided alternative of $H_A: \mu_k - \mu_l \neq 0$. 
 
 Furthermore, we'll pre-specify a low significance level of $\alpha$ = 0.01. By setting this value low, all things being equal, there is a lower chance that the $p$-value will be less than $\alpha$. Thus, there is a lower chance that we'll reject the null hypothesis $H_0$ in favor of the alternative hypothesis $H_A$. In other words, we'll reject the hypothesis that there is no difference in mean ratings for all killed and living horned lizards, only if we have quite strong evidence.
 
@@ -1239,7 +1236,7 @@ obs_diff_means
 
 #### 5. `visualize` the p-value {-}
 
-Lastly, in order to compute the $p$-value, we have to assess how "extreme" the observed difference in means of `r obs_diff_means$stat %>% round(3)` is. We do this by comparing `r obs_diff_means$stat %>% round(3)` to our null distribution, which was constructed in a hypothesized universe of no true difference in average horn lengths between the two groups. Let's visualize both the null distribution and the $p$-value in Figure \@ref(fig:null-distribution-HornedLizards-2). Unlike our example in Subsection \@ref(infer-workflow-ht) involving BirdMalaria, since we have a two-sided $H_A: \mu_k - \mu_l \neq 0$, we have to allow for both possibilities for _more extreme_, so we set `direction = "both"`.
+Lastly, in order to compute the $p$-value, we have to assess how "extreme" the observed difference in means of `r obs_diff_means$stat %>% round(3)` is. We do this by comparing `r obs_diff_means$stat %>% round(3)` to our null distribution, which was constructed in a hypothesized universe of no true difference in average horn lengths between the two groups. Let's visualize both the null distribution and the $p$-value in Figure \@ref(fig:null-distribution-HornedLizards-2). Unlike our example in Subsection \@ref(infer-workflow-ht) involving GreatTitMalaria, since we have a two-sided $H_A: \mu_k - \mu_l \neq 0$, we have to allow for both possibilities for _more extreme_, so we set `direction = "both"`.
 
 ```{r eval=FALSE}
 visualize(null_distribution_HornedLizards, bins = 10) + 

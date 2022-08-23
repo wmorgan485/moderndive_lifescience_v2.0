@@ -239,7 +239,7 @@ Much like an app on your phone, you only have to install a package once. However
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat the earlier installation steps, but for the `dplyr`, `openintro`, and `knitr` packages. This will install the earlier mentioned `dplyr` package for data wrangling, the `openintro` package contains the `mammals` data set with information on 39 mammalian species, and the `knitr` package for generating easy-to-read tables in R. We'll use these packages in the next section.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Repeat the earlier installation steps, but for the following R packages: `dplyr`, `knitr`, `openintro`, `airports`, `cherryblossom`, and `usdata` packages. This will install the earlier mentioned `dplyr` package for data wrangling, the `knitr` package for generating easy-to-read tables in R, and the `openintro` package with the `mammals` data set that we'll examine next, as well as a few packages required by `openintro`. We'll use these packages in the next section.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -278,7 +278,7 @@ Error in library(ggplot2) : there is no package called ‘ggplot2’
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `openintro`, `readr` and `knitr` packages as well by repeating the earlier steps.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** "Load" the `dplyr`, `knitr`, `openintro`, `airports`, `cherryblossom`, and `usdata` packages as well by repeating the earlier steps.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -305,7 +305,7 @@ This is a different error message than the one you just saw on a package not hav
 
 Let's put everything we've learned so far into practice and start exploring some real data! Data comes to us in a variety of formats, from pictures to text to numbers.  Throughout this book, we'll focus on datasets that are saved in "spreadsheet"-type format. This is probably the most common way data are collected and saved in many fields.  Remember from Subsection \@ref(programming-concepts) that these "spreadsheet"-type datasets are called _data frames_ in R. \index{data frame} We'll focus on working with data saved as data frames throughout this book.
 
-Let's first load all the packages needed for this chapter, assuming you've already installed them. Read Section \@ref(packages) for information on how to install and load R packages if you haven't already.
+Let's first load all the packages needed for this chapter. Before you load the following packages, check that they are installed by looking in RStudio's Packages tab. The `openintro` package also requires the `airports`, `cherryblossom`, and `usdata` packages, so look for these too.  If any of the needed packages are missing, read Section \@ref(packages) for information on how to install R packages. 
 
 ```{r message=FALSE, warning=FALSE}
 library(openintro)
@@ -501,7 +501,7 @@ We'll cover two methods for importing `.csv` and `.xlsx` spreadsheet data in R: 
 
 ### Using the console
 
-First, let's import a Comma Separated Values `.csv` file that exists on the internet. The `.csv` file `chap12e2BlackbirdTestosterone.csv` compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in  Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175.	Let's use the `read_csv()` function from the `readr` \index{R packages!readr!read\_csv()} [@R-readr] package to read the dataset from the *Analysis of Biological Data* textbook website, import it into R, and save it in a data frame called `blackbird`.
+First, let's import a Comma Separated Values `.csv` file that exists on the internet. The `.csv` file `chap12e2BlackbirdTestosterone.csv` compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in  Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175.	Let's use the `read_csv()` function from the `readr` \index{R packages!readr!read\_csv()} [@R-readr] package to read the dataset from the *Analysis of Biological Data* textbook website, import it into R, and save it in a data frame called `blackbird`. 
 
 ```{r message=FALSE, eval=FALSE}
 blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
@@ -511,6 +511,8 @@ blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-c
 blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
 blackbird
 ```
+
+(If you saw a message about column specifications, you can ignore it.)
 
 Note that the `read_csv()` function included in the `readr` package is different than the `read.csv()` function that comes installed with R. While the difference in the names might seem trivial (an `_` instead of a `.`), the `read_csv()` function is, in our opinion, easier to use since it can more easily read data off the web and generally imports data at a much faster speed. Furthermore, the `read_csv()` function included in the `readr` saves data frames as `tibbles` by default. 
 

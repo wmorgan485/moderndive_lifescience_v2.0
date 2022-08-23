@@ -30,10 +30,10 @@ set.seed(76)
 
 So far in our journey, we've seen how to look at data saved in data frames (Chapter \@ref(getting-started)) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of `geom`etric objects.
 
-Recall that for some of our visualizations, we first needed to transform/modify existing data frames a little. For example, to create the linegraph in Figure \@ref(fig:dailyweight) with measurements *only* for Chick 1, we first needed to pare down the `Chickbody_wt` data frame to a `chick1_weight` data frame consisting of only `Chick == 1` rows. Thus, `chick1_weight` will have fewer rows than `Chickbody_wt`. We did this using the `filter()` function:
+Recall that for some of our visualizations, we first needed to transform/modify existing data frames a little. For example, to create the linegraph in Figure \@ref(fig:dailyweight) with measurements *only* for Chick 1, we first needed to pare down the `ChickWeight` data frame to a `chick1_weight` data frame consisting of only `Chick == 1` rows. Thus, `chick1_weight` will have fewer rows than `ChickWeight`. We did this using the `filter()` function:
 
 ```{r, eval=FALSE}
-chick1_weight <- filter(Chickbody_wt, Chick == 1)
+chick1_weight <- filter(ChickWeight, Chick == 1)
 ```
 
 In this chapter, we'll extend this example and we'll introduce a series of functions from the `dplyr` package for data wrangling that will allow you to take a data frame and "wrangle" it (transform it) to suit your needs. Such functions include:
@@ -125,7 +125,7 @@ So while both approaches achieve the same goal, the latter is much more human-re
 1. The result will be the transformed/modified data frame that you want. In our example, we'll save the result in a new data frame by using the `<-` assignment operator with the name `chick1_weight` via `chick1_weight <-`.
 
 ```{r, eval=FALSE}
-chick1_weight <- Chickbody_wt %>% 
+chick1_weight <- ChickWeight %>% 
   filter(Chick == 1)
 ```
 
@@ -330,8 +330,7 @@ mammals_sleep
 The `select()` function can also be used to reorder columns when combined with the `everything()` helper function.  For example, suppose we want the `species` and sleep-related variables to appear first, while not discarding the rest of the variables. In the following code, `everything()` will pick up all remaining variables: 
 
 ```{r, eval=FALSE}
-mammals_reorder <- mammals %>% 
-  mammals_sleep <- mammals %>% select(species, non_dreaming:total_sleep, everything())
+mammals_reorder <- mammals %>% select(species, non_dreaming:total_sleep, everything())
 glimpse(mammals_reorder)
 ```
 

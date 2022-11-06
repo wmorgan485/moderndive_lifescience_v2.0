@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-08-22" />
+<meta name="date" content="2022-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1092,9 +1092,9 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 3 × 4
   group   mean_wl1 mean_wl2 mean_wl3
   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 Control     4.5      3.33     2.08
-2 Diet        5.33     3.92     2.25
-3 DietEx      6.2      6.1      2.2 </code></pre>
+1 Control  4.5      3.33333  2.08333
+2 Diet     5.33333  3.91667  2.25   
+3 DietEx   6.2      6.1      2.2    </code></pre>
 <p>Now, let’s lay out the grammar of graphics we saw in Section <a href="2-viz.html#grammarofgraphics">2.1</a>.</p>
 <p>First we know we need to set <code>data = WeeklyAverage</code> and use a <code>geom_line()</code> layer, but what is the aesthetic mapping of variables? We’d like to see how the weight loss has changed over the months for each group, so we need to map:</p>
 <ul>
@@ -1112,15 +1112,15 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 9 × 3
   group   month    weightloss
   &lt;fct&gt;   &lt;chr&gt;         &lt;dbl&gt;
-1 Control mean_wl1       4.5 
-2 Control mean_wl2       3.33
-3 Control mean_wl3       2.08
-4 Diet    mean_wl1       5.33
-5 Diet    mean_wl2       3.92
-6 Diet    mean_wl3       2.25
-7 DietEx  mean_wl1       6.2 
-8 DietEx  mean_wl2       6.1 
-9 DietEx  mean_wl3       2.2 </code></pre>
+1 Control mean_wl1    4.5    
+2 Control mean_wl2    3.33333
+3 Control mean_wl3    2.08333
+4 Diet    mean_wl1    5.33333
+5 Diet    mean_wl2    3.91667
+6 Diet    mean_wl3    2.25   
+7 DietEx  mean_wl1    6.2    
+8 DietEx  mean_wl2    6.1    
+9 DietEx  mean_wl3    2.2    </code></pre>
 <ol style="list-style-type: decimal">
 <li>The first argument specifies the columns you either want to or don’t want to “tidy.” We set this to <code>cols = -group</code> indicating that we don’t want to “tidy” the <code>group</code> variable but do want to “tidy” the other variables in <code>WeeklyAverage</code>.</li>
 <li><code>names_to</code> is the name of the variable in the new “tidy” data frame that will contain the <em>column names</em> of the original data. Observe how we set <code>names_to = "month"</code>. In the resulting <code>WeeklyAverage_tidy</code>, the column <code>month</code> indicates the month that the weight loss was measured.</li>
@@ -1138,15 +1138,15 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 9 × 3
   group   month weightloss
   &lt;fct&gt;   &lt;int&gt;      &lt;dbl&gt;
-1 Control     1       4.5 
-2 Control     2       3.33
-3 Control     3       2.08
-4 Diet        1       5.33
-5 Diet        2       3.92
-6 Diet        3       2.25
-7 DietEx      1       6.2 
-8 DietEx      2       6.1 
-9 DietEx      3       2.2 </code></pre>
+1 Control     1    4.5    
+2 Control     2    3.33333
+3 Control     3    2.08333
+4 Diet        1    5.33333
+5 Diet        2    3.91667
+6 Diet        3    2.25   
+7 DietEx      1    6.2    
+8 DietEx      2    6.1    
+9 DietEx      3    2.2    </code></pre>
 <p>We can now create the time-series plot in Figure <a href="4-tidy.html#fig:guat-dem-tidy">4.4</a> using <code>geom_line()</code> to visualize how weight loss scores in each group changed during the study. Furthermore, we’ll use the <code>labs()</code> function in the <code>ggplot2</code> package to add informative labels to the <code>aes()</code>thetic attributes of our plot.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="4-tidy.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(WeeklyAverage_tidy, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> weightloss, <span class="at">color =</span> group)) <span class="sc">+</span></span>
 <span id="cb131-2"><a href="4-tidy.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>

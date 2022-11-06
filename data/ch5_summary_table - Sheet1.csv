@@ -1,7 +1,7 @@
 ,Verb,Data wrangling operation
 1,`filter()`,"Pick out a subset of rows based on values of a variable"
 2,`slice()`,"Pick out a subset of rows based on row number"
-3,`filter()`,"Pick out a subset of columns based on name or other criteria"
+3,`select()`,"Pick out a subset of columns based on name or other criteria"
 4,`summarize()`,"Summarize many values to one using a summary statistic function like `mean()`, `median()`, etc."
 5,`group_by()`,"Add grouping structure to rows in data frame. Note this does not change values in data frame, rather only the meta-data"
 6,`mutate()`,"Create new variables by mutating existing ones"

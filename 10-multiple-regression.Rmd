@@ -273,13 +273,13 @@ get_regression_table(len_model_interaction) %>%
 # This code is used for dynamic non-static in-line text output purposes
 intercept_OJ <- get_regression_table(len_model_interaction) %>% 
   slice(1) %>% 
-  pull(estimate)
+  pull(estimate) %>% round(2)
 slope_OJ <- get_regression_table(len_model_interaction) %>% 
   slice(2) %>% 
-  pull(estimate)
+  pull(estimate) %>% round(2)
 offset_VC <- get_regression_table(len_model_interaction) %>% 
   slice(3) %>% 
-  pull(estimate)
+  pull(estimate) %>% round(2)
 offset_slope_interaction <- get_regression_table(len_model_interaction) %>% 
   slice(4) %>% 
   pull(estimate)
@@ -293,7 +293,7 @@ This holds similarly for `dose`. It is the slope for dose *for only the OJ recip
 
 What about the intercept and slope for dose of the ascorbic acid recipients in the `r if_else(is_latex_output(), "lighter-colored", "blue")` line in Figure \@ref(fig:numxcatxplot1)? This is where our notion of "offsets" comes into play once again. 
 
-The value for `suppVC` of `r offset_VC` is not the intercept for the ascorbic acid recipients, but rather the *offset*\index{offset} in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is `intercept + suppVC` = `r intercept_OJ` + (`r offset_VC`) = `r intercept_OJ` - `r -1*offset_VC` = `r intercept_OJ + offset_VC`. 
+The value for `suppVC` of `r offset_VC` is not the intercept for the ascorbic acid recipients, but rather the *offset*\index{offset} in intercept for these guinea pigs relative to orange juice recipients. The intercept for the ascorbic acid recipients is `intercept + suppVC` = `r intercept_OJ` + (`r offset_VC`) = `r intercept_OJ + offset_VC`. 
 
 Similarly, `dose:suppVC` = `r offset_slope_interaction` is not the slope for dose for the ascorbic acid recipients, but rather the *offset* in slope for those guinea pigs. Therefore, the slope for dose for the ascorbic acid recipients is `dose + dose:suppVC` $=  `r slope_OJ` + `r offset_slope_interaction` = `r slope_VC`$. Thus, the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line in Figure \@ref(fig:numxcatxplot1) has intercept `r intercept_OJ + offset_VC` and slope for `dose` of `r slope_VC`. Let's summarize these values in Table \@ref(tab:interaction-summary) and focus on the two slopes for `dose`:
 
@@ -355,7 +355,7 @@ $$
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &= `r intercept_OJ` + `r slope_OJ` \cdot \text{dose} - `r -1*offset_VC` \cdot 0 + `r offset_slope_interaction` \cdot \text{dose} \cdot 0\\
 &= `r intercept_OJ` + `r slope_OJ` \cdot \text{dose} - 0 + 0\\
-&= `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose}\\
+&= `r intercept_OJ` + `r slope_OJ` \cdot \text{dose}\\
 \end{aligned}
 $$
 
@@ -384,7 +384,7 @@ Another way of thinking about interaction effects on tooth length is as follows.
 
 When creating regression models with one numerical and one categorical explanatory variable, we are not just limited to interaction models as we just saw. Another type of model we can use is known as a *parallel slopes* model.\index{parallel slopes model} Unlike interaction models where the regression lines can have different intercepts and different slopes, parallel slopes models still allow for different intercepts but *force* all lines to have the same slope. The resulting regression lines are thus parallel. Let's visualize the best-fitting parallel slopes model to `ToothGrowth`.
 
-Unfortunately, the `geom_smooth()` function in the `ggplot2` package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called `geom_parallel_slopes()`\index{moderndive!geom\_parallel\_slopes()} that is included in the `moderndive` package. You won't find `geom_parallel_slopes()` in the `ggplot2` package, but rather the `moderndive` package. Thus, if you want to be able to use it, you will need to load both the `ggplot2` and `moderndive` packages. Using this function, let's now plot the parallel slopes model for teaching score. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure \@ref(fig:numxcatxplot1), but now the `geom_smooth(method = "lm", se = FALSE)` layer is replaced with `geom_parallel_slopes(se = FALSE)`. 
+Unfortunately, the `geom_smooth()` function in the `ggplot2` package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called `geom_parallel_slopes()`\index{moderndive!geom\_parallel\_slopes()} that is included in the `moderndive` package. You won't find `geom_parallel_slopes()` in the `ggplot2` package, so to use it, you will need to load both the `ggplot2` and `moderndive` packages. Using this function, let's now plot the parallel slopes model for tooth length. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure \@ref(fig:numxcatxplot1), but now the `geom_smooth(method = "lm", se = FALSE)` layer is replaced with `geom_parallel_slopes(se = FALSE)`. 
 
 ```{r eval=FALSE}
 ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
@@ -408,7 +408,7 @@ if (is_html_output()) {
 
 Observe in Figure \@ref(fig:numxcatx-parallel) that we now have parallel lines corresponding to the orange juice and ascorbic acid (VC) recipients, respectively: here they have the same positive slope.  This is telling us that guinea pigs who receive higher doses of vitamin C will tend to have longer teeth than guinea pigs who receive less. Furthermore, since the lines are parallel, the associated gain for higher dose is assumed to be the same for both orange juice and ascorbic acid (VC) recipients. 
 
-However, observe also in Figure \@ref(fig:numxcatx-parallel) that these two lines have different intercepts as evidenced by the fact that the `r if_else(is_latex_output(), "lighter-colored", "blue")` line corresponding to the ascorbic acid (VC) recipients is higher than the `r if_else(is_latex_output(), "darker-colored", "red")` line corresponding to the orange juice recipients. This is telling us that irrespective of dose, orange juice recipients tended to receive lower teaching scores than ascorbic acid (VC) recipients. 
+Also observe in Figure \@ref(fig:numxcatx-parallel) that these two lines have different intercepts as evidenced by the fact that the `r if_else(is_latex_output(), "lighter-colored", "blue")` line corresponding to the ascorbic acid (VC) recipients is lower than the `r if_else(is_latex_output(), "darker-colored", "red")` line corresponding to the orange juice recipients. This is telling us that irrespective of dose, orange juice recipients tended to have longer teeth than ascorbic acid (VC) recipients. 
 
 In order to obtain the precise numerical values of the two intercepts and the single common slope, we once again "fit" the model using the `lm()` "linear model" function and then apply the `get_regression_table()` function. However, unlike the interaction model which had a model formula of the form `y ~ x1 * x2`, our model formula is now of the form `y ~ x1 + x2`. In other words, our two explanatory variables `x1` and `x2` are separated by a `+` sign:
 
@@ -437,14 +437,16 @@ get_regression_table(len_model_parallel_slopes) %>%
 # This code is used for dynamic non-static in-line text output purposes
 intercept_OJ_parallel <- get_regression_table(len_model_parallel_slopes) %>%
   slice(1) %>% 
-  pull(estimate)
+  pull(estimate) %>% 
+  round(2)
 offset_VC_parallel <- get_regression_table(len_model_parallel_slopes) %>% 
-  slice(2) %>% 
-  pull(estimate)
+  slice_tail() %>% 
+  pull(estimate) %>% 
+  round(2)
 intercept_VC_parallel <- intercept_OJ_parallel + offset_VC_parallel
 ```
 
-Similarly to the regression table for the interaction model from Table \@ref(tab:regtable-interaction), we have an `intercept` term corresponding to the intercept for the "baseline for comparison" orange juice (OJ) group and a `suppVC` term corresponding to the *offset* in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure \@ref(fig:numxcatx-parallel) the `r if_else(is_latex_output(), "darker-colored", "red")` regression line corresponding to the orange juice recipients has an intercept of `r intercept_OJ_parallel` while the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line corresponding to the ascorbic acid (VC) recipients has an intercept of `r intercept_OJ_parallel` + `r offset_VC_parallel` = `r intercept_OJ_parallel + offset_VC_parallel`.  
+Similar to the regression table for the interaction model from Table \@ref(tab:regtable-interaction), we have an `intercept` term corresponding to the intercept for the "baseline for comparison" orange juice (OJ) group and a `suppVC` term corresponding to the *offset* in intercept for the ascorbic acid (VC) recipients relative to orange juice recipients. In other words, in Figure \@ref(fig:numxcatx-parallel) the `r if_else(is_latex_output(), "darker-colored", "red")` regression line corresponding to the orange juice recipients has an intercept of `r intercept_OJ_parallel` while the `r if_else(is_latex_output(), "lighter-colored", "blue")` regression line corresponding to the ascorbic acid (VC) recipients has an intercept of `r intercept_OJ_parallel` + `r offset_VC_parallel` = `r intercept_OJ_parallel + offset_VC_parallel`.  
 
 ```{r echo=FALSE, purl=FALSE}
 dose_coef <- get_regression_table(len_model_parallel_slopes) %>%
@@ -485,7 +487,7 @@ comes out correct in the HTML output.
 $$
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &= b_0 + b_{\text{dose}} \cdot \text{dose} + b_{\text{VC}} \cdot \mathbb{1}_{\text{is VC}}(x)\\
-&= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot \mathbb{1}_{\text{is VC}}(x) 
+&= `r intercept_OJ_parallel` + `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot \mathbb{1}_{\text{is VC}}(x) 
 \end{aligned}
 $$
 
@@ -493,8 +495,8 @@ Let's put this all together and compute the fitted value $\widehat{y} = \widehat
 
 $$
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 0\\
-&= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` + `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 0\\
+&= `r intercept_OJ_parallel` + `r dose_coef` \cdot \text{dose}
 \end{aligned}
 $$
 
@@ -502,9 +504,9 @@ which is the equation of the `r if_else(is_latex_output(), "darker-colored", "re
 
 $$
 \begin{aligned}
-\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 1\\
-&= (`r intercept_OJ_parallel` + `r offset_VC_parallel`) - `r -1*dose_coef` \cdot \text{dose}\\
-&= `r intercept_VC_parallel` `r dose_coef` \cdot \text{dose}
+\widehat{y} = \widehat{\text{len}} &= `r intercept_OJ_parallel` + `r dose_coef` \cdot \text{dose} + `r offset_VC_parallel` \cdot 1\\
+&= (`r intercept_OJ_parallel` + `r offset_VC_parallel`) + `r dose_coef` \cdot \text{dose}\\
+&= `r intercept_VC_parallel`+ `r dose_coef` \cdot \text{dose}
 \end{aligned}
 $$
 
@@ -574,10 +576,10 @@ if (is_html_output()) {
 
 What are these two values of $\widehat{y}$ = $\widehat{\text{len}}$ precisely? We can use the equations of the two regression lines we computed in Subsection \@ref(model4interactiontable), which in turn were based on values from the regression table in Table \@ref(tab:regtable-interaction):
 
-* For all orange juice recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_OJ` - `r -1*slope_OJ` \cdot \text{dose}$
-* For all ascorbic acid (VC) recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_VC` - `r -1*slope_VC` \cdot \text{dose}$
+* For all orange juice recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_OJ` + `r slope_OJ` \cdot \text{dose}$
+* For all ascorbic acid (VC) recipients: $\widehat{y} = \widehat{\text{len}} = `r intercept_VC` + `r slope_VC` \cdot \text{dose}$
 
-So our fitted values would be: $`r intercept_OJ` - `r -1 * slope_OJ` \cdot `r ex_OJ_dose` = `r (intercept_OJ + (slope_OJ*ex_OJ_dose)) %>% round(2)`$ and $`r intercept_VC` - `r -1*slope_VC` \cdot `r ex_VC_dose` = `r (intercept_VC + (slope_VC*ex_VC_dose)) %>% format(round(2), nsmall = 2)`$, respectively. 
+So our fitted values would be: $`r intercept_OJ` - `r -1 * slope_OJ` \cdot `r ex_OJ_dose` = `r (intercept_OJ + (slope_OJ*ex_OJ_dose)) %>% round(2)`$ and $`r intercept_VC` + `r slope_VC` \cdot `r ex_VC_dose` = `r (intercept_VC + (slope_VC*ex_VC_dose)) %>% format(round(2), nsmall = 2)`$, respectively. 
 
 Now what if we want the fitted values not just for these two guinea pigs, but for all `r n_ToothGrowth` guinea pigs included in the `ToothGrowth` data frame? Doing this by hand would be long and tedious! This is where the `get_regression_points()` function from the `moderndive` package can help: it will quickly automate the above calculations for all `r n_ToothGrowth` guinea pigs. We present a preview of the first 5 rows for each supplement type out of `r n_ToothGrowth` in Table \@ref(tab:model4-points-table).
 

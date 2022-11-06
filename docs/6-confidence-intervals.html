@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-08-22" />
+<meta name="date" content="2022-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1334,7 +1334,7 @@ FIGURE 6.18: Diagram of the specify() verb.
 10  2000
 # … with 40 more rows</code></pre>
 <p>Notice how the data itself doesn’t change, but the <code>Response: year (numeric)</code> <em>meta-data</em> does. This is similar to how the <code>group_by()</code> verb from <code>dplyr</code> doesn’t change the data, but only adds “grouping” meta-data, as we saw in Section <a href="3-wrangling.html#groupby">3.6</a>.</p>
-<p>We can also specify which variables will be the focus of our statistical inference using a <code>formula = y ~ x</code>. This is the same formula notation you saw in Chapters <a href="8-regression.html#regression">8</a> and <a href="10-multiple-regression.html#multiple-regression">10</a> on regression models: the response variable <code>y</code> is separated from the explanatory variable <code>x</code> by a <code>~</code> (“tilde”). The following use of <code>specify()</code> with the <code>formula</code> argument yields the same result seen previously:</p>
+<p>We can also specify which variables will be the focus of our statistical inference using a <code>formula = y ~ x</code>. This is the same formula notation you will see in Chapters <a href="8-regression.html#regression">8</a> and <a href="10-multiple-regression.html#multiple-regression">10</a> on regression models: the response variable <code>y</code> is separated from the explanatory variable <code>x</code> by a <code>~</code> (“tilde”). The following use of <code>specify()</code> with the <code>formula</code> argument yields the same result seen previously:</p>
 <div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="6-confidence-intervals.html#cb212-1" aria-hidden="true" tabindex="-1"></a>pennies_sample <span class="sc">%&gt;%</span> </span>
 <span id="cb212-2"><a href="6-confidence-intervals.html#cb212-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> year <span class="sc">~</span> <span class="cn">NULL</span>)</span></code></pre></div>
 <p>Since in the case of pennies we only have a response variable and no explanatory variable of interest, we set the <code>x</code> on the right-hand side of the <code>~</code> to be <code>NULL</code>.</p>

@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-08-22" />
+<meta name="date" content="2022-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1879,8 +1879,8 @@ Explanatory: group (factor)
 <p>We want to find the percentage of values that are at or below <code>obs_two_sample_t</code> <span class="math inline">\(= -4.263\)</span> or at or above <code>-obs_two_sample_t</code> <span class="math inline">\(= 4.263\)</span>. We use the <code>shade_p_value()</code> function with the <code>direction</code> argument set to <code>"both"</code> to do this:</p>
 <div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="7-hypothesis-testing.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distribution_HornedLizards_t, <span class="at">method =</span> <span class="st">&quot;both&quot;</span>) <span class="sc">+</span></span>
 <span id="cb342-2"><a href="7-hypothesis-testing.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> obs_two_sample_t, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
-<pre><code>Warning: Check to make sure the conditions have been met for the theoretical method. {infer}
-currently does not check these for you.</code></pre>
+<pre><code>Warning: Check to make sure the conditions have been met for the theoretical
+method. {infer} currently does not check these for you.</code></pre>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:t-stat-4"></span>
 <img src="ModernDive_files/figure-html/t-stat-4-1.png" alt="Null distribution using t-statistic and t-distribution with $p$-value shaded." width="\textwidth" />
 <p class="caption">

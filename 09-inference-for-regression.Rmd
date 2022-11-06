@@ -85,7 +85,7 @@ Recall using simple linear regression \index{regression!simple linear} we modele
 We started with the `LionNoses` data frame in the `abd` package, which contained the two variables of interest: `age` and `proportion.black`:
 
 ```{r}
-LionNoses
+glimpse(LionNoses)
 ```
 ```{r, echo=FALSE, purl=FALSE}
 cor_ch6 <- LionNoses %>%

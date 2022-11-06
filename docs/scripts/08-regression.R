@@ -29,10 +29,6 @@ library(gapminder)
 
 
 ## -----------------------------------------------------------------------------
-LionNoses
-
-
-## -----------------------------------------------------------------------------
 glimpse(LionNoses)
 
 
@@ -40,12 +36,6 @@ glimpse(LionNoses)
 ## LionNoses %>%
 ##   sample_n(size = 5)
 
-
-
-## -----------------------------------------------------------------------------
-LionNoses %>%
-  summarize(mean_age = mean(age), mean_proportion.black = mean(proportion.black),
-            median_age = median(age), median_proportion.black = median(proportion.black))
 
 
 ## ----eval=FALSE---------------------------------------------------------------

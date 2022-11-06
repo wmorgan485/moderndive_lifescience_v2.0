@@ -1171,19 +1171,21 @@ Let's recap all five of the five named graphs (5NG) \index{five named graphs} in
 # The following Google Doc is published to CSV and loaded using read_csv():
 # https://docs.google.com/spreadsheets/d/1vzqlFiT6qm5wzy_L_0nL7EWAd6jiUZmLSCFhDhztDSg/edit#gid=0
 
-if (!file.exists("rds/summary_table_ch2.rds")) {
+if (!file.exists("rds/summary_table_ch3.rds")) {
   summary_table_ch3 <-
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vRGaUW6EMIGPhg2V7CahoSdVi_JCcESFRYV5tov6bjcwOcn7DZDzfpZgrvjfFG6PV57gcJYIrwl_Q2c/pub?gid=0&single=true&output=csv" %>%
     read_csv(na = "")
   summary_table_ch3$Notes[2] <- "Used when there is a sequential order to x-variable, e.g., time"
-  write_rds(summary_table_ch3, "rds/summary_table_ch2.rds")
+  summary_table_ch3$Notes[3] <- "Like boxplots, facetted histograms show distribution of 1 numerical variable split by the values of a categorical variable"
+  summary_table_ch3$Shows[4] <- "Distribution of 1 numerical variable split by the values of a categorical variable"  
+write_rds(summary_table_ch3, "rds/summary_table_ch3.rds")
 } else {
-  summary_table_ch2 <- read_rds("rds/summary_table_ch2.rds") %>%
-    rename(` ` = `X1`)
+  summary_table_ch3 <- read_rds("rds/summary_table_ch3.rds") %>%
+    rename(` ` = contains("1"))
 }
 
 if (is_latex_output()) {
-  summary_table_ch2 %>%
+  summary_table_ch3 %>%
     # Weird tick marks show up in PDF:
     mutate(`Geometric object` = str_replace_all(`Geometric object`, "`", "")) %>%
     kable(
@@ -1197,7 +1199,7 @@ if (is_latex_output()) {
     column_spec(4, width = "1.2in") %>%
     column_spec(5, width = "1.6in")
 } else {
-  summary_table_ch2 %>%
+  summary_table_ch3 %>%
     kable(
       caption = "Summary of Five Named Graphs",
       booktabs = TRUE,

@@ -1217,7 +1217,11 @@ comes out correct in the HTML output.
 <div id="model4table" class="section level3 hasAnchor" number="10.1.3">
 <h3><span class="header-section-number">10.1.3</span> Parallel slopes model<a href="10-multiple-regression.html#model4table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When creating regression models with one numerical and one categorical explanatory variable, we are not just limited to interaction models as we just saw. Another type of model we can use is known as a <em>parallel slopes</em> model. Unlike interaction models where the regression lines can have different intercepts and different slopes, parallel slopes models still allow for different intercepts but <em>force</em> all lines to have the same slope. The resulting regression lines are thus parallel. Let’s visualize the best-fitting parallel slopes model to <code>ToothGrowth</code>.</p>
+<<<<<<< HEAD
 <p>Unfortunately, the <code>geom_smooth()</code> function in the <code>ggplot2</code> package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called <code>geom_parallel_slopes()</code> that is included in the <code>moderndive</code> package. You won’t find <code>geom_parallel_slopes()</code> in the <code>ggplot2</code> package, so to use it, you will need to load both the <code>ggplot2</code> and <code>moderndive</code> packages. Using this function, let’s now plot the parallel slopes model for tooth length. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, but now the <code>geom_smooth(method = "lm", se = FALSE)</code> layer is replaced with <code>geom_parallel_slopes(se = FALSE)</code>.</p>
+=======
+<p>Unfortunately, the <code>geom_smooth()</code> function in the <code>ggplot2</code> package does not have a convenient way to plot parallel slopes models. Evgeni Chasnovski thus created a special purpose function called <code>geom_parallel_slopes()</code> that is included in the <code>moderndive</code> package. You won’t find <code>geom_parallel_slopes()</code> in the <code>ggplot2</code> package, so to use it, you will need to load both the <code>ggplot2</code> and <code>moderndive</code> packages. Using this function, let’s now plot the parallel slopes model for tooth lengt. Notice how the code is identical to the code that produced the visualization of the interaction model in Figure <a href="10-multiple-regression.html#fig:numxcatxplot1">10.1</a>, but now the <code>geom_smooth(method = "lm", se = FALSE)</code> layer is replaced with <code>geom_parallel_slopes(se = FALSE)</code>.</p>
+>>>>>>> d7dde064745f57477f3e9b458a530053fbcc5d35
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="10-multiple-regression.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ToothGrowth, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
 <span id="cb408-2"><a href="10-multiple-regression.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb408-3"><a href="10-multiple-regression.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Dose&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tooth length&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Supplement type&quot;</span>) <span class="sc">+</span></span>
@@ -1402,8 +1406,13 @@ comes out correct in the HTML output.
 <p>which is the equation of the red regression line in Figure <a href="10-multiple-regression.html#fig:numxcatx-parallel">10.2</a> corresponding to the orange juice recipients. Correspondingly, since for ascorbic acid (VC) recipients the indicator function <span class="math inline">\(\mathbb{1}_{\text{is VC}}(x)\)</span> = 1, the previous equation becomes</p>
 <p><span class="math display">\[
 \begin{aligned}
+<<<<<<< HEAD
 \widehat{y} = \widehat{\text{len}} &amp;= 9.27 + 9.764 \cdot \text{dose} + -3.7 \cdot 1\\
 &amp;= (9.27 + -3.7) + 9.764 \cdot \text{dose}\\
+=======
+\widehat{y} = \widehat{\text{len}} &amp;= 9.27 9.764 \cdot \text{dose} + -3.7 \cdot 1\\
+&amp;= (9.27 + -3.7) - -9.764 \cdot \text{dose}\\
+>>>>>>> d7dde064745f57477f3e9b458a530053fbcc5d35
 &amp;= 5.57+ 9.764 \cdot \text{dose}
 \end{aligned}
 \]</span></p>

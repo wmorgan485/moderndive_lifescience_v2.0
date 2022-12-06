@@ -213,7 +213,7 @@ many_species <- mammals %>%
 
 but as we progressively include more categories, this will get unwieldy to write. A slightly shorter approach uses the `%in%` \index{operators!in} operator along with the `c()` function. Recall from Subsection \@ref(programming-concepts) that the `c()` function "combines" or "concatenates" values into a single *vector* of values. \index{vectors}
 
-```{r, echo=FALSE, purl=FALSE}
+```{r}
 many_species <- mammals %>% 
   filter(species %in% c("Africanelephant", "Asianelephant", "Deserthedgehog", "Europeanhedgehog"))
 many_species

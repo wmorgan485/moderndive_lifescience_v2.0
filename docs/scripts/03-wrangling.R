@@ -54,6 +54,10 @@ library(openintro)
 ##   filter(species == "Africanelephant" | species == "Asianelephant" | species == "Deserthedgehog" | species == "Europeanhedgehog")
 
 
+## -----------------------------------------------------------------------------
+many_species <- mammals %>% 
+  filter(species %in% c("Africanelephant", "Asianelephant", "Deserthedgehog", "Europeanhedgehog"))
+many_species
 
 
 

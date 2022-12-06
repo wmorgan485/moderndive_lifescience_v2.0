@@ -45,7 +45,7 @@ We'll introduce these concepts in the upcoming Sections \@ref(r-rstudio)-\@ref(p
 
 *At the end of this chapter, you should be able to…*  
 • Use RStudio to enter and run code.  
-• Use the following terms: data frame, vector, data frame, function/command, argument.  
+• Define the following terms: data frame, vector, function/command, argument.  
 • Distinguish between R messages, warnings, and errors -- and respond accordingly.  
 • Learn coding by copying, pasting and tweaking existing code.  
 • Install and load R packages of functions and data.  
@@ -471,14 +471,12 @@ Each help file should pop up in the Help pane of RStudio. If you have questions 
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Look at the help file for the `mammals` data frame. Revise your earlier guesses about what the describe.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Look at the help file for the `mammals` data frame. Revise your earlier guesses about what the variables describe.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
 \vspace{-0.25in}
 ```
--->
-
 
 
 ## Importing data {#csv}
@@ -519,7 +517,7 @@ Note that the `read_csv()` function included in the `readr` package is different
 
 ### Using RStudio's interface
 
-Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by going to <a href="https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv</a>, then
+Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by following to <a href="https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv">this link</a>, then...
 
 1. Go to the Files pane of RStudio.
 2. Navigate to the directory (i.e., folder on your computer) where the downloaded `chap12e2BlackbirdTestosterone.csv` file is saved. For example, this might be in your Downloads folder.
@@ -562,7 +560,7 @@ include_graphics("images/copyright/getting-used-to-R.png")
 
 ### What's to come?
 
-We're now going to start the "Data Science with `tidyverse`" portion of this book in Chapter \@ref(viz) as shown in Figure \@ref(fig:moderndive-flowchart) with what we feel is the most important tool in a data scientist's toolbox: data visualization. We'll continue to explore the data included in the `mammals` dataset using the `ggplot2` package for data visualization. You'll see that data visualization is a powerful tool to add to your toolbox for data exploration that provides additional insight to what the `View()` and `glimpse()` functions can provide. 
+We're now going to start the "Data Science with `tidyverse`" portion of this book in Chapter \@ref(viz), as shown in Figure \@ref(fig:moderndive-flowchart), with what we feel is the most important tool in a data scientist's toolbox: data visualization. We'll continue to explore the data included in the `mammals` dataset using the `ggplot2` package for data visualization. You'll see that data visualization is a powerful tool to add to your toolbox for data exploration that provides additional insight to what the `View()` and `glimpse()` functions can provide. 
 
 (ref:flowchart2) *ModernDive for Life Scientists* flowchart - on to Part I!
 

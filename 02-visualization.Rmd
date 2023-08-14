@@ -472,98 +472,6 @@ Linegraphs, just like scatterplots, display the relationship between two numeric
 
 
 
-## Facets {#facets}
-
-Before continuing with the next of the 5NG, let's briefly introduce a new concept called *faceting*.  Faceting is used when we'd like to split a particular visualization by the values of another variable. This will create multiple copies of the same type of plot with matching x and y axes, but whose content will differ. 
-
-For example, suppose we were interested in comparing the timeline of weight gain among the 20 chicks fed Diet 1. We could "duplicate" the linegraph above for Chick 1 for the other 19 chicks on Diet 1. In other words, we would plot linegraphs of `weight` for each `Chick` on Diet 1 separately. 
-
-First we create a new data frame by filtering ChickWeight for rows with Chicks on Diet 1:
-
-```{r}
-Diet1_ChickWeight <- filter(ChickWeight, Diet == 1)
-```
-
-Now we make a linegraph for each chick on Diet 1 by adding `facet_wrap(~ Chick)` layer. Note the `~` is a "tilde" and can generally be found on the key next to the "1" key on US keyboards. The tilde is required and you'll receive an error message if you don't include it here. 
-
-```{r eval=FALSE}
-ggplot(data = Diet1_ChickWeight, 
-       mapping = aes(x = Time, y = weight)) +
-  geom_line() +
-  facet_wrap(~ Chick)
-```
-
-```{r facetlinegraph, fig.cap="Faceted histogram of body weights by chicks on Diet 1", echo=FALSE, purl=FALSE, fig.height=3.3}
-chick_facet <- ggplot(data = Diet1_ChickWeight, 
-       mapping = aes(x = Time, y = weight)) +
-  geom_line() +
-  facet_wrap(~Chick)
-
-if (is_latex_output()) {
-  chick_facet +
-    theme(
-      strip.text = element_text(colour = "black"),
-      strip.background = element_rect(fill = "grey93")
-    )
-} else {
-  chick_facet
-}
-```
-
-We can also specify the number of rows and columns in the grid by using the `nrow` and `ncol` arguments inside of \index{ggplot2!facet\_wrap()} `facet_wrap()`. For example, say we would like our faceted histogram to have 5 rows instead of 4. We simply add an `nrow = 5` argument to `facet_wrap(~ Chick)`.
-
-```{r eval=FALSE}
-ggplot(data = Diet1_ChickWeight, 
-       mapping = aes(x = Time, y = weight)) +
-  geom_line() +
-  facet_wrap(~ Chick, nrow = 5)
-```
-
-```{r facetlinegraph2, fig.cap="Faceted histogram with 5 instead of 4 rows.", echo=FALSE, purl=FALSE, fig.height=3.3}
-chick_facet_5 <- ggplot(data = Diet1_ChickWeight, 
-       mapping = aes(x = Time, y = weight)) +
-  geom_line() +
-  facet_wrap(~Chick, nrow = 5)
-
-if (is_latex_output()) {
-  chick_facet_5 +
-    theme(
-      strip.text = element_text(colour = "black"),
-      strip.background = element_rect(fill = "grey93")
-    )
-} else {
-  chick_facet_5
-}
-```
-
-Observe in both Figures \@ref(fig:facetlinegraph) and \@ref(fig:facetlinegraph2) that as we would expect chick weights increased with time. 
-
-```{block lc-facet, type="learncheck", purl=FALSE}
-\vspace{-0.15in}
-**_Learning check_**
-\vspace{-0.1in}
-```
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What do the numbers above each plot correspond to?  What about the numbers below the bottom plots?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What other things do you notice about this faceted plot?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Does the rate of `weight` gain over time in the `chick_weight_d21` dataset have a lot of variability?  Why do you say that?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How does a faceted plot help us see relationships between two variables?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** For which types of datasets would faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.
-
-```{block, type="learncheck", purl=FALSE}
-\vspace{-0.25in}
-\vspace{-0.25in}
-```
-
-
-
-
-
-
 ## 5NG#3: Histograms {#histograms}
 
 Let's consider the `weight` variable in the `ChickWeight` data frame once again, but unlike with the linegraphs in Section \@ref(linegraphs), let's say we don't care about its relationship with time, but rather we only care about how the values of `weight` *distribute* in 3-week old chicks. In other words:
@@ -695,10 +603,85 @@ hist_1 + hist_2
 \vspace{-0.25in}
 ```
 
+## Facets {#facets}
+
+Before continuing with the next of the 5NG, let's briefly introduce a new concept called *faceting*.  Faceting is used when we'd like to split a particular visualization by the values of another variable. This will create multiple copies of the same type of plot with matching x and y axes, but whose content will differ. 
+
+For example, suppose we were interested in comparing the Day 21 weights for chicks on the four different diets. We could "duplicate" the histogram above but plot histograms of `weight` on Day 21 for each `Diet` separately. We make a histogram for chick weights on each diet by adding a `facet_wrap(~ Diet)` layer. Note the `~` is a "tilde" and can generally be found on the key next to the "1" key on US keyboards. The tilde is required and you'll receive an error message if you don't include it here. 
+
+```{r eval=FALSE}
+ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+  geom_histogram(bins = 20, color = "white") +
+  facet_wrap(~Diet)
+```
+
+```{r facetlinegraph, fig.cap="Faceted histogram of body weights by chicks on Diet 1", echo=FALSE, purl=FALSE, fig.height=3.3}
+chick_facet <- ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+  geom_histogram(bins = 20, color = "white") +
+  facet_wrap(~Diet)
+
+if (is_latex_output()) {
+  chick_facet +
+    theme(
+      strip.text = element_text(colour = "black"),
+      strip.background = element_rect(fill = "grey93")
+    )
+} else {
+  chick_facet
+}
+```
+
+We can also specify the number of rows and columns in the grid by using the `nrow` and `ncol` arguments inside of \index{ggplot2!facet\_wrap()} `facet_wrap()`. For example, say we would like our faceted histogram to have one column for easier comparisons. We simply add an `ncol = 1` argument to `facet_wrap(~ Chick)`.
+
+```{r eval=FALSE}
+ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+  geom_histogram(bins = 20, color = "white") +
+  facet_wrap(~Diet, ncol = 1)
+```
+
+```{r facetlinegraph2, fig.cap="Faceted histogram with 1 instead of 2 columns.", echo=FALSE, purl=FALSE, fig.height=3.3}
+chick_facet_5 <- ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+  geom_histogram(bins = 20, color = "white") +
+  facet_wrap(~Diet, ncol = 1)
+
+if (is_latex_output()) {
+  chick_facet_5 +
+    theme(
+      strip.text = element_text(colour = "black"),
+      strip.background = element_rect(fill = "grey93")
+    )
+} else {
+  chick_facet_5
+}
+```
+
+While we can compare the distribution of chick weights on the four different diets in both Figure \@ref(fig:facetlinegraph) and Figure \@ref(fig:facetlinegraph2), the comparison is easier in the second faceted graph . 
+
+```{block lc-facet, type="learncheck", purl=FALSE}
+\vspace{-0.15in}
+**_Learning check_**
+\vspace{-0.1in}
+```
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What do the numbers above each plot correspond to?  What about the numbers below the bottom plots?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What other things do you notice about this faceted plot?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Does the `weight` gain on each diet in the `chick_weight_d21` dataset have a lot of variability?  Why do you say that?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How does a faceted plot help us see relationships between two variables?
+
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** For which types of datasets would faceted plots not work well in comparing relationships between variables? Give an example describing the nature of these variables and other important characteristics.
+
+```{block, type="learncheck", purl=FALSE}
+\vspace{-0.25in}
+\vspace{-0.25in}
+```
+
 
 ### Summary
 
-Histograms, unlike scatterplots and linegraphs, present information on only a single numerical variable. Specifically, they are visualizations of the distribution of the numerical variable in question. 
+Histograms, unlike scatterplots and linegraphs, present information on only a single numerical variable. Specifically, they are visualizations of the distribution of the numerical variable in question. Faceting splits a particular visualization by the values of another variable.
 
 
 

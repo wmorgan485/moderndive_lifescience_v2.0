@@ -731,7 +731,7 @@ five_number_summary <- tibble(
 )
 ```
 
-While faceted histograms are one type of visualization used to compare the distribution of a numerical variable split by the values of another variable, another type of visualization that achieves this same goal is a *side-by-side boxplot*. A boxplot \index{boxplots} is constructed from the information provided in the *five-number summary* of a numerical variable: minimum, first quartile, median, third quartile, and maximum values (see Appendix \@ref(appendix-stat-terms)).  
+While faceted histograms are one type of visualization used to compare the distribution of a numerical variable split by the values of another variable, another type of visualization that achieves this same goal is a *side-by-side boxplot*. A boxplot \index{boxplots} is constructed based on the *five-number summary* of the distribution of a numerical variable: that is, the minimum, first quartile (25th percentile), median (50th percentile), third quartile (75th percentile), and maximum values (described in Appendix \@ref(appendix-stat-terms)).  
 
 To keep things simple for now, let's only consider the Day 21 weight recordings for the `r n_Diet1` chicks on Diet 1, each represented as a jittered point in Figure \@ref(fig:Diet11). 
 
@@ -747,9 +747,9 @@ base_plot +
 These `r n_Diet1` observations have the following *five-number summary*:
 
 1. Minimum: `r min_Diet1` g
-1. First quartile (25th percentile): `r quartiles[1]` g
-1. Median (second quartile, 50th percentile): `r quartiles[2]` g
-1. Third quartile (75th percentile): `r quartiles[3]` g
+1. First quartile: `r quartiles[1]` g
+1. Median: `r quartiles[2]` g
+1. Third quartile: `r quartiles[3]` g
 1. Maximum: `r max_Diet1` g
 
 In the leftmost plot of Figure \@ref(fig:Diet12), let's mark these 5 values with dashed horizontal lines on top of the `r n_Diet1` points. In the middle plot of Figure \@ref(fig:Diet12) let's add the *boxplot*. In the rightmost plot of Figure \@ref(fig:Diet12), let's remove the points and the dashed horizontal lines for clarity's sake.
@@ -925,9 +925,7 @@ In order to create a barplot visualizing the distribution of the categorical var
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Why are histograms inappropriate for categorical variables?
-
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What is the difference between histograms and barplots?
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** How are histograms and barplots similar? How do they differ?
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What was the 2nd most common `predation` category for the mammalian species? How could we rearrange the table to get this answer more quickly?
 
@@ -940,7 +938,7 @@ In order to create a barplot visualizing the distribution of the categorical var
 
 ### Two categorical variables {#two-categ-barplot}
 
-Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the *joint* distribution of two categorical variables at the same time.  Let's examine the *joint* distribution of mammalian species by `predation` as well as `exposure`, (an index of how exposed the mammal is during sleep). In other words, the number of species for each combination of `predation` and `exposure`. For example, the number of species with `predation` category 2 and `exposure` category. Recall the `ggplot()` code that created the barplot of `predation` frequency in Figure \@ref(fig:habitatsbar):
+Barplots are a very common way to visualize the frequency of different categories, or levels, of a single categorical variable. Another use of barplots is to visualize the *joint* distribution of two categorical variables at the same time.  Let's examine the *joint* distribution of mammalian species by `predation` as well as `exposure`, (an index of how exposed the mammal is during sleep). In other words, the number of species for each combination of `predation` and `exposure`. For example, the number of species with `predation` category 2 and `exposure` category 1. Recall the `ggplot()` code that created the barplot of `predation` frequency in Figure \@ref(fig:habitatsbar):
 
 ```{r, eval=FALSE}
 ggplot(data = mammals, mapping = aes(x = predation)) + 
@@ -1241,7 +1239,7 @@ generate_r_file_link("02-visualization.R")
 ```
 -->
 
-If you want to further unlock the power of the `ggplot2` package for data visualization, we suggest that you check out RStudio's "Data Visualization with ggplot2" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter. (For example in Figure \@ref(fig:habitatsbar), you saw that we could add code to rotate labels.) In particular, the ggplot2 cheatsheet presents many more than the 5 `geom`etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the `geom`etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Data Visualization with ggplot2." `r if(is_html_output()) "You can see a preview in the figure below."`
+If you want to further unlock the power of the `ggplot2` package for data visualization, we suggest that you check out RStudio's "Data Visualization with ggplot2" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter. In particular, the ggplot2 cheatsheet presents many more than the 5 `geom`etric objects we covered in this chapter while providing quick and easy to read visual descriptions. For all the `geom`etric objects, it also lists all the possible aesthetic attributes one can tweak. In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Data Visualization with ggplot2." `r if(is_html_output()) "You can see a preview in the figure below."`
 
 ```{r ggplot-cheatsheet, echo=FALSE, fig.cap="Data Visualization with ggplot2 cheatsheet.", purl=FALSE}
 if (is_html_output()) {

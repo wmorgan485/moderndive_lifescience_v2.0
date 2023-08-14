@@ -607,7 +607,7 @@ hist_1 + hist_2
 
 Before continuing with the next of the 5NG, let's briefly introduce a new concept called *faceting*.  Faceting is used when we'd like to split a particular visualization by the values of another variable. This will create multiple copies of the same type of plot with matching x and y axes, but whose content will differ. 
 
-For example, suppose we were interested in comparing the Day 21 weights for chicks on the four different diets. We could "duplicate" the histogram above but plot histograms of `weight` on Day 21 for each `Diet` separately. We make a histogram for chick weights on each diet by adding a `facet_wrap(~ Diet)` layer. Note the `~` is a "tilde" and can generally be found on the key next to the "1" key on US keyboards. The tilde is required and you'll receive an error message if you don't include it here. 
+For example, suppose we were interested in comparing the Day 21 weights for chicks on the four different diets. We could "duplicate" the histogram above but plot histograms of `weight` on Day 21 for each `Diet` separately. We make a histogram for chick weights on each diet by adding a `facet_wrap(~Diet)` layer. Note the `~` is a "tilde" and can generally be found on the key next to the "1" key on US keyboards. The tilde is required and you'll receive an error message if you don't include it here. 
 
 ```{r eval=FALSE}
 ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
@@ -631,7 +631,7 @@ if (is_latex_output()) {
 }
 ```
 
-We can also specify the number of rows and columns in the grid by using the `nrow` and `ncol` arguments inside of \index{ggplot2!facet\_wrap()} `facet_wrap()`. For example, say we would like our faceted histogram to have one column for easier comparisons. We simply add an `ncol = 1` argument to `facet_wrap(~ Chick)`.
+We can also specify the number of rows and columns in the grid by using the `nrow` and `ncol` arguments inside of \index{ggplot2!facet\_wrap()} `facet_wrap()`. For example, say we would like our faceted histogram to have one column for easier comparisons. We simply add an `ncol = 1` argument to `facet_wrap(~Diet)`.
 
 ```{r eval=FALSE}
 ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +

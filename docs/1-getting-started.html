@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-14" />
+<meta name="date" content="2023-08-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,11 +267,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.5.1</b> Histograms via <code>geom_histogram</code></a></li>
 <li class="chapter" data-level="2.5.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.5.2</b> Adjusting the bins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.5.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.1</b> Summary</a></li>
-</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a></li>
 <li class="chapter" data-level="2.7" data-path="2-viz.html"><a href="2-viz.html#boxplots"><i class="fa fa-check"></i><b>2.7</b> 5NG#4: Boxplots</a>
 <ul>
 <li class="chapter" data-level="2.7.1" data-path="2-viz.html"><a href="2-viz.html#geomboxplot"><i class="fa fa-check"></i><b>2.7.1</b> Boxplots via <code>geom_boxplot</code></a></li>
@@ -934,32 +932,32 @@ Note that if you'd like your output on your computer to match up exactly with th
 <p>As you will see, there are many ways to access data sets in R. We’ll start with <code>mammals</code>, a dataset built into the <code>openintro</code> R package that contains sleep data and other information about 39 mammalian species.</p>
 <p>We’ll begin by previewing the <code>mammals</code> data frame. In the Console panel of RStudio, run the following code, either by typing or cutting-and-pasting it. It displays the contents of the <code>mammals</code> data frame in your console. Note that depending on the size of your monitor, the number of displayed columns may vary.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="1-getting-started.html#cb5-1" tabindex="-1"></a>mammals</span></code></pre></div>
-<pre><code># A tibble: 62 × 14
+<pre><code># A tibble: 62 × 11
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 Africanelephant 6654       5712           NA       NA           3.3      38.6
- 2 Africangiantpo…    1          6.6          6.3      2           8.3       4.5
- 3 ArcticFox          3.385     44.5         NA       NA          12.5      14  
- 4 Arcticgroundsq…    0.92       5.7         NA       NA          16.5      NA  
- 5 Asianelephant   2547       4603            2.1      1.8         3.9      69  
- 6 Baboon            10.55     179.5          9.1      0.7         9.8      27  
- 7 Bigbrownbat        0.023      0.3         15.8      3.9        19.7      19  
- 8 Braziliantapir   160        169            5.2      1           6.2      30.4
- 9 Cat                3.3       25.6         10.9      3.6        14.5      28  
-10 Chimpanzee        52.16     440            8.3      1.4         9.7      50  
+ 1 Africanelephant  6.65e+3   5712           NA       NA           3.3      38.6
+ 2 Africangiantpou… 1   e+0      6.6          6.3      2           8.3       4.5
+ 3 ArcticFox        3.38e+0     44.5         NA       NA          12.5      14  
+ 4 Arcticgroundsqu… 9.2 e-1      5.7         NA       NA          16.5      NA  
+ 5 Asianelephant    2.55e+3   4603            2.1      1.8         3.9      69  
+ 6 Baboon           1.06e+1    180.           9.1      0.7         9.8      27  
+ 7 Bigbrownbat      2.3 e-2      0.3         15.8      3.9        19.7      19  
+ 8 Braziliantapir   1.6 e+2    169            5.2      1           6.2      30.4
+ 9 Cat              3.3 e+0     25.6         10.9      3.6        14.5      28  
+10 Chimpanzee       5.22e+1    440            8.3      1.4         9.7      50  
 # ℹ 52 more rows
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+# ℹ 4 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;</code></pre>
 <p>Let’s unpack this output:</p>
 <ul>
-<li><code>A tibble: 62 x 14</code>: A <code>tibble</code> is a specific kind of data frame in R. This particular data frame has
+<li><code>A tibble: 62 x 11</code>: A <code>tibble</code> is a specific kind of data frame in R. This particular data frame has
 <ul>
 <li><code>62</code> rows corresponding to different <em>observations</em>. Here, each observation is a mammalian species.</li>
-<li><code>14</code> columns corresponding to 14 <em>variables</em> describing each observation.</li>
+<li><code>11</code> columns corresponding to 11 <em>variables</em> describing each observation.</li>
 </ul></li>
 <li><code>body_wt</code>, <code>brain_wt</code>, <code>non_dreaming</code>, <code>dreaming</code>, etc. are the different columns, in other words, the different variables of this dataset.</li>
 <li>We then have a preview of the first 10 rows of observations corresponding to the first 10 species. R is only showing the first 10 rows, because if it showed all <code>62</code> rows, it would overwhelm your screen.</li>
-<li><code>... with 52 more rows, and ... more variables:</code> indicating to us that 52 more rows of data and more variables that could not fit in this screen. (If you’re screen is wide enough all 14 variables may fit and there will be no more variables to show.)</li>
+<li><code>... with 52 more rows, and ... more variables:</code> indicating to us that 52 more rows of data and more variables that could not fit in this screen. (If you’re screen is wide enough all 11 variables may fit and there will be no more variables to show.)</li>
 </ul>
 <p>Unfortunately, this output does not allow us to explore the data very well, but it does give a nice preview. Let’s look at some different ways to explore data frames more closely.</p>
 </div>
@@ -994,7 +992,7 @@ Note that if you'd like your output on your computer to match up exactly with th
 <p>The second way we’ll cover to explore a data frame is using the <code>glimpse()</code> function included in the <code>dplyr</code> package. Thus, you can only use the <code>glimpse()</code> function after you’ve loaded the <code>dplyr</code> package by running <code>library(dplyr)</code>. This function provides us with an alternative perspective for exploring a data frame that highlights the variables:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="1-getting-started.html#cb7-1" tabindex="-1"></a><span class="fu">glimpse</span>(mammals)</span></code></pre></div>
 <pre><code>Rows: 62
-Columns: 14
+Columns: 11
 $ species      &lt;fct&gt; Africanelephant, Africangiantpouchedrat, ArcticFox, Arcti…
 $ body_wt      &lt;dbl&gt; 6654.000, 1.000, 3.385, 0.920, 2547.000, 10.550, 0.023, 1…
 $ brain_wt     &lt;dbl&gt; 5712.0, 6.6, 44.5, 5.7, 4603.0, 179.5, 0.3, 169.0, 25.6, …
@@ -1005,10 +1003,7 @@ $ life_span    &lt;dbl&gt; 38.6, 4.5, 14.0, NA, 69.0, 27.0, 19.0, 30.4, 28.0, 50
 $ gestation    &lt;dbl&gt; 645, 42, 60, 25, 624, 180, 35, 392, 63, 230, 112, 281, NA…
 $ predation    &lt;int&gt; 3, 3, 1, 5, 3, 4, 1, 4, 1, 1, 5, 5, 2, 5, 1, 2, 2, 2, 1, …
 $ exposure     &lt;int&gt; 5, 1, 1, 2, 5, 4, 1, 5, 2, 1, 4, 5, 1, 5, 1, 2, 2, 2, 2, …
-$ danger       &lt;int&gt; 3, 3, 1, 3, 4, 4, 1, 4, 1, 1, 4, 5, 2, 5, 1, 2, 2, 2, 1, …
-$ wt_in_lb     &lt;dbl&gt; 14672.0700, 2.2050, 7.4639, 2.0286, 5616.1350, 23.2628, 0…
-$ wt_in_oz     &lt;dbl&gt; 234753.120, 35.280, 119.423, 32.458, 89858.160, 372.204, …
-$ oz_per_year  &lt;dbl&gt; 6081.6870, 7.8400, 8.5302, NA, 1302.2922, 13.7853, 0.0427…</code></pre>
+$ danger       &lt;int&gt; 3, 3, 1, 3, 4, 4, 1, 4, 1, 1, 4, 5, 2, 5, 1, 2, 2, 2, 1, …</code></pre>
 <p>Observe that <code>glimpse()</code> will give you the first few entries of each variable in a row after the variable name. In addition, the <em>data type</em> (see Subsection <a href="1-getting-started.html#programming-concepts">1.2.1</a>) of the variable is given immediately after each variable’s name inside <code>&lt; &gt;</code>.</p>
 <p>Here, <code>int</code> and <code>dbl</code> refer to “integer” and “double”, which are computer coding terms for quantitative/numerical variables. “Doubles” take up twice the size to store on a computer compared to integers.</p>
 <p>In contrast, <code>fct</code> refers to “factor”, which is computer terminology for categorical data. Categorical data and other text can also be stored as a <code>chr</code> or “character” data type. There are other types of variables in R, some of which we will encounter later.</p>

@@ -603,6 +603,12 @@ hist_1 + hist_2
 \vspace{-0.25in}
 ```
 
+### Summary
+
+Histograms, unlike scatterplots and linegraphs, present information on only a single numerical variable. Specifically, they are visualizations of the distribution of the numerical variable in question. 
+
+
+
 ## Facets {#facets}
 
 Before continuing with the next of the 5NG, let's briefly introduce a new concept called *faceting*.  Faceting is used when we'd like to split a particular visualization by the values of another variable. This will create multiple copies of the same type of plot with matching x and y axes, but whose content will differ. 
@@ -677,12 +683,6 @@ While we can compare the distribution of chick weights on the four different die
 \vspace{-0.25in}
 \vspace{-0.25in}
 ```
-
-
-### Summary
-
-Histograms, unlike scatterplots and linegraphs, present information on only a single numerical variable. Specifically, they are visualizations of the distribution of the numerical variable in question. Faceting splits a particular visualization by the values of another variable.
-
 
 
 

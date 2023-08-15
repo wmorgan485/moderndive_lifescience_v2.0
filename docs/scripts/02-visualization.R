@@ -68,32 +68,6 @@ ggplot(data = chick1_weight,
 
 
 ## -----------------------------------------------------------------------------
-Diet1_ChickWeight <- filter(ChickWeight, Diet == 1)
-
-
-## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = Diet1_ChickWeight,
-##        mapping = aes(x = Time, y = weight)) +
-##   geom_line() +
-##   facet_wrap(~ Chick)
-
-
-
-
-## ----eval=FALSE---------------------------------------------------------------
-## ggplot(data = Diet1_ChickWeight,
-##        mapping = aes(x = Time, y = weight)) +
-##   geom_line() +
-##   facet_wrap(~ Chick, nrow = 5)
-
-
-
-
-
-
-
-
-## -----------------------------------------------------------------------------
 chick_weight_d21 <- filter(ChickWeight, Time == 21)
 
 
@@ -133,6 +107,26 @@ ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
 ## ---- eval=FALSE--------------------------------------------------------------
 ## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
 ##   geom_histogram(binwidth = 20, color = "white")
+
+
+
+
+
+
+
+
+## ----eval=FALSE---------------------------------------------------------------
+## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+##   geom_histogram(bins = 20, color = "white") +
+##   facet_wrap(~Diet)
+
+
+
+
+## ----eval=FALSE---------------------------------------------------------------
+## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
+##   geom_histogram(bins = 20, color = "white") +
+##   facet_wrap(~Diet, ncol = 1)
 
 
 

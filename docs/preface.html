@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Preface | Modern Biological Data Analysis</title>
   <meta name="description" content="An open-source and fully-reproducible electronic textbook for teaching statistical inference using tidyverse data science tools." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Preface | Modern Biological Data Analysis" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2022-11-06" />
+<meta name="date" content="2023-08-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,7 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
 <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
 <script src="libs/dygraphs-1.1.1/shapes.js"></script>
@@ -112,7 +112,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -125,7 +125,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -139,6 +139,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -259,12 +263,14 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.1" data-path="2-viz.html"><a href="2-viz.html#geomline"><i class="fa fa-check"></i><b>2.4.1</b> Linegraphs via <code>geom_line</code></a></li>
 <li class="chapter" data-level="2.4.2" data-path="2-viz.html"><a href="2-viz.html#summary-1"><i class="fa fa-check"></i><b>2.4.2</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.5</b> Facets</a></li>
-<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#histograms"><i class="fa fa-check"></i><b>2.6</b> 5NG#3: Histograms</a>
+<li class="chapter" data-level="2.5" data-path="2-viz.html"><a href="2-viz.html#histograms"><i class="fa fa-check"></i><b>2.5</b> 5NG#3: Histograms</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.6.1</b> Histograms via <code>geom_histogram</code></a></li>
-<li class="chapter" data-level="2.6.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.6.2</b> Adjusting the bins</a></li>
-<li class="chapter" data-level="2.6.3" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.3</b> Summary</a></li>
+<li class="chapter" data-level="2.5.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.5.1</b> Histograms via <code>geom_histogram</code></a></li>
+<li class="chapter" data-level="2.5.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.5.2</b> Adjusting the bins</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.1</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="2-viz.html"><a href="2-viz.html#boxplots"><i class="fa fa-check"></i><b>2.7</b> 5NG#4: Boxplots</a>
 <ul>
@@ -807,9 +813,9 @@ FIGURE 0.2: Data/science pipeline.
 <h3>Why did we write this book?<a href="preface.html#why-did-we-write-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This book is inspired by</p>
 <ul>
-<li><em>Mathematical Statistics with Resampling and R</em> <span class="citation">(<a href="#ref-hester2011" role="doc-biblioref">Chihara and Hesterberg 2011</a>)</span></li>
-<li><em>OpenIntro: Intro Stat with Randomization and Simulation</em> <span class="citation">(<a href="#ref-isrs2014" role="doc-biblioref">Diez, Barr, and Çetinkaya-Rundel 2014</a>)</span></li>
-<li><em>R for Data Science</em> <span class="citation">(<a href="#ref-rds2016" role="doc-biblioref">Grolemund and Wickham 2017</a>)</span></li>
+<li><em>Mathematical Statistics with Resampling and R</em> <span class="citation">(<a href="#ref-hester2011">Chihara and Hesterberg 2011</a>)</span></li>
+<li><em>OpenIntro: Intro Stat with Randomization and Simulation</em> <span class="citation">(<a href="#ref-isrs2014">Diez, Barr, and Çetinkaya-Rundel 2014</a>)</span></li>
+<li><em>R for Data Science</em> <span class="citation">(<a href="#ref-rds2016">Grolemund and Wickham 2017</a>)</span></li>
 </ul>
 <p>The first book, designed for upper-level undergraduates and graduate students, provides an excellent resource on how to use resampling to impart statistical concepts like sampling distributions using computation instead of large-sample approximations and other mathematical formulas. The last two books are free options for learning about introductory statistics and data science, providing an alternative to the many traditionally expensive introductory statistics textbooks.</p>
 <p>When looking over the introductory statistics textbooks that currently exist, we found there wasn’t one that incorporated many newly developed R packages directly into the text, in particular the many packages included in the <a href="http://tidyverse.org/"><code>tidyverse</code></a> set of packages, such as <code>ggplot2</code>, <code>dplyr</code>, <code>tidyr</code>, and <code>readr</code> that will be the focus of this book’s first part on “Data Science with <code>tidyverse</code>.”</p>
@@ -873,7 +879,7 @@ FIGURE 0.2: Data/science pipeline.
 </div>
 <div id="about-this-book" class="section level2 unnumbered hasAnchor">
 <h2>About this book<a href="preface.html#about-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This book was written using RStudio’s <a href="https://bookdown.org/">bookdown</a> package by Yihui Xie <span class="citation">(<a href="#ref-R-bookdown" role="doc-biblioref">Xie 2022</a>)</span>. This package simplifies the publishing of books by having all content written in <a href="http://rmarkdown.rstudio.com/html_document_format.html">R Markdown</a>. The bookdown/R Markdown source code for all versions of ModernDive is available on GitHub:</p>
+<p>This book was written using RStudio’s <a href="https://bookdown.org/">bookdown</a> package by Yihui Xie <span class="citation">(<a href="#ref-R-bookdown">Xie 2023</a>)</span>. This package simplifies the publishing of books by having all content written in <a href="http://rmarkdown.rstudio.com/html_document_format.html">R Markdown</a>. The bookdown/R Markdown source code for all versions of ModernDive is available on GitHub:</p>
 <ul>
 <li><strong>Latest online version</strong> The most up-to-date release:
 <ul>
@@ -915,7 +921,7 @@ Diez, David M, Christopher D Barr, and Mine Çetinkaya-Rundel. 2014. <em>Introdu
 Grolemund, Garrett, and Hadley Wickham. 2017. <em>R for Data Science</em>. First. Sebastopol, CA: O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
 </div>
 <div id="ref-R-bookdown" class="csl-entry">
-Xie, Yihui. 2022. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+Xie, Yihui. 2023. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
 </div>
 </div>
 <div class="footnotes">
@@ -994,7 +1000,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

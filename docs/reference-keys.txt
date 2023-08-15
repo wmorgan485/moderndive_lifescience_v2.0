@@ -17,13 +17,13 @@ fig:alpha
 fig:jitter-example-plot-1
 fig:jitter
 fig:dailyweight
-fig:facetlinegraph
-fig:facetlinegraph2
 fig:weight-on-line
 fig:histogramexample
 fig:chick-weight-d21-histogram
 fig:chick-weight-d21-histogram-2
 fig:hist-bins
+fig:facetlinegraph
+fig:facetlinegraph2
 fig:Diet11
 fig:Diet12
 fig:Dietweightbox
@@ -193,7 +193,7 @@ fig:p-value-slope
 tab:table-ch11
 tab:model4-data-preview
 fig:numxcatxplot1
-tab:unnamed-chunk-438
+tab:unnamed-chunk-437
 tab:regtable-interaction
 tab:interaction-summary
 fig:numxcatx-parallel
@@ -260,10 +260,10 @@ summary
 linegraphs
 geomline
 summary-1
-facets
 histograms
 geomhistogram
 adjustbins
+facets
 summary-2
 boxplots
 geomboxplot

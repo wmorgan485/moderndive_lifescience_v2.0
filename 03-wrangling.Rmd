@@ -28,7 +28,7 @@ options(knitr.kable.NA = "")
 set.seed(76)
 ```
 
-So far in our journey, we've seen how to look at data saved in data frames (Chapter \@ref(getting-started)) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of `geom`etric objects (Chapter \@ref(visualization)).
+So far in our journey, we've seen how to look at data saved in data frames (Chapter \@ref(getting-started)) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of `geom`etric objects (Chapter \@ref(viz)).
 
 Recall that for some of our visualizations, we first needed to transform/modify existing data frames a little. For example, to create the linegraph in Figure \@ref(fig:dailyweight) with measurements *only* for Chick 1, we first needed to pare down the `ChickWeight` data frame to a `chick1_weight` data frame consisting of only `Chick == 1` rows. Thus, `chick1_weight` will have fewer rows than `ChickWeight`. We did this using the `filter()` function:
 

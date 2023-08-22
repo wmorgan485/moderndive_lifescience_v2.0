@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-14" />
+<meta name="date" content="2023-08-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,11 +267,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.5.1</b> Histograms via <code>geom_histogram</code></a></li>
 <li class="chapter" data-level="2.5.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.5.2</b> Adjusting the bins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.5.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.1</b> Summary</a></li>
-</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a></li>
 <li class="chapter" data-level="2.7" data-path="2-viz.html"><a href="2-viz.html#boxplots"><i class="fa fa-check"></i><b>2.7</b> 5NG#4: Boxplots</a>
 <ul>
 <li class="chapter" data-level="2.7.1" data-path="2-viz.html"><a href="2-viz.html#geomboxplot"><i class="fa fa-check"></i><b>2.7.1</b> Boxplots via <code>geom_boxplot</code></a></li>
@@ -681,17 +679,17 @@ div.csl-indent {
 </html>
 <div id="wrangling" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data Wrangling<a href="3-wrangling.html#wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>So far in our journey, we’ve seen how to look at data saved in data frames (Chapter <a href="1-getting-started.html#getting-started">1</a>) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of <code>geom</code>etric objects.</p>
+<p>So far in our journey, we’ve seen how to look at data saved in data frames (Chapter <a href="1-getting-started.html#getting-started">1</a>) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of <code>geom</code>etric objects (Chapter <a href="#visualization"><strong>??</strong></a>).</p>
 <p>Recall that for some of our visualizations, we first needed to transform/modify existing data frames a little. For example, to create the linegraph in Figure <a href="2-viz.html#fig:dailyweight">2.7</a> with measurements <em>only</em> for Chick 1, we first needed to pare down the <code>ChickWeight</code> data frame to a <code>chick1_weight</code> data frame consisting of only <code>Chick == 1</code> rows. Thus, <code>chick1_weight</code> will have fewer rows than <code>ChickWeight</code>. We did this using the <code>filter()</code> function:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="3-wrangling.html#cb45-1" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> <span class="fu">filter</span>(ChickWeight, Chick <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>In this chapter, we’ll extend this example and we’ll introduce a series of functions from the <code>dplyr</code> package for data wrangling that will allow you to take a data frame and “wrangle” it (transform it) to suit your needs. Such functions include:</p>
 <ol style="list-style-type: decimal">
-<li><code>filter()</code> and <code>slice</code> a data frame’s existing rows to only pick out a subset of them. For example, the <code>mammals</code> data frame.</li>
-<li><code>select()</code> a data frame’s existing columns to only pick out a subset of them or <code>rename</code> existing columns.</li>
-<li><code>summarize()</code> one or more of its columns/variables with a <em>summary statistic</em>. Examples of summary statistics include the median and interquartile range of chick weights as we saw in Section <a href="2-viz.html#boxplots">2.7</a> on boxplots.</li>
-<li><code>group_by()</code> its rows. In other words, assign different rows to be part of the same <em>group</em>. We can then combine <code>group_by()</code> with <code>summarize()</code> to report summary statistics for each group <em>separately</em>. For example, say you don’t want a single overall average <code>weight</code> on Day 21 for the <code>chick_weight_d21</code> dataset, but rather four separate averages, one computed for each of the four <code>Diet</code> groups.</li>
-<li><code>mutate()</code> its existing columns/variables to create new ones. For example, convert weight recordings from grams to ounces.</li>
-<li><code>arrange()</code> its rows. For example, sort the rows of <code>mammals</code> in ascending or descending order of <code>life_span</code>.</li>
+<li><code>filter()</code> and <code>slice</code> a data frame’s existing rows to only pick out a subset of rows.</li>
+<li><code>select()</code> a data frame’s existing columns to only keep a subset or <code>rename</code> existing columns.</li>
+<li><code>summarize()</code> one or more of a data frame’s columns/variables with a <em>summary statistic</em>. Examples of summary statistics include the median and interquartile range of chick weights as we saw in Section <a href="2-viz.html#boxplots">2.7</a> on boxplots.</li>
+<li><code>group_by()</code> the rows of a data frame. In other words, assign different rows to be part of the same <em>group</em>. We can then combine <code>group_by()</code> with <code>summarize()</code> to report summary statistics for each group <em>separately</em>. For example, say you don’t want a single overall average <code>weight</code> on Day 21 for the <code>chick_weight_d21</code> dataset, but rather four separate averages, one computed for each of the four <code>Diet</code> groups.</li>
+<li><code>mutate()</code> a data frame’s existing columns/variables to create new ones. For example, convert weight recordings from grams to ounces.</li>
+<li><code>arrange()</code> a data frame’s rows in a new order. For example, sort the rows of <code>mammals</code> in ascending or descending order of <code>life_span</code>.</li>
 </ol>
 <p>Notice how we used <code>computer_code</code> font to describe the actions we want to take on our data frames. This is because the <code>dplyr</code> package for data wrangling has intuitively verb-named functions that are easy to remember.</p>
 <p>There is a further benefit to learning to use the <code>dplyr</code> package for data wrangling: its similarity to the database querying language <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> (pronounced “sequel” or spelled out as “S”, “Q”, “L”). SQL (which stands for “Structured Query Language”) is used to manage large databases quickly and efficiently and is widely used by many institutions with a lot of data. While SQL is a topic left for a book or a course on database management, keep in mind that once you learn <code>dplyr</code>, you can learn SQL easily.</p>
@@ -717,7 +715,7 @@ groups.<br />
 </div>
 <div id="piping" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> The pipe operator: <code>%&gt;%</code><a href="3-wrangling.html#piping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Before we start data wrangling, let’s first introduce a nifty tool that gets loaded with the <code>dplyr</code> package: the pipe operator <code>%&gt;%</code>. The pipe operator allows us to combine multiple operations in R into a single sequential <em>chain</em> of actions.</p>
+<p>Before we start data wrangling, let’s first introduce a nifty tool that gets loaded with the <code>dplyr</code> package: the pipe operator <code>%&gt;%</code> (also indicated as <code>|&gt;</code>). The pipe operator allows us to combine multiple operations in R into a single sequential <em>chain</em> of actions.</p>
 <p>Let’s start with a hypothetical example. Say you would like to perform a hypothetical sequence of operations on a hypothetical data frame <code>x</code> using hypothetical functions <code>f()</code>, <code>g()</code>, and <code>h()</code>:</p>
 <ol style="list-style-type: decimal">
 <li>Take <code>x</code> <em>then</em></li>
@@ -742,7 +740,7 @@ groups.<br />
 <p>So while both approaches achieve the same goal, the latter is much more human-readable because you can clearly read the sequence of operations line-by-line. But what are the hypothetical <code>x</code>, <code>f()</code>, <code>g()</code>, and <code>h()</code>? Throughout this chapter on data wrangling:</p>
 <ol style="list-style-type: decimal">
 <li>The starting value <code>x</code> will be a data frame. For example, the <code>mammals</code> data frame we explored in Section <a href="1-getting-started.html#mammalsdataframe">1.4.2</a>.</li>
-<li>The sequence of functions, here <code>f()</code>, <code>g()</code>, and <code>h()</code>, will mostly be a sequence of any number of the data wrangling verb-named functions we listed in the introduction to this chapter. For example, the <code>filter(Chick == 1)</code> function and argument we previewed earlier.</li>
+<li>The sequence of functions, here <code>f()</code>, <code>g()</code>, and <code>h()</code>, will mostly be a sequence of any number of the data wrangling, verb-named functions we listed in the introduction to this chapter. For example, the <code>filter(Chick == 1)</code> function and argument we previewed earlier.</li>
 <li>The result will be the transformed/modified data frame that you want. In our example, we’ll save the result in a new data frame by using the <code>&lt;-</code> assignment operator with the name <code>chick1_weight</code> via <code>chick1_weight &lt;-</code>.</li>
 </ol>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="3-wrangling.html#cb49-1" tabindex="-1"></a>chick1_weight <span class="ot">&lt;-</span> ChickWeight <span class="sc">%&gt;%</span> </span>
@@ -777,11 +775,11 @@ FIGURE 3.1: Diagram of filter() rows operation.
 <li><code>|</code> corresponds to “or”</li>
 <li><code>&amp;</code> corresponds to “and”</li>
 </ul>
-<p>To see many of these in action, let’s filter <code>mammals</code> for mammalian species that are in <code>predation</code> category 1 or 2 <em>and</em> not in exposure category 1. Note that this example uses the <code>!</code> “not” operator to pick rows that <em>don’t</em> match a criteria. As mentioned earlier, the <code>!</code> can be read as “not.” Run the following:</p>
+<p>To see many of these in action, let’s filter <code>mammals</code> for mammalian species that are in <code>predation</code> category 1 or 2 <em>and</em> not in <code>exposure</code> category 1. Note that this example uses the <code>!</code> “not” operator to pick rows that <em>don’t</em> match a criteria. As mentioned earlier, the <code>!</code> can be read as “not.” Run the following:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="3-wrangling.html#cb51-1" tabindex="-1"></a>predation_notexp1 <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb51-2"><a href="3-wrangling.html#cb51-2" tabindex="-1"></a>  <span class="fu">filter</span>((predation <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> predation <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">&amp;</span> exposure <span class="sc">!=</span> <span class="dv">1</span>)</span>
 <span id="cb51-3"><a href="3-wrangling.html#cb51-3" tabindex="-1"></a>predation_notexp1</span></code></pre></div>
-<pre><code># A tibble: 12 × 14
+<pre><code># A tibble: 12 × 11
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
  1 Cat                3.3       25.6         10.9      3.6        14.5      28  
@@ -792,12 +790,12 @@ FIGURE 3.1: Diagram of filter() rows operation.
  6 Gorilla          207        406           NA       NA          12        39.3
  7 Grayseal          85        325            4.7      1.5         6.2      41  
  8 Owlmonkey          0.48      15.5         15.2      1.8        17        12  
- 9 Raccoon            4.288     39.2         NA       NA          12.5      13.7
+ 9 Raccoon            4.29      39.2         NA       NA          12.5      13.7
 10 Rhesusmonkey       6.8      179            8.4      1.2         9.6      29  
 11 Rockhyrax(Heter…   0.75      12.3          5.7      0.9         6.6       7  
 12 Slowloris          1.4       12.5         NA       NA          11        12.7
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+# ℹ 4 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;</code></pre>
 <p>As expected, the <code>predation_notexp1</code> data frame contains a subset, 12 rows, of the 62 rows in the original <code>mammals</code> data frame.</p>
 <p>This alternative code where we do <em>not</em> select species that are <code>exposure</code> category 1 achieves the same aim:</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="3-wrangling.html#cb53-1" tabindex="-1"></a>predation_notexp1 <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
@@ -815,15 +813,14 @@ FIGURE 3.1: Diagram of filter() rows operation.
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="3-wrangling.html#cb56-1" tabindex="-1"></a>many_species <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb56-2"><a href="3-wrangling.html#cb56-2" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Africanelephant&quot;</span>, <span class="st">&quot;Asianelephant&quot;</span>, <span class="st">&quot;Deserthedgehog&quot;</span>, <span class="st">&quot;Europeanhedgehog&quot;</span>))</span>
 <span id="cb56-3"><a href="3-wrangling.html#cb56-3" tabindex="-1"></a>many_species</span></code></pre></div>
-<pre><code># A tibble: 4 × 14
-  species           body_wt brain_wt non_dreaming dreaming total_sleep life_span
-  &lt;fct&gt;               &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-1 Africanelephant  6654       5712           NA       NA           3.3      38.6
-2 Asianelephant    2547       4603            2.1      1.8         3.9      69  
-3 Deserthedgehog      0.55       2.4          7.6      2.7        10.3      NA  
-4 Europeanhedgehog    0.785      3.5          6.6      4.1        10.7       6  
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 4 × 11
+  species body_wt brain_wt non_dreaming dreaming total_sleep life_span gestation
+  &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Africa… 6.65e+3   5712           NA       NA           3.3      38.6       645
+2 Asiane… 2.55e+3   4603            2.1      1.8         3.9      69         624
+3 Desert… 5.5 e-1      2.4          7.6      2.7        10.3      NA          NA
+4 Europe… 7.85e-1      3.5          6.6      4.1        10.7       6          42
+# ℹ 3 more variables: predation &lt;int&gt;, exposure &lt;int&gt;, danger &lt;int&gt;</code></pre>
 <p>This code filters <code>mammals</code> for all mammalian species where <code>species</code> is in the vector of <code>species</code> <code>c("Africanelephant", "Asianelephant", "Deserthedgehog", "Europeanhedgehog")</code>. Both outputs of <code>many_species</code> are the same, but as you can see the latter takes much less energy to code. The <code>%in%</code> operator is useful for looking for matches commonly in one vector/variable compared to another.</p>
 <p>As a final note, we recommend that <code>filter()</code> should be among the first verbs you consider applying to your data. This cleans your dataset to only those rows you care about, or put differently, it narrows down the scope of your data frame to just the observations you care about.</p>
 <div class="learncheck">
@@ -838,7 +835,7 @@ FIGURE 3.1: Diagram of filter() rows operation.
 </div>
 <div id="slice-rows" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> <code>slice</code> rows<a href="3-wrangling.html#slice-rows" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Similar to <code>filter</code>, the <code>slice</code> function function returns a subset of row from a data frame. While <code>filter</code> returns the rows that match a specified criteria about the values of a variable (e.g., <code>species == "Cat"</code>), the <code>slice</code> function returns rows based on their positions. For example, let’s <code>slice</code> the first 5 rows of the <code>mammals</code> data frame:</p>
+<p>Similar to <code>filter</code>, the <code>slice</code> function function returns a subset of rows from a data frame. While <code>filter</code> returns the rows that match a specified criteria about the values of a variable (e.g., <code>species == "Cat"</code>), the <code>slice</code> function returns rows based on their positions. For example, let’s <code>slice</code> the first 5 rows of the <code>mammals</code> data frame:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="3-wrangling.html#cb58-1" tabindex="-1"></a>mammals <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
 <p>However, even more useful is a derivative of <code>slice</code> called <code>slice_max</code> that allow us to retrieve rows with the top values of a specified variable. For example, we can return a data frame of the 5 mammalian species with the longest life spans. Observe that we set the number of values to return to <code>n = 5</code> and <code>order_by = life_span</code> to indicate that we want the rows corresponding to the top 5 values of <code>life_span</code>.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="3-wrangling.html#cb59-1" tabindex="-1"></a>mammals <span class="sc">%&gt;%</span> <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">order_by =</span> life_span)</span></code></pre></div>
@@ -856,9 +853,9 @@ FIGURE 3.1: Diagram of filter() rows operation.
 </div>
 <div id="select" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> <code>select</code> variables<a href="3-wrangling.html#select" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We recommended that you consider applying the <code>filter()</code> function to your data to narrow down the scope of your data frame to just the observations you care about. It may also be the case that you are only interested in a subset of the variables in your dataset. For example, the <code>mammals</code> data frame has 14 variables, but typically only a few variables will be of interest for a particular analysis. You can identify the names of these 14 variables by running the <code>glimpse()</code> function from the <code>dplyr</code> package:</p>
+<p>We recommended that you consider applying the <code>filter()</code> function to your data to narrow down the scope of your data frame to just the observations you care about. It may also be the case that you are only interested in a subset of the variables in your dataset. For example, the <code>mammals</code> data frame has 11 variables, but typically only a few variables will be of interest for a particular analysis. You can identify the names of these 11 variables by running the <code>glimpse()</code> function from the <code>dplyr</code> package:</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="3-wrangling.html#cb60-1" tabindex="-1"></a><span class="fu">glimpse</span>(mammals)</span></code></pre></div>
-<p>In the same way that <code>filter</code> and <code>slice</code> return a subset of rows, the <code>select</code> function and its selection helpers allow us to return a subset of columns from a data frame.</p>
+<p>In the same way that <code>filter</code> and <code>slice</code> return a subset of rows, the <code>select</code> function and its selection helpers allow us to return a subset of columns from a data frame as illustrated in Figure <a href="3-wrangling.html#fig:selectfig">3.2</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:selectfig"></span>
 <img src="images/cheatsheets/select.png" alt="Diagram of select() columns." width="\textwidth" />
 <p class="caption">
@@ -867,15 +864,14 @@ FIGURE 3.2: Diagram of select() columns.
 </div>
 <p>Returning to <code>many_species</code>, our data frame with four mammalian species, we might only really be interested in the variables <code>species</code>, <code>body_wt</code> and <code>danger</code>. However, with the current data frame, it’s a bit difficult to compare these columns among all the others:</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="3-wrangling.html#cb61-1" tabindex="-1"></a>many_species</span></code></pre></div>
-<pre><code># A tibble: 4 × 14
-  species           body_wt brain_wt non_dreaming dreaming total_sleep life_span
-  &lt;fct&gt;               &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-1 Africanelephant  6654       5712           NA       NA           3.3      38.6
-2 Asianelephant    2547       4603            2.1      1.8         3.9      69  
-3 Deserthedgehog      0.55       2.4          7.6      2.7        10.3      NA  
-4 Europeanhedgehog    0.785      3.5          6.6      4.1        10.7       6  
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 4 × 11
+  species body_wt brain_wt non_dreaming dreaming total_sleep life_span gestation
+  &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 Africa… 6.65e+3   5712           NA       NA           3.3      38.6       645
+2 Asiane… 2.55e+3   4603            2.1      1.8         3.9      69         624
+3 Desert… 5.5 e-1      2.4          7.6      2.7        10.3      NA          NA
+4 Europe… 7.85e-1      3.5          6.6      4.1        10.7       6          42
+# ℹ 3 more variables: predation &lt;int&gt;, exposure &lt;int&gt;, danger &lt;int&gt;</code></pre>
 <p>Examining these columns is much easier if we work with a smaller data frame by <code>select()</code>ing the desired variables:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="3-wrangling.html#cb63-1" tabindex="-1"></a>slim_many_species <span class="ot">&lt;-</span> many_species <span class="sc">%&gt;%</span> </span>
 <span id="cb63-2"><a href="3-wrangling.html#cb63-2" tabindex="-1"></a>  <span class="fu">select</span>(species, body_wt, danger)</span></code></pre></div>
@@ -918,7 +914,7 @@ FIGURE 3.2: Diagram of select() columns.
 </div>
 <p><strong>(LC3.4)</strong> Run the code <code>mammals %&gt;% select(ends_with("wt"))</code> to select columns with names that end with “wt”. How many columns are returned?</p>
 <p><strong>(LC3.5)</strong> Use the <code>contains()</code> helper function to select columns from the <code>mammals</code> data frame that contain “dream”. How many columns are returned?</p>
-<p><strong>(LC3.6)</strong> What if you forgot to include the double-quotes for the first command above? Run the code <code>mammals %&gt;% select(ends_with("wt"))</code> to see what happens.</p>
+<p><strong>(LC3.6)</strong> What if you forgot to include the double-quotes for the first command above? Run the code <code>mammals %&gt;% select(ends_with(wt))</code> to see what happens.</p>
 <div class="learncheck">
 
 </div>
@@ -976,16 +972,16 @@ FIGURE 3.4: Diagram of summarize() rows.
    mean std_dev
   &lt;dbl&gt;   &lt;dbl&gt;
 1    NA      NA</code></pre>
-<p>Why are the values returned <code>NA</code>? As we saw in Subsection <a href="2-viz.html#geompoint">2.3.1</a>, <code>NA</code> is how R encodes <em>missing values</em> . By default any time you try to calculate a summary statistic of a variable that has one or more <code>NA</code> missing values in R, <code>NA</code> is returned. To work around this fact, you can set the <code>na.rm</code> argument to <code>TRUE</code>, where <code>rm</code> is short for “remove”; this will ignore any <code>NA</code> missing values and only return the summary value for all non-missing values.</p>
+<p>Why are the values returned <code>NA</code>? As we saw in Subsection <a href="2-viz.html#geompoint">2.3.1</a>, <code>NA</code> is how R encodes <em>missing values</em> . By default any time you try to calculate a summary statistic of a variable that has one or more <code>NA</code> missing values in R, <code>NA</code> is returned. To work around this fact, you can set the <code>na.rm</code> argument of each summary function to <code>TRUE</code>, where <code>rm</code> is short for “remove”; this will ignore any <code>NA</code> missing values and only return the summary value for all non-missing values.</p>
 <p>The code that follows computes the mean and standard deviation of all non-missing values of <code>life_span</code>:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="3-wrangling.html#cb75-1" tabindex="-1"></a>summary_mammals <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb75-2"><a href="3-wrangling.html#cb75-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(life_span, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb75-3"><a href="3-wrangling.html#cb75-3" tabindex="-1"></a>            <span class="at">std_dev =</span> <span class="fu">sd</span>(life_span, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb75-4"><a href="3-wrangling.html#cb75-4" tabindex="-1"></a>summary_mammals</span></code></pre></div>
 <pre><code># A tibble: 1 × 2
-     mean std_dev
-    &lt;dbl&gt;   &lt;dbl&gt;
-1 19.8776 18.2063</code></pre>
+   mean std_dev
+  &lt;dbl&gt;   &lt;dbl&gt;
+1  19.9    18.2</code></pre>
 <p>Notice how the <code>na.rm = TRUE</code> are used as arguments to the <code>mean()</code> and <code>sd()</code> summary functions individually, and not to the <code>summarize()</code> function.</p>
 <p>However, one needs to be cautious whenever ignoring missing values. In the upcoming <em>Learning checks</em> questions, we’ll consider the possible ramifications of blindly sweeping rows with missing values “under the rug.” This is in fact why the <code>na.rm</code> argument to any summary statistic function in R is set to <code>FALSE</code> by default. In other words, R does not ignore rows with missing values by default. R is alerting you to the presence of missing data and you should be mindful of this absence and any potential causes of this absence throughout your analysis.</p>
 <p>What are other summary functions we can use inside the <code>summarize()</code> verb to compute summary statistics? As seen in the diagram in Figure <a href="3-wrangling.html#fig:summary-function">3.3</a>, you can use any summary function in R that takes many values and returns just one. Here are just a few:</p>
@@ -1040,54 +1036,54 @@ v2 TODO: Address this warning message explicitly in text and fix index.Rmd
 <span id="cb78-4"><a href="3-wrangling.html#cb78-4" tabindex="-1"></a>            <span class="at">std_dev =</span> <span class="fu">sd</span>(life_span, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb78-5"><a href="3-wrangling.html#cb78-5" tabindex="-1"></a>summary_pred_life</span></code></pre></div>
 <pre><code># A tibble: 5 × 3
-  predation    mean std_dev
-      &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1         1 29.1571 24.5232
-2         2 13.2923 12.8962
-3         3 15.3909 20.6090
-4         4 19.1143 11.7115
-5         5 20.6769 12.9310</code></pre>
+  predation  mean std_dev
+      &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1         1  29.2    24.5
+2         2  13.3    12.9
+3         3  15.4    20.6
+4         4  19.1    11.7
+5         5  20.7    12.9</code></pre>
 <p>This code is similar to the code that created <code>summary_mammals</code>, but with an extra <code>group_by()</code> command added before the <code>summarize()</code>. Grouping the <code>mammals</code> dataset by <code>predation</code> and then applying the <code>summarize()</code> functions yields a data frame that displays the mean and standard deviation length split by the different predation categories.</p>
 <p>It is important to note that the <code>group_by()</code> function doesn’t change data frames by itself. Rather it changes the <em>meta-data</em>, or data about the data, specifically the grouping structure. It is only after we apply the <code>summarize()</code> function that the data frame changes.</p>
 <p>For example, let’s consider the <code>mammals</code> data frame again. Run this code:</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="3-wrangling.html#cb80-1" tabindex="-1"></a>mammals</span></code></pre></div>
-<pre><code># A tibble: 62 × 14
+<pre><code># A tibble: 62 × 11
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 Africanelephant 6654       5712           NA       NA           3.3      38.6
- 2 Africangiantpo…    1          6.6          6.3      2           8.3       4.5
- 3 ArcticFox          3.385     44.5         NA       NA          12.5      14  
- 4 Arcticgroundsq…    0.92       5.7         NA       NA          16.5      NA  
- 5 Asianelephant   2547       4603            2.1      1.8         3.9      69  
- 6 Baboon            10.55     179.5          9.1      0.7         9.8      27  
- 7 Bigbrownbat        0.023      0.3         15.8      3.9        19.7      19  
- 8 Braziliantapir   160        169            5.2      1           6.2      30.4
- 9 Cat                3.3       25.6         10.9      3.6        14.5      28  
-10 Chimpanzee        52.16     440            8.3      1.4         9.7      50  
+ 1 Africanelephant  6.65e+3   5712           NA       NA           3.3      38.6
+ 2 Africangiantpou… 1   e+0      6.6          6.3      2           8.3       4.5
+ 3 ArcticFox        3.38e+0     44.5         NA       NA          12.5      14  
+ 4 Arcticgroundsqu… 9.2 e-1      5.7         NA       NA          16.5      NA  
+ 5 Asianelephant    2.55e+3   4603            2.1      1.8         3.9      69  
+ 6 Baboon           1.06e+1    180.           9.1      0.7         9.8      27  
+ 7 Bigbrownbat      2.3 e-2      0.3         15.8      3.9        19.7      19  
+ 8 Braziliantapir   1.6 e+2    169            5.2      1           6.2      30.4
+ 9 Cat              3.3 e+0     25.6         10.9      3.6        14.5      28  
+10 Chimpanzee       5.22e+1    440            8.3      1.4         9.7      50  
 # ℹ 52 more rows
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
-<p>Observe that the first line of the output reads <code># A tibble: 62 x 14</code>. This is an example of meta-data, in this case the number of observations/rows and variables/columns in <code>mammals</code>. The actual data itself are the subsequent table of values. Now let’s pipe the <code>mammals</code> data frame into <code>group_by(predation)</code>:</p>
+# ℹ 4 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;</code></pre>
+<p>Observe that the first line of the output reads <code># A tibble: 62 x 11</code>. This is an example of meta-data, in this case the number of observations/rows and variables/columns in <code>mammals</code>. The actual data itself are the subsequent table of values. Now let’s pipe the <code>mammals</code> data frame into <code>group_by(predation)</code>:</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="3-wrangling.html#cb82-1" tabindex="-1"></a>mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb82-2"><a href="3-wrangling.html#cb82-2" tabindex="-1"></a>  <span class="fu">group_by</span>(predation)</span></code></pre></div>
-<pre><code># A tibble: 62 × 14
+<pre><code># A tibble: 62 × 11
 # Groups:   predation [5]
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 Africanelephant 6654       5712           NA       NA           3.3      38.6
- 2 Africangiantpo…    1          6.6          6.3      2           8.3       4.5
- 3 ArcticFox          3.385     44.5         NA       NA          12.5      14  
- 4 Arcticgroundsq…    0.92       5.7         NA       NA          16.5      NA  
- 5 Asianelephant   2547       4603            2.1      1.8         3.9      69  
- 6 Baboon            10.55     179.5          9.1      0.7         9.8      27  
- 7 Bigbrownbat        0.023      0.3         15.8      3.9        19.7      19  
- 8 Braziliantapir   160        169            5.2      1           6.2      30.4
- 9 Cat                3.3       25.6         10.9      3.6        14.5      28  
-10 Chimpanzee        52.16     440            8.3      1.4         9.7      50  
+ 1 Africanelephant  6.65e+3   5712           NA       NA           3.3      38.6
+ 2 Africangiantpou… 1   e+0      6.6          6.3      2           8.3       4.5
+ 3 ArcticFox        3.38e+0     44.5         NA       NA          12.5      14  
+ 4 Arcticgroundsqu… 9.2 e-1      5.7         NA       NA          16.5      NA  
+ 5 Asianelephant    2.55e+3   4603            2.1      1.8         3.9      69  
+ 6 Baboon           1.06e+1    180.           9.1      0.7         9.8      27  
+ 7 Bigbrownbat      2.3 e-2      0.3         15.8      3.9        19.7      19  
+ 8 Braziliantapir   1.6 e+2    169            5.2      1           6.2      30.4
+ 9 Cat              3.3 e+0     25.6         10.9      3.6        14.5      28  
+10 Chimpanzee       5.22e+1    440            8.3      1.4         9.7      50  
 # ℹ 52 more rows
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
-<p>Observe that now there is additional meta-data: <code># Groups: predation [5]</code> indicating that the grouping structure meta-data has been set based on the 5 possible levels of the categorical variable <code>predation</code>. On the other hand, observe that the data has not changed: it is still a table of 62 <span class="math inline">\(\times\)</span> 14 values.</p>
+# ℹ 4 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;</code></pre>
+<p>Observe that now there is additional meta-data: <code># Groups: predation [5]</code> indicating that the grouping structure meta-data has been set based on the 5 possible levels of the categorical variable <code>predation</code>. On the other hand, observe that the data has not changed: it is still a table of 62 <span class="math inline">\(\times\)</span> 11 values.</p>
 <p>Only by combining a <code>group_by()</code> with another data wrangling operation, in this case <code>summarize()</code>, will the data actually be transformed.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="3-wrangling.html#cb84-1" tabindex="-1"></a>mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb84-2"><a href="3-wrangling.html#cb84-2" tabindex="-1"></a>  <span class="fu">group_by</span>(predation) <span class="sc">%&gt;%</span> </span>
@@ -1095,31 +1091,31 @@ v2 TODO: Address this warning message explicitly in text and fix index.Rmd
 <pre><code># A tibble: 5 × 2
   predation avg_life
       &lt;int&gt;    &lt;dbl&gt;
-1         1  29.1571
-2         2  13.2923
-3         3  15.3909
-4         4  19.1143
-5         5  20.6769</code></pre>
+1         1     29.2
+2         2     13.3
+3         3     15.4
+4         4     19.1
+5         5     20.7</code></pre>
 <p>If you would like to remove this grouping structure meta-data, we can pipe the resulting data frame into the <code>ungroup()</code> function:</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="3-wrangling.html#cb86-1" tabindex="-1"></a>mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb86-2"><a href="3-wrangling.html#cb86-2" tabindex="-1"></a>  <span class="fu">group_by</span>(predation) <span class="sc">%&gt;%</span> </span>
 <span id="cb86-3"><a href="3-wrangling.html#cb86-3" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
-<pre><code># A tibble: 62 × 14
+<pre><code># A tibble: 62 × 11
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 Africanelephant 6654       5712           NA       NA           3.3      38.6
- 2 Africangiantpo…    1          6.6          6.3      2           8.3       4.5
- 3 ArcticFox          3.385     44.5         NA       NA          12.5      14  
- 4 Arcticgroundsq…    0.92       5.7         NA       NA          16.5      NA  
- 5 Asianelephant   2547       4603            2.1      1.8         3.9      69  
- 6 Baboon            10.55     179.5          9.1      0.7         9.8      27  
- 7 Bigbrownbat        0.023      0.3         15.8      3.9        19.7      19  
- 8 Braziliantapir   160        169            5.2      1           6.2      30.4
- 9 Cat                3.3       25.6         10.9      3.6        14.5      28  
-10 Chimpanzee        52.16     440            8.3      1.4         9.7      50  
+ 1 Africanelephant  6.65e+3   5712           NA       NA           3.3      38.6
+ 2 Africangiantpou… 1   e+0      6.6          6.3      2           8.3       4.5
+ 3 ArcticFox        3.38e+0     44.5         NA       NA          12.5      14  
+ 4 Arcticgroundsqu… 9.2 e-1      5.7         NA       NA          16.5      NA  
+ 5 Asianelephant    2.55e+3   4603            2.1      1.8         3.9      69  
+ 6 Baboon           1.06e+1    180.           9.1      0.7         9.8      27  
+ 7 Bigbrownbat      2.3 e-2      0.3         15.8      3.9        19.7      19  
+ 8 Braziliantapir   1.6 e+2    169            5.2      1           6.2      30.4
+ 9 Cat              3.3 e+0     25.6         10.9      3.6        14.5      28  
+10 Chimpanzee       5.22e+1    440            8.3      1.4         9.7      50  
 # ℹ 52 more rows
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+# ℹ 4 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;</code></pre>
 <p>Observe how the <code># Groups: predation [5]</code> meta-data is no longer present.</p>
 <p>Let’s now revisit the <code>n()</code> counting summary function we briefly introduced previously. Recall that the <code>n()</code> function counts rows. This is opposed to the <code>sum()</code> summary function that returns the sum of a numerical variable. For example, suppose we’d like to count how many mammalian species were in each <code>predation</code> group:</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="3-wrangling.html#cb88-1" tabindex="-1"></a>by_pred <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
@@ -1137,7 +1133,7 @@ v2 TODO: Address this warning message explicitly in text and fix index.Rmd
 <p>We see that the greatest number of species are in <code>predation</code> category 2 and the fewest in category 4.</p>
 <div id="grouping-by-more-than-one-variable" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> Grouping by more than one variable<a href="3-wrangling.html#grouping-by-more-than-one-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>You are not limited to grouping by one variable. Say you want to know the number of species of each <code>predation</code> category for each <code>exposure</code> level. We can also group by a second variable <code>exposure</code> using <code>group_by(predation, exposure)</code>:</p>
+<p>You are not limited to grouping by one variable. Say you want to know the number of species of each <code>predation</code> category for each <code>exposure</code> level. We can also group by this second variable using <code>group_by(predation, exposure)</code>:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="3-wrangling.html#cb90-1" tabindex="-1"></a>by_pred_exp <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb90-2"><a href="3-wrangling.html#cb90-2" tabindex="-1"></a>  <span class="fu">group_by</span>(predation, exposure) <span class="sc">%&gt;%</span> </span>
 <span id="cb90-3"><a href="3-wrangling.html#cb90-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>())</span>
@@ -1203,7 +1199,7 @@ v2 TODO: Address this warning message explicitly in text and fix index.Rmd
 FIGURE 3.6: Diagram of mutate() columns.
 </p>
 </div>
-<p>Another common transformation of data is to create/compute new variables based on existing ones. For example, say you are more comfortable thinking of weight in pounds (lb) instead of kilograms (hg). The formula to convert weights from kg to lb is</p>
+<p>Another common transformation of data is to create/compute new variables based on existing ones. For example, say you are more comfortable thinking of weight in pounds (lb) instead of kilograms (kg). The formula to convert weights from kg to lb is</p>
 <p><span class="math display">\[
 \text{weight in lb} = {\text{weight in kg}} \cdot {2.205}
 \]</span></p>
@@ -1211,22 +1207,22 @@ FIGURE 3.6: Diagram of mutate() columns.
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="3-wrangling.html#cb94-1" tabindex="-1"></a>mammals <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb94-2"><a href="3-wrangling.html#cb94-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wt_in_lb =</span> body_wt <span class="sc">*</span> <span class="fl">2.205</span>)</span>
 <span id="cb94-3"><a href="3-wrangling.html#cb94-3" tabindex="-1"></a>mammals</span></code></pre></div>
-<pre><code># A tibble: 62 × 14
+<pre><code># A tibble: 62 × 12
    species          body_wt brain_wt non_dreaming dreaming total_sleep life_span
    &lt;fct&gt;              &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 Africanelephant 6654       5712           NA       NA           3.3      38.6
- 2 Africangiantpo…    1          6.6          6.3      2           8.3       4.5
- 3 ArcticFox          3.385     44.5         NA       NA          12.5      14  
- 4 Arcticgroundsq…    0.92       5.7         NA       NA          16.5      NA  
- 5 Asianelephant   2547       4603            2.1      1.8         3.9      69  
- 6 Baboon            10.55     179.5          9.1      0.7         9.8      27  
- 7 Bigbrownbat        0.023      0.3         15.8      3.9        19.7      19  
- 8 Braziliantapir   160        169            5.2      1           6.2      30.4
- 9 Cat                3.3       25.6         10.9      3.6        14.5      28  
-10 Chimpanzee        52.16     440            8.3      1.4         9.7      50  
+ 1 Africanelephant  6.65e+3   5712           NA       NA           3.3      38.6
+ 2 Africangiantpou… 1   e+0      6.6          6.3      2           8.3       4.5
+ 3 ArcticFox        3.38e+0     44.5         NA       NA          12.5      14  
+ 4 Arcticgroundsqu… 9.2 e-1      5.7         NA       NA          16.5      NA  
+ 5 Asianelephant    2.55e+3   4603            2.1      1.8         3.9      69  
+ 6 Baboon           1.06e+1    180.           9.1      0.7         9.8      27  
+ 7 Bigbrownbat      2.3 e-2      0.3         15.8      3.9        19.7      19  
+ 8 Braziliantapir   1.6 e+2    169            5.2      1           6.2      30.4
+ 9 Cat              3.3 e+0     25.6         10.9      3.6        14.5      28  
+10 Chimpanzee       5.22e+1    440            8.3      1.4         9.7      50  
 # ℹ 52 more rows
-# ℹ 7 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
-#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;, wt_in_oz &lt;dbl&gt;, oz_per_year &lt;dbl&gt;</code></pre>
+# ℹ 5 more variables: gestation &lt;dbl&gt;, predation &lt;int&gt;, exposure &lt;int&gt;,
+#   danger &lt;int&gt;, wt_in_lb &lt;dbl&gt;</code></pre>
 <p>In this code, we <code>mutate()</code> the <code>mammals</code> data frame by creating a new variable <code>wt_in_lb = body_wt * 2.205</code> and then <em>overwrite</em> the original <code>mammals</code> data frame. Why did we overwrite the data frame <code>mammals</code>, instead of assigning the result to a new data frame like <code>mammals_new</code>? As a rough rule of thumb, as long as you are not losing original information that you might need later, it’s acceptable practice to overwrite existing data frames with updated ones, as we did here. On the other hand, why did we not overwrite the variable <code>body_wt</code>, but instead created a new variable called <code>wt_in_lb</code>? Because if we did this, we would have erased the original information contained in <code>body_wt</code> of weights in grams that may still be valuable to us.</p>
 <p>Let’s now compute average body weights of mammalian species in different <code>predation</code> categories in both kg and lb using the <code>group_by()</code> and <code>summarize()</code> code we saw in Section <a href="3-wrangling.html#groupby">3.6</a>:</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="3-wrangling.html#cb96-1" tabindex="-1"></a>summary_pred_wt <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
@@ -1237,11 +1233,11 @@ FIGURE 3.6: Diagram of mutate() columns.
 <pre><code># A tibble: 5 × 3
   predation mean_wt_in_kg mean_wt_in_lb
       &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1         1       43.9234      96.8512 
-2         2        1.973        4.35046
-3         3      770.714     1699.42   
-4         4       53.8301     118.695  
-5         5      146.792      323.675  </code></pre>
+1         1         43.9          96.9 
+2         2          1.97          4.35
+3         3        771.         1699.  
+4         4         53.8         119.  
+5         5        147.          324.  </code></pre>
 <p>Let’s look at some summary statistics of the <code>wt_in_lb</code> variable by considering multiple summary functions at once in the same <code>summarize()</code> code:</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="3-wrangling.html#cb98-1" tabindex="-1"></a>lb_summary <span class="ot">&lt;-</span> mammals <span class="sc">%&gt;%</span> </span>
 <span id="cb98-2"><a href="3-wrangling.html#cb98-2" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
@@ -1256,9 +1252,9 @@ FIGURE 3.6: Diagram of mutate() columns.
 <span id="cb98-11"><a href="3-wrangling.html#cb98-11" tabindex="-1"></a>  )</span>
 <span id="cb98-12"><a href="3-wrangling.html#cb98-12" tabindex="-1"></a>lb_summary</span></code></pre></div>
 <pre><code># A tibble: 1 × 8
-       min    q1  median      q3     max    mean      sd missing
-     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
-1 0.011025 1.323 7.37021 106.287 14672.1 438.332 1982.64       0</code></pre>
+     min    q1 median    q3    max  mean    sd missing
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
+1 0.0110  1.32   7.37  106. 14672.  438. 1983.       0</code></pre>
 <p>We see for example that the mean weight for all mammalian species is about 438 pounds, while the heaviest species is 14,672 pounds!</p>
 <p>However, typing out all these summary statistic functions in <code>summarize()</code> is long and tedious. Fortunately, there is a much more succinct way to compute a variety of common summary statistics using the <code>skim()</code> function from the <code>skimr</code> package. This function takes in a data frame, “skims” it, and returns commonly used summary statistics.</p>
 <p>Let’s select the <code>wt_in_lb</code> column from <code>mammals</code> and pipe it into the <code>skim()</code> function:</p>
@@ -1438,14 +1434,7 @@ Arrange rows of a data variable in ascending (default) or <code>desc</code>endin
 
 An R script file of all R code used in this chapter is available [here](scripts/03-wrangling.R).
 -->
-<p>If you want to further unlock the power of the <code>dplyr</code> package for data wrangling, we suggest that you check out RStudio’s “Data Transformation with dplyr” cheatsheet. This cheatsheet summarizes much more than what we’ve discussed in this chapter, including more advanced data wrangling functions, while providing quick and easy-to-read visual descriptions. In fact, many of the diagrams illustrating data wrangling operations in this chapter, such as Figure <a href="3-wrangling.html#fig:filter">3.1</a> on <code>filter()</code>, originate from this cheatsheet.</p>
-<p>You can access this cheatsheet by going to the RStudio Menu Bar and selecting “Help -&gt; Cheatsheets -&gt; Data Transformation with dplyr.” You can see a preview in the figure below.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dplyr-cheatsheet"></span>
-<img src="images/cheatsheets/dplyr_cheatsheet-1.png" alt="Data Transformation with dplyr cheatsheet." width="\textwidth" />
-<p class="caption">
-FIGURE 3.8: Data Transformation with dplyr cheatsheet.
-</p>
-</div>
+<p>If you want to further unlock the power of the <code>dplyr</code> package for data wrangling, we suggest that you check out RStudio’s “Data Transformation with dplyr” cheatsheet. This cheatsheet summarizes much more than what we’ve discussed in this chapter, including more advanced data wrangling functions, while providing quick and easy-to-read visual descriptions. You can access this cheatsheet by going to the RStudio Menu Bar and selecting “Help -&gt; Cheatsheets -&gt; Data Transformation with dplyr.”</p>
 <p>On top of the data wrangling verbs and examples we presented in this section, if you’d like to see more examples of using the <code>dplyr</code> package for data wrangling, check out <a href="http://r4ds.had.co.nz/transform.html">Chapter 5</a> of <em>R for Data Science</em> <span class="citation">(<a href="#ref-rds2016">Grolemund and Wickham 2017</a>)</span>.</p>
 </div>
 <div id="whats-to-come-1" class="section level3 hasAnchor" number="3.9.3">

@@ -28,7 +28,7 @@ options(knitr.kable.NA = "")
 set.seed(76)
 ```
 
-So far in our journey, we've seen how to look at data saved in data frames (Chapter \@ref(getting-started)) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of `geom`etric objects.
+So far in our journey, we've seen how to look at data saved in data frames (Chapter \@ref(getting-started)) and how to create data visualizations using the grammar of graphics, which maps variables in a data frame to the aesthetic attributes of `geom`etric objects (Chapter \@ref(visualization)).
 
 Recall that for some of our visualizations, we first needed to transform/modify existing data frames a little. For example, to create the linegraph in Figure \@ref(fig:dailyweight) with measurements *only* for Chick 1, we first needed to pare down the `ChickWeight` data frame to a `chick1_weight` data frame consisting of only `Chick == 1` rows. Thus, `chick1_weight` will have fewer rows than `ChickWeight`. We did this using the `filter()` function:
 
@@ -38,12 +38,12 @@ chick1_weight <- filter(ChickWeight, Chick == 1)
 
 In this chapter, we'll extend this example and we'll introduce a series of functions from the `dplyr` package for data wrangling that will allow you to take a data frame and "wrangle" it (transform it) to suit your needs. Such functions include:
 
-1. `filter()` and `slice` a data frame's existing rows to only pick out a subset of them. For example, the `mammals` data frame.
-1. `select()` a data frame's existing columns to only pick out a subset of them or `rename` existing columns. 
-1. `summarize()` one or more of its columns/variables with a *summary statistic*. Examples of summary statistics include the median and interquartile range of chick weights as we saw in Section \@ref(boxplots) on boxplots. 
-1. `group_by()` its rows. In other words, assign different rows to be part of the same *group*. We can then combine `group_by()` with `summarize()` to report summary statistics for each group *separately*. For example, say you don't want a single overall average `weight` on Day 21 for the `chick_weight_d21` dataset, but rather four separate averages, one computed for each of the four `Diet` groups.
-1. `mutate()` its existing columns/variables to create new ones. For example, convert weight recordings from grams to ounces.
-1. `arrange()` its rows. For example, sort the rows of `mammals` in ascending or descending order of `life_span`.
+1. `filter()` and `slice` a data frame's existing rows to only pick out a subset of rows. 
+1. `select()` a data frame's existing columns to only keep a subset or `rename` existing columns. 
+1. `summarize()` one or more of a data frame's columns/variables with a *summary statistic*. Examples of summary statistics include the median and interquartile range of chick weights as we saw in Section \@ref(boxplots) on boxplots. 
+1. `group_by()` the rows of a data frame. In other words, assign different rows to be part of the same *group*. We can then combine `group_by()` with `summarize()` to report summary statistics for each group *separately*. For example, say you don't want a single overall average `weight` on Day 21 for the `chick_weight_d21` dataset, but rather four separate averages, one computed for each of the four `Diet` groups.
+1. `mutate()` a data frame's existing columns/variables to create new ones. For example, convert weight recordings from grams to ounces.
+1. `arrange()` a data frame's rows in a new order. For example, sort the rows of `mammals` in ascending or descending order of `life_span`.
 
 Notice how we used `computer_code` font to describe the actions we want to take on our data frames. This is because the `dplyr` package for data wrangling has intuitively verb-named functions that are easy to remember. 
 
@@ -87,7 +87,7 @@ library(scales)
 
 ## The pipe operator: `%>%` {#piping}
 
-Before we start data wrangling, let's first introduce a nifty tool that gets loaded with the `dplyr` package: the \index{operators!pipe} pipe operator `%>%`. The pipe operator allows us to combine multiple operations in R into a single sequential *chain* of actions.
+Before we start data wrangling, let's first introduce a nifty tool that gets loaded with the `dplyr` package: the \index{operators!pipe} pipe operator `%>%` (also indicated as `|>`). The pipe operator allows us to combine multiple operations in R into a single sequential *chain* of actions.
 
 Let's start with a hypothetical example. Say you would like to perform a hypothetical sequence of operations on a hypothetical data frame `x` using hypothetical functions `f()`, `g()`, and `h()`:
 
@@ -121,7 +121,7 @@ You would read this sequence as:
 So while both approaches achieve the same goal, the latter is much more human-readable because you can clearly read the sequence of operations line-by-line. But what are the hypothetical `x`, `f()`, `g()`, and `h()`?  Throughout this chapter on data wrangling:
 
 1. The starting value `x` will be a data frame. For example, the `mammals` data frame we explored in Section \@ref(mammalsdataframe).
-1. The sequence of functions, here `f()`, `g()`, and `h()`, will mostly be a sequence of any number of the data wrangling verb-named functions we listed in the introduction to this chapter. For example, the `filter(Chick == 1)` function and argument we previewed earlier.
+1. The sequence of functions, here `f()`, `g()`, and `h()`, will mostly be a sequence of any number of the data wrangling, verb-named functions we listed in the introduction to this chapter. For example, the `filter(Chick == 1)` function and argument we previewed earlier.
 1. The result will be the transformed/modified data frame that you want. In our example, we'll save the result in a new data frame by using the `<-` assignment operator with the name `chick1_weight` via `chick1_weight <-`.
 
 ```{r, eval=FALSE}
@@ -168,7 +168,7 @@ Furthermore, you can combine multiple criteria using operators that make compari
 - `|` corresponds to "or"
 - `&` corresponds to "and"
 
-To see many of these in action, let's filter `mammals` for mammalian species that are in `predation` category 1 or 2 *and* not in exposure category 1.  Note that this example uses the \index{operators!not} `!` "not" operator to pick rows that *don't* match a criteria. As mentioned earlier, the `!` can be read as "not." Run the following:
+To see many of these in action, let's filter `mammals` for mammalian species that are in `predation` category 1 or 2 *and* not in `exposure` category 1.  Note that this example uses the \index{operators!not} `!` "not" operator to pick rows that *don't* match a criteria. As mentioned earlier, the `!` can be read as "not." Run the following:
 
 
 ```{r, eval=FALSE}
@@ -239,7 +239,7 @@ As a final note, we recommend that `filter()` should be among the first verbs yo
 
 ## `slice` rows
 
-Similar to `filter`, the `slice` function  \index{dplyr!slice()} function returns a subset of row from a data frame. While `filter` returns the rows that match a specified criteria about the values of a variable (e.g., `species == "Cat"`), the `slice` function returns rows based on their positions.  For example, let's `slice` the first 5 rows of the `mammals` data frame:
+Similar to `filter`, the `slice` function  \index{dplyr!slice()} function returns a subset of rows from a data frame. While `filter` returns the rows that match a specified criteria about the values of a variable (e.g., `species == "Cat"`), the `slice` function returns rows based on their positions.  For example, let's `slice` the first 5 rows of the `mammals` data frame:
 
 ```{r, eval=FALSE}
 mammals %>% slice(1:5)
@@ -288,7 +288,7 @@ We recommended that you consider applying the `filter()` function to your data t
 glimpse(mammals)
 ```
 
-In the same way that `filter` and `slice` return a subset of rows, the `select` function and its selection helpers allow us to return a subset of columns from a data frame.
+In the same way that `filter` and `slice` return a subset of rows, the `select` function and its selection helpers allow us to return a subset of columns from a data frame as illustrated in Figure \@ref(fig:selectfig).
 
 ```{r selectfig, fig.cap="Diagram of select() columns.", echo=FALSE, purl=FALSE}
 include_graphics("images/cheatsheets/select.png")
@@ -346,7 +346,7 @@ See the help file for `select()` by running `?select` for more information about
 
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Use the `contains()` helper function to select columns from the `mammals` data frame that contain "dream". How many columns are returned? 
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What if you forgot to include the double-quotes for the first command above? Run the code `mammals %>% select(ends_with("wt"))` to see what happens.
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** What if you forgot to include the double-quotes for the first command above? Run the code `mammals %>% select(ends_with(wt))` to see what happens.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -406,7 +406,7 @@ summary_mammals <- mammals %>%
 summary_mammals
 ```
 
-Why are the values returned `NA`? As we saw in Subsection \@ref(geompoint), `NA` is how R encodes *missing values* \index{missing values}. By default any time you try to calculate a summary statistic of a variable that has one or more `NA` missing values in R, `NA` is returned. To work around this fact, you can set the `na.rm` argument to `TRUE`, where `rm` is short for "remove"; this will ignore any `NA` missing values and only return the summary value for all non-missing values. 
+Why are the values returned `NA`? As we saw in Subsection \@ref(geompoint), `NA` is how R encodes *missing values* \index{missing values}. By default any time you try to calculate a summary statistic of a variable that has one or more `NA` missing values in R, `NA` is returned. To work around this fact, you can set the `na.rm` argument of each summary function to `TRUE`, where `rm` is short for "remove"; this will ignore any `NA` missing values and only return the summary value for all non-missing values. 
 
 The code that follows computes the mean and standard deviation of all non-missing values of `life_span`:
 
@@ -544,7 +544,7 @@ We see that the greatest number of species are in `predation` category 2 and the
 
 ### Grouping by more than one variable
 
-You are not limited to grouping by one variable. Say you want to know the number of species of each `predation` category for each `exposure` level. We can also group by a second variable `exposure` using `group_by(predation, exposure)`:
+You are not limited to grouping by one variable. Say you want to know the number of species of each `predation` category for each `exposure` level. We can also group by this second variable using `group_by(predation, exposure)`:
 
 ```{r message=FALSE, warning=FALSE}
 by_pred_exp <- mammals %>% 
@@ -596,7 +596,7 @@ What happened here is that the second `group_by(exposure)` overwrote the groupin
 include_graphics("images/cheatsheets/mutate.png")
 ```
 
-Another common transformation of data is to create/compute new variables based on existing ones. For example, say you are more comfortable thinking of weight in pounds (lb) instead of kilograms (hg). The formula to convert weights from kg to lb is
+Another common transformation of data is to create/compute new variables based on existing ones. For example, say you are more comfortable thinking of weight in pounds (lb) instead of kilograms (kg). The formula to convert weights from kg to lb is
 
 $$
 \text{weight in lb} = {\text{weight in kg}} \cdot {2.205}
@@ -804,15 +804,7 @@ generate_r_file_link("03-wrangling.R")
 ```
 -->
 
-If you want to further unlock the power of the `dplyr` package for data wrangling, we suggest that you check out RStudio's "Data Transformation with dplyr" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter, including more advanced data wrangling functions, while providing quick and easy-to-read visual descriptions. In fact, many of the diagrams illustrating data wrangling operations in this chapter, such as Figure \@ref(fig:filter) on `filter()`, originate from this cheatsheet.
-
-You can access this cheatsheet by going to the RStudio Menu Bar and selecting "Help -> Cheatsheets -> Data Transformation with dplyr." `r if(is_html_output()) "You can see a preview in the figure below."`
-
-```{r dplyr-cheatsheet, fig.cap="Data Transformation with dplyr cheatsheet.", echo=FALSE, purl=FALSE}
-if (is_html_output()) {
-  include_graphics("images/cheatsheets/dplyr_cheatsheet-1.png")
-}
-```
+If you want to further unlock the power of the `dplyr` package for data wrangling, we suggest that you check out RStudio's "Data Transformation with dplyr" cheatsheet. This cheatsheet summarizes much more than what we've discussed in this chapter, including more advanced data wrangling functions, while providing quick and easy-to-read visual descriptions. You can access this cheatsheet by going to the RStudio Menu Bar and selecting "Help -> Cheatsheets -> Data Transformation with dplyr." 
 
 On top of the data wrangling verbs and examples we presented in this section, if you'd like to see more examples of using the `dplyr` package for data wrangling, check out [Chapter 5](http://r4ds.had.co.nz/transform.html) of *R for Data Science* [@rds2016].
 

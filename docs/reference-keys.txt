@@ -47,7 +47,6 @@ fig:groupsummarize
 fig:select
 fig:depth-range-hist
 tab:wrangle-summary-table
-fig:dplyr-cheatsheet
 fig:drinks-smaller
 fig:tidyfig
 tab:non-tidy-stocks
@@ -55,8 +54,6 @@ tab:tidy-stocks
 tab:tidy-stocks-2
 fig:drinks-smaller-tidy-barplot
 fig:guat-dem-tidy
-fig:import-cheatsheet
-fig:tidyr-cheatsheet
 fig:part2
 fig:sampling-exercise-1
 fig:sampling-exercise-2
@@ -263,8 +260,8 @@ summary-1
 histograms
 geomhistogram
 adjustbins
-facets
 summary-2
+facets
 boxplots
 geomboxplot
 summary-3

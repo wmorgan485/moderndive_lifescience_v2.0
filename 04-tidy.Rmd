@@ -332,13 +332,14 @@ You can also view examples of both `pivot_longer()` and `pivot_wider()` on the [
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look again at the `blackbird` data frame that you imported earlier. Run the following:
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look again at the `blackbird` data frame that you previously imported in Subsection \@ref(using-the-console). Run the following:
 
 ```{r, eval=FALSE, purl=FALSE}
+blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
 blackbird
 ```
 
-As mentioned earlier, `blackbird` is a data frame containing information that compares the immunocompetence of red-winged blackbirds before and after testosterone implants. For simplicity, let's ignore the last two columns, which are the log-transformed values of the data in the previous two columns:
+As mentioned earlier, `blackbird` is a data frame containing information that compares the immunocompetence of red-winged blackbirds before and after testosterone implants. For simplicity, let's remove the last two columns, which are the log-transformed values of the data in the previous two columns:
 
 ```{r}
 blackbird_smaller <- blackbird %>% 
@@ -394,9 +395,8 @@ WeeklyAverage_tidy
 ```
 
 1. The first argument specifies the columns you either want to or don't want to "tidy." We set this to `cols = -group` indicating that we don't want to "tidy" the `group` variable but do want to "tidy" the other variables in `WeeklyAverage`. 
-1. `names_to` is the name of the variable in the new "tidy" data frame that will contain the *column names* of the original data. Observe how we set `names_to = "month"`.  In the resulting `WeeklyAverage_tidy`, the column `month` indicates the month that the weight loss was measured.
-1. `values_to` is the name of the variable in the new "tidy" data frame that will contain the *values* of the original data. Observe how we set `values_to = "weightloss"`. In the resulting `WeeklyAverage_tidy` the column `weightloss` contains the 3 $\times$ 3 = 3 weight loss scores as numeric values.
-1. The last argument of `names_transform` tells R what type of variable `year` should be set to. Without specifying that it is an `integer` as we've done here, `pivot_longer()` will set it to be a character value by default.
+1. `names_to` is the name of the variable in the new "tidy" data frame that will contain the *column names* of the original data. Observe how we set `names_to = "month"`.  In the resulting `WeeklyAverage_tidy`, the column `month` indicates the month (1, 2, or 3) that the weight loss was measured.
+1. `values_to` is the name of the variable in the new "tidy" data frame that will contain the *values* of the original data. Observe how we set `values_to = "weightloss"`. In the resulting `WeeklyAverage_tidy` data frame, the column `weightloss` contains the 3 $\times$ 3 = 9 weight loss scores as numeric values.
 
 This is a good start, but to create the time-series plot, the month variable needs to be numeric, not a character string. We can fix this by converting the `month` variable to an integer using two additional arguments in the `pivot_longer` command. We'll use `names_prefix` to strip off the `mean_wl` prefix from each column name, and `names_transform` to convert `month` into an integer variable. 
 
@@ -418,7 +418,7 @@ ggplot(WeeklyAverage_tidy, aes(x = month, y = weightloss, color = group)) +
   labs(x = "Month", y = "Weight Loss Score", color = "Study group")
 ```
 
-We see that the Diet + Exercise group had a higher average weight loss score in the first month than the other groups, but eventually the average weight loss scores converged in the third month.
+We see that the Diet + Exercise (DietEx) group had a higher average weight loss score in the first month than the other groups, but eventually the average weight loss scores converged in the third month.
 
 Note that if we forgot to include the `names_transform` argument specifying that `month` should be in the integer format, we would have gotten an error here since `geom_line()` wouldn't have known how to sort the character values in `month` in the right order. 
 
@@ -428,11 +428,9 @@ Note that if we forgot to include the `names_transform` argument specifying that
 \vspace{-0.1in}
 ```
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Read in the life expectancy data stored at <https://moderndive.com/data/le_mess.csv> and convert it to a "tidy" data frame. 
-
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Prepare line graphs displaying the average weight loss scores with time for each group using facets instead. Is the faceted plot more helpful for comparing the groups than the original plot?
 
-**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Revise the code for the original plot to better visualize the sampling variation for each group and month. 
+**`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**  Read in the life expectancy data stored at <https://moderndive.com/data/le_mess.csv> and convert it to a "tidy" data frame. 
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.25in}
@@ -498,20 +496,7 @@ generate_r_file_link("04-tidy.R")
 ```
 -->
 
-If you want to learn more about using the `readr` and `tidyr` package, we suggest that you check out RStudio's "Data Import Cheat Sheet." In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Browse Cheatsheets" -> Scroll down the page to the "Data Import Cheat Sheet." The first page of this cheatsheet has information on using the `readr` package to import data, while the second page has information on using the `tidyr` package to "tidy" data. `r if(is_html_output()) "You can see a preview of both cheatsheets in the figures below."`
-
-```{r import-cheatsheet, echo=FALSE, fig.cap="Data Import cheatsheet (first page): readr package.", out.width="66%", purl=FALSE}
-if (is_html_output()) {
-  include_graphics("images/cheatsheets/data-import-1.png")
-}
-```
-
-```{r tidyr-cheatsheet, echo=FALSE, fig.cap="Data Import cheatsheet (second page): tidyr package.", out.width="66%", purl=FALSE}
-if (is_html_output()) {
-  include_graphics("images/cheatsheets/data-import-2.png")
-}
-```
-
+If you want to learn more about using the `readr` and `tidyr` package, we suggest that you check out RStudio's cheat sheets. In the current version of RStudio, you can access these by going to the RStudio Menu Bar -> Help -> Cheat Sheets -> "Browse Cheatsheets...". on Cheatsheets web page, scroll down the page to find the cheatsheets for `readr` and `tidyr`. 
 
 ### What's to come?
 

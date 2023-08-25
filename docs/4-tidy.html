@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-14" />
+<meta name="date" content="2023-08-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,11 +267,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.5.1</b> Histograms via <code>geom_histogram</code></a></li>
 <li class="chapter" data-level="2.5.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.5.2</b> Adjusting the bins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.5.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.1</b> Summary</a></li>
-</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a></li>
 <li class="chapter" data-level="2.7" data-path="2-viz.html"><a href="2-viz.html#boxplots"><i class="fa fa-check"></i><b>2.7</b> 5NG#4: Boxplots</a>
 <ul>
 <li class="chapter" data-level="2.7.1" data-path="2-viz.html"><a href="2-viz.html#geomboxplot"><i class="fa fa-check"></i><b>2.7.1</b> Boxplots via <code>geom_boxplot</code></a></li>
@@ -1057,9 +1055,10 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC4.3)</strong> Take a look again at the <code>blackbird</code> data frame that you imported earlier. Run the following:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="4-tidy.html#cb122-1" tabindex="-1"></a>blackbird</span></code></pre></div>
-<p>As mentioned earlier, <code>blackbird</code> is a data frame containing information that compares the immunocompetence of red-winged blackbirds before and after testosterone implants. For simplicity, let’s ignore the last two columns, which are the log-transformed values of the data in the previous two columns:</p>
+<p><strong>(LC4.3)</strong> Take a look again at the <code>blackbird</code> data frame that you previously imported in Subsection <a href="1-getting-started.html#using-the-console">1.5.1</a>. Run the following:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="4-tidy.html#cb122-1" tabindex="-1"></a>blackbird <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv&quot;</span>)</span>
+<span id="cb122-2"><a href="4-tidy.html#cb122-2" tabindex="-1"></a>blackbird</span></code></pre></div>
+<p>As mentioned earlier, <code>blackbird</code> is a data frame containing information that compares the immunocompetence of red-winged blackbirds before and after testosterone implants. For simplicity, let’s remove the last two columns, which are the log-transformed values of the data in the previous two columns:</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="4-tidy.html#cb123-1" tabindex="-1"></a>blackbird_smaller <span class="ot">&lt;-</span> blackbird <span class="sc">%&gt;%</span> </span>
 <span id="cb123-2"><a href="4-tidy.html#cb123-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">starts_with</span>(<span class="st">&quot;log&quot;</span>))</span>
 <span id="cb123-3"><a href="4-tidy.html#cb123-3" tabindex="-1"></a>blackbird_smaller</span></code></pre></div>
@@ -1099,9 +1098,9 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 3 × 4
   group   mean_wl1 mean_wl2 mean_wl3
   &lt;fct&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1 Control  4.5      3.33333  2.08333
-2 Diet     5.33333  3.91667  2.25   
-3 DietEx   6.2      6.1      2.2    </code></pre>
+1 Control     4.5      3.33     2.08
+2 Diet        5.33     3.92     2.25
+3 DietEx      6.2      6.1      2.2 </code></pre>
 <p>Now, let’s lay out the grammar of graphics we saw in Section <a href="2-viz.html#grammarofgraphics">2.1</a>.</p>
 <p>First we know we need to set <code>data = WeeklyAverage</code> and use a <code>geom_line()</code> layer, but what is the aesthetic mapping of variables? We’d like to see how the weight loss has changed over the months for each group, so we need to map:</p>
 <ul>
@@ -1119,20 +1118,19 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 9 × 3
   group   month    weightloss
   &lt;fct&gt;   &lt;chr&gt;         &lt;dbl&gt;
-1 Control mean_wl1    4.5    
-2 Control mean_wl2    3.33333
-3 Control mean_wl3    2.08333
-4 Diet    mean_wl1    5.33333
-5 Diet    mean_wl2    3.91667
-6 Diet    mean_wl3    2.25   
-7 DietEx  mean_wl1    6.2    
-8 DietEx  mean_wl2    6.1    
-9 DietEx  mean_wl3    2.2    </code></pre>
+1 Control mean_wl1       4.5 
+2 Control mean_wl2       3.33
+3 Control mean_wl3       2.08
+4 Diet    mean_wl1       5.33
+5 Diet    mean_wl2       3.92
+6 Diet    mean_wl3       2.25
+7 DietEx  mean_wl1       6.2 
+8 DietEx  mean_wl2       6.1 
+9 DietEx  mean_wl3       2.2 </code></pre>
 <ol style="list-style-type: decimal">
 <li>The first argument specifies the columns you either want to or don’t want to “tidy.” We set this to <code>cols = -group</code> indicating that we don’t want to “tidy” the <code>group</code> variable but do want to “tidy” the other variables in <code>WeeklyAverage</code>.</li>
-<li><code>names_to</code> is the name of the variable in the new “tidy” data frame that will contain the <em>column names</em> of the original data. Observe how we set <code>names_to = "month"</code>. In the resulting <code>WeeklyAverage_tidy</code>, the column <code>month</code> indicates the month that the weight loss was measured.</li>
-<li><code>values_to</code> is the name of the variable in the new “tidy” data frame that will contain the <em>values</em> of the original data. Observe how we set <code>values_to = "weightloss"</code>. In the resulting <code>WeeklyAverage_tidy</code> the column <code>weightloss</code> contains the 3 <span class="math inline">\(\times\)</span> 3 = 3 weight loss scores as numeric values.</li>
-<li>The last argument of <code>names_transform</code> tells R what type of variable <code>year</code> should be set to. Without specifying that it is an <code>integer</code> as we’ve done here, <code>pivot_longer()</code> will set it to be a character value by default.</li>
+<li><code>names_to</code> is the name of the variable in the new “tidy” data frame that will contain the <em>column names</em> of the original data. Observe how we set <code>names_to = "month"</code>. In the resulting <code>WeeklyAverage_tidy</code>, the column <code>month</code> indicates the month (1, 2, or 3) that the weight loss was measured.</li>
+<li><code>values_to</code> is the name of the variable in the new “tidy” data frame that will contain the <em>values</em> of the original data. Observe how we set <code>values_to = "weightloss"</code>. In the resulting <code>WeeklyAverage_tidy</code> data frame, the column <code>weightloss</code> contains the 3 <span class="math inline">\(\times\)</span> 3 = 9 weight loss scores as numeric values.</li>
 </ol>
 <p>This is a good start, but to create the time-series plot, the month variable needs to be numeric, not a character string. We can fix this by converting the <code>month</code> variable to an integer using two additional arguments in the <code>pivot_longer</code> command. We’ll use <code>names_prefix</code> to strip off the <code>mean_wl</code> prefix from each column name, and <code>names_transform</code> to convert <code>month</code> into an integer variable.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="4-tidy.html#cb129-1" tabindex="-1"></a>WeeklyAverage_tidy <span class="ot">&lt;-</span> WeeklyAverage <span class="sc">%&gt;%</span> </span>
@@ -1145,15 +1143,15 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 <pre><code># A tibble: 9 × 3
   group   month weightloss
   &lt;fct&gt;   &lt;int&gt;      &lt;dbl&gt;
-1 Control     1    4.5    
-2 Control     2    3.33333
-3 Control     3    2.08333
-4 Diet        1    5.33333
-5 Diet        2    3.91667
-6 Diet        3    2.25   
-7 DietEx      1    6.2    
-8 DietEx      2    6.1    
-9 DietEx      3    2.2    </code></pre>
+1 Control     1       4.5 
+2 Control     2       3.33
+3 Control     3       2.08
+4 Diet        1       5.33
+5 Diet        2       3.92
+6 Diet        3       2.25
+7 DietEx      1       6.2 
+8 DietEx      2       6.1 
+9 DietEx      3       2.2 </code></pre>
 <p>We can now create the time-series plot in Figure <a href="4-tidy.html#fig:guat-dem-tidy">4.4</a> using <code>geom_line()</code> to visualize how weight loss scores in each group changed during the study. Furthermore, we’ll use the <code>labs()</code> function in the <code>ggplot2</code> package to add informative labels to the <code>aes()</code>thetic attributes of our plot.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="4-tidy.html#cb131-1" tabindex="-1"></a><span class="fu">ggplot</span>(WeeklyAverage_tidy, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> weightloss, <span class="at">color =</span> group)) <span class="sc">+</span></span>
 <span id="cb131-2"><a href="4-tidy.html#cb131-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
@@ -1164,16 +1162,15 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 FIGURE 4.4: Weight loss scores of control group.
 </p>
 </div>
-<p>We see that the Diet + Exercise group had a higher average weight loss score in the first month than the other groups, but eventually the average weight loss scores converged in the third month.</p>
+<p>We see that the Diet + Exercise (DietEx) group had a higher average weight loss score in the first month than the other groups, but eventually the average weight loss scores converged in the third month.</p>
 <p>Note that if we forgot to include the <code>names_transform</code> argument specifying that <code>month</code> should be in the integer format, we would have gotten an error here since <code>geom_line()</code> wouldn’t have known how to sort the character values in <code>month</code> in the right order.</p>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC4.4)</strong> Read in the life expectancy data stored at <a href="https://moderndive.com/data/le_mess.csv" class="uri">https://moderndive.com/data/le_mess.csv</a> and convert it to a “tidy” data frame.</p>
-<p><strong>(LC4.5)</strong> Prepare line graphs displaying the average weight loss scores with time for each group using facets instead. Is the faceted plot more helpful for comparing the groups than the original plot?</p>
-<p><strong>(LC4.6)</strong> Revise the code for the original plot to better visualize the sampling variation for each group and month.</p>
+<p><strong>(LC4.4)</strong> Prepare line graphs displaying the average weight loss scores with time for each group using facets instead. Is the faceted plot more helpful for comparing the groups than the original plot?</p>
+<p><strong>(LC4.5)</strong> Read in the life expectancy data stored at <a href="https://moderndive.com/data/le_mess.csv" class="uri">https://moderndive.com/data/le_mess.csv</a> and convert it to a “tidy” data frame.</p>
 <div class="learncheck">
 
 </div>
@@ -1209,30 +1206,18 @@ FIGURE 4.4: Weight loss scores of control group.
 
 An R script file of all R code used in this chapter is available [here](scripts/04-tidy.R).
 -->
-<p>If you want to learn more about using the <code>readr</code> and <code>tidyr</code> package, we suggest that you check out RStudio’s “Data Import Cheat Sheet.” In the current version of RStudio, you can access this cheatsheet by going to the RStudio Menu Bar -&gt; Help -&gt; Cheat Sheets -&gt; “Browse Cheatsheets” -&gt; Scroll down the page to the “Data Import Cheat Sheet.” The first page of this cheatsheet has information on using the <code>readr</code> package to import data, while the second page has information on using the <code>tidyr</code> package to “tidy” data. You can see a preview of both cheatsheets in the figures below.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:import-cheatsheet"></span>
-<img src="images/cheatsheets/data-import-1.png" alt="Data Import cheatsheet (first page): readr package." width="66%" />
-<p class="caption">
-FIGURE 4.5: Data Import cheatsheet (first page): readr package.
-</p>
-</div>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tidyr-cheatsheet"></span>
-<img src="images/cheatsheets/data-import-2.png" alt="Data Import cheatsheet (second page): tidyr package." width="66%" />
-<p class="caption">
-FIGURE 4.6: Data Import cheatsheet (second page): tidyr package.
-</p>
-</div>
+<p>If you want to learn more about using the <code>readr</code> and <code>tidyr</code> package, we suggest that you check out RStudio’s cheat sheets. In the current version of RStudio, you can access these by going to the RStudio Menu Bar -&gt; Help -&gt; Cheat Sheets -&gt; “Browse Cheatsheets…”. on Cheatsheets web page, scroll down the page to find the cheatsheets for <code>readr</code> and <code>tidyr</code>.</p>
 </div>
 <div id="whats-to-come-2" class="section level3 hasAnchor" number="4.4.2">
 <h3><span class="header-section-number">4.4.2</span> What’s to come?<a href="4-tidy.html#whats-to-come-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Congratulations! You’ve completed the “Data Science with <code>tidyverse</code>” portion of this book. We’ll now move to the “Statistical Inference with <code>infer</code>” portion of this book. Statistical inference is the science of inferring about some unknown quantity using sampling.</p>
 <p>The most well-known examples of sampling in practice involve <em>polls</em>. Because asking an entire population about their opinions would be a long and arduous task, pollsters often take a smaller sample that is hopefully representative of the population. Based on the results of this sample, pollsters hope to make claims about the entire population.</p>
-<p>As shown in Figure <a href="4-tidy.html#fig:part2">4.7</a>, once we’ve covered Chapter <a href="5-sampling.html#sampling">5</a> on sampling, we’ll examine confidence intervals in Chapter <a href="6-confidence-intervals.html#confidence-intervals">6</a> and hypothesis testing in Chapter <a href="7-hypothesis-testing.html#hypothesis-testing">7</a>.</p>
+<p>As shown in Figure <a href="4-tidy.html#fig:part2">4.5</a>, once we’ve covered Chapter <a href="5-sampling.html#sampling">5</a> on sampling, we’ll examine confidence intervals in Chapter <a href="6-confidence-intervals.html#confidence-intervals">6</a> and hypothesis testing in Chapter <a href="7-hypothesis-testing.html#hypothesis-testing">7</a>.</p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:part2"></span>
 <img src="images/flowcharts/flowchart/flowchart_ModDiveLifeSci_03.png" alt="ModernDive for Life Scientists flowchart - on to Part II!" width="\textwidth" />
 <p class="caption">
-FIGURE 4.7: <em>ModernDive for Life Scientists</em> flowchart - on to Part II!
+FIGURE 4.5: <em>ModernDive for Life Scientists</em> flowchart - on to Part II!
 </p>
 </div>
 

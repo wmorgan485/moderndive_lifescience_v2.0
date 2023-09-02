@@ -75,7 +75,7 @@ Furthermore, what if we would like not only a single estimate of the unknown pop
 • Perform exploratory data analysis by examining raw data values, computing summary statistics, and visualizing the data.  
 • Calculate a confidence interval from a bootstrap distribution using the percentile method and standard error method.  
 • Explain the effect of higher confidence levels and larger sample sizes on the width of a confidence interval.  
-• Methods based on mathematical theories can also be used to compute the standard error and confidence interval if the sampling distribution is normally distributed.  
+• Use methods based on mathematical theories to compute the standard error and confidence interval, if the sampling distribution is normally distributed.  
 \vspace{-0.1in}
 ```
 
@@ -145,8 +145,8 @@ The `pennies_sample` data frame has `r num_pennies` rows corresponding to each p
 Based on these `r num_pennies` sampled pennies, what can we say about *all* US pennies in 2019? Let's study some properties of our sample by performing an exploratory data analysis. When working with a new data set, an important first step is to perform an *exploratory data analysis*, \index{data analysis!exploratory} or EDA for short. EDA gives you a sense of the distributions of the individual variables in your data, whether any potential relationships exist between variables, whether there are outliers and/or missing values, and (most importantly) how to build your model. Here are three common steps in an EDA:
 
 1. Most crucially, look at the raw data values.
-1. Compute summary statistics, such as means, medians, and interquartile ranges.
 1. Create data visualizations.
+1. Compute summary statistics, such as means, medians, and interquartile ranges.
 
 We've already performed the first common step in an exploratory data analysis: looking at the raw data values. Getting an early sense of what your raw data looks like can often prevent many larger issues down the road. 
 
@@ -380,7 +380,7 @@ In fact, the histogram of sample means from `r n_resample_friends` resamples in 
 
 In Section \@ref(resampling-simulation) we'll mimic our tactile resampling activity virtually on the computer, allowing us to quickly perform the resampling many more than `r n_resample_friends` times. In Section \@ref(ci-build-up) we'll define the statistical concept of a *confidence interval*, which builds off the concept of bootstrap distributions.
 
-In Section \@ref(bootstrap-process), we'll construct confidence intervals using the `dplyr` package, as well as a new package: the `infer` package for "tidy" and transparent statistical inference. We'll introduce the "tidy" statistical inference framework that was the motivation for the `infer` package pipeline. The `infer` package will be the driving package throughout the rest of this book.
+In Section \@ref(bootstrap-process), we'll construct confidence intervals using the `dplyr` package, as well as a new package: the `infer` package for "tidy" and transparent statistical inference. We'll introduce the "tidy" statistical inference framework that was the motivation for the `infer` package pipeline. The `infer` package will be the driving package throughout this unit of the book.
 
 As we did in Chapter \@ref(sampling), we'll tie all these ideas together with a real-life case study in Section \@ref(case-study-two-prop-ci). This time we'll look at data from an experiment about yawning from the US television show *Mythbusters*.  
 
@@ -1738,7 +1738,7 @@ In fact, the standard error is another related factor in determining confidence 
 
 ## Case study: Is yawning contagious? {#case-study-two-prop-ci}
 
-Let's apply our knowledge of confidence intervals to answer the question: "Is yawning contagious?". If you see someone else yawn, are you more likely to yawn? In an episode of the US show [*Mythbusters*](http://www.discovery.com/tv-shows/mythbusters/mythbusters-database/yawning-contagious/), the hosts conducted an experiment to answer this question. The episode is available to view in the United States on the Discovery Network website [here](https://www.discovery.com/tv-shows/mythbusters/videos/is-yawning-contagious) and more information about the episode is also available on [IMDb](https://www.imdb.com/title/tt0768479/).
+Let's apply our knowledge of confidence intervals to answer the question: "Is yawning contagious?". If you see someone else yawn, are you more likely to yawn? In an episode of the US show [*Mythbusters*](https://en.wikipedia.org/wiki/MythBusters), the hosts conducted an experiment to answer this question. More information about the episode is available on [IMDb](https://www.imdb.com/title/tt0768479/).
 
 ### *Mythbusters* study data
 
@@ -1759,7 +1759,7 @@ The variables are:
 - `group`: A binary *treatment* variable indicating whether the participant was exposed to yawning. `"seed"` indicates the participant was exposed to yawning while `"control"` indicates the participant was not. 
 - `yawn`: A binary *response* variable indicating whether the participant ultimately yawned.
 
-Recall that you learned about treatment and response variables in Subsection \@ref(correlation-is-not-causation) in our discussion on confounding variables. \index{variables!treatment}\index{variables!response}
+Recall that you learned about treatment and response variables in Subsection \@ref(infer-workflow) in our description of how to `specify` variables in the `infer` workflow. \index{variables!treatment}\index{variables!response}
 
 Let's use some data wrangling to obtain counts of the four possible outcomes:
 
@@ -1778,7 +1778,7 @@ Let's now focus on the `"seed"` group participants who were exposed to yawning w
 
 Let's review the terminology and notation related to sampling we studied in Subsection \@ref(terminology-and-notation). In Chapter \@ref(sampling) our *study population* was the bowl of $N$ = `r nrow(bowl)` balls. Our *population parameter* of interest was the *population proportion* of these balls that were red, denoted mathematically by $p$. In order to estimate $p$, we extracted a sample of 50 balls using the shovel and computed the relevant *point estimate*: the *sample proportion* that were red, denoted mathematically by $\widehat{p}$.
 
-Who is the study population here? All humans? All the people who watch the show *Mythbusters*? It's hard to say! This question can only be answered if we know how the show's hosts recruited participants! In other words, what was the *sampling methodology*\index{sampling methodology} used by the *Mythbusters* to recruit participants? We alas are not provided with this information. Only for the purposes of this case study, however, we'll *assume* that the 50 participants are a representative sample of all Americans given the popularity of this show. Thus, we'll be assuming that any results of this experiment will generalize to all $N$ = 327 million Americans (2018 population). 
+Who is the study population here? All humans? All the people who watch the show *Mythbusters*? It's hard to say! This question can only be answered if we know how the show's hosts recruited participants! In other words, what was the *sampling methodology*\index{sampling methodology} used by the *Mythbusters* to recruit participants? We alas are not provided with this information. However, for the purposes of this case study, we'll *assume* that the 50 participants are a representative sample of all Americans given the popularity of this show. Thus, we'll be assuming that any results of this experiment will generalize to all $N$ = 327 million Americans (2018 population). 
 
 Just like with our sampling bowl, the population parameter here will involve proportions. However, in this case it will be the *difference in population proportions* $p_{seed} - p_{control}$, where $p_{seed}$ is the proportion of *all* Americans who if exposed to yawning will yawn themselves, and $p_{control}$ is the proportion of *all* Americans who if not exposed to yawning still yawn themselves. Correspondingly, the point estimate/sample statistic based the *Mythbusters*' sample of participants will be the *difference in sample proportions* $\widehat{p}_{seed} - \widehat{p}_{control}$. Let's extend Table \@ref(tab:table-ch8) of scenarios of sampling for inference to include our latest scenario. 
 
@@ -1825,7 +1825,7 @@ However, say the *Mythbusters* repeated this experiment. In other words, say the
 
 How does this sampling variation affect their estimate of 4.4%? In other words, what would be a plausible range of values for this difference that accounts for this sampling variation? We can answer this question with confidence intervals! Furthermore, since the *Mythbusters* only have a single two-sample of 50 participants, they would have to construct a 95% confidence interval for $p_{seed} - p_{control}$ using *bootstrap resampling with replacement*.
 
-We make a couple of important notes. First, for the comparison between the `"seed"` and `"control"` groups to make sense, however, both groups need to be *independent* from each other. Otherwise, they could influence each other's results. This means that a participant being selected for the `"seed"` or `"control"` group has no influence on another participant being assigned to one of the two groups. As an example, if there were a mother and her child as participants in the study, they wouldn't necessarily be in the same group. They would each be assigned randomly to one of the two groups of the explanatory variable.
+We make a couple of important notes. First, for the comparison between the `"seed"` and `"control"` groups to make sense, both groups need to be *independent* from each other. Otherwise, they could influence each other's results. This means that a participant being selected for the `"seed"` or `"control"` group has no influence on another participant being assigned to one of the two groups. As an example, if there were a mother and her child as participants in the study, they wouldn't necessarily be in the same group. They would each be assigned randomly to one of the two groups of the explanatory variable.
 
 Second, the order of the subtraction in the difference doesn't matter so long as you are consistent and tailor your interpretations accordingly. In other words, using a point estimate of $\widehat{p}_{seed} - \widehat{p}_{control}$ or $\widehat{p}_{control} - \widehat{p}_{seed}$ does not make a material difference, you just need to stay consistent and interpret your results accordingly. 
 
@@ -1851,7 +1851,7 @@ Error: A level of the response variable `yawn` needs to be
 specified for the `success` argument in `specify()`.
 ```
 
-Alas, we got an error message similar to the one from Subsection \@ref(ilyas-yohan): `infer` is telling us that one of the levels of the categorical variable `yawn` needs to be defined as the `success`. Recall that we define `success` to be the event of interest we are trying to count and compute proportions of. Are we interested in those participants who `"yes"` yawned or those who `"no"` didn't yawn? This isn't clear to R or someone just picking up the code and results for the first time, so we need to set the `success` argument to `"yes"` as follows to improve the transparency of the code:
+Alas, we got an error message similar to the one from Subsection \@ref(ilyas-yohan): `infer` is telling us that one of the levels of the categorical variable `yawn` needs to be defined as the `success`. Recall that we define `success` to be the event of interest we are trying to count and compute proportions of. Are we interested in those participants who `"yes"` yawned or those who `"no"` didn't yawn? This isn't clear to R or someone just picking up the code and results for the first time, so we need to set the `success` argument to `"yes"` to improve the transparency of the code:
 
 ```{r}
 mythbusters_yawn %>% 
@@ -1979,9 +1979,9 @@ myth_ci_percentile <- bootstrap_distribution_yawning %>%
   get_confidence_interval(type = "percentile", level = 0.95)
 ```
 
-Second, since the bootstrap distribution is roughly bell-shaped, we can construct a confidence interval using the standard error method as well. Recall that to construct a confidence interval using the standard error method, we need to specify the center of the interval using the `point_estimate` argument. In our case, we need to set it to be the difference in sample proportions of 4.4% that the *Mythbusters* observed.
+Second, since the bootstrap distribution is roughly bell-shaped, we can also construct a confidence interval using the standard error method as well. Recall that to construct a confidence interval using the standard error method, we need to specify the center of the interval using the `point_estimate` argument. In our case, we need to set it to be the difference in sample proportions of 4.4% that the *Mythbusters* observed. 
 
-We can also use the `infer` workflow to compute this value by excluding the `generate()` `r n_virtual_resample` bootstrap replicates step. In other words, do not generate replicates, but rather use only the original sample data. We can achieve this by commenting out the `generate()` line, telling R to ignore it:
+We can also use the `infer` workflow to compute the difference in sample proportions by excluding the `generate()` `r n_virtual_resample` bootstrap replicates step. In other words, do not generate replicates, but rather use only the original sample data. We can achieve this by commenting out the `generate()` line, telling R to ignore it:
 
 ```{r}
 obs_diff_in_props <- mythbusters_yawn %>% 
@@ -2024,7 +2024,7 @@ There is one value of particular interest that this 95% confidence interval cont
 
 In our case, since the 95% confidence interval includes 0, we cannot conclusively say if either proportion is larger. Of our `r n_virtual_resample` bootstrap resamples with replacement, sometimes $\widehat{p}_{seed}$ was higher and thus those exposed to yawning yawned themselves more often. At other times, the reverse happened. 
 
-Say, on the other hand, the 95% confidence interval was entirely above zero. This would suggest that $p_{seed} - p_{control} > 0$, or, in other words $p_{seed} > p_{control}$, and thus we'd have evidence suggesting those exposed to yawning do yawn more often. 
+Say, on the other hand, the 95% confidence interval was entirely above zero. This would suggest that $p_{seed} - p_{control} > 0$, or, in other words $p_{seed} > p_{control}$, and thus we'd have strong evidence suggesting those exposed to yawning do yawn more often. 
 
 <!--
 v2 TODO: Talk about randomized experiment nature of Mythbusters data
@@ -2192,7 +2192,7 @@ p_samp + p_boot + plot_layout(ncol = 1, heights = c(1, 1))
 
 There is a lot going on in Figure \@ref(fig:side-by-side), so let's break down all the comparisons slowly. First, observe how the sampling distribution on top is centered at $p$ = `r p_red`. This is because the sampling is done at random and in an unbiased fashion. So the estimates $\widehat{p}$ are centered at the true value of $p$. 
 
-However, this is not the case with the following bootstrap distribution. The bootstrap distribution is centered at 0.42, which is the proportion red of Ilyas and Yohan's `r n_balls_sample` sampled balls. This is because we are resampling from the same sample over and over again. Since the bootstrap distribution is centered at the original sample's proportion, it doesn't necessarily provide a better estimate of $p$ = `r p_red`. This leads us to our first lesson about bootstrapping:
+However, this is not the case with the bootstrap distribution. The bootstrap distribution is centered at 0.42, which is the proportion red of Ilyas and Yohan's `r n_balls_sample` sampled balls. This is because we are resampling from the same sample over and over again. Since the bootstrap distribution is centered at the original sample's proportion, it doesn't necessarily provide a better estimate of $p$ = `r p_red`. This leads us to our first lesson about bootstrapping:
 
 > The bootstrap distribution will likely not have the same center as the sampling distribution. In other words, bootstrapping cannot improve the quality of an estimate.
 
@@ -2225,7 +2225,7 @@ Thus, using the fact that the bootstrap distribution and sampling distributions 
 
 ## Theory-based confidence intervals {#theory-ci}
 
-So far in this chapter, we've constructed confidence intervals using two methods: the percentile method and the standard error method. Recall also from Subsection \@ref(se-method) that we can only use the standard-error method if the bootstrap distribution is bell-shaped (i.e., normally distributed). 
+So far in this chapter, we've constructed confidence intervals using two methods: the percentile method and the standard error method. Recall from Subsection \@ref(se-method) that we can only use the standard-error method if the bootstrap distribution is bell-shaped (i.e., normally distributed). 
 
 In a similar vein, if the sampling distribution is normally shaped, there is another method for constructing confidence intervals that does not involve using your computer. You can use a *theory-based method* involving mathematical formulas!
 
@@ -2299,11 +2299,11 @@ $$\text{MoE}_{\widehat{p}} = `r qnorm(0.975) %>% round(2)` \cdot \text{SE}_{\wid
     
     $$\widehat{p} \pm \text{MoE}_{\widehat{p}} = \widehat{p} \pm (`r qnorm(0.975) %>% round(2)` \cdot \text{SE}_{\widehat{p}}) = \widehat{p} \pm \left( `r qnorm(0.975) %>% round(2)` \cdot \sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}} \right)$$
 
-So going back to Yohan and Ilyas' sample of $n = `r n_balls_sample`$ balls that had `r obs_red` red balls, the 95% confidence interval for $p$ is 
+So going back to Yohan and Ilyas' sample of $n =$ `r n_balls_sample` balls that had `r obs_red` red balls, the 95% confidence interval for $p$ is 
 
 $$
 \begin{aligned}
-0.41 \pm `r qnorm(0.975) %>% round(2)` \cdot 0.0698 &= 0.41 \, \pm \, 0.137 \\ &= (0.41 - 0.137, \, 0.41 + 0.137) \\ &= (0.273, \, 0.547).
+0.42 \pm `r qnorm(0.975) %>% round(2)` \cdot 0.0698 &= 0.42 \, \pm \, 0.137 \\ &= (0.42 - 0.137, \, 0.42 + 0.137) \\ &= (0.283, \, 0.557).
 \end{aligned}
 $$
 
@@ -2390,7 +2390,7 @@ Observe that `r n_obs_friend_groups` of the `r n_friend_groups` confidence inter
 
 Theory-based methods like this have largely been used in the past because we didn't have the computing power to perform simulation-based methods such as bootstrapping. They are still commonly used, however, and if the sampling distribution is normally distributed, we have access to an alternative method for constructing confidence intervals as well as performing hypothesis tests as we will see in Chapter \@ref(hypothesis-testing).
 
-The kind of computer-based statistical inference we've seen so far has a particular name in the field of statistics: *simulation-based inference*. This is because we are performing statistical inference using computer simulations.\index{simulation-based inference} In our opinion, two large benefits of simulation-based methods over theory-based methods are that (1) they are easier for people new to statistical inference to understand and (2) they also work in situations where theory-based methods and mathematical formulas don't exist. 
+The kind of computer-based statistical inference we've used above has a particular name in the field of statistics: *simulation-based inference*. This is because we are performing statistical inference using computer simulations.\index{simulation-based inference} In our opinion, two large benefits of simulation-based methods over theory-based methods are that (1) they are easier for people new to statistical inference to understand and (2) they also work in situations where theory-based methods and mathematical formulas don't exist. 
 
 <!--
 v2 TODO: Consider adding:
@@ -2522,4 +2522,4 @@ If you want more examples of the `infer` workflow to construct confidence interv
 
 ### What's to come?
 
-Now that we've equipped ourselves with confidence intervals, in Chapter \@ref(hypothesis-testing) we'll cover the other common tool for statistical inference: hypothesis testing. Just like confidence intervals, hypothesis tests are used to infer about a population using a sample. However, we'll see that the framework for making such inferences is slightly different. 
+Now that we've equipped ourselves with confidence intervals, in Chapter \@ref(hypothesis-testing) we'll cover the other common tool for statistical inference: hypothesis testing. Just like confidence intervals, hypothesis tests are used to infer a quantity about a population using a sample. However, we'll see that the framework for making such inferences is slightly different. 

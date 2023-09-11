@@ -14,7 +14,7 @@ GreatTitMalaria
 
 ## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
-##   geom_bar() +
+##   geom_bar(position = position_fill()) +
 ##   labs(x = "Treatment")
 
 

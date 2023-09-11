@@ -25,7 +25,7 @@ options(scipen = 99) # , digits = 3)
 set.seed(76)
 ```
 
-Now that we've studied confidence intervals in Chapter \@ref(confidence-intervals), let's study another commonly used method for statistical inference: hypothesis testing. Hypothesis tests allow us to take a sample of data from a population and infer about the plausibility of competing hypotheses. For example, in the upcoming "clutch size" example in Section \@ref(ht-activity), you'll study the data collected from a study to investigate whether their was an association between egg production and a female's susceptibility to parasites. 
+Now that we've studied confidence intervals in Chapter \@ref(confidence-intervals), let's study another commonly used method for statistical inference: hypothesis testing. Hypothesis tests allow us to take a sample of data from a population and infer about the plausibility of competing hypotheses. For example, in the upcoming "clutch size" example in Section \@ref(ht-activity), you'll review a study that investigated whether their was an association between egg production and a female's susceptibility to parasites. 
 
 The good news is we've already covered many of the necessary concepts to understand hypothesis testing in Chapters \@ref(sampling) and \@ref(confidence-intervals). We will expand further on these ideas here and also provide a general framework for understanding hypothesis tests. By understanding this general framework, you'll be able to adapt it to many different scenarios.
 
@@ -101,7 +101,7 @@ Let's perform an exploratory data analysis of the relationship between the two c
 
 ```{r eval=FALSE}
 ggplot(GreatTitMalaria, aes(x = treatment, fill = response)) +
-  geom_bar() +
+  geom_bar(position = position_fill()) +
   labs(x = "Treatment")
 ```
 
@@ -173,7 +173,7 @@ The question is, however, does this provide *conclusive* evidence that there is 
 
 To run the simulations, we will work with the original `GreatTitMalaria` dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn't affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our `GreatTitMalaria` data frame, the `treatment` variable would thus be an irrelevant label for predicting malaria infection. If these `treatment` labels were irrelevant, then we could randomly reassign them by "shuffling" them to no consequence!
 
-To illustrate this idea, in Table \@ref(tab:compare-six) we narrow our focus to 6 arbitrarily chosen females of the `r total_birds` . The malaria column shows that 3 females were infected while 3 weren't. The `treatment` column shows the nest treatment, control or egg removal. 
+To illustrate this idea, in Table \@ref(tab:compare-six) we narrow our focus to 6 arbitrarily chosen females of the `r total_birds` . The malaria column shows that 3 females were infected while 3 weren't. The `treatment` column shows the nest treatment: control or egg removal. 
 
 However, in our hypothesized universe of no effect of egg removal, treatment is irrelevant and thus it is of no consequence to randomly "shuffle" the values of `treatment`. The `shuffled_treatment` column shows one such possible random shuffling. Observe in the last column how the number of females in the `Egg removal` group and the `Control` group  remains the same at 3 each, but they are now listed in a different order. 
 
@@ -505,7 +505,7 @@ denom <- nrow(shuffled_stats)
 p_val <- round((num + 1) / (denom + 1), 3)
 ```
 
-In this case, `r sum(shuffled_stats$stat <= observed_test_statistic)` times out of `r n_replicates`, we obtained a difference in proportion greater than or equal to the observed difference of `r observed_test_statistic` = `r observed_test_statistic*100`%. A very rare (in fact, not occurring) outcome! Given the rarity of such a pronounced difference in infection rates in our hypothesized universe of no treatment effect, we're inclined to *reject* \index{hypothesis testing!reject the null hypothesis} our hypothesized universe. Instead, we favor the hypothesis stating there is an effect of egg removal on susceptibility to malaria infection. In other words, we reject $H_0$ in favor of $H_A$.
+In this case, `r sum(shuffled_stats$stat >= observed_test_statistic)` times out of `r n_replicates`, we obtained a difference in proportion greater than or equal to the observed difference of `r observed_test_statistic` = `r observed_test_statistic*100`%. A very rare (in fact, not occurring) outcome! Given the rarity of such a pronounced difference in infection rates in our hypothesized universe of no treatment effect, we're inclined to *reject* \index{hypothesis testing!reject the null hypothesis} our hypothesized universe. Instead, we favor the hypothesis stating there is an effect of egg removal on susceptibility to malaria infection. In other words, we reject $H_0$ in favor of $H_A$.
 
 <!--
 v2 TODO: Including observed test stat in p-value computation
@@ -1599,10 +1599,10 @@ include_graphics("images/flowcharts/infer/ht_diagram_trimmed.png")
 We'll now move to the "Data modeling with moderndive" portion of this book in Chapters \@ref(regression) and \@ref(multiple-regression), where you'll leverage your data visualization and wrangling skills to model relationships between different variables in data frames. Then, you'll use your understanding of confidence intervals from Chapter \@ref(confidence-intervals) and hypothesis tests from this chapter, to explore inference for regression in Chapter \@ref(inference-for-regression).
 
 Onwards and upwards into Data Modeling as shown in Figure \@ref(fig:part3)!
-
+<!--
 (ref:flowchart-partii) *ModernDive for Life Scientists* flowchart - on to Part III!
-
-```{r part3, echo=FALSE, fig.cap="(ref:flowchart-partii)", fig.height=5.5, purl=FALSE}
+-->
+```{r part3, echo=FALSE, fig.cap="*ModernDive for Life Scientists* flowchart - on to Part III!", fig.height=5.5, purl=FALSE}
 include_graphics("images/flowcharts/flowchart/flowchart_ModDiveLifeSci_04.png")
 ```
 

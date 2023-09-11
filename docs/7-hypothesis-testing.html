@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-14" />
+<meta name="date" content="2023-09-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,11 +267,9 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="2.5.1" data-path="2-viz.html"><a href="2-viz.html#geomhistogram"><i class="fa fa-check"></i><b>2.5.1</b> Histograms via <code>geom_histogram</code></a></li>
 <li class="chapter" data-level="2.5.2" data-path="2-viz.html"><a href="2-viz.html#adjustbins"><i class="fa fa-check"></i><b>2.5.2</b> Adjusting the bins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.5.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a>
-<ul>
-<li class="chapter" data-level="2.6.1" data-path="2-viz.html"><a href="2-viz.html#summary-2"><i class="fa fa-check"></i><b>2.6.1</b> Summary</a></li>
-</ul></li>
+<li class="chapter" data-level="2.6" data-path="2-viz.html"><a href="2-viz.html#facets"><i class="fa fa-check"></i><b>2.6</b> Facets</a></li>
 <li class="chapter" data-level="2.7" data-path="2-viz.html"><a href="2-viz.html#boxplots"><i class="fa fa-check"></i><b>2.7</b> 5NG#4: Boxplots</a>
 <ul>
 <li class="chapter" data-level="2.7.1" data-path="2-viz.html"><a href="2-viz.html#geomboxplot"><i class="fa fa-check"></i><b>2.7.1</b> Boxplots via <code>geom_boxplot</code></a></li>
@@ -681,7 +679,7 @@ div.csl-indent {
 </html>
 <div id="hypothesis-testing" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Hypothesis Testing<a href="7-hypothesis-testing.html#hypothesis-testing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Now that we’ve studied confidence intervals in Chapter <a href="6-confidence-intervals.html#confidence-intervals">6</a>, let’s study another commonly used method for statistical inference: hypothesis testing. Hypothesis tests allow us to take a sample of data from a population and infer about the plausibility of competing hypotheses. For example, in the upcoming “clutch size” example in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a>, you’ll study the data collected from a study to investigate whether their was an association between egg production and a female’s susceptibility to parasites.</p>
+<p>Now that we’ve studied confidence intervals in Chapter <a href="6-confidence-intervals.html#confidence-intervals">6</a>, let’s study another commonly used method for statistical inference: hypothesis testing. Hypothesis tests allow us to take a sample of data from a population and infer about the plausibility of competing hypotheses. For example, in the upcoming “clutch size” example in Section <a href="7-hypothesis-testing.html#ht-activity">7.1</a>, you’ll review a study that investigated whether their was an association between egg production and a female’s susceptibility to parasites.</p>
 <p>The good news is we’ve already covered many of the necessary concepts to understand hypothesis testing in Chapters <a href="5-sampling.html#sampling">5</a> and <a href="6-confidence-intervals.html#confidence-intervals">6</a>. We will expand further on these ideas here and also provide a general framework for understanding hypothesis tests. By understanding this general framework, you’ll be able to adapt it to many different scenarios.</p>
 <p>The same can be said for confidence intervals. There was one general framework that applies to <em>all</em> confidence intervals and the <code>infer</code> package was designed around this framework. While the specifics may change slightly for different types of confidence intervals, the general framework stays the same.</p>
 <p>We believe that this approach is much better for long-term learning than focusing on specific details for specific confidence intervals using theory-based approaches. As you’ll now see, we prefer this general framework for hypothesis tests as well.</p>
@@ -790,7 +788,7 @@ methods.<br />
 65 Egg removal No Malaria</code></pre>
 <p>Let’s perform an exploratory data analysis of the relationship between the two categorical variables malaria and <code>treatment</code>. Recall that we saw in Subsection <a href="2-viz.html#two-categ-barplot">2.8.2</a> that one way we can visualize such a relationship is by using a stacked barplot.</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="7-hypothesis-testing.html#cb289-1" tabindex="-1"></a><span class="fu">ggplot</span>(GreatTitMalaria, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb289-2"><a href="7-hypothesis-testing.html#cb289-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb289-2"><a href="7-hypothesis-testing.html#cb289-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_fill</span>()) <span class="sc">+</span></span>
 <span id="cb289-3"><a href="7-hypothesis-testing.html#cb289-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Treatment&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:BirdMalaria-barplot"></span>
 <img src="ModernDive_files/figure-html/BirdMalaria-barplot-1.png" alt="Barplot relating bird treatment to malaria infection." width="\textwidth" />
@@ -817,7 +815,7 @@ FIGURE 7.2: Mosaic plot relating bird treatment to frequency of malaria infectio
 <div id="shuffling-once" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Shuffling once<a href="7-hypothesis-testing.html#shuffling-once" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To run the simulations, we will work with the original <code>GreatTitMalaria</code> dataset. To understand the probability of the observed results, first try to imagine a hypothetical universe where egg removal didn’t affect the likelihood of a malaria infection. In such a hypothetical universe, the nest status of a female bird would have no bearing on their chances of becoming infected by a parasite. Bringing things back to our <code>GreatTitMalaria</code> data frame, the <code>treatment</code> variable would thus be an irrelevant label for predicting malaria infection. If these <code>treatment</code> labels were irrelevant, then we could randomly reassign them by “shuffling” them to no consequence!</p>
-<p>To illustrate this idea, in Table <a href="7-hypothesis-testing.html#tab:compare-six">7.1</a> we narrow our focus to 6 arbitrarily chosen females of the 65 . The malaria column shows that 3 females were infected while 3 weren’t. The <code>treatment</code> column shows the nest treatment, control or egg removal.</p>
+<p>To illustrate this idea, in Table <a href="7-hypothesis-testing.html#tab:compare-six">7.1</a> we narrow our focus to 6 arbitrarily chosen females of the 65 . The malaria column shows that 3 females were infected while 3 weren’t. The <code>treatment</code> column shows the nest treatment: control or egg removal.</p>
 <p>However, in our hypothesized universe of no effect of egg removal, treatment is irrelevant and thus it is of no consequence to randomly “shuffle” the values of <code>treatment</code>. The <code>shuffled_treatment</code> column shows one such possible random shuffling. Observe in the last column how the number of females in the <code>Egg removal</code> group and the <code>Control</code> group remains the same at 3 each, but they are now listed in a different order.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -1115,7 +1113,7 @@ FIGURE 7.7: Null distribution and observed test statistic.
 </div>
 <p>Sixth, the <strong><span class="math inline">\(p\)</span>-value</strong> is the probability of obtaining a test statistic just as extreme or more extreme than the observed test statistic <em>assuming the null hypothesis <span class="math inline">\(H_0\)</span> is true</em>. Double ooof! Let’s unpack this slowly as well. You can think of the <span class="math inline">\(p\)</span>-value as a quantification of “surprise”: assuming <span class="math inline">\(H_0\)</span> is true, how surprised are we with what we observed? Or in our case, in our hypothesized universe of no effect of the egg removal treatment, how surprised are we that we observed a difference in infection rates of 0.3 from our collected samples assuming <span class="math inline">\(H_0\)</span> is true? Very surprised? Somewhat surprised?</p>
 <p>The <span class="math inline">\(p\)</span>-value quantifies this probability, or in the case of our 100 differences in sample proportions in Figure <a href="7-hypothesis-testing.html#fig:null-distribution-2">7.7</a>, what proportion had a more “extreme” result? Here, extreme is defined in terms of the alternative hypothesis <span class="math inline">\(H_A\)</span> that control birds are infected at a lower rate than experimental birds. In other words, how often was the infection rate of experimental birds <em>even more</em> pronounced than <span class="math inline">\(0.5 - 0.2 = 0.3 = 30\%\)</span>?</p>
-<p>In this case, 100 times out of 100, we obtained a difference in proportion greater than or equal to the observed difference of 0.3 = 30%. A very rare (in fact, not occurring) outcome! Given the rarity of such a pronounced difference in infection rates in our hypothesized universe of no treatment effect, we’re inclined to <em>reject</em> our hypothesized universe. Instead, we favor the hypothesis stating there is an effect of egg removal on susceptibility to malaria infection. In other words, we reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_A\)</span>.</p>
+<p>In this case, 0 times out of 100, we obtained a difference in proportion greater than or equal to the observed difference of 0.3 = 30%. A very rare (in fact, not occurring) outcome! Given the rarity of such a pronounced difference in infection rates in our hypothesized universe of no treatment effect, we’re inclined to <em>reject</em> our hypothesized universe. Instead, we favor the hypothesis stating there is an effect of egg removal on susceptibility to malaria infection. In other words, we reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_A\)</span>.</p>
 <!--
 v2 TODO: Including observed test stat in p-value computation
 
@@ -2029,12 +2027,14 @@ FIGURE 7.24: infer package workflow for hypothesis testing.
 </p>
 </div>
 <p>We’ll now move to the “Data modeling with moderndive” portion of this book in Chapters <a href="8-regression.html#regression">8</a> and <a href="10-multiple-regression.html#multiple-regression">10</a>, where you’ll leverage your data visualization and wrangling skills to model relationships between different variables in data frames. Then, you’ll use your understanding of confidence intervals from Chapter <a href="6-confidence-intervals.html#confidence-intervals">6</a> and hypothesis tests from this chapter, to explore inference for regression in Chapter <a href="9-inference-for-regression.html#inference-for-regression">9</a>.</p>
-<p>Onwards and upwards into Data Modeling as shown in Figure <a href="7-hypothesis-testing.html#fig:part3">7.25</a>!</p>
-<p><em>ModernDive for Life Scientists</em> flowchart - on to Part II! <em>ModernDive for Life Scientists</em> flowchart - on to Part III!</p>
+Onwards and upwards into Data Modeling as shown in Figure <a href="7-hypothesis-testing.html#fig:part3">7.25</a>!
+<!--
+<em>ModernDive for Life Scientists</em> flowchart - on to Part II! *ModernDive for Life Scientists* flowchart - on to Part III!
+-->
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:part3"></span>
-<img src="images/flowcharts/flowchart/flowchart_ModDiveLifeSci_04.png" alt="ModernDive for Life Scientists flowchart - on to Part II!" width="\textwidth" />
+<img src="images/flowcharts/flowchart/flowchart_ModDiveLifeSci_04.png" alt="*ModernDive for Life Scientists* flowchart - on to Part III!" width="\textwidth" />
 <p class="caption">
-FIGURE 7.25: <em>ModernDive for Life Scientists</em> flowchart - on to Part II!
+FIGURE 7.25: <em>ModernDive for Life Scientists</em> flowchart - on to Part III!
 </p>
 </div>
 

@@ -41,8 +41,7 @@ set.seed(76)
 Now that we are equipped with data visualization skills from Chapter \@ref(viz), data wrangling skills from Chapter \@ref(wrangling), and an understanding of how to import data and the concept of a "tidy" data format from Chapter \@ref(tidy), let's now proceed with data modeling.
 -->
 
-The fundamental premise of data modeling is to make explicit the relationship between an *response variable* $y$, also called a dependent variable or outcome variable, \index{variables!response / outcome / dependent} and
-* an *explanatory variable* $x$, also called an independent variable, predictor variable, or \index{variables!explanatory / predictor / independent} covariate. Another way to state this is using mathematical terminology: we will model the outcome variable $y$ "as a function" of the explanatory/predictor variable $x$. When we say "function" here, we are referring to a mathematical function (not functions in R like `ggplot()`). 
+The fundamental premise of *data modeling* is to make explicit the relationship between a *response variable* $y$ (also called a dependent variable or outcome variable) \index{variables!response / outcome / dependent} and an *explanatory variable* $x$ (also called an independent variable, predictor variable, or \index{variables!explanatory / predictor / independent} covariate). Another way to state this is using mathematical terminology: we will model the outcome variable $y$ "as a function" of the explanatory/predictor variable $x$. When we say "function" here, we are referring to a mathematical function (not functions in R like `ggplot()`). 
 
 While there exist many techniques for modeling, such as tree-based models and neural networks, in this book we'll focus on one particular technique: *linear regression*. \index{regression!linear} Linear regression is one of the most commonly-used and easy-to-understand approaches to modeling.
 
@@ -140,21 +139,19 @@ Researchers at the University of Minnesota tried to answer the following researc
 
 ### Exploratory data analysis {#model1EDA}
 
-The data on the `r n_lions` male lions can be found in the `LionNoses` data frame included in the `abd` package. Recall that a crucial step before doing any kind of analysis or modeling is performing an *exploratory data analysis*, \index{data analysis!exploratory} or EDA for short. EDA gives you a sense of the distributions of the individual variables in your data, whether any potential relationships exist between variables, whether there are outliers and/or missing values, and (most importantly) how to build your model. Here are three common steps in an EDA:
+The data on the `r n_lions` male lions can be found in the `LionNoses` data frame included in the `abd` package. Recall that a crucial step before doing any kind of analysis or modeling is performing an *exploratory data analysis*, \index{data analysis!exploratory} or EDA for short. EDA gives you a sense of the distributions of the individual variables in your data, whether any potential relationships exist between variables, whether there are outliers and/or missing values, and (most importantly) how to build your model. Let's review the three common steps in EDA:
 
-1. Most crucially, looking at the raw data values.
-1. Computing summary statistics, such as means, medians, and interquartile ranges.
-1. Creating data visualizations.
+1. Most crucially, look at the raw data values.
+1. Compute summary statistics (e.g., mean).
+1. Create data visualizations.
 
-Let's perform the first common step in an exploratory data analysis: looking at the raw data values. Because this step seems so trivial, unfortunately many data analysts ignore it. However, getting an early sense of what your raw data looks like can often prevent many larger issues down the road. 
-
-You can do this by using RStudio's spreadsheet viewer or by using the `glimpse()` function as introduced in Subsection \@ref(exploredataframes) on exploring data frames:
+Let's first look at the raw data values in the `LionNoses` data set using RStudio's spreadsheet viewer or by using the `glimpse()` function as introduced in Subsection \@ref(exploredataframes) on exploring data frames. Remember that getting an early sense of what your raw data looks like can often prevent larger issues down the road. 
 
 ```{r}
 glimpse(LionNoses)
 ```
 
-Let's fully describe the variables in `LionNoses`:
+We can see that there are two variables in `LionNoses`:
 
 1. `proportion.black`: A numerical variable of the relative coloration of the nose. This is the outcome variable $y$ of interest.
 1. `age`: A numerical variable of the male lion's age. This will be the explanatory variable $x$.
@@ -185,6 +182,27 @@ Now that we've looked at the raw values in our `LionNoses` data frame and got a 
 ```{r eval=FALSE}
 LionNoses %>% skim()
 ```
+```
+── Data Summary ────────────────────────
+                           Values    
+Name                       Piped data
+Number of rows             32        
+Number of columns          2         
+_______________________              
+Column type frequency:               
+  numeric                  2         
+________________________             
+Group variables            None      
+
+── Variable type: numeric ─────────────────────────────────────────────────────────────────────────────────────────
+  skim_variable    n_missing complete_rate  mean    sd  p0   p25   p50   p75
+1 age                      0             1 4.31  2.68  1.1 2.18  3.5   5.85
+2 proportion.black         0             1 0.322 0.199 0.1 0.165 0.265 0.432
+
+  p100 
+  13.1  
+  0.79 
+```
 <!--
 TODO: 
 Update skimr::skim() output to match v2.0.1
@@ -210,7 +228,7 @@ For the numerical variables `age` and `proportion.black` it returns:
 - `p100`: the 100th percentile: the value at which 100% of observations are smaller than it (the *maximum* value)
 -->
 
-Looking at this output, we can see how the values of both variables distribute. For example, the mean nose coloration was 0.322 black, whereas the mean age  was 4.31 years. Furthermore, the middle 50% of nose coloration was between 0.165 and 0.433 (the first and third quartiles), whereas the middle 50% of age falls within 2.18 to 5.85 years.
+Looking at this output, we can see how the values of both variables distribute. For example, the mean nose coloration was 0.322 black, whereas the mean age  was 4.31 years. Furthermore, the middle 50% of nose coloration was between 0.165 and 0.433 (the first and third quartiles, or IQR), whereas the middle 50% of age falls within 2.18 to 5.85 years.
 
 #### Correlation coefficient
 
@@ -264,7 +282,7 @@ if (is_latex_output()) {
 
 The correlation coefficient can be computed using the `get_correlation()` \index{moderndive!get\_correlation()} function in the `moderndive` package. In this case, the inputs to the function are the two numerical variables for which we want to calculate the correlation coefficient. 
 
-We put the name of the outcome variable on the left-hand side of the `~` "tilde" sign, while putting the name of the explanatory variable on the right-hand side. This is known as R's \index{R!formula notation} *formula notation*. We will use this same "formula" syntax with regression later in this chapter.
+We put the name of the outcome variable on the left-hand side of the `~` "tilde" sign, while putting the name of the explanatory variable on the right-hand side. This is known as R's \index{R!formula notation} *formula notation*, which we first saw in Subsection \@ref(infer-workflow). We will use this same "formula" syntax with regression later in this chapter.
 
 ```{r}
 LionNoses %>% 
@@ -414,7 +432,7 @@ First, we "fit" the linear regression model to the `data` using the `lm()` \inde
 
 * `y` is the outcome variable, followed by a tilde `~`. In our case, `y` is set to `proportion.black`.
 * `x` is the explanatory variable. In our case, `x` is set to `age`.
-* The combination of `y ~ x` is called a *model formula*. (Note the order of `y` and `x`.) In our case, the model formula is `proportion.black ~ age`. We saw such model formulas earlier when we computed the correlation coefficient using the `get_correlation()` function in Subsection \@ref(model1EDA).
+* Again, the combination of `y ~ x` is called a *model formula*. (Note the order of `y` and `x`.) In our case, the model formula is `proportion.black ~ age`. We saw such model formulas earlier in this chapter when we computed the correlation coefficient using the `get_correlation()` function in Subsection \@ref(model1EDA).
 * `data_frame_name` is the name of the data frame that contains the variables `y` and `x`. In our case, `data_frame_name` is the `LionNoses` data frame.
 
 Second, we take the saved model in `lion_model` and apply the `get_regression_table()` function from the `moderndive` package to it to obtain the regression table in Table \@ref(tab:regtable). This function is an example of what's known in computer programming as a *wrapper function*. \index{functions!wrapper} They take other pre-existing functions and "wrap" them into a single function that hides its inner workings.  This concept is illustrated in Figure \@ref(fig:moderndive-figure-wrapper).
@@ -497,7 +515,7 @@ best_fit_plot
 
 Now say we want to compute both the fitted value $\widehat{y} = b_0 + b_1 \cdot x$ and the residual $y - \widehat{y}$ for *all* `r n_lions` lions in the study. Recall that each lion corresponds to one of the `r n_lions` rows in the `LionNoses` data frame and also one of the `r n_lions` points in the regression plot in Figure \@ref(fig:numxplot4).
 
-We could repeat the previous calculations we performed by hand `r n_lions` times, but that would be tedious and time consuming. Instead, let's do this using a computer with the `get_regression_points()` function. Just like the `get_regression_table()` function, the `get_regression_points()` function is a "wrapper" function. However, this function returns a different output. Let's apply the `get_regression_points()` function to `lion_model`, which is where we saved our `lm()` model in the previous section. In Table \@ref(tab:regression-points-1) we present the results of only the 21st through 24th courses for brevity's sake.
+We could repeat the previous calculations we performed by hand `r n_lions` times, but that would be tedious and time consuming. Instead, let's do this using a computer with the `get_regression_points()` function. Just like the `get_regression_table()` function, the `get_regression_points()` function is a "wrapper" function. However, this function returns a different output. Let's apply the `get_regression_points()` function to `lion_model`, which is where we saved our `lm()` model in the previous section. In Table \@ref(tab:regression-points-1) we present the results for only the 21st through 24th lions for brevity's sake.
 
 ```{r, eval=FALSE}
 regression_points <- get_regression_points(lion_model)
@@ -539,7 +557,7 @@ Just as we did for the 21st lion in the `LionNoses` dataset (in the first row of
 * `proportion.black_hat` = `r proportion.black_hat_24` = `r evals_line[1]` + `r evals_line[2]` $\cdot$ `r age_24` is the fitted value $\widehat{y}$ on the regression line for this lion.
 * `residual` = `r residual_24` =  `r proportion.black_24` - `r proportion.black_hat_24` is the value of the residual for this lion. In other words, the model's fitted value was off by `r residual_24` for this lion.
 
-At this point, you can skip ahead if you like to Subsection \@ref(leastsquares) to learn about the processes behind what makes "best-fitting" regression lines. As a primer, a "best-fitting" line refers to the line that minimizes the *sum of squared residuals* out of all possible lines we can draw through the points. In Section \@ref(model2), we'll discuss another common scenario of having a categorical explanatory variable and a numerical outcome variable.
+At this point, you can skip ahead if you like to Subsection \@ref(leastsquares) to learn about the processes behind what makes "best-fitting" regression lines. As a primer, a "best-fitting" line refers to the line that minimizes the *sum of squared residuals* out of all possible lines we can draw through the points. In Section \@ref(model2), we'll discuss using linear regression with a numerical outcome variable and a *categorical* explanatory variable.
 
 ```{block, type="learncheck", purl=FALSE}
 \vspace{-0.15in}
@@ -580,10 +598,10 @@ year_end <- gapminder %>%
 
 To answer such questions, we'll use the `gapminder` data frame included in the `gapminder` \index{R packages!gapminder!gapminder data frame} package. This dataset has international development statistics such as life expectancy, GDP per capita, and population for `r n_countries` countries for 5-year intervals between `r year_start` and `r year_end`. Recall we visualized some of this data in Figure \@ref(fig:gapminder) in Subsection \@ref(gapminder) on the grammar of graphics.
 
-We'll use this data for basic regression again, but now using an explanatory variable $x$ that is categorical, as opposed to the numerical explanatory variable model we used in the previous Section \@ref(model1).
+We'll use this data for basic regression again, but now using an explanatory variable $x$ that is categorical, as opposed to the numerical explanatory variable model we used in the previous Section \@ref(model1). Specifically, we'll model the relationship between:
 
-1. A numerical outcome variable $y$ (a country's life expectancy) and
-1. A single categorical explanatory variable $x$ (the continent that the country is a part of).
+1. A country's life expectancy, a numerical outcome variable $y$, and
+1. The continent that the country is a part of, a categorical explanatory variable $x$.
 
 When the explanatory variable $x$ is categorical, the concept of a "best-fitting" regression line is a little different than the one we saw previously in Section \@ref(model1) where the explanatory variable $x$ was numerical. We'll study these differences shortly in Subsection \@ref(model2table), but first we conduct an exploratory data analysis.
 
@@ -618,7 +636,7 @@ Let's perform the first common step in an exploratory data analysis: looking at 
 glimpse(gapminder2007)
 ```
 
-Observe that ``Observations: `r gapminder2007_rows` `` indicates that there are `r gapminder2007_rows` rows/observations in `gapminder2007`, where each row corresponds to one country. In other words, the *observational unit* is an individual country. Furthermore, observe that the variable `continent` is of type `<fct>`, which stands for _factor_, which is R's way of encoding categorical variables.
+Observe that there are `r gapminder2007_rows` rows/observations in `gapminder2007`, where each row corresponds to one country. In other words, the *observational unit* is an individual country. Furthermore, observe that the variable `continent` is of type `<fct>`, which stands for _factor_, which is R's way of encoding categorical variables.
 
 A full description of all the variables included in `gapminder` can be found by reading the associated help file (run `?gapminder` in the console). However, let's fully describe only the `r ncol(gapminder2007)` variables we selected in `gapminder2007`:
 
@@ -660,9 +678,12 @@ Skim summary statistics
  n variables: 2 
 
 ── Variable type:factor
-  variable missing complete   n n_unique                         top_counts ordered
- continent       0      142 142        5 Afr: 52, Asi: 33, Eur: 30, Ame: 25   FALSE
+  variable missing complete   n n_unique                         top_counts
+ continent       0      142 142        5 Afr: 52, Asi: 33, Eur: 30, Ame: 25
 
+ ordered
+   FALSE
+   
 ── Variable type:numeric
  variable missing complete   n  mean    sd    p0   p25   p50   p75 p100
   lifeExp       0      142 142 67.01 12.07 39.61 57.16 71.94 76.41 82.6
@@ -671,8 +692,8 @@ Skim summary statistics
 The `skim()` output now reports summaries for categorical variables (`Variable type:factor`) separately from the numerical variables (`Variable type:numeric`). For the categorical variable `continent`, it reports:
 
 - `missing`, `complete`, and `n`,  which are the number of missing, complete, and total number of values as before, respectively.
-- `n_unique`: The number of unique levels to this variable, corresponding to Africa, Asia, Americas, Europe, and Oceania. This refers to how many countries are in the data for each continent.
-- `top_counts`: In this case, the top four counts: `Africa` has 52 countries, `Asia` has 33, `Europe` has 30, and `Americas` has 25. Not displayed is `Oceania` with 2 countries.
+- `n_unique`: The number of unique levels to this variable, corresponding to Africa, Asia, Americas, Europe, and Oceania. 
+- `top_counts`: This refers to how many countries are in the data for each continent. In this case, the top four counts: `Africa` has 52 countries, `Asia` has 33, `Europe` has 30, and `Americas` has 25. Not displayed is `Oceania` with 2 countries.
 - `ordered`: This tells us whether the categorical variable is "ordinal": whether there is an encoded hierarchy (like low, medium, high). In this case, `continent` is not ordered.
 
 ```{r, echo=FALSE, purl=FALSE}
@@ -843,7 +864,7 @@ gapminder2007 %>%
 
 In Subsection \@ref(model1table) we introduced simple linear regression, which involves modeling the relationship between a numerical outcome variable $y$ and a numerical explanatory variable $x$. In our life expectancy example, we now instead have a categorical explanatory variable `continent`. Our model will not yield a "best-fitting" regression line like in Figure \@ref(fig:numxplot3), but rather *offsets* relative to a baseline for comparison.\index{offset}
 
-As we did in Subsection \@ref(model1table) when studying the relationship between black proportion of life noses and age, let's output the regression table for this model. Recall that this is done in two steps:
+As we did in Subsection \@ref(model1table) when studying the relationship between black proportion of lion noses and age, let's output the regression table for this model. Recall that this is done in two steps:
 
 1. We first "fit" the linear regression model using the `lm(y ~ x, data)` function and save it in `lifeExp_model`.
 1. We get the regression table by applying the `get_regression_table()` function from the `moderndive` package to `lifeExp_model`.
@@ -1067,16 +1088,16 @@ To study the relationship between Y and X, we could use a regression model where
 
 * Z is a *confounding* variable \index{variables!confounding} that affects both X and Y, thereby "confounding" their relationship. Here the confounding variable is alcohol.
 
-Alcohol will cause people to be both more likely to sleep with their shoes on as well as be more likely to wake up with a headache. Thus any regression model of the relationship between X and Y should also use Z as an explanatory variable. In other words, our doctor needs to take into account who had been drinking the night before. In the next chapter, we'll start covering multiple regression models that allow us to incorporate more than one variable in our regression models.
+Alcohol will cause people to be both more likely to sleep with their shoes on as well as be more likely to wake up with a headache. Thus any regression model of the relationship between X and Y should also use Z as an explanatory variable. In other words, our doctor needs to take into account who had been drinking the night before. In a later chapter, we'll start covering multiple regression models that allow us to incorporate more than one variable in our regression models.
 
-Establishing causation is a tricky problem and frequently takes either carefully designed experiments or methods to control for the effects of confounding variables. Both these approaches attempt, as best they can, either to take all possible confounding variables into account or negate their impact. This allows researchers to focus only on the relationship of interest: the relationship between the outcome variable Y and the treatment variable X.
+Establishing causation is a tricky problem and frequently requires either methods to control for the effects of confounding variables or carefully designed experiments. Both these approaches attempt, as best they can, either to take all possible confounding variables into account or negate their impact. This allows researchers to focus only on the relationship of interest: the relationship between the outcome variable Y and the treatment variable X.
 
 As you read news stories, be careful not to fall into the trap of thinking that correlation necessarily implies causation.  Check out the [Spurious Correlations](http://www.tylervigen.com/spurious-correlations) website for some rather comical examples of variables that are correlated, but are definitely not causally related.
 
 
 ### Best-fitting line {#leastsquares}
 
-Regression lines are also known as "best-fitting" lines. But what do we mean by "best"? Let's unpack the criteria that is used in regression to determine "best." Recall Figure \@ref(fig:numxplot4), where for an lion with an age of $x = 5.8$ years we mark the *observed value* $y$ with a circle, the *fitted value* $\widehat{y}$ with a square, and the *residual* $y - \widehat{y}$ with an arrow. We re-display Figure \@ref(fig:numxplot4) in the top-left plot of Figure \@ref(fig:best-fitting-line) in addition to three more arbitrarily chosen course lions:
+Regression lines are also known as "best-fitting" lines. But what do we mean by "best"? Let's unpack the criteria that is used in regression to determine "best." Recall Figure \@ref(fig:numxplot4), where for a lion with an age of $x = 5.8$ years we mark the *observed value* $y$ with a circle, the *fitted value* $\widehat{y}$ with a square, and the *residual* $y - \widehat{y}$ with an arrow. We re-display Figure \@ref(fig:numxplot4) in the top-left plot of Figure \@ref(fig:best-fitting-line) in addition to three more arbitrarily chosen lions:
 
 ```{r best-fitting-line, fig.height=5.5, echo=FALSE, fig.cap="Example of observed value, fitted value, and residual.", purl=FALSE, message=FALSE}
 # First residual

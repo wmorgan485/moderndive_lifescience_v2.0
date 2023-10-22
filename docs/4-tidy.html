@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-25" />
+<meta name="date" content="2023-10-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1056,7 +1056,7 @@ FIGURE 4.3: Comparing alcohol consumption in 4 countries using geom_col().
 </p>
 </div>
 <p><strong>(LC4.3)</strong> Take a look again at the <code>blackbird</code> data frame that you previously imported in Subsection <a href="1-getting-started.html#using-the-console">1.5.1</a>. Run the following:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="4-tidy.html#cb122-1" tabindex="-1"></a>blackbird <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv&quot;</span>)</span>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="4-tidy.html#cb122-1" tabindex="-1"></a>blackbird <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv&quot;</span>)</span>
 <span id="cb122-2"><a href="4-tidy.html#cb122-2" tabindex="-1"></a>blackbird</span></code></pre></div>
 <p>As mentioned earlier, <code>blackbird</code> is a data frame containing information that compares the immunocompetence of red-winged blackbirds before and after testosterone implants. For simplicity, let’s remove the last two columns, which are the log-transformed values of the data in the previous two columns:</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="4-tidy.html#cb123-1" tabindex="-1"></a>blackbird_smaller <span class="ot">&lt;-</span> blackbird <span class="sc">%&gt;%</span> </span>

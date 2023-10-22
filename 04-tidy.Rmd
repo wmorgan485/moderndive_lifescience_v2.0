@@ -335,7 +335,7 @@ You can also view examples of both `pivot_longer()` and `pivot_wider()` on the [
 **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`** Take a look again at the `blackbird` data frame that you previously imported in Subsection \@ref(using-the-console). Run the following:
 
 ```{r, eval=FALSE, purl=FALSE}
-blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+blackbird <- read_csv("https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv")
 blackbird
 ```
 

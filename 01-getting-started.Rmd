@@ -502,11 +502,11 @@ We'll cover two methods for importing `.csv` and `.xlsx` spreadsheet data in R: 
 First, let's import a Comma Separated Values `.csv` file that exists on the internet. The `.csv` file `chap12e2BlackbirdTestosterone.csv` compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in  Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175.	Let's use the `read_csv()` function from the `readr` \index{R packages!readr!read\_csv()} [@R-readr] package to read the dataset from the *Analysis of Biological Data* textbook website, import it into R, and save it in a data frame called `blackbird`. 
 
 ```{r message=FALSE, eval=FALSE}
-blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+blackbird <- read_csv("https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv")
 ```
 
 ```{r message=FALSE, echo=FALSE, purl=FALSE}
-blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+blackbird <- read_csv("https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv")
 blackbird
 ```
 
@@ -517,7 +517,7 @@ Note that the `read_csv()` function included in the `readr` package is different
 
 ### Using RStudio's interface
 
-Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by following to <a href="https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv">this link</a>, then...
+Let's read in the exact same data, but this time from a file saved on your computer. Furthermore, we'll do this using RStudio's graphical interface instead of running `read_csv()` in the console. First, download the  file `chap12e2BlackbirdTestosterone.csv` by following <a href="https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv">this link</a>, then...
 
 1. Go to the Files pane of RStudio.
 2. Navigate to the directory (i.e., folder on your computer) where the downloaded `chap12e2BlackbirdTestosterone.csv` file is saved. For example, this might be in your Downloads folder.

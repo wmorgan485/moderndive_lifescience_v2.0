@@ -23,7 +23,7 @@
 <meta name="author" content="Chester Ismay and Albert Y. Kim   Foreword by Kelly S. McConville   Adapted by William R. Morgan" />
 
 
-<meta name="date" content="2023-08-15" />
+<meta name="date" content="2023-10-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1068,7 +1068,7 @@ $ danger       &lt;int&gt; 3, 3, 1, 3, 4, 4, 1, 4, 1, 1, 4, 5, 2, 5, 1, 2, 2, 2,
 <div id="using-the-console" class="section level3 hasAnchor" number="1.5.1">
 <h3><span class="header-section-number">1.5.1</span> Using the console<a href="1-getting-started.html#using-the-console" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s import a Comma Separated Values <code>.csv</code> file that exists on the internet. The <code>.csv</code> file <code>chap12e2BlackbirdTestosterone.csv</code> compares the humoral immunocompetence, measured as secondary antibody production to a protein antigen, of red-winged blackbirds before and after testosterone implants, as described in Hasselquist, D., J. A. Marsh, P. W. Sherman, and J. C. Wingfield. 1999. Behavioral Ecology and Sociobiology 45: 167–175. Let’s use the <code>read_csv()</code> function from the <code>readr</code> <span class="citation">(<a href="#ref-R-readr">Wickham, Hester, and Bryan 2023</a>)</span> package to read the dataset from the <em>Analysis of Biological Data</em> textbook website, import it into R, and save it in a data frame called <code>blackbird</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="1-getting-started.html#cb11-1" tabindex="-1"></a>blackbird <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="1-getting-started.html#cb11-1" tabindex="-1"></a>blackbird <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 13 × 5
    blackbird beforeImplant afterImplant logBeforeImplant logAfterImplant
        &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
@@ -1090,7 +1090,7 @@ $ danger       &lt;int&gt; 3, 3, 1, 3, 4, 4, 1, 4, 1, 1, 4, 5, 2, 5, 1, 2, 2, 2,
 </div>
 <div id="using-rstudios-interface" class="section level3 hasAnchor" number="1.5.2">
 <h3><span class="header-section-number">1.5.2</span> Using RStudio’s interface<a href="1-getting-started.html#using-rstudios-interface" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let’s read in the exact same data, but this time from a file saved on your computer. Furthermore, we’ll do this using RStudio’s graphical interface instead of running <code>read_csv()</code> in the console. First, download the file <code>chap12e2BlackbirdTestosterone.csv</code> by following to <a href="https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv">this link</a>, then…</p>
+<p>Let’s read in the exact same data, but this time from a file saved on your computer. Furthermore, we’ll do this using RStudio’s graphical interface instead of running <code>read_csv()</code> in the console. First, download the file <code>chap12e2BlackbirdTestosterone.csv</code> by following <a href="https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv">this link</a>, then…</p>
 <ol style="list-style-type: decimal">
 <li>Go to the Files pane of RStudio.</li>
 <li>Navigate to the directory (i.e., folder on your computer) where the downloaded <code>chap12e2BlackbirdTestosterone.csv</code> file is saved. For example, this might be in your Downloads folder.</li>
@@ -1118,7 +1118,7 @@ FIGURE 1.6: Importing an Excel file to R.
 -->
 <p>If you are new to the world of coding, R, and RStudio and feel you could benefit from a more detailed introduction, we suggest you check out the short book, <a href="https://rbasics.netlify.app/"><em>Getting Used to R, RStudio, and R Markdown</em></a> <span class="citation">(<a href="#ref-usedtor2016">Ismay and Kennedy 2016</a>)</span>. It includes screencast recordings that you can follow along and pause as you learn. This book also contains an introduction to R Markdown, a tool used for reproducible research in R.</p>
 
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-28"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-29"></span>
 <img src="images/copyright/getting-used-to-R.png" alt="Preview of Getting Used to R, RStudio, and R Markdown." width="\textwidth" />
 <p class="caption">
 FIGURE 1.7: Preview of <em>Getting Used to R, RStudio, and R Markdown</em>.

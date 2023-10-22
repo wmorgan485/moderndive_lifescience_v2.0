@@ -72,7 +72,7 @@ library(patchwork)
 
 ## Regression refresher
 
-Before jumping into inference for regression, let's remind ourselves of the study to estimate lion ages based on nose coloration in Section \@ref(model1). 
+Before jumping into inference for regression, let's remind ourselves of the study to estimate nose coloration based on  lion ages in Section \@ref(model1). 
 
 
 ### Lion age and nose coloration
@@ -274,7 +274,7 @@ In Section \@ref(infer-regression), we'll perform a simulation using the `infer`
 
 ### Test statistic {#regression-test-statistic}
 
-The fourth column of the regression table in Table \@ref(tab:regtable-11) `statistic` corresponds to a *test statistic* relating to the following *hypothesis test*:
+The fourth column of the regression table in Table \@ref(tab:regtable-11), `statistic`, corresponds to a *test statistic* relating to the following *hypothesis test*:
 
 $$
 \begin{aligned}
@@ -589,7 +589,7 @@ In this section, we'll use the simulation-based methods you previously learned i
 We'll construct a 95% confidence interval for $\beta_1$ using the `infer` workflow outlined in Subsection \@ref(infer-workflow). Specifically, we'll first construct the bootstrap distribution for the fitted slope $b_1$ using our single sample of `r n_Lions` lions: 
 
 1. `specify()` the variables of interest in `LionNoses` with the formula: `proportion.black ~ age`.
-1. `generate()` replicates by using `bootstrap` resampling with replacement from the original sample of `r n_Lions` lions We generate ``reps = `r n_reps` `` replicates using `type = "bootstrap"`.
+1. `generate()` replicates by using `bootstrap` resampling with replacement from the original sample of `r n_Lions` lions. We generate ``reps = `r n_reps` `` replicates using `type = "bootstrap"`.
 1. `calculate()` the summary statistic of interest: the fitted `slope` $b_1$.
 
 Using this bootstrap distribution, we'll construct the 95% confidence interval using the percentile method and (if appropriate) the standard error method as well. It is important to note in this case that the bootstrapping with replacement is done *row-by-row*. Thus, the original pairs of `proportion.black` and `age` values are always kept together, but different pairs of `proportion.black` and `age` values may be resampled multiple times. The resulting confidence interval will denote a range of plausible values for the unknown population slope $\beta_1$ quantifying the relationship between black nose proportions and lion ages for *all* lions in this wild population.

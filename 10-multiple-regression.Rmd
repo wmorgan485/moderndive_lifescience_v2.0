@@ -149,9 +149,9 @@ ToothGrowth %>%
   )
 ```
 
-Now that we've looked at the raw values in our `ToothGrowth` data frame and got a sense of the data, let's compute summary statistics. As we did in our exploratory data analyses in Sections \@ref(model1EDA) and  \@ref(model2EDA) from the previous chapter, let's use the `skim()` function from the `skimr` package:\index{R packages!skimr!skim()}
+Now that we've looked at the raw values in our `ToothGrowth` data frame and got a sense of the data, let's compute summary statistics. As we did in our exploratory data analyses in Sections \@ref(model1EDA) and  \@ref(model2EDA), let's use the `skim()` function from the `skimr` package:\index{R packages!skimr!skim()}
 
-```{r, eval =FALSE}
+```{r, eval = TRUE}
 ToothGrowth %>% skim()
 ```
 
@@ -173,7 +173,7 @@ ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-```{r numxcatxplot1, echo=FALSE, fig.cap="Colored scatterplot of relationship of teaching and beauty scores.", fig.height=3.2, purl=FALSE, message=FALSE}
+```{r numxcatxplot1, echo=FALSE, fig.cap="Colored scatterplot of relationship of tooth length and dose.", fig.height=3.2, purl=FALSE, message=FALSE}
 if (is_html_output()) {
   ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
     geom_point() +
@@ -364,7 +364,7 @@ which is the equation of the `r if_else(is_latex_output(), "darker-colored", "re
 $$
 \begin{aligned}
 \widehat{y} = \widehat{\text{len}} &= `r intercept_OJ` + `r slope_OJ` \cdot \text{dose} - `r -1*offset_VC` + `r offset_slope_interaction` \cdot \text{dose}\\
-&= (`r intercept_OJ` - `r -1*offset_VC`) + (`slope_OJ` + `r offset_slope_interaction`) * \text{dose}\\
+&= (`r intercept_OJ` - `r -1*offset_VC`) + (r slope_OJ` + `r offset_slope_interaction`) * \text{dose}\\
 &= `r intercept_VC` + `r slope_VC` \cdot \text{dose}\\
 \end{aligned}
 $$
@@ -623,7 +623,7 @@ It turns out that the first five orange juice recipients received 0.5 mg/day of 
 
 ## Two categorical explanatory variables {#model3}
 
-Let's now switch gears and consider multiple regression models where instead of one numerical and one categorical explanatory variable, we now have two categorical explanatory variables. The dataset we'll use is from [*Analysis of Biological Data*] by Whitlock and Schluter. Its accompanying `abd` R package contains the `IntertidalAlgae` dataset that we'll use next.
+Let's now switch gears and consider multiple regression models where instead of one numerical and one categorical explanatory variable, we now have two categorical explanatory variables. The dataset we'll use is from *Analysis of Biological Data* by Whitlock and Schluter. Its accompanying `abd` R package contains the `IntertidalAlgae` dataset that we'll use next.
 
 This dataset is from a study looking at the effect of herbivores and height above low tide, and the interaction between these factors, on abundance of a red intertidal alga. 
 
@@ -631,8 +631,8 @@ In this section, we'll fit a regression model where we have
 
 1. A numerical outcome variable $y$, sqrt.area, the square root of the area (in cm^2^) covered by red algae at the experiment's end, and
 1. Two explanatory variables:
-    1. One categorical explanatory variable $x_1$, herbivores, absence or presence of herbivores
-    1. Another categorical explanatory variable $x_2$, height, the height of the experimental plot relative to the tide levels.
+    1. A categorical explanatory variable $x_1$, herbivores, referring to the absence or presence of herbivores.
+    1. Another categorical explanatory variable $x_2$, height, referring to the height of the experimental plot relative to the tide levels.
 
 
 ### Exploratory data analysis {#model3EDA}
@@ -670,7 +670,7 @@ IntertidalAlgae %>%
 
 Now that we've looked at the raw values in our `IntertidalAlgae` data frame and got a sense of the data, let's move on to the next common step in an exploratory data analysis: computing summary statistics. Let's use the `skim()` function from the `skimr` package:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 IntertidalAlgae %>% skim()
 ```
 
@@ -715,7 +715,7 @@ model3_height_area_plot <- ggplot(IntertidalAlgae, aes(x = height, y = sqrt.area
 model3_herbivores_area_plot + model3_height_area_plot
 ```
 
-It seems that the herbivore treatment, but not tidal location, has some effect on its own on red algae coverage. With respect to herbivore treatment, the median of $y$ is almost double in the presence of herbivores (`plus`) as compared to the absence (`minus`). With respect to height above low tide, the median of $y$ is nearly the same in the low tide group as in the mid tide group. 
+It seems that the herbivore treatment, but not tidal location, has some effect on its own on red algae coverage. With respect to herbivore treatment, the median of $y$ is almost half in the presence of herbivores (`plus`) as compared to the absence (`minus`). With respect to height above low tide, the median of $y$ is nearly the same in the low tide group as in the mid tide group. 
 
 However, the two plots in Figure \@ref(fig:2numxplot1b) only focus on the relationship of the outcome variable with each of the two explanatory variables *separately*. To visualize the *joint* relationship of all three variables simultaneously, let's make just a scatterplot and indicate the other explanatory variable by color. Each of the `r n_IntertidalAlgae` observations in the `IntertidalAlgae` data frame are marked with a point where
 
@@ -788,7 +788,7 @@ get_regression_table(area_model1) %>%
 1. We first "fit" the linear regression model using the `lm(y ~ x1 * x2, data)` function and save it in `area_model1`.
 1. We get the regression table by applying the `get_regression_table()` function from the `moderndive` package to `area_model1`.
 
-Let's interpret the three values in the `estimate` column. First, the `intercept` value is 32.9, and this will be our base value in comparison to other groups. This `intercept` represents the mean `sqrt.area` for a plot who has `herbivores` absent and `height` of low tide, and this corresponds to where the red line (`low`) intersects $x$ = `minus`.
+Let's interpret the values in the `estimate` column. First, the `intercept` value is 32.9, and this will be our base value in comparison to other groups. This `intercept` represents the mean `sqrt.area` for a plot who has `herbivores` absent and `height` of low tide, and this corresponds to where the red line (`low`) intersects $x$ = `minus`.
 
 Second, the `herbivoresplus` value is -22.5. Taking into account all the other explanatory variables in our model, the addition of `herbivores`has an associated decrease on average of 22.5 in sqrt.area. <!--Just as we did in Subsection \@ref(model1table), we are cautious *not* to imply causality as we saw in Subsection \@ref(correlation-is-not-causation) that "correlation is not necessarily causation." We do this merely stating there was an *associated* increase. --> We preface our interpretation with the statement, "taking into account all the other explanatory variables in our model."  Here, by all other explanatory variables we mean `height` and the interaction between `height` and `herbivores`. We do this to emphasize that we are now jointly interpreting the associated effect of multiple explanatory variables in the same model at the same time. 
 
@@ -917,9 +917,9 @@ regression_points %>%
   )
 ```
 
-###Which model, without or with interaction, fits the data better?
+### Which model, without or with interaction, fits the data better?
 
-Here we compare the mean of the observed $y$ values (Obs) of each of the four groups with their mean fitted $\widehat{y}$ values for the interaction (Int)  and non-interaction (Non) models:
+Above, in Subsection \@ref(model3table), we fit an interaction linear model to the `IntertidalAlgae` data and in `r paste0("LC", chap, ".", lc)`, you fit a non-interaction linear model. To see which linear model better fits the data, let's compare the mean of the observed $y$ values (Obs) of each of the four groups with their fitted $\widehat{y}$ values for the interaction (Int)  and non-interaction (Non) models. Recall that for a linear model, the observed $y$ values for a given value of $x$ are expected to have a normal distribution centered at the mean or fitted $\widehat{y}$ value.
 
 ```{r, eval=FALSE}
 area_model2 <- lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)
@@ -933,7 +933,7 @@ means_Non <- get_regression_points(area_model2) %>%
 means_table <- means_Obs %>% inner_join(means_Int) %>% inner_join(means_Non)
 means_table
 ```
-```{r model3-means-table, echo=FALSE, purl=FALSE}
+```{r model3-means-table, message=FALSE, echo=FALSE, purl=FALSE}
 area_model2 <- lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)
 means_Obs <- IntertidalAlgae %>% group_by(herbivores, height) %>% summarise(mean_Obs=mean(sqrt.area))
 means_Int <- get_regression_points(area_model1) %>% 
@@ -982,14 +982,16 @@ NonPlot <- IntertidalAlgae %>%
 IntPlot + NonPlot
 ```
 
-
+In both cases examined in this chapter (`ToothGrowth` and `IntertidalAlgae`), the interaction model fit the data much better than the non-interaction (parallel slopes) model. You may be wondering if that is always the case, and if so, why do we bother fitting a non-interaction model if its fit is consistently inferior. In the next section, we'll see that there may be circumstances when it may be more appropriate to use the non-interaction model instead of the interaction model.
 
 
 ## Related topics {#mult-reg-related-topics}
 
 ### Model selection using visualizations {#model-selection}
 
-When should we use an interaction model versus a parallel slopes (non-interaction) model? Recall in Sections \@ref(model4interactiontable) and \@ref(model4table) we fit both interaction and parallel slopes models for the outcome variable $y$ (tooth length) using a numerical explanatory variable $x_1$ (dose) and a categorical explanatory variable $x_2$ (supplement type). We compared these models in Figure \@ref(fig:numxcatx-comparison), which we display again now. 
+When would we ever use a parallel slopes (non-interaction) model versus an interaction  model? The answer lies in a philosophical principle known as "Occam's Razor." It states that, "all other things being equal, simpler solutions are more likely to be correct than complex ones." When viewed in a modeling framework, Occam's Razor \index{Occam's Razor} can be restated as, "all other things being equal, simpler models are to be preferred over complex ones." In other words, we should only favor the more complex model if the additional complexity is *warranted*. 
+
+Let's apply this principle to our earlier analysis. Recall that in Sections \@ref(model4interactiontable) and \@ref(model4table) we fit both interaction and parallel slopes models for the outcome variable $y$ (tooth length) using a numerical explanatory variable $x_1$ (dose) and a categorical explanatory variable $x_2$ (supplement type). We compared these models in Figure \@ref(fig:numxcatx-comparison), which we display again now. 
 
 ```{r recall-parallel-vs-interaction, fig.height=3.5, echo=FALSE, fig.cap="Previously seen comparison of interaction and parallel slopes models.", purl=FALSE, message=FALSE}
 if (is_html_output()) {
@@ -1003,11 +1005,7 @@ if (is_html_output()) {
 }
 ```
 
-A lot of you might have asked yourselves: "Why would I force the lines to have parallel slopes (as seen in the right-hand plot) when they clearly have different slopes (as seen in the left-hand plot)?".
-
-The answer lies in a philosophical principle known as "Occam's Razor." It states that, "all other things being equal, simpler solutions are more likely to be correct than complex ones." When viewed in a modeling framework, Occam's Razor \index{Occam's Razor} can be restated as, "all other things being equal, simpler models are to be preferred over complex ones." In other words, we should only favor the more complex model if the additional complexity is *warranted*. 
-
-Let's revisit the equations for the regression line for both the interaction and parallel slopes model:
+You may have asked yourselves at this point, "Why would I force the lines to have parallel slopes (as seen in the right-hand plot) when they clearly have different slopes (as seen in the left-hand plot)?". With regards to "Occam's Razor", recall that the equation for the regression line of the interaction model is "more complex" in that there is an additional $b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}$ interaction term not present in the equation for the parallel slopes model.:
 
 $$
 \begin{aligned}
@@ -1017,10 +1015,10 @@ $$
 \end{aligned}
 $$
 
-The interaction model is "more complex" in that there is an additional $b_{\text{dose,VC}} \cdot \text{dose} \cdot \mathbb{1}_{\text{is VC}}$ interaction term in the equation not present for the parallel slopes model. Or viewed alternatively, the regression table for the interaction model in Table \@ref(tab:regtable-interaction) has *four* rows, whereas the regression table for the parallel slopes model in Table \@ref(tab:regtable-parallel-slopes) has *three* rows. The question becomes: "Is this additional complexity warranted?". In this case, it can be argued that this additional complexity is warranted, as evidenced by the two converging regression lines in the left-hand plot of Figure \@ref(fig:recall-parallel-vs-interaction).
+Or viewed alternatively, the regression table for the interaction model in Table \@ref(tab:regtable-interaction) has *four* rows, whereas the regression table for the parallel slopes model in Table \@ref(tab:regtable-parallel-slopes) has *three* rows. The question becomes: "Is this additional complexity warranted?". In this case, it can be argued that this additional complexity is warranted, as evidenced by the two converging regression lines in the left-hand plot of Figure \@ref(fig:recall-parallel-vs-interaction).
 
 
-However, let's consider an example where the additional complexity might *not* be warranted. Let's consider the `MoleRats` data included in the `moderndive` package which contains data on energy expenditure in two castes of  mole rats. For more details, read the help file for this data by running `?MoleRats` in the console.
+However, we next consider an example where the additional complexity might *not* be warranted. The `MoleRats` dataset included in the `moderndive` package contains data on energy expenditure in two castes of  mole rats. For more details, read the help file for this data by running `?MoleRats` in the console.
 
 Let's model the numerical outcome variable $y$, `ln.energy`, log-transformed energy expenditure for a given mole rat, as a function of two explanatory variables:
 
@@ -1122,28 +1120,28 @@ get_regression_table(model_2_parallel_slopes) %>%
 
 Observe how the regression table for the interaction model has 1 more rows (4 versus 3). This reflects the additional "complexity" of the interaction model over the parallel slopes model. 
 
-Furthermore, note in Table \@ref(tab:model2-interaction) how the *offsets for the slope* `ln.mass::casteworker` being 0.419 is small relative to the *slope for the baseline group* of lazy caste of $1.294$. In other words, both slopes are similarly positive: $1.294$ for the lazy caste and $1.713$ $(=1.294 + 0.419)$ for the worker caste. These results are suggesting that irrespective of caste, the relationship between mass and energy expenditure is similar and, alas, quite positive.
+Furthermore, note in Table \@ref(tab:model2-interaction) how the *offsets for the slope* `ln.mass::casteworker` being 0.419 is comparable to the standard error of $0.415$. Most importantly, the 95% confidence interval includes zero (0) meaning that it's quite plausible that the slope of the two regression lines do not differ.  These results are suggesting then that irrespective of caste, the relationship between mass and energy expenditure is not significantly different, as indicated by the p-value of $0.321$.
 
-What you have just performed is a rudimentary *model selection*\index{model selection}: choosing which model fits data best among a set of candidate models. The model selection we performed used the "eyeball test": qualitatively looking at visualizations to choose a model. In the next subsection, you'll once again perform the same model selection, but this time using a numerical approach via the $R^2$ (pronounced "R-squared") value. 
+What you have just performed is a *model selection*\index{model selection}: choosing which model fits data best among a set of candidate models. The model selection we performed first used the "eyeball test": qualitatively looking at visualizations to choose a model. We then supplemented this evidence quantitatively by examining the remaining columns of the regression table. In the next subsection, we will use another numerical approach via the $R^2$ (pronounced "R-squared") value to perform the same model selection. 
 
 
 ### Model selection using R-squared {#rsquared}
 
 At the end of the previous section in Figure \@ref(fig:numxcatx-comparison-2) you compared an interaction model with a parallel slopes model, where both models attempted to explain $y$ = the average energy expenditure of mole rats. In Tables \@ref(tab:model2-interaction) and \@ref(tab:model2-parallel-slopes), we observed that the interaction model was "more complex" in that the regression table had 4 rows versus the 3 rows of the parallel slopes model. 
 
-Most importantly however, when comparing the left and right-hand plots of Figure \@ref(fig:numxcatx-comparison-2), we observed that the two lines corresponding to lazy and worker mole rats were not that different. Given this similarity, we stated it could be argued that the "simpler" parallel slopes model should be favored. 
+Most importantly however, when comparing the left and right-hand plots of Figure \@ref(fig:numxcatx-comparison-2), we observed that the two lines corresponding to lazy and worker mole rats were not that different. Furthermore, this was supported by the values in the `ln.mass::casteworker` row of the regression table for the interaction model, shown in in Table \@ref(tab:model2-interaction). Given the similarity of the two slopes, we stated it could be argued that the "simpler" parallel slopes model should be favored. 
 
-In this section, we'll mimic the model selection we just performed using the qualitative "eyeball test", but this time using a numerical and quantitative approach. Specifically, we'll use the $R^2$ summary statistic (pronounced "R-squared"), also called the "coefficient of determination". But first, we must introduce one new concept: the *variance* of a numerical variable. 
+In this section, we'll mimic the model selection we just performed, but this time using a numerical and quantitative approach. Specifically, we'll use the $R^2$ summary statistic (pronounced "R-squared"), also called the "coefficient of determination", 
 
-We've previously studied two summary statistics of the *spread* (or *variation*) of a numerical variable: the standard deviation when studying the normal distribution in \@ref(appendix-normal-curve) and the interquartile range (IQR) when studying boxplots in Section \@ref(geomboxplot). We now introduce a third summary statistic of spread: the *variance*. The variance is merely the standard deviation squared and it can be computed in R using the `var()` summary function within `summarize()`. If you would like to see the formula, see \@ref(appendix-sd-variance). 
+Since $R^2$ is calculated using the variance of the observed and the fitted values of $y$, let's first review variance. Recall that one summary statistic of the *spread* (or *variation*) of a numerical variable is the standard deviation. The variance is merely the standard deviation squared, and it is therefore the average of the squared deviations of each observation from the mean, as you can see with the formula in \@ref(appendix-sd-variance). In R, the variance can be computed using the `var()` summary function within `summarize()`. 
 
-Recall that to get: 1) the observed values $y$, 2) the fitted values $\widehat{y}$ from a regression model, and 3) the resulting residuals $y - \widehat{y}$, we can apply the `get_regression_points()` function our saved model, in this case `model_2_interaction`:
+Recall that to get: 1) the observed values $y$, 2) the fitted values $\widehat{y}$ from a regression model, and 3) the resulting residuals $y - \widehat{y}$ (i.e., deviations from the mean), we can apply the `get_regression_points()` function with our saved model, in this case `model_2_interaction`:
 
 ```{r}
 get_regression_points(model_2_interaction) 
 ```
 
-Let's now use the `var()` summary function within a `summarize()` to compute the variance of these three terms:
+Let's now use the `var()` summary function within `summarize()` to compute the variance of these three terms:
 
 ```{r}
 get_regression_points(model_2_interaction) %>% 
@@ -1208,7 +1206,7 @@ bind_rows(
                 latex_options = c("hold_position"))
 ```
 
-Observe how the $R^2$ values are near identical at around `r variances_parallel_slopes %>% pull(r_squared)` = `r variances_parallel_slopes %>% pull(r_squared) %>% "*"(100) %>% round(1)`%. In other words, the *additional complexity* of the interaction model only improves our $R^2$ value by a near zero amount. Thus, we are inclined to favor the "simpler" parallel slopes model.
+Observe how the $R^2$ values are near identical at around `r variances_parallel_slopes %>% pull(r_squared)` = `r variances_parallel_slopes %>% pull(r_squared) %>% "*"(100) %>% round(1)`%. In other words, the *additional complexity* of the interaction model barely improves our $R^2$ value by a minimal amount. Thus, we are inclined to favor the "simpler" parallel slopes model.
 
 Now let's repeat this $R^2$ comparison between interaction and parallel slopes model for our models of $y$ = coverage area of red algae which you visually compared in Figure \@ref(fig:2numxplot1d). We compare these values in Table \@ref(tab:model1-r-squared)
 
@@ -1235,7 +1233,7 @@ bind_rows(
                 latex_options = c("hold_position"))
 ```
 
-Observe how the $R^2$ values are now very different! In other words, since the *additional complexity* of the interaction model over the parallel slopes model improves our $R^2$ value by a relatively large amount (`r variances_interaction$r_squared` versus `r variances_parallel_slopes$r_squared`, which is an increase of about `r round(100*((variances_interaction$r_squared)/(variances_parallel_slopes$r_squared)-1), 1)`%), it could be argued that the additional complexity is warranted. 
+Observe how the $R^2$ values are now very different! In other words, since the *additional complexity* of the interaction model over the parallel slopes model improves our $R^2$ value by a relatively large amount (`r variances_interaction$r_squared` versus `r variances_parallel_slopes$r_squared`, it could be argued that the additional complexity is warranted. 
 
 As a final note, we can also use the third of our `get_regression()` wrapper functions, `get_regression_summaries()`, to quickly automate calculating $R^2$ for both the interaction and parallels slopes models, first for the `MoleRats` data.
 
@@ -1248,7 +1246,7 @@ get_regression_summaries(model_2_parallel_slopes)
 
 In addition to the $R^2$ value for a model, this wrapper function also returns an adjusted-$R^2$ value, which accounts for the additional feature contained in the interaction model. While $R^2$ will always increase as we add additional variables to our model, the adjusted-$R^2$ will only increase if the more complex model is better. You'll notice that the adjusted-$R^2$ of the interaction and the parallel slopes models for the `MoleRats` data is identical at 0.372. This indicates that the additional complexity of the model that accounts for an interaction between the two explanatory variables is not any better than the simpler parallel-slopes model.
 
-In contrast when we compare the interaction and parallel slopes models for the `IntertidalAlgae` data, we see marked increase in the adjusted-$R^2$ values with the interaction model:
+In contrast when we compare the interaction and parallel slopes models for the `IntertidalAlgae` data, we see a marked increase in the adjusted-$R^2$ values with the interaction model:
 
 ```{r echo=FALSE, purl=FALSE}
 # R-squared for interaction model:

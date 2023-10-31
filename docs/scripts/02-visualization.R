@@ -18,7 +18,7 @@ library(dplyr)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = mammals, mapping = aes(x = brain_wt, y = life_span)) +
 ##   geom_point()
 
@@ -94,17 +94,17 @@ ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
   geom_histogram(color = "white")
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
 ##   geom_histogram(color = "white", fill = "steelblue")
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
 ##   geom_histogram(bins = 20, color = "white")
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = chick_weight_d21, mapping = aes(x = weight)) +
 ##   geom_histogram(binwidth = 20, color = "white")
 
@@ -173,7 +173,7 @@ ggplot(data = fruits, mapping = aes(x = fruit)) +
   geom_bar()
 
 
-## ---- geomcol, fig.cap="Barplot when counts are pre-counted.", fig.height=2.5----
+## ----geomcol, fig.cap="Barplot when counts are pre-counted.", fig.height=2.5----
 ggplot(data = fruits_counted, mapping = aes(x = fruit, y = number)) +
   geom_col()
 
@@ -189,7 +189,7 @@ ggplot(data = mammals, mapping = aes(x = predation)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = mammals, mapping = aes(x = predation)) +
 ##   geom_bar()
 
@@ -208,7 +208,7 @@ ggplot(data = mammals, mapping = aes(x = predation)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(data = mammals, mapping = aes(x = predation), fill = factor(exposure)) +
 ##   geom_bar()
 
@@ -246,7 +246,7 @@ ggplot(data = mammals, mapping = aes(x = predation)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Segment 1:
 ## ggplot(data = mammals, mapping = aes(x = predation)) +
 ##   geom_bar()
@@ -262,6 +262,6 @@ ggplot(data = mammals, mapping = aes(x = predation)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## chick1_weight <- filter(ChickWeight, Chick == 1)
 

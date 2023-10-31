@@ -1,11 +1,11 @@
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(tidyverse)
 ## library(moderndive)
 ## library(skimr)
 ## library(abd)
 ## library(gapminder)
 
-## ---- echo=FALSE, message=FALSE, purl=TRUE------------------------------------
+## ----echo=FALSE, message=FALSE, purl=TRUE-------------------------------------
 # The code presented to the reader in the chunk above is different than the code
 # in this chunk that is actually run to build the book. In particular we do not
 # load the skimr package.
@@ -32,7 +32,7 @@ library(gapminder)
 glimpse(LionNoses)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## LionNoses %>%
 ##   sample_n(size = 5)
 
@@ -49,7 +49,7 @@ LionNoses %>%
   get_correlation(formula = proportion.black ~ age)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## LionNoses %>%
 ##   summarize(correlation = cor(proportion.black, age))
 
@@ -73,7 +73,7 @@ ggplot(LionNoses, aes(x = age, y = proportion.black)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## lion_model <- lm(proportion.black ~ age, data = LionNoses)
 ## # Get regression table:
@@ -82,7 +82,7 @@ ggplot(LionNoses, aes(x = age, y = proportion.black)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## lion_model <- lm(proportion.black ~ age, data = LionNoses)
 ## # Get regression table:
@@ -99,7 +99,7 @@ ggplot(LionNoses, aes(x = age, y = proportion.black)) +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## regression_points <- get_regression_points(lion_model)
 ## regression_points
 
@@ -112,7 +112,7 @@ ggplot(LionNoses, aes(x = age, y = proportion.black)) +
 
 
 
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 library(gapminder)
 gapminder2007 <- gapminder %>%
   filter(year == 2007) %>%
@@ -125,7 +125,7 @@ gapminder2007 <- gapminder %>%
 glimpse(gapminder2007)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## gapminder2007 %>% sample_n(size = 5)
 
 
@@ -163,7 +163,7 @@ ggplot(gapminder2007, aes(x = continent, y = lifeExp)) +
        title = "Life expectancy by continent")
 
 
-## ---- eval=TRUE---------------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 lifeExp_by_continent <- gapminder2007 %>%
   group_by(continent) %>%
   summarize(median = median(lifeExp), 
@@ -179,7 +179,7 @@ lifeExp_by_continent <- gapminder2007 %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## lifeExp_model <- lm(lifeExp ~ continent, data = gapminder2007)
 ## get_regression_table(lifeExp_model)
 
@@ -190,7 +190,7 @@ lifeExp_by_continent <- gapminder2007 %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## regression_points <- get_regression_points(lifeExp_model, ID = "country")
 ## regression_points
 
@@ -228,7 +228,7 @@ regression_points %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## lion_model <- lm(formula = proportion.black ~ age, data = LionNoses)
 ## # Get regression table:
@@ -237,7 +237,7 @@ regression_points %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(broom)
 ## library(janitor)
 ## lion_model %>%
@@ -248,7 +248,7 @@ regression_points %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(broom)
 ## library(janitor)
 ## lion_model %>%

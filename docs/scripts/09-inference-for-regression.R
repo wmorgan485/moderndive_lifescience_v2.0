@@ -22,7 +22,7 @@ ggplot(LionNoses,
   geom_smooth(method = "lm", se = FALSE)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## lion_model <- lm(proportion.black ~ age, data = LionNoses)
 ## # Get regression table:
@@ -52,7 +52,7 @@ regression_points
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(regression_points, aes(x = residual)) +
 ##   geom_histogram(binwidth = 0.05, color = "white") +
 ##   labs(x = "Residual")
@@ -61,7 +61,7 @@ regression_points
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(regression_points, aes(x = age, y = residual)) +
 ##   geom_point() +
 ##   labs(x = "Age (years)", y = "Residual") +
@@ -107,7 +107,7 @@ se_ci <- bootstrap_distn_slope %>%
 se_ci
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## visualize(bootstrap_distn_slope) +
 ##   shade_confidence_interval(endpoints = percentile_ci, fill = NULL,
 ##                             linetype = "solid", color = "grey90") +

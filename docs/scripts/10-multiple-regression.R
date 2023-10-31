@@ -1,10 +1,10 @@
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(tidyverse)
 ## library(moderndive)
 ## library(skimr)
 ## library(abd)
 
-## ---- echo=FALSE, message=FALSE, purl=TRUE------------------------------------
+## ----echo=FALSE, message=FALSE, purl=TRUE-------------------------------------
 # The code presented to the reader in the chunk above is different than the code
 # in this chunk that is actually run to build the book. In particular we do not
 # load the skimr package.
@@ -30,13 +30,13 @@ glimpse(ToothGrowth)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ToothGrowth %>% sample_n(size = 5)
 
 
 
-## ---- eval =FALSE-------------------------------------------------------------
-## ToothGrowth %>% skim()
+## ----eval = TRUE--------------------------------------------------------------
+ToothGrowth %>% skim()
 
 
 ## -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ ToothGrowth %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## len_model_interaction <- lm(len ~ dose * supp, data = ToothGrowth)
 ## 
@@ -79,7 +79,7 @@ ToothGrowth %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## len_model_parallel_slopes <- lm(len ~ dose + supp, data = ToothGrowth)
 ## # Get regression table:
@@ -99,7 +99,7 @@ ToothGrowth %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## regression_points <- get_regression_points(len_model_interaction)
 ## regression_points %>% group_by(supp) %>% slice_head(n=5)
 
@@ -109,23 +109,23 @@ ToothGrowth %>%
 
 
 
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 library(abd)
 glimpse(IntertidalAlgae)
 
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## IntertidalAlgae %>% sample_n(size = 5)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
-## IntertidalAlgae %>% skim()
+## ----eval=TRUE----------------------------------------------------------------
+IntertidalAlgae %>% skim()
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area)) +
 ##   geom_boxplot() +
 ##   geom_jitter(width = 0.1) +
@@ -142,7 +142,7 @@ glimpse(IntertidalAlgae)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(IntertidalAlgae, aes(x = herbivores, y = sqrt.area,
 ##                             color = height, group = height)) +
 ##   geom_jitter(width = 0.1) +
@@ -157,7 +157,7 @@ glimpse(IntertidalAlgae)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Fit regression model:
 ## area_model1 <- lm(sqrt.area ~ herbivores * height, data = IntertidalAlgae)
 ## # Get regression table:
@@ -169,13 +169,13 @@ glimpse(IntertidalAlgae)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## get_regression_points(area_model1) %>%
 ##   group_by(herbivores, height) %>% slice_head(n=2)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## area_model2 <- lm(sqrt.area ~ herbivores + height, data = IntertidalAlgae)
 ## means_Obs <- IntertidalAlgae %>% group_by(herbivores, height) %>% summarise(mean_Obs=mean(sqrt.area))
 ## means_Int <- get_regression_points(area_model1) %>%
@@ -193,7 +193,7 @@ glimpse(IntertidalAlgae)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Interaction model
 ## ggplot(MoleRats,
 ##        aes(x = ln.mass, y = ln.energy, color = caste)) +
@@ -204,7 +204,7 @@ glimpse(IntertidalAlgae)
 ##        title = "Interaction model")
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Parallel slopes model
 ## ggplot(MoleRats,
 ##        aes(x = ln.mass, y = ln.energy, color = caste)) +
@@ -216,13 +216,13 @@ glimpse(IntertidalAlgae)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## model_2_interaction <- lm(ln.energy ~ ln.mass * caste,
 ##                           data = MoleRats)
 ## get_regression_table(model_2_interaction)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## model_2_parallel_slopes <- lm(ln.energy ~ ln.mass + caste,
 ##                               data = MoleRats)
 ## get_regression_table(model_2_parallel_slopes)

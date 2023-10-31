@@ -1,10 +1,10 @@
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## chick1_weight <- filter(ChickWeight, Chick == 1)
 
 
 
 
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 library(dplyr)
 library(ggplot2)
 library(openintro)
@@ -16,20 +16,20 @@ library(openintro)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## chick1_weight <- ChickWeight %>%
 ##   filter(Chick == 1)
 
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## predation1 <- mammals %>%
 ##   filter(predation == 1)
 ## View(predation1)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## predation_notexp1 <- mammals %>%
 ##   filter((predation == 1 | predation == 2) & exposure != 1)
 ## predation_notexp1
@@ -37,19 +37,19 @@ library(openintro)
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## predation_notexp1 <- mammals %>%
 ##   filter((predation == 1 | predation == 2) & !exposure == 1)
 ## predation_notexp1
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## predation_notexp1 <- mammals %>%
 ##   filter((predation == 1 | predation == 2), !exposure == 1)
 ## predation_notexp1
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## many_species <- mammals %>%
 ##   filter(species == "Africanelephant" | species == "Asianelephant" | species == "Deserthedgehog" | species == "Europeanhedgehog")
 
@@ -64,11 +64,11 @@ many_species
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## mammals %>% slice(1:5)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## mammals %>% slice_max(n = 5, order_by = life_span)
 
 
@@ -78,7 +78,7 @@ many_species
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## glimpse(mammals)
 
 
@@ -97,7 +97,7 @@ slim_many_species <- many_species %>%
 slim_many_species
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## mammals_10cols <- mammals %>% select(-gestation)
 
 
@@ -106,7 +106,7 @@ mammals_sleep <- mammals %>% select(species, non_dreaming:total_sleep)
 mammals_sleep
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## mammals_reorder <- mammals %>% select(species, non_dreaming:total_sleep, everything())
 ## glimpse(mammals_reorder)
 
@@ -115,7 +115,7 @@ mammals_sleep
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## mammals %>%
 ##   rename(danger_faced = danger)
 
@@ -213,7 +213,7 @@ by_pred_exp_incorrect
 
 
 
-## ---- eval=TRUE---------------------------------------------------------------
+## ----eval=TRUE----------------------------------------------------------------
 mammals <- mammals %>% 
   mutate(wt_in_lb = body_wt * 2.205)
 mammals

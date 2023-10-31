@@ -37,7 +37,7 @@ GreatTitMalaria
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## ggplot(GreatTitMalaria_shuffled,
 ##        aes(x = shuffled_treatment, fill = response)) +
 ##   geom_bar() +
@@ -58,7 +58,7 @@ GreatTitMalaria_shuffled %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## obs_diff_prop <- BirdMalaria %>%
 ##   specify(response ~ treatment, success = "infected") %>%
 ##   calculate(stat = "diff in props", order = c("male", "female"))
@@ -193,7 +193,7 @@ se_ci
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(moderndive)
 ## library(infer)
 ## null_distribution_cean <- GreatTitMalaria %>%
@@ -298,7 +298,7 @@ obs_diff_means
 null_distribution_HornedLizards %>% 
   get_p_value(obs_stat = obs_diff_means, direction = "both")
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 p_value_HornedLizards <- null_distribution_HornedLizards %>%
   get_p_value(obs_stat = obs_diff_means, direction = "both") %>%
   mutate(p_value = round(p_value, 3))
@@ -319,7 +319,7 @@ HornedLizards %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## # Construct null distribution of xbar_a - xbar_r:
 ## null_distribution_HornedLizards <- HornedLizards %>%
 ##   specify(formula = horn.length ~ group) %>%

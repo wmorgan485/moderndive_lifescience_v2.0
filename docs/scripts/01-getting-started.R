@@ -1,4 +1,4 @@
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 ## library(ggplot2)
 
 
@@ -46,5 +46,5 @@ glimpse(mammals)
 
 
 ## ----message=FALSE, eval=FALSE------------------------------------------------
-## blackbird <- read_csv("http://www.zoology.ubc.ca/~schluter/WhitlockSchluter/wp-content/data/chapter12/chap12e2BlackbirdTestosterone.csv")
+## blackbird <- read_csv("https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e2BlackbirdTestosterone.csv")
 
